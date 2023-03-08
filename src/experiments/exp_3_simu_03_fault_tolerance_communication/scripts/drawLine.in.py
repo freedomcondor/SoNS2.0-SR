@@ -37,10 +37,10 @@ option = {
 
 	'failure_place_holder'   : 0,
 
-	'trible_right'           : True,
-	'trible_right_dataFolder1':  dataFolder1,
-	'trible_right_dataFolder2':  dataFolder2,
-	'trible_right_dataFolder3':  dataFolder3,
+	'triple_right'           : True,
+	'triple_right_dataFolder1':  dataFolder1,
+	'triple_right_dataFolder2':  dataFolder2,
+	'triple_right_dataFolder3':  dataFolder3,
 }
 #------------------------------------------------
 '''
