@@ -22,8 +22,8 @@ sample_run = "test_20220628_3_success_3"
 option = {
 	'dataFolder'             : dataFolder,
 	'sample_run'             : sample_run,
-	'SRFig_save'             : "exp_0_hw_04_switch_line_SRFig.pdf",
-	'trackLog_save'          : "exp_0_hw_04_switch_line_trackLog.pdf",
+	'SRFig_save'             : "mission3_hw_exp_0_hw_04_switch_line_SRFig.pdf",
+	'trackLog_save'          : "mission3_hw_exp_0_hw_04_switch_line_trackLog.pdf",
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
@@ -32,6 +32,8 @@ option = {
 #	'split_right'            : True,
 #	'violin_ax_top_lim_from' : 5,
 #	'violin_ax_top_lim_to'   : 5.5,
+
+	'boxPlotValue_save'                  : "mission3_hw_boxplot_exp_0_hw_04_switch_line.dat",
 
 #------------------------------------------------
 	'key_frame' :  [0, 400, 1000] ,
@@ -77,5 +79,22 @@ option = {
 
 drawSRFig(option)
 drawTrackLog(option)
+
+
+dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_04_switch_line/data_simu/data"
+sample_run = "run1"
+
+option = {
+	'dataFolder'             : dataFolder,
+	'sample_run'             : sample_run,
+	'SRFig_save'             : "mission3_simu_exp_0_hw_04_switch_line_SRFig.pdf",
+	'SRFig_show'             : False,
+
+	'main_ax_lim'            : [-0.5, 3.5],
+
+	'boxPlotValue_save'                  : "mission3_simu_boxplot_exp_0_hw_04_switch_line.dat",
+}
+
+drawSRFig(option)
 
 

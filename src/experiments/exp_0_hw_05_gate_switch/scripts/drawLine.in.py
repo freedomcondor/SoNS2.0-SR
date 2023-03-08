@@ -15,8 +15,8 @@ exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exe
 option = {
 	'dataFolder' : "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_05_gate_switch/data_hw/data",
 	'sample_run'             : "test_20220630_12_success_3",
-	'SRFig_save'             : "exp_0_hw_05_gate_switch_SRFig.pdf",
-	'trackLog_save'          : "exp_0_hw_05_gate_switch_trackLog.pdf",
+	'SRFig_save'             : "mission4_hw_exp_0_hw_05_gate_switch_SRFig.pdf",
+	'trackLog_save'          : "mission4_hw_exp_0_hw_05_gate_switch_trackLog.pdf",
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
@@ -24,6 +24,8 @@ option = {
 
 	'split_right'            : True,
 	'violin_ax_top_lim'      : [5, 5.5],
+
+	'boxPlotValue_save'      : "mission4_hw_boxplot_exp_0_hw_05_gate_switch.dat",
 
 #------------------------------------------------
 	'key_frame' :  [0, 300, 1200] ,
@@ -68,3 +70,20 @@ option = {
 
 drawSRFig(option)
 drawTrackLog(option)
+
+
+option = {
+	'dataFolder' : "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_05_gate_switch/data_simu/data",
+	'sample_run'             : "run1",
+	'SRFig_save'             : "mission4_simu_exp_0_hw_05_gate_switch_SRFig.pdf",
+	'SRFig_show'             : False,
+
+	'main_ax_lim'            : [-0.3, 4.0],
+
+	'split_right'            : True,
+	'violin_ax_top_lim'      : [5, 5.5],
+
+	'boxPlotValue_save'      : "mission4_simu_boxplot_exp_0_hw_05_gate_switch.dat",
+}
+
+drawSRFig(option)

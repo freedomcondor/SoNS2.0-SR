@@ -34,6 +34,7 @@ print("stage4 start at", stage4Step)
 
 local firstRecruitStep = logReader.calcFirstRecruitStep(robotsData)
 local saveStartStep = firstRecruitStep - 10
+--local saveStartStep = firstRecruitStep + 10 -- for simulation
 print("firstRecruit happens", firstRecruitStep, "data start at", saveStartStep)
 
 os.execute("echo " .. tostring(stage2Step - saveStartStep) .. " > formationSwitch.txt")
