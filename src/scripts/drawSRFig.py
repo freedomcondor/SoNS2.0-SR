@@ -19,7 +19,7 @@ def drawSRFig(option) :
 
 	if ('split_right'  not in option or option['split_right']  != True) and \
 	   ('double_right' not in option or option['double_right'] != True) and \
-	   ('trible_right' not in option or option['trible_right'] != True) :
+	   ('triple_right' not in option or option['triple_right'] != True) :
 		# 2 subfigures
 		fig, axs = plt.subplots(1, 2, gridspec_kw={'width_ratios': [5, 1]})
 		fig.subplots_adjust(hspace=0.05)  # adjust space between axes
@@ -38,7 +38,7 @@ def drawSRFig(option) :
 		violin2_ax = axs[2]
 
 	elif ('split_right'  not in option or  option['split_right']  != True) and \
-	     ('trible_right'     in option and option['trible_right'] == True) :
+	     ('triple_right'     in option and option['triple_right'] == True) :
 		# 4 subfigures
 		fig, axs = plt.subplots(1, 4, gridspec_kw={'width_ratios': [5, 1, 1, 1]})
 		fig.subplots_adjust(hspace=0.05)  # adjust space between axes
@@ -50,7 +50,7 @@ def drawSRFig(option) :
 
 	elif ('split_right'      in option and option['split_right']  == True) and \
 	     ('double_right' not in option or  option['double_right'] != True) and \
-	     ('trible_right' not in option or  option['trible_right'] != True) :
+	     ('triple_right' not in option or  option['triple_right'] != True) :
 		# 4 subfigures
 		height_ratios = [1, 8]
 		if 'height_ratios' in option :
@@ -83,7 +83,7 @@ def drawSRFig(option) :
 	
 
 	elif ('split_right'  in option and option['split_right']  == True) and \
-	     ('trible_right' in option and option['trible_right'] == True) :
+	     ('triple_right' in option and option['triple_right'] == True) :
 		# 6 subfigures
 		height_ratios = [1, 8]
 		if 'height_ratios' in option :
@@ -331,8 +331,8 @@ def drawSRFig(option) :
 
 	#-------------------------------------------------------------------------
 	# read all each robot data and make it a total box/violin plot
-	if "trible_right_dataFolder1" in option :
-		dataFolder = option['trible_right_dataFolder1']
+	if "triple_right_dataFolder1" in option :
+		dataFolder = option['triple_right_dataFolder1']
 
 	boxdata = []
 	for subFolder in getSubfolders(dataFolder) :
@@ -345,15 +345,18 @@ def drawSRFig(option) :
 		violin_return_2 = violin_ax_top.violinplot(boxdata, showmeans=True)
 		violin_returns.append(violin_return_2)
 	
+	if "boxPlotValue_save" in option :
+		logBoxDataValues(boxdata, option["boxPlotValue_save"])
+	
 	boxdata2 = None
 	if violin2_ax != None and \
 	  ('double_right_dataFolder' in option or \
-	   'trible_right_dataFolder2' in option):
+	   'triple_right_dataFolder2' in option):
 		double_right_dataFolder = None
 		if 'double_right_dataFolder' in option:
 			double_right_dataFolder = option['double_right_dataFolder']
-		elif 'trible_right_dataFolder2' in option:
-			double_right_dataFolder = option['trible_right_dataFolder2']
+		elif 'triple_right_dataFolder2' in option:
+			double_right_dataFolder = option['triple_right_dataFolder2']
 
 		boxdata2 = []
 		for subFolder in getSubfolders(double_right_dataFolder) :
@@ -365,10 +368,13 @@ def drawSRFig(option) :
 		if violin2_ax_top != None :
 			violin_return_4 = violin2_ax_top.violinplot(boxdata2, showmeans=True)
 			violin_returns.append(violin_return_4)
+
+		if "boxPlotValue_doubleRight_save" in option :
+			logBoxDataValues(boxdata2, option["boxPlotValue_doubleRight_save"])
 	
 	boxdata3 = None
-	if violin3_ax != None and 'trible_right_dataFolder3' in option :
-		dataFolder3 = option['trible_right_dataFolder3']
+	if violin3_ax != None and 'triple_right_dataFolder3' in option :
+		dataFolder3 = option['triple_right_dataFolder3']
 
 		boxdata3 = []
 		for subFolder in getSubfolders(dataFolder3) :
@@ -380,6 +386,9 @@ def drawSRFig(option) :
 		if violin3_ax_top != None :
 			violin_return_6 = violin3_ax_top.violinplot(boxdata3, showmeans=True)
 			violin_returns.append(violin_return_6)
+
+		if "boxPlotValue_tripleRight_save" in option :
+			logBoxDataValues(boxdata3, option["boxPlotValue_tripleRight_save"])
 		
 	# set font and style for violin plot (both top and bottom if existed)
 	for violin in violin_returns :
@@ -421,3 +430,25 @@ def drawSRFig(option) :
 		plt.savefig(option['SRFig_save'])
 	if 'SRFig_show' in option and option['SRFig_show'] == True :
 		plt.show()
+
+def logBoxDataValues(boxdata, filename) :
+	f = open(filename, "w")
+
+	meanvalue = statistics.mean(boxdata)
+	stdev = statistics.stdev(boxdata)
+
+	minvalue = min(boxdata)
+	maxvalue = max(boxdata)
+	count = len(boxdata)
+	interval95 = 1.96 * stdev / math.sqrt(count)
+	#interval999 = 3.291 * stdev / math.sqrt(count)
+	interval99999 = 4.417 * stdev / math.sqrt(count)
+
+	f.write("meanvalue = {}\n".format(meanvalue))
+	f.write("stdev     = {}\n".format(stdev))
+	f.write("minvalue  = {}\n".format(minvalue))
+	f.write("maxvalue  = {}\n".format(maxvalue))
+	f.write("confidence interval 95%     = {}, {}\n".format(meanvalue - interval95, meanvalue + interval95))
+	f.write("confidence interval 99.999% = {}, {}\n".format(meanvalue - interval99999, meanvalue + interval99999))
+
+	f.close()
