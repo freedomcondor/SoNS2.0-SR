@@ -79,7 +79,7 @@ local geneIndex = logReader.calcMorphID(gene)
 
 local robotsData = logReader.loadData("./logs")
 
-fixData(robotsData)
+fixData(robotsData)  -- only for hardware datas
 
 -- read failure step
 local failure_step = 500
@@ -90,6 +90,12 @@ if f ~= nil then
 		string = l
 	end
 	failure_step = tonumber(string)
+--[[
+else
+	f = io.open("failure_step.txt", "w")
+	f:write(tostring(failure_step))
+	io.close(f)
+--]]
 end
 
 local stage2Step = logReader.checkIDFirstAppearStep(robotsData, structure2.idN)
@@ -124,6 +130,7 @@ lowerBoundParameters = {
 
 local firstRecruitStep = logReader.calcFirstRecruitStep(robotsData)
 local saveStartStep = firstRecruitStep - 10
+--local saveStartStep = firstRecruitStep + 10 -- for simulation data
 
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, 1, structure2Step - 1)
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, saveStartStep, structure2Step - 1)

@@ -23,8 +23,8 @@ sample_run = "test_20220713_1_success_1"
 option = {
 	'dataFolder'             : dataFolder,
 	'sample_run'             : sample_run,
-	'SRFig_save'             : "exp_0_hw_08_split_SRFig.pdf",
-	'trackLog_save'          : "exp_0_hw_08_split_trackLog.pdf",
+	'SRFig_save'             : "mission5_hw_exp_0_hw_08_split_SRFig.pdf",
+	'trackLog_save'          : "mission5_hw_exp_0_hw_08_split_trackLog.pdf",
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
@@ -36,6 +36,9 @@ option = {
 
 	'double_right'           : True,
 	'double_right_dataFolder': dataFolder2,
+
+	'boxPlotValue_save'                  : "mission5_hw_boxplot1_exp_0_hw_08_split.dat",
+	'boxPlotValue_doubleRight_save'      : "mission5_hw_boxplot2_exp_0_hw_09_1d_switch_rescue.dat",
 #------------------------------------------------
 	'key_frame' :  [0] ,
 
@@ -61,3 +64,28 @@ option = {
 
 drawSRFig(option)
 drawTrackLog(option)
+
+dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_08_split/data_simu/data"
+dataFolder2 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data"
+sample_run = "run1"
+
+option = {
+	'dataFolder'             : dataFolder,
+	'sample_run'             : sample_run,
+	'SRFig_save'             : "mission5_simu_exp_0_hw_08_split_SRFig.pdf",
+	'SRFig_show'             : False,
+
+	'main_ax_lim'            : [-0.5, 6.5],
+
+	#'split_right'            : True,
+	#'violin_ax_top_lim'      : [2.3, 6.2],
+	#'height_ratios'          : [1, 10],
+
+	'double_right'           : True,
+	'double_right_dataFolder': dataFolder2,
+
+	'boxPlotValue_save'                  : "mission5_simu_boxplot1_exp_0_hw_08_split.dat",
+	'boxPlotValue_doubleRight_save'      : "mission5_simu_boxplot2_exp_0_hw_09_1d_switch_rescue.dat",
+}
+
+drawSRFig(option)

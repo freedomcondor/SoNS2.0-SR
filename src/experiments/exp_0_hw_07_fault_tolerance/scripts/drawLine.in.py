@@ -23,10 +23,11 @@ sample_run = "test_20220712_7_success_6"
 option = {
 	'dataFolder'             : dataFolder,
 	'sample_run'             : sample_run,
-	'SRFig_save'             : "exp_0_hw_07_fault_tolerance_SRFig.pdf",
-	'trackLog_save'          : "exp_0_hw_07_fault_tolerance_trackLog.pdf",
+	'SRFig_save'             : "mission6_hw_exp_0_hw_07_fault_tolerance_SRFig.pdf",
+	'trackLog_save'          : "mission6_hw_exp_0_hw_07_fault_tolerance_trackLog.pdf",
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
+	'boxPlotValue_save'      : "mission6_hw_boxplot_exp_0_hw_07_fault_tolerance.dat",
 
 	'main_ax_lim'            : [-0.5, 3.5],
 
@@ -71,4 +72,25 @@ option = {
 drawSRFig(option)
 drawTrackLog(option)
 
+dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_07_fault_tolerance/data_simu/data"
+sample_run = "run1"
+
+option = {
+	'dataFolder'             : dataFolder,
+	'sample_run'             : sample_run,
+	'SRFig_save'             : "mission6_simu_exp_0_simu_07_fault_tolerance_SRFig.pdf",
+	'SRFig_show'             : False,
+	'trackLog_show'          : False,
+
+	'main_ax_lim'            : [-0.5, 3.5],
+
+#	'split_right'            : True,
+#	'violin_ax_top_lim_from' : 5,
+#	'violin_ax_top_lim_to'   : 5.5,
+
+	'failure_place_holder'   : 0,
+	'boxPlotValue_save'      : "mission6_simu_boxplot_exp_0_hw_07_fault_tolerance.dat",
+}
+
+drawSRFig(option)
 
