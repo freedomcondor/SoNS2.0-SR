@@ -128,15 +128,7 @@ def generate_physics_media_loop_visualization(cmake_binary_dir) :
                       label="my_qtopengl_user_functions" />
       <camera>
         <placements>
-          <placement index="0" position="0.0122872,0.0534732,25.7009" look_at="0.0122872,0.0534732,24.7009" up="-0.00187965,0.999998,0" lens_focal_length="90" />
-          <placement index="1" position="-6.01698,3.45411,1.68985" look_at="-5.13495,3.03202,1.48039" up="0.188941,-0.0904165,0.977817" lens_focal_length="30" />
-          <placement index="2" position="6.24865,-4.76935,2.71261" look_at="5.52826,-4.16628,2.37006" up="-0.262661,0.219888,0.939499" lens_focal_length="30" />
-          <placement index="3" position="-6.25183,-4.76287,2.69551" look_at="-5.59804,-4.13326,2.27582" up="0.302308,0.291125,0.907665" lens_focal_length="30" />
-          <placement index="4" position="-6.2675,4.75161,2.71277" look_at="-5.59966,4.11924,2.32022" up="0.285045,-0.269901,0.91973" lens_focal_length="30" />
-          <placement index="5" position="  0, 15, 7.5" look_at="0,0,0.25" lens_focal_length="60" />
-          <placement index="6" position="-15, 15, 10"  look_at="0,0,0.25" lens_focal_length="90" />
-          <placement index="7" position="-15,  0, 7.5" look_at="0,0,0.25" lens_focal_length="60" />
-          <placement index="8" position="-15,-15, 10"  look_at="0,0,0.25" lens_focal_length="90" />
+          <placement index="0" position="0,-0.1,8" look_at="0,0,0" up="0,0,1" lens_focal_length="30" />
         </placements>
       </camera>
     </qt-opengl>
@@ -358,22 +350,28 @@ def generate_block_xml(i, x, y, th, type) :
 	'''.format(i, type, x, y, th)
 	return tag
 
-def generate_drone_xml(i, x, y, th) :
+def generate_drone_xml(i, x, y, th, wifi_range=None) :
+	wifi_range_xml = ""
+	if wifi_range != None:
+		wifi_range_xml = '''wifi_transmission_range="{}"'''.format(wifi_range)
 	tag = '''
-	<drone id="drone{}" wifi_medium="wifi" >
+	<drone id="drone{}" wifi_medium="wifi" {}>
 		<body position="{},{},0" orientation="{},0,0"/>
 		<controller config="drone"/>
 	</drone>
-	'''.format(i, x, y, th)
+	'''.format(i, wifi_range_xml, x, y, th)
 	return tag
 
-def generate_pipuck_xml(i, x, y, th) :
+def generate_pipuck_xml(i, x, y, th, wifi_range=None) :
+	wifi_range_xml = ""
+	if wifi_range != None:
+		wifi_range_xml = '''wifi_transmission_range="{}"'''.format(wifi_range)
 	tag = '''
-	<pipuck_ext id="pipuck{}" wifi_medium="wifi" tag_medium="tags" debug="true">
+	<pipuck_ext id="pipuck{}" wifi_medium="wifi" {} tag_medium="tags" debug="true">
 		<body position="{},{},0" orientation="{},0,0"/>
 		<controller config="pipuck"/>
 	</pipuck_ext>
-	'''.format(i, x, y, th)
+	'''.format(i, wifi_range_xml, x, y, th)
 	return tag
 
 ########## target ##############################################################
@@ -669,19 +667,19 @@ def generate_slave_locations_with_origin(n, master_locations,
 			break
 	return a
 
-def generate_drones(locations, start_id) :
+def generate_drones(locations, start_id, wifi_range=None) :
 	tagstr = ""
 	i = start_id
 	for loc in locations :
-		tagstr = tagstr + generate_drone_xml(i, loc[0], loc[1], -45)
+		tagstr = tagstr + generate_drone_xml(i, loc[0], loc[1], -45, wifi_range)
 		i = i + 1
 	return tagstr
 
-def generate_pipucks(locations, start_id) :
+def generate_pipucks(locations, start_id, wifi_range=None) :
 	tagstr = ""
 	i = start_id
 	for loc in locations :
-		tagstr = tagstr + generate_pipuck_xml(i, loc[0], loc[1], 0)
+		tagstr = tagstr + generate_pipuck_xml(i, loc[0], loc[1], 0, wifi_range)
 		i = i + 1
 	return tagstr
 
