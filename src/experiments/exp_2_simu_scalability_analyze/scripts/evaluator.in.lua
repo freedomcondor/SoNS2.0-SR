@@ -78,13 +78,13 @@ local robotNumber = countRobots(robotsData)
 
 -- calc origin error
 local result_data, data_length = readDataInFile("result_data.txt")
-local sum, count = sumDataFromSteps(result_data, data_length - 50, data_length)
+local sum, count = sumDataFromSteps(result_data, data_length-500, data_length-200)
 local average_error = sum * 1.0 / count
 --local converge_step = findDataStepBelowValue(result_data, 100, average_error)
 
 -- calc smoothed error
 local result_data, data_length = readDataInFile("result_smoothed_data.txt")
-local sum, count = sumDataFromSteps(result_data, data_length - 50, data_length)
+local sum, count = sumDataFromSteps(result_data, data_length-500, data_length-200)
 local average_smoothed_error = sum * 1.0 / count
 
 -- calc converge from smoothed data
@@ -227,7 +227,10 @@ function sumTimeDataInFile(fileName, from, to)
 			12	timeMeasureCoreSpreader
 			13	timeMeasureCoreBrainkeeper
 			--]]
-			local numberN = numbers[9]
+			local numberN = numbers[1] +
+			                numbers[2] +
+			                numbers[3] +
+			                numbers[4]
 			sum = sum + numberN
 			count = count + 1
 		end
@@ -251,7 +254,7 @@ end
 local time_file_list, robotNumber = getDataFileList("./logs", "time_dat")
 --local sum, count = sumTimeDataInFiles("./logs", time_file_list, 1950, 2000)
 --local sum, count = sumTimeDataInFiles("./logs", time_file_list, 1950, 2000)
-local sum, count = sumMaxTime("./logs", time_file_list, 1950, 2000)
+local sum, count = sumMaxTime("./logs", time_file_list, 2000, 2300)
 local average = sum * 1.0 / count
 os.execute("echo " .. tostring(robotNumber) .. " " .. tostring(average) .. " > result_time_data.txt")
 
@@ -336,6 +339,6 @@ end
 ---------------------------------------------------------------------------------------
 local comm_file_list, robotNumber = getDataFileList("./logs", "comm_dat")
 --local sum, count = sumDataInFiles("./logs", comm_file_list, 1950, 2000)
-local sum, count = sumMaxComm("./logs", comm_file_list, 1950, 2000)
+local sum, count = sumMaxComm("./logs", comm_file_list, 2000, 2300)
 local average = sum * 1.0 / count
 os.execute("echo " .. tostring(robotNumber) .. " " .. tostring(average) .. " > result_comm_data.txt")
