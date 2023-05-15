@@ -11,7 +11,7 @@
 #SBATCH --mail-user=weixu.zhu@ulb.be   # your email to receive emails about the state of your job
 #SBATCH --mail-type=END,FAIL           # when to send emails, choices are BEGIN, END, FAIL, ARRAY_TASKS
 
-#SBATCH --array=1-50                    # job array
+#SBATCH --array=1-750                    # job array
 
 ## Module dependencies
 #export MODULEPATH=$HOME/Software/modulefiles:$MODULEPATH
@@ -29,7 +29,7 @@ TMPDIR=/tmp/wzhu/mns_exp_2_simu_scalability_analyze
 JOB_ID=$SLURM_ARRAY_TASK_ID
 
 # Repeat
-REPEAT=10
+REPEAT=30
 
 #
 N_DRONE=$[(JOB_ID+REPEAT-1)/REPEAT]
@@ -50,4 +50,6 @@ python3 @CMAKE_CURRENT_BINARY_DIR@/../run.py -r $JOB_ID -l $N_DRONE -v false
 lua @CMAKE_CURRENT_BINARY_DIR@/evaluator.lua $N_DRONE
 
 cd ..
+zip -r run$JOB_ID.zip run$JOB_ID
 mv run$JOB_ID $DATADIR
+mv run$JOB_ID.zip $DATADIR

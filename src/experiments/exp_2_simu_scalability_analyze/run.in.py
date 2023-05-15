@@ -18,16 +18,16 @@ drone_locations = generate_random_locations(n_drone,                        # to
                                             n_drone * 0.25, 0,              # origin location
                                             -n_drone * 0.25-1, n_drone * 0.25+1,              # random x range
                                             -3, 3,              # random y range
-                                            1.3, 1.5)                       # near limit and far limit
+                                            1.1, 1.3)                       # near limit and far limit
 pipuck_locations = generate_slave_locations_with_origin(n_pipuck,
                                             drone_locations,
                                             n_drone * 0.25, 0,              # origin location
                                             -n_drone * 0.25-1, n_drone * 0.25+1,              # random x range
                                             -3, 3,              # random y range
-                                            0.5, 0.9)                       # near limit and far limit
+                                            0.5, 0.7)                       # near limit and far limit
 
-drone_xml = generate_drones(drone_locations, 1, 3)                 # from label 1 generate drone xml tags
-pipuck_xml = generate_pipucks(pipuck_locations, 1, 3)              # from label 1 generate pipuck xml tags
+drone_xml = generate_drones(drone_locations, 1, 4.2)                 # from label 1 generate drone xml tags
+pipuck_xml = generate_pipucks(pipuck_locations, 1, 4.2)              # from label 1 generate pipuck xml tags
 
 
 params = '''
@@ -37,8 +37,9 @@ params = '''
               drone_tag_detection_rate="1"
               drone_default_height="1.8"
               drone_default_start_height="1.8"
-              dangerzone_drone="1.3"
-              dangerzone_reference_pipuck_scalar="1.3"
+              dangerzone_drone="1.1"
+              dangerzone_pipuck="0.3"
+              dangerzone_reference_pipuck_scalar="2.0"
               deadzone_reference_pipuck_scalar="2"
               morphologiesGenerator="morphologiesGenerator"
 

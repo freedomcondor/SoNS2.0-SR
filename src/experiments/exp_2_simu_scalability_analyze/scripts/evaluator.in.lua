@@ -70,6 +70,9 @@ function findDataStepBelowValue(data, fromStep, value)
 	local i = fromStep
 	while data[i] > value do
 		i = i + 1
+		if i > #data then
+			return i
+		end
 	end
 	return i
 end

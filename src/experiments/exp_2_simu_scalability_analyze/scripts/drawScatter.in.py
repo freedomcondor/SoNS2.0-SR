@@ -23,16 +23,19 @@ def readFormationData(fileName) :
 	       float(splits[4])   # recruit step
 	'''
 def boxplot_25_scales(ax, scales, values, color='b') :
-	index = []
 	datas = []
-	for i in range(0, 25) :
-		index.append(i + 1)
-		datas.append([])
+	positions = []
 
 	i = 0
 	for value in values :
-		scale = scales[i]/5
-		datas[int(scale-1)].append(value)
+		scale = scales[i]
+
+		if scale not in positions :
+			positions.append(scale)
+			datas.append([])
+
+		idx = positions.index(scale)
+		datas[idx].append(value)
 		i = i + 1
 
 	'''
@@ -46,10 +49,13 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 	    patch_artist=True
 	) 
 	'''
-	violin_return = ax.violinplot(datas, showmeans=True)
+	#violin_return = ax.violinplot(datas, showmeans=True)
+	violin_return = ax.violinplot(datas, positions=positions, widths=3, showmeans=True)
 	violin_returns = [violin_return]
 
-	ax.set_xticks([5, 10, 15, 20, 25, 50, 75, 100, 125])
+	#ax.set_xticks([5, 10, 15, 20, 25],[25, 50, 75, 100, 125])
+	ax.set_xticks([5, 10, 15, 20, 25])
+	#ax.set_xticks([25, 50, 75, 100, 125])
 
 	# set font and style for violin plot (both top and bottom if existed)
 	for violin in violin_returns :
@@ -70,7 +76,8 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 #----------------------------------------------------------------------------------
 #folder = "@CMAKE_CURRENT_SOURCE_DIR@/../data"
 #folder = "/home/harry/code/mns2.0/build/threads_finish"
-folder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
+#folder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
+folder = "@CMAKE_BINARY_DIR@/data_simu_scalability_analyze_1-450"
 
 fig, axs = plt.subplots(2, 2)
 comm_ax = axs[0, 0]
@@ -125,6 +132,8 @@ for subfolder in getSubfolders(folder) :
 	scale, error, smoothed_error, converge, recruit = readFormationData(subfolder + "result_formation_data.txt")
 	scales.append(scale)
 	errors.append(error)
+	if error > 0.12 :
+		print(">0.12: ", subfolder)
 	smoothed_errors.append(smoothed_error)
 	converges.append(converge / 5)
 	recruits.append(recruit / 5)
@@ -166,5 +175,5 @@ axs[1, 2].scatter(scales, recruits, color="red")
 axs[1, 2].set_title("zoom in of recruit time")
 '''
 
-plt.savefig("exp_2_scalability_analyze.pdf")
-#plt.show()
+#plt.savefig("exp_2_scalability_analyze.pdf")
+plt.show()
