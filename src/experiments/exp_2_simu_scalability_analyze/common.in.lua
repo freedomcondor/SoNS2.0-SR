@@ -197,6 +197,11 @@ end
 
 -- Analyze function -----
 function getCurrentTime()
+	local wallTimeS, wallTimeNS, CPUTimeS, CPUTimeNS = robot.radios.wifi.get_time()
+	return CPUTimeS + CPUTimeNS * 0.000000001
+end
+
+function getCurrentTime_backup()
 	local tmpfile = robot.id .. '_time_tmp.dat'
 
 	os.execute('date +\"%s.%N\" > ' .. tmpfile)
