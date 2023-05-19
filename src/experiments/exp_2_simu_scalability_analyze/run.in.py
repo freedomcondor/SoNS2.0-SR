@@ -13,6 +13,11 @@ print("n_drone", n_drone)
 n_pipuck = n_drone * 4
 arena_size = n_drone * 3 + 2
 
+Experiment_length = 2500
+
+if n_drone > 25 :
+    Experiment_length = n_drone * 100 + (n_drone - 25) * 100
+
 # drone and pipuck
 drone_locations = generate_random_locations(n_drone,                        # total number
                                             n_drone * 0.25, 0,              # origin location
@@ -52,7 +57,7 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos",
                     "vns.argos",
 	[
 		["RANDOMSEED",        str(Inputseed)],
-		["TOTALLENGTH",       str((2500)/5)],
+		["TOTALLENGTH",       str((Experiment_length)/5)],
 		["DRONES",            drone_xml], 
 		["PIPUCKS",           pipuck_xml], 
 		#["WALL",              wall_xml], 

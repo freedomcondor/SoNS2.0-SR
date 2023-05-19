@@ -79,6 +79,10 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 #folder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
 folder = "@CMAKE_BINARY_DIR@/data_simu_scalability_analyze_1-450"
 
+folders = ["/Volumes/Seagate/tmp/data_simu_1",
+           "/Users/harry/Desktop/mns2.0-SR/build/data_simu_zip_tmp"
+          ]
+
 fig, axs = plt.subplots(2, 2)
 comm_ax = axs[0, 0]
 time_ax = axs[0, 1]
@@ -91,10 +95,16 @@ fontsize = 5
  # get data
 scales = []
 comms = []
-for subfolder in getSubfolders(folder) :
-	scale, comm = readCommOrTimeData(subfolder + "result_comm_data.txt")
-	scales.append(scale)
-	comms.append(comm)
+
+for folder in folders :
+	for subfolder in getSubfolders(folder) :
+		scale, comm = readCommOrTimeData(subfolder + "result_comm_data.txt")
+		scales.append(scale)
+		comms.append(comm)
+
+		if comm > 650 :
+			print(">650: ", subfolder)
+
  # boxplot data
 boxplot_25_scales(comm_ax, scales, comms)
 comm_ax.set_ylim([0, 1000])
@@ -108,13 +118,18 @@ comm_ax.tick_params(axis='y', labelsize=fontsize)
 # calculation cost (calc time per step)
 scales = []
 times = []
-for subfolder in getSubfolders(folder) :
-	scale, time = readCommOrTimeData(subfolder + "result_time_data.txt")
-	scales.append(scale)
-	times.append(time)
+
+for folder in folders :
+	for subfolder in getSubfolders(folder) :
+		scale, time = readCommOrTimeData(subfolder + "result_time_data.txt")
+		scales.append(scale)
+		times.append(time)
+
+		if time > 0.6 :
+			print(">0.6: ", subfolder)
 
 boxplot_25_scales(time_ax, scales, times)
-time_ax.set_ylim([0, 3.0])
+time_ax.set_ylim([0, 1.5])
 #time_ax.set_title("calculation cost per step (s)")
 
 time_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
@@ -128,22 +143,23 @@ errors = []
 smoothed_errors = []
 converges = []
 recruits = []
-for subfolder in getSubfolders(folder) :
-	scale, error, smoothed_error, converge, recruit = readFormationData(subfolder + "result_formation_data.txt")
-	scales.append(scale)
-	errors.append(error)
-	if error > 0.12 :
-		print(">0.12: ", subfolder)
-	smoothed_errors.append(smoothed_error)
-	converges.append(converge / 5)
-	recruits.append(recruit / 5)
+for folder in folders :
+	for subfolder in getSubfolders(folder) :
+		scale, error, smoothed_error, converge, recruit = readFormationData(subfolder + "result_formation_data.txt")
+		scales.append(scale)
+		errors.append(error)
+		if error > 0.12 :
+			print(">0.12: ", subfolder)
+		smoothed_errors.append(smoothed_error)
+		converges.append(converge / 5)
+		recruits.append(recruit / 5)
 
 #-------------------------------------------------------------
 # position errors
 #boxplot_25_scales(error_ax, scales, errors)
 #boxplot_25_scales(error_ax, scales, smoothed_errors, "red")
 boxplot_25_scales(error_ax, scales, smoothed_errors)
-error_ax.set_ylim([0, 0.15])
+error_ax.set_ylim([0, 0.30])
 #error_ax.set_title("position errors")
 
 error_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
@@ -154,7 +170,7 @@ error_ax.tick_params(axis='y', labelsize=fontsize)
 # converge time and recruit time
 handle1 = boxplot_25_scales(converge_ax, scales, converges)
 handle2 = boxplot_25_scales(converge_ax, scales, recruits, 'red')
-converge_ax.set_ylim([0, 400])
+converge_ax.set_ylim([0, 600])
 #converge_ax.set_title("converge and recruit time")
 
 converge_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)

@@ -257,7 +257,8 @@ end
 local time_file_list, robotNumber = getDataFileList("./logs", "time_dat")
 --local sum, count = sumTimeDataInFiles("./logs", time_file_list, 1950, 2000)
 --local sum, count = sumTimeDataInFiles("./logs", time_file_list, 1950, 2000)
-local sum, count = sumMaxTime("./logs", time_file_list, 2000, 2300)
+--local sum, count = sumMaxTime("./logs", time_file_list, 2000, 2300)
+local sum, count = sumMaxTime("./logs", time_file_list, data_length-500, data_length-200)
 local average = sum * 1.0 / count
 os.execute("echo " .. tostring(robotNumber) .. " " .. tostring(average) .. " > result_time_data.txt")
 
@@ -342,6 +343,6 @@ end
 ---------------------------------------------------------------------------------------
 local comm_file_list, robotNumber = getDataFileList("./logs", "comm_dat")
 --local sum, count = sumDataInFiles("./logs", comm_file_list, 1950, 2000)
-local sum, count = sumMaxComm("./logs", comm_file_list, 2000, 2300)
+local sum, count = sumMaxComm("./logs", comm_file_list, data_length-500, data_length-200)
 local average = sum * 1.0 / count
 os.execute("echo " .. tostring(robotNumber) .. " " .. tostring(average) .. " > result_comm_data.txt")
