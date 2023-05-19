@@ -54,7 +54,7 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 	violin_returns = [violin_return]
 
 	#ax.set_xticks([5, 10, 15, 20, 25],[25, 50, 75, 100, 125])
-	ax.set_xticks([5, 10, 15, 20, 25])
+	#ax.set_xticks([5, 10, 15, 20, 25])
 	#ax.set_xticks([25, 50, 75, 100, 125])
 
 	# set font and style for violin plot (both top and bottom if existed)
