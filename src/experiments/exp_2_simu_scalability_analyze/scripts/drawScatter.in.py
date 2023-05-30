@@ -38,49 +38,53 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 		datas[idx].append(value)
 		i = i + 1
 
-	'''
-	ax.boxplot(
-	    datas,
-	    boxprops = dict(facecolor=color, color=color),
-	    capprops = dict(color=color),
-	    whiskerprops = dict(color=color),
-	    flierprops = dict(markerfacecolor=color, markeredgecolor=color, marker='.'),
-	    medianprops = dict(color=color),
-	    patch_artist=True
-	) 
-	'''
-	#violin_return = ax.violinplot(datas, showmeans=True)
-	violin_return = ax.violinplot(datas, positions=positions, widths=3, showmeans=True)
-	violin_returns = [violin_return]
+	boxplot = False 
+	boxplot = True 
+	if boxplot == True :
+		box_return = ax.boxplot(
+		    datas,
+		    boxprops = dict(facecolor=color, color=color),
+		    capprops = dict(color=color),
+		    whiskerprops = dict(color=color),
+		    flierprops = dict(markerfacecolor=color, markeredgecolor=color, marker='.'),
+		    medianprops = dict(color=color),
+		    patch_artist=True
+		) 
+		return box_return
+	else :
+		#violin_return = ax.violinplot(datas, showmeans=True)
+		violin_return = ax.violinplot(datas, positions=positions, widths=3, showmeans=True)
+		violin_returns = [violin_return]
 
-	#ax.set_xticks([5, 10, 15, 20, 25],[25, 50, 75, 100, 125])
-	#ax.set_xticks([5, 10, 15, 20, 25])
-	#ax.set_xticks([25, 50, 75, 100, 125])
+		#ax.set_xticks([5, 10, 15, 20, 25],[25, 50, 75, 100, 125])
+		#ax.set_xticks([5, 10, 15, 20, 25])
+		#ax.set_xticks([25, 50, 75, 100, 125])
 
-	# set font and style for violin plot (both top and bottom if existed)
-	for violin in violin_returns :
-		for line in [violin['cbars'], violin['cmins'], violin['cmeans'], violin['cmaxes']] :
-			line.set_linewidth(0.8) # used to be 1.5
-		for line in [violin['cbars'], violin['cmins'], violin['cmaxes']] :
-			line.set_facecolor('grey')
-			line.set_edgecolor('grey')
-		for line in [violin['cmeans']] :
-			line.set_facecolor(color)
-			line.set_edgecolor(color)
-		for pc in violin['bodies']:
-			pc.set_facecolor(color)
-			pc.set_edgecolor(color)
+		# set font and style for violin plot (both top and bottom if existed)
+		for violin in violin_returns :
+			for line in [violin['cbars'], violin['cmins'], violin['cmeans'], violin['cmaxes']] :
+				line.set_linewidth(0.8) # used to be 1.5
+			for line in [violin['cbars'], violin['cmins'], violin['cmaxes']] :
+				line.set_facecolor('grey')
+				line.set_edgecolor('grey')
+			for line in [violin['cmeans']] :
+				line.set_facecolor(color)
+				line.set_edgecolor(color)
+			for pc in violin['bodies']:
+				pc.set_facecolor(color)
+				pc.set_edgecolor(color)
 	
-	return violin_return
+		return violin_return
 
 #----------------------------------------------------------------------------------
 #folder = "@CMAKE_CURRENT_SOURCE_DIR@/../data"
 #folder = "/home/harry/code/mns2.0/build/threads_finish"
 #folder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
-folder = "@CMAKE_BINARY_DIR@/data_simu_scalability_analyze_1-450"
+#folder = "@CMAKE_BINARY_DIR@/data_simu_scalability_analyze_1-450"
 
-folders = ["/Volumes/Seagate/tmp/data_simu_1",
-           "/Users/harry/Desktop/mns2.0-SR/build/data_simu_zip_tmp"
+folders = ["/media/harry/Expansion/Storage/scalability_data/data_simu_1-750",
+           "/media/harry/Expansion/Storage/scalability_data/data_simu_751-999",
+           "/media/harry/Expansion/Storage/scalability_data/data_simu_1000-1299",
           ]
 
 fig, axs = plt.subplots(2, 2)
@@ -103,7 +107,7 @@ for folder in folders :
 		comms.append(comm)
 
 		if comm > 650 :
-			print(">650: ", subfolder)
+			print("communication amount > 650: ", subfolder)
 
  # boxplot data
 boxplot_25_scales(comm_ax, scales, comms)
@@ -126,10 +130,11 @@ for folder in folders :
 		times.append(time)
 
 		if time > 0.6 :
-			print(">0.6: ", subfolder)
+			print("calculation cost > 0.6: ", subfolder)
 
 boxplot_25_scales(time_ax, scales, times)
-time_ax.set_ylim([0, 1.5])
+#time_ax.set_ylim([0, 1.5])
+time_ax.set_ylim([0, 2.0])
 #time_ax.set_title("calculation cost per step (s)")
 
 time_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
@@ -148,8 +153,12 @@ for folder in folders :
 		scale, error, smoothed_error, converge, recruit = readFormationData(subfolder + "result_formation_data.txt")
 		scales.append(scale)
 		errors.append(error)
-		if error > 0.12 :
-			print(">0.12: ", subfolder)
+		if smoothed_error > 0.12 :
+			print("smoothed error > 0.12: ", subfolder)
+
+		if recruit / 5 > 100 :
+			print("recruit > 100: ", subfolder)
+
 		smoothed_errors.append(smoothed_error)
 		converges.append(converge / 5)
 		recruits.append(recruit / 5)
@@ -170,7 +179,8 @@ error_ax.tick_params(axis='y', labelsize=fontsize)
 # converge time and recruit time
 handle1 = boxplot_25_scales(converge_ax, scales, converges)
 handle2 = boxplot_25_scales(converge_ax, scales, recruits, 'red')
-converge_ax.set_ylim([0, 600])
+#converge_ax.set_ylim([0, 600])
+converge_ax.set_ylim([0, 1300])
 #converge_ax.set_title("converge and recruit time")
 
 converge_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
@@ -178,13 +188,22 @@ converge_ax.set_ylabel('Converge time (s)', fontsize=fontsize)
 converge_ax.tick_params(axis='x', labelsize=fontsize)
 converge_ax.tick_params(axis='y', labelsize=fontsize)
 
-converge_ax.legend([handle1['bodies'][0],
-                    handle2['bodies'][1]],
-                   ['formation converge time',
-                    'SoNS establishment time'],
-    loc="upper left",
-    fontsize="xx-small"
-)
+if 'bodies' in handle1 :
+	converge_ax.legend([handle1['bodies'][0],
+	                    handle2['bodies'][1]],
+	                   ['formation converge time',
+	                    'SoNS establishment time'],
+	    loc="upper left",
+	    fontsize="xx-small"
+	)
+else :
+	converge_ax.legend([handle1['boxes'][0],
+	                    handle2['boxes'][1]],
+	                   ['formation converge time',
+	                    'SoNS establishment time'],
+	    loc="upper left",
+	    fontsize="xx-small"
+	)
 
 '''
 axs[1, 2].scatter(scales, recruits, color="red")
