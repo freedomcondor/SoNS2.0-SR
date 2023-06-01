@@ -2,6 +2,8 @@ drawDataFileName = "@CMAKE_SOURCE_DIR@/scripts/drawData.py"
 #execfile(drawDataFileName)
 exec(compile(open(drawDataFileName, "rb").read(), drawDataFileName, 'exec'))
 
+from matplotlib.ticker import FormatStrFormatter
+
 def readCommOrTimeData(fileName) :
 	file = open(fileName,"r")
 	for line in file :
@@ -38,11 +40,13 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 		datas[idx].append(value)
 		i = i + 1
 
-	boxplot = False 
+	#boxplot = False 
 	boxplot = True 
 	if boxplot == True :
 		box_return = ax.boxplot(
 		    datas,
+		    positions=positions,
+		    widths=2.0,
 		    boxprops = dict(facecolor=color, color=color),
 		    capprops = dict(color=color),
 		    whiskerprops = dict(color=color),
@@ -50,13 +54,18 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 		    medianprops = dict(color=color),
 		    patch_artist=True
 		) 
+
+		ax.set_xticks([25, 50, 75, 100, 125, 150, 175, 200, 225])
+		ax.xaxis.set_major_formatter(FormatStrFormatter('%d'))
+		#ax.set_xticklabels(["hi", "hi"])
+
 		return box_return
 	else :
 		#violin_return = ax.violinplot(datas, showmeans=True)
 		violin_return = ax.violinplot(datas, positions=positions, widths=3, showmeans=True)
 		violin_returns = [violin_return]
 
-		#ax.set_xticks([5, 10, 15, 20, 25],[25, 50, 75, 100, 125])
+		ax.set_xticks([5, 10, 15, 20, 25],[25, 50, 75, 100, 125])
 		#ax.set_xticks([5, 10, 15, 20, 25])
 		#ax.set_xticks([25, 50, 75, 100, 125])
 
@@ -87,11 +96,22 @@ folders = ["/media/harry/Expansion/Storage/scalability_data/data_simu_1-750",
            "/media/harry/Expansion/Storage/scalability_data/data_simu_1000-1299",
           ]
 
+'''
 fig, axs = plt.subplots(2, 2)
 comm_ax = axs[0, 0]
 time_ax = axs[0, 1]
 error_ax = axs[1, 0]
 converge_ax = axs[1, 1]
+'''
+fig = plt.figure(constrained_layout=True)
+updown = fig.add_gridspec(2,1)
+up = updown[0].subgridspec(1,2)
+down = updown[1].subgridspec(1,3)
+
+error_ax = fig.add_subplot(up[1])
+comm_ax = fig.add_subplot(down[0])
+time_ax = fig.add_subplot(down[1])
+converge_ax = fig.add_subplot(down[2])
 
 fontsize = 5
 #-------------------------------------------------------------
@@ -168,7 +188,7 @@ for folder in folders :
 #boxplot_25_scales(error_ax, scales, errors)
 #boxplot_25_scales(error_ax, scales, smoothed_errors, "red")
 boxplot_25_scales(error_ax, scales, smoothed_errors)
-error_ax.set_ylim([0, 0.30])
+error_ax.set_ylim([0, 0.50])
 #error_ax.set_title("position errors")
 
 error_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
