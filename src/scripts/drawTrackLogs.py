@@ -1,5 +1,8 @@
 from matplotlib import cm
 from matplotlib.legend_handler import HandlerTuple
+import matplotlib as mpl
+from svgpathtools import svg2paths
+from svgpath2mpl import parse_path
 import math
 
 #from scipy.interpolate import make_interp_spline
@@ -73,6 +76,7 @@ def setAxParameters(ax, option):
 
 def drawTrackLog(option):
 	dataFolder = option['dataFolder']
+	brain_marker_svg_path = option['brain_marker']
 
 	case_name = None
 	for subFolder in getSubfolders(dataFolder) :
@@ -258,7 +262,7 @@ def drawTrackLog(option):
 
 	# draw key frame
 	usualcolor = 'black'
-	braincolor = 'blue'
+	braincolor = 'black'
 	for key_frame in key_frame_robots :
 		for robotID, robotData in key_frame.items() : 
 			robotType = robotID.rstrip(string.digits)
@@ -292,7 +296,8 @@ def drawTrackLog(option):
 
 		#draw brain at last to cover the lines
 		for robotID, robotData in key_frame.items() : 
-			if robotData['brain'] == robotID :
+			if robotData['brain'] == robotID and "color" not in robotData:
+				# draw a star on top to cover the lines
 				robotType = robotID.rstrip(string.digits)
 				marker = 'o'
 				markersize = '3.5'
@@ -305,12 +310,33 @@ def drawTrackLog(option):
 					color = usualcolor
 				if "color" in robotData :
 					color = robotData["color"]
-				ax.plot3D([robotData["position"][0]], 
+
+				# draw a white circle
+				ax.plot3D([robotData["position"][0]],
 				          [robotData["position"][1]],
 				          [robotData["position"][2]],
-				          color = color, 
+				          color = "white",
+				          marker = "o",
+				          markersize=str(float(markersize)*1.6)
+				         )
+				# draw svgs for fancy marker
+				brain_svg_front_path, attributes = svg2paths(brain_marker_svg_path)
+				brain_svg_marker = parse_path(attributes[0]['d'])
+				brain_svg_marker.vertices -= brain_svg_marker.vertices.mean(axis=0)
+				ax.plot3D([robotData["position"][0]],
+				          [robotData["position"][1]],
+				          [robotData["position"][2]],
+				          color = "black",
+				          marker = brain_svg_marker,
+				          markersize=str(float(markersize)*1.4)
+				         )
+
+				ax.plot3D([robotData["position"][0]],
+				          [robotData["position"][1]],
+				          [robotData["position"][2]],
+				          color = "black",
 				          marker = marker,
-				          markersize=markersize
+				          markersize=str(float(markersize)*0.8)
 				         )
 
 	# legend
@@ -328,7 +354,7 @@ def drawTrackLog(option):
 	)
 	legend_handle_brain_drone, = ax.plot([], [],
 	          color = braincolor, 
-	          marker = '*',
+	          marker = brain_svg_marker,
 	          markersize = '7',
 	          linestyle = 'None'
 	)
