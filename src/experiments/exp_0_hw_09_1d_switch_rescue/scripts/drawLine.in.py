@@ -5,7 +5,7 @@ exec(compile(open(drawDataFileName, "rb").read(), drawDataFileName, 'exec'))
 import statistics
 
 #dataFolder = "/Users/harry/Desktop/exp_0_hw_01_formation_1_2d_10p/data_hw/data"
-dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw"
 
 '''
 #-------------------------------------------------------------------------

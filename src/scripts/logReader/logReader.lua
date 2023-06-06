@@ -355,6 +355,8 @@ function logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsD
 end
 
 function logReader.calcSegmentLowerBound(robotsData, geneIndex, parameters, startStep, endStep)
+	logReader.calcSegmentNewLowerBound(robotsData, geneIndex, parameters, startStep, endStep)
+
 	local time_period = parameters.time_period;
 	local default_speed = parameters.default_speed;
 	local slowdown_dis = parameters.slowdown_dis;
@@ -392,6 +394,37 @@ function logReader.calcSegmentLowerBound(robotsData, geneIndex, parameters, star
 	end
 end
 
+function logReader.calcSegmentNewLowerBound(robotsData, geneIndex, parameters, startStep, endStep)
+	local time_period = parameters.time_period;
+	local default_speed = parameters.default_speed;
+	-- fill start and end if not provided
+	if startStep == nil then startStep = 1 end
+	if endStep == nil then
+		local length
+		for robotName, stepTable in pairs(robotsData) do
+			length = #stepTable
+			break
+		end
+		endStep = length
+	end
+
+	for step = startStep, endStep do
+		for robotName, robotData in pairs(robotsData) do
+			if step == startStep then
+				robotData[step].newLowerBoundError = robotData[step].error
+			else
+				local lowerBoundDis = robotData[step-1].newLowerBoundError
+				local speed = default_speed;
+
+				if lowerBoundDis > 0 then
+					lowerBoundDis = lowerBoundDis - time_period * speed;
+				end
+				robotData[step].newLowerBoundError = lowerBoundDis
+			end
+		end
+	end
+end
+
 function logReader.calcSegmentLowerBoundErrorInc(robotsData, geneIndex, startStep, endStep)
 	-- fill start and end if not provided
 	if startStep == nil then startStep = 1 end
@@ -420,6 +453,9 @@ end
 
 function logReader.saveData(robotsData, saveFile, attribute, startStep, endStep)
 	if attribute == nil then attribute = 'error' end
+	if attribute == "lowerBoundError" then
+		logReader.saveData(robotsData, "result_new_lowerbound_data.txt", "newLowerBoundError", startStep, endStep)
+	end
 	-- fill start and end if not provided
 	local startStep = startStep or 1
 	local length

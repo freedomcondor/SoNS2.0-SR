@@ -12,9 +12,9 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data"
 #doubleRight
-dataFolder2 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_hw/data"
+dataFolder2 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_hw/data"
 #sample_run = "test_20220622_success_1"
 #sample_run = "test_20220622_success_2"
 #sample_run = "test_20220622_success_3"
@@ -45,6 +45,7 @@ option = {
 	'boxPlotValue_doubleRight_save'      : "mission2_hw_boxplot2_exp_0_hw_02_obstacle_avoidance_small.dat",
 
 #------------------------------------------------
+	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	'key_frame' :  [0, 400] ,
 
 	'key_frame_parent_index' :  [
@@ -80,10 +81,10 @@ drawSRFig(option)
 drawTrackLog(option)
 
 
-dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_simu/data"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_simu/data"
 sample_run = "run1"
 #doubleRight
-dataFolder2 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_simu/data"
+dataFolder2 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_simu/data"
 
 option = {
 	'dataFolder'             : dataFolder,

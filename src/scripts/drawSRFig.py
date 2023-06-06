@@ -215,10 +215,16 @@ def drawSRFig(option) :
 		# choose a folder
 		if 'sample_run' in option and subFolder != dataFolder + "/" + option['sample_run'] + "/" :
 			continue
-		# draw lowerbound
-		X, sparseLowerbound = sparceDataEveryXSteps(readDataFrom(subFolder + "result_lowerbound_data.txt"), 5)
+		# draw new lowerbound as pink
+		X, sparseLowerbound = sparceDataEveryXSteps(readDataFrom(subFolder + "result_new_lowerbound_data.txt"), 5)
 		#drawDataWithXInSubplot(X, sparseLowerbound, axs[0], 'hotpink')
 		legend_handle_lowerbound, = drawDataInSubplot(sparseLowerbound, main_ax, 'hotpink')
+
+		# draw lowerbound as green
+		X, sparseLowerbound = sparceDataEveryXSteps(readDataFrom(subFolder + "result_lowerbound_data.txt"), 5)
+		#drawDataWithXInSubplot(X, sparseLowerbound, axs[0], 'hotpink')
+		legend_handle_lowerbound, = drawDataInSubplot(sparseLowerbound, main_ax, 'green')
+
 		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
 			robotsData.append(readDataFrom(subFile))
 			#drawDataInSubplot(readDataFrom(subFile), main_ax)

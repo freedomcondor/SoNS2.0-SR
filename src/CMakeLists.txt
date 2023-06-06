@@ -54,6 +54,8 @@ if(ARGOS_QTOPENGL_FOUND)
     my_extensions)
 endif(ARGOS_QTOPENGL_FOUND)
 
+set(CMAKE_MNS_DATA_PATH /media/harry/Expansion/Storage/mns2.0-data)
+
 #create a logs folder for logs
 make_directory(logs)
 #add experiments sub directory

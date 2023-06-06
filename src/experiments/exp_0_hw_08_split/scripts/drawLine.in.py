@@ -12,8 +12,8 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_08_split/data_hw/data"
-dataFolder2 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_hw/data"
+dataFolder2 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw"
 sample_run = "test_20220713_1_success_1"
 #sample_run = "test_20220713_3_success_2"
 #sample_run = "test_20220713_4_success_3"
@@ -40,6 +40,7 @@ option = {
 	'boxPlotValue_save'                  : "mission5_hw_boxplot1_exp_0_hw_08_split.dat",
 	'boxPlotValue_doubleRight_save'      : "mission5_hw_boxplot2_exp_0_hw_09_1d_switch_rescue.dat",
 #------------------------------------------------
+	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	'key_frame' :  [0] ,
 
 	'key_frame_parent_index' :  [
@@ -65,8 +66,8 @@ option = {
 drawSRFig(option)
 drawTrackLog(option)
 
-dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_08_split/data_simu/data"
-dataFolder2 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_simu/data"
+dataFolder2 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data"
 sample_run = "run1"
 
 option = {

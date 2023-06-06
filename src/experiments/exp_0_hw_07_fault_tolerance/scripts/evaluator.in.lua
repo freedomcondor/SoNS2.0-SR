@@ -1,8 +1,7 @@
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/scripts/logReader/?.lua"
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/utils/?.lua"
 --package.path = package.path .. ";@CMAKE_CURRENT_BINARY_DIR@/../simu/?.lua"
-package.path = package.path .. ";@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_6_success_5/hw/?.lua"
---package.path = package.path .. ";/Users/harry/Desktop/exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_6_success_5/hw/?.lua"
+package.path = package.path .. ";@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_6_success_5/hw/?.lua"
 
 logger = require("Logger")
 logReader = require("logReader")
