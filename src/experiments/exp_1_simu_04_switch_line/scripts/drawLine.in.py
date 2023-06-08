@@ -13,10 +13,10 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 option = {
-	'dataFolder' : "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_1_simu_04_switch_line/data_simu/data",
+	'dataFolder' : "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_1_simu_04_switch_line/data_simu/data",
 	'sample_run'             : "run1",
-	'SRFig_save'             : "exp_1_simu_04_switch_line_SRFig.pdf",
-	'trackLog_save'          : "exp_1_simu_04_switch_line_trackLog.pdf",
+	'SRFig_save'             : "mission3_simu10d_exp_1_simu_04_switch_line_SRFig.pdf",
+	'trackLog_save'          : "mission3_simu10d_exp_1_simu_04_switch_line_trackLog.pdf",
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
@@ -26,10 +26,11 @@ option = {
 	'violin_ax_top_lim'      : [9.5, 10],
 
 #------------------------------------------------
+	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	#'key_frame' :  [0, 300, 2000] ,  # option 1
 	'key_frame' :  [0, 500] ,
 	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_1_simu_04_switch_line/data_simu/track_fig_logs"
+		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_1_simu_04_switch_line/data_simu/track_fig_logs"
 	,
 
 	'legend_obstacle'  : True,

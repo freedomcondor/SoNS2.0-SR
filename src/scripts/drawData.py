@@ -10,6 +10,14 @@ def readDataFrom(fileName) :
 	file.close()
 	return data
 
+def readStrDataFrom(fileName) :
+	file = open(fileName,"r")
+	data = []
+	for line in file :
+		data.append(line.rstrip())
+	file.close()
+	return data
+
 def drawData(data, color = None) :
 	if color == None:
 		return plt.plot(data)

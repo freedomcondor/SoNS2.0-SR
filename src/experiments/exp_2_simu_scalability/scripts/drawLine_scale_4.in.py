@@ -13,10 +13,10 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 option = {
-	'dataFolder' : "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_2_simu_scalability/data_simu_scale_4/data",
+	'dataFolder' : "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_4/data",
 	'sample_run'             : "run1",
-	'SRFig_save'             : "exp_2_simu_scalability_scale4_SRFig.pdf",
-	'trackLog_save'          : "exp_2_simu_scalability_scale4_trackLog.pdf",
+	'SRFig_save'             : "scalability_simu25d_exp_2_simu_scalability_scale4_SRFig.pdf",
+	'trackLog_save'          : "scalability_simu25d_exp_2_simu_scalability_scale4_trackLog.pdf",
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
@@ -26,10 +26,11 @@ option = {
 	'violin_ax_top_lim'      : [17.5, 19.5],
 
 #------------------------------------------------
+	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	#'key_frame' :  [0, 300, 2000] ,  # option 1
 	'key_frame' :  [0, 1200] ,
 	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_2_simu_scalability/track_fig_logs_scale_4"
+		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/track_fig_logs_scale_4"
 	,
 
 	'figsize'          : [10, 10],

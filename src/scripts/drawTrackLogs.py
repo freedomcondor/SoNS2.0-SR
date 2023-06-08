@@ -15,8 +15,12 @@ def setAxParameters(ax, option):
 	ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
 	ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
 
-	ax.set_xlabel("x distance(m)")
-	ax.set_ylabel("y distance(m)", rotation=45)
+	plt.rcParams["font.family"] = "Arial"
+	label_font = "Arial Black"
+	ax.set_xlabel("$x$ distance (m)", fontname=label_font)
+	#ax.set_ylabel("$y$ distance (m)", rotation=0)
+	ax.yaxis.set_rotate_label(False) # disable automatic rotation
+	ax.set_ylabel("$y$ distance (m)", fontname=label_font, rotation=90)
 	#ax.set_zlabel("z")
 	ax.set_xlim(option['x_lim'])
 	ax.set_ylim(option['y_lim'])
@@ -240,7 +244,6 @@ def drawTrackLog(option):
 
 
 		#ax.plot3D(X_smooth[i-interval], Y_smooth[i-interval], Z_smooth[i-interval], color = 'black', marker = 'o')
-	#print(key_frame_robots)
 
 	# draw obstacles
 	color = 'red'
@@ -261,20 +264,48 @@ def drawTrackLog(option):
 		          color = color, linewidth='0.5', markersize='2.5', marker = 'v')
 
 	# draw key frame
+	# first check failed step and failed robots
+	print("checking failed robots from : " + input_file + "/../failure_robots.txt")
+	failed_robot_flag = False
+	failed_robots = []
+	failed_step = None
+	if os.path.isfile(input_file + "/../failure_robots.txt") :
+		print("failure_robots.txt exists")
+		failed_robots = readStrDataFrom(input_file + "/../failure_robots.txt")
+		failed_robot_flag = True
+	else:
+		print("failure_robots.txt doesn't exist")
+
+	if os.path.isfile(input_file + "/../failure_step.txt") :
+		failed_step = readDataFrom(input_file + "/../failure_step.txt")[0]
+
+	print("failed at", failed_step, "failed_robots = ", failed_robots)
+
+	# start to draw
 	usualcolor = 'black'
-	braincolor = 'black'
+	failedcolor = 'blue'
+	key_frame_i = 0
+	key_frame_origin = key_frame
 	for key_frame in key_frame_robots :
+		step_number = key_frame_origin[key_frame_i]
+		print("drawing keyframe " + str(key_frame_i) + " at step " + str(step_number))
+		key_frame_i = key_frame_i + 1
+
 		for robotID, robotData in key_frame.items() : 
+			# draw regular robots
 			robotType = robotID.rstrip(string.digits)
 			marker = 'o'
 			markersize = '3.5'
 			if robotType == "drone" :
 				marker = '*'
 				markersize = '7'
-			if robotData["brain"] == robotID :
-				color = braincolor
-			else :
-				color = usualcolor
+			color = usualcolor
+
+			# draw failed robots
+			if robotID in failed_robots and step_number >= failed_step:
+				color = failedcolor
+
+			# draw colored robots (for first step)
 			if "color" in robotData :
 				color = robotData["color"]
 			# draw dot
@@ -294,50 +325,53 @@ def drawTrackLog(option):
 				          linewidth="1.2",
 				          color = color)
 
-		#draw brain at last to cover the lines
-		for robotID, robotData in key_frame.items() : 
-			if robotData['brain'] == robotID and "color" not in robotData:
-				# draw a star on top to cover the lines
-				robotType = robotID.rstrip(string.digits)
-				marker = 'o'
-				markersize = '3.5'
-				if robotType == "drone" :
-					marker = '*'
-					markersize = '7'
-				if robotData["brain"] == robotID :
-					color = braincolor
-				else :
-					color = usualcolor
-				if "color" in robotData :
-					color = robotData["color"]
+	#draw brain at last to cover the lines and overlapping robots
+	key_frame_i = 0
+	for key_frame in key_frame_robots :
+		step_number = key_frame_origin[key_frame_i]
+		print("drawing keyframe " + str(key_frame_i) + " at step " + str(step_number))
+		key_frame_i = key_frame_i + 1
 
-				# draw a white circle
-				ax.plot3D([robotData["position"][0]],
-				          [robotData["position"][1]],
-				          [robotData["position"][2]],
-				          color = "white",
-				          marker = "o",
-				          markersize=str(float(markersize)*1.6)
-				         )
-				# draw svgs for fancy marker
+		for robotID, robotData in key_frame.items() : 
+			if robotData['brain'] == robotID and \
+			   not (robotID in failed_robots and step_number >= failed_step) and \
+			   "color" not in robotData: # color not in robotData means not the first frame
+				# check if it is a true brain (not failed robot)
+				true_brain_flag = False
+				for j_robotID, j_robotData in key_frame.items() : 
+					if j_robotData["parent"] == robotID :
+						true_brain_flag = True 
+						break
+					
 				brain_svg_front_path, attributes = svg2paths(brain_marker_svg_path)
 				brain_svg_marker = parse_path(attributes[0]['d'])
 				brain_svg_marker.vertices -= brain_svg_marker.vertices.mean(axis=0)
-				ax.plot3D([robotData["position"][0]],
-				          [robotData["position"][1]],
-				          [robotData["position"][2]],
-				          color = "black",
-				          marker = brain_svg_marker,
-				          markersize=str(float(markersize)*1.4)
-				         )
 
-				ax.plot3D([robotData["position"][0]],
-				          [robotData["position"][1]],
-				          [robotData["position"][2]],
-				          color = "black",
-				          marker = marker,
-				          markersize=str(float(markersize)*0.8)
-				         )
+				if true_brain_flag == True :
+					# draw a white circle
+					ax.plot3D([robotData["position"][0]],
+					          [robotData["position"][1]],
+					          [robotData["position"][2]],
+					          color = "white",
+					          marker = "o",
+					          markersize=str(float(markersize)*1.6)
+					         )
+					# draw svgs for fancy marker
+					ax.plot3D([robotData["position"][0]],
+					          [robotData["position"][1]],
+					          [robotData["position"][2]],
+					          color = "black",
+					          marker = brain_svg_marker,
+					          markersize=str(float(markersize)*1.4)
+					         )
+
+					ax.plot3D([robotData["position"][0]],
+					          [robotData["position"][1]],
+					          [robotData["position"][2]],
+					          color = "black",
+					          marker = marker,
+					          markersize=str(float(markersize)*0.8)
+					         )
 
 	# legend
 	legend_handle_usual_robot, = ax.plot([], [],
@@ -353,9 +387,9 @@ def drawTrackLog(option):
 	          linestyle = 'None'
 	)
 	legend_handle_brain_drone, = ax.plot([], [],
-	          color = braincolor, 
+	          color = "black", 
 	          marker = brain_svg_marker,
-	          markersize = '7',
+	          markersize = '9',
 	          linestyle = 'None'
 	)
 	legend_handles = [legend_handle_brain_drone,
@@ -367,7 +401,9 @@ def drawTrackLog(option):
 	          'ground robots',
 	         ]
 
-	legend_position = (0.815, 0.75)
+	legend_position = (0.815, 0.75) # position for xx-small
+	#legend_position = (0.815, 0.74) # position for small
+	#legend_position = (0.815, 0.73) # position for small
 	legend_col = 1
 
 	if 'legend_obstacle' in option and option['legend_obstacle'] :
@@ -391,6 +427,26 @@ def drawTrackLog(option):
 
 		#legend_position = (0.815, 0.73)  # col = 2 and position doesn't need to change
 		legend_col = 2
+	
+	if failed_robot_flag == True :
+		legend_handle_failed_robot, = ax.plot([], [],
+		          color = failedcolor, 
+		          marker = 'o',
+		          markersize = '3.5',
+		          linestyle = 'None'
+		)
+		legend_handle_failed_drone, = ax.plot([], [],
+		          color = failedcolor, 
+		          marker = '*',
+		          markersize = '7',
+		          linestyle = 'None'
+		)
+		legend_handles.append((legend_handle_failed_robot, legend_handle_failed_drone))
+		labels.append('failed robot')
+
+		if not ('legend_obstacle' in option and option['legend_obstacle']) :
+			# then we have 4 rows
+			legend_position = (0.815, 0.74) # position for xx-small
 	
 	ax.legend(
 	    legend_handles, 

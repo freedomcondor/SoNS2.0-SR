@@ -280,6 +280,26 @@ function logReader.markFailedRobot(robotsData, endStep)
 	end
 end
 
+function logReader.saveFailedRobot(robotsData, saveFile)
+	-- fill start and end if not provided
+	local startStep = startStep or 1
+	local length
+	for robotName, stepTable in pairs(robotsData) do
+		length = #stepTable
+		break
+	end
+	local endStep = endStep or length
+
+	local f = io.open(saveFile, "w")
+	for robotName, robotData in pairs(robotsData) do
+		if robotData[endStep].failed == true then
+			f:write(robotName .."\n")
+		end
+	end
+	io.close(f)
+	print("save failed robot finish")
+end
+
 function logReader.calcSegmentData(robotsData, geneIndex, startStep, endStep)
 	logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsData, geneIndex, false, true, startStep, endStep)
 end

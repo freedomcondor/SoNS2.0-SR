@@ -84,7 +84,7 @@ option = {
 	'SRFig_show'             : False,
 	'boxPlotValue_save'      : "mission1_simu_boxplot1_exp_0_hw_01_formation_1_2d_10p.dat",
 
-	'main_ax_lim'            : [-0.2, 2],
+	'main_ax_lim'            : [-0.2, 3.2],
 
 	'split_right'            : True,
 	#'violin_ax_top_lim'      : [5.75, 6],

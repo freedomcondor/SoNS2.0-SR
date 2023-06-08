@@ -12,14 +12,14 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_02_fault_tolerance_33/data_simu/data"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_02_fault_tolerance_33/data_simu/data"
 sample_run = "run1"
 
 option = {
 	'dataFolder'             : dataFolder,
 	'sample_run'             : sample_run,
-	'SRFig_save'             : "exp_3_simu_02_fault_tolerance_33_SRFig.pdf",
-	'trackLog_save'          : "exp_3_simu_02_fault_tolerance_33_trackLog.pdf",
+	'SRFig_save'             : "mission7_33_failure_exp_3_simu_02_fault_tolerance_33_SRFig.pdf",
+	'trackLog_save'          : "mission7_33_failure_exp_3_simu_02_fault_tolerance_33_trackLog.pdf",
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
@@ -31,11 +31,12 @@ option = {
 	'failure_place_holder'   : 0,
 
 #------------------------------------------------
+	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	#'key_frame' :  [0, 250, 950] ,
 	'key_frame' :  [0, 500] ,
 
 	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_02_fault_tolerance_33/track_fig_logs/logs"
+		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_02_fault_tolerance_33/track_fig_logs/logs"
 	,
 
 	'legend_obstacle'  : True,

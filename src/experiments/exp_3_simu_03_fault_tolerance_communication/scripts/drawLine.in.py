@@ -12,21 +12,21 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
 sample_run = "run1"
 
-dataFolder1 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_0.5s/data"
-dataFolder2 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_1s/data"
-dataFolder3 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
+dataFolder1 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_0.5s/data"
+dataFolder2 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_1s/data"
+dataFolder3 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
 
 #dataFolder1 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
 
 option = {
 	'dataFolder'             : dataFolder,
 	'sample_run'             : sample_run,
-	'SRFig_save'             : "exp_3_simu_03_fault_tolerance_communication_SRFig.pdf",
-	'trackLog_save'          : "exp_3_simu_03_fault_tolerance_communication_trackLog.pdf",
-	'SRFig_show'             : True,
+	'SRFig_save'             : "mission7_comm_failure_exp_3_simu_03_fault_tolerance_communication_SRFig.pdf",
+	'trackLog_save'          : "mission7_comm_failure_exp_3_simu_03_fault_tolerance_communication_trackLog.pdf",
+	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
 	'main_ax_lim'            : [-0.5, 7],
@@ -48,7 +48,7 @@ option = {
 	'key_frame' :  [0, 500] ,
 
 	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_03_fault_tolerance_communication/track_fig_logs/logs"
+		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/track_fig_logs/logs"
 	,
 
 	'legend_obstacle'  : True,

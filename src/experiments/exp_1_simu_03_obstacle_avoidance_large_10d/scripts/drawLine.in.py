@@ -26,6 +26,7 @@ option = {
 	'violin_ax_top_lim'      : [5.06, 5.4],
 
 #------------------------------------------------
+	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	'key_frame' :  [0, 800] ,
 	'overwrite_trackFig_log_foler' : 
 		"@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_1_simu_03_obstacle_avoidance_large_10d/data_simu/track_fig_logs"

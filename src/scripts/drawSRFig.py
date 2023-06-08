@@ -17,12 +17,22 @@ def drawSRFig(option) :
 	violin3_ax = None
 	violin3_ax_top = None
 
+	hspace = 0.05
+	wspace = 0.3
+	main_ratio_x_component = 7
+	main_ratio_y_component = 4
+
+	height_ratios = [1, 8]
+	if 'height_ratios' in option :
+		height_ratios = option['height_ratios']
+	top_ratio_y_scalar = (height_ratios[0] + height_ratios[1]) / height_ratios[1]
+	
 	if ('split_right'  not in option or option['split_right']  != True) and \
 	   ('double_right' not in option or option['double_right'] != True) and \
 	   ('triple_right' not in option or option['triple_right'] != True) :
 		# 2 subfigures
-		fig, axs = plt.subplots(1, 2, gridspec_kw={'width_ratios': [5, 1]})
-		fig.subplots_adjust(hspace=0.05)  # adjust space between axes
+		fig, axs = plt.subplots(1, 2, gridspec_kw={'width_ratios': [main_ratio_x_component, 1]}, figsize=(main_ratio_x_component+1, main_ratio_y_component))
+		fig.subplots_adjust(hspace=hspace, wspace=wspace)  # adjust space between axes
 
 		main_ax = axs[0]
 		violin_ax = axs[1]
@@ -30,8 +40,8 @@ def drawSRFig(option) :
 	elif ('split_right'  not in option or  option['split_right']  != True) and \
 	     ('double_right'     in option and option['double_right'] == True) :
 		# 3 subfigures
-		fig, axs = plt.subplots(1, 3, gridspec_kw={'width_ratios': [5, 1, 1]})
-		fig.subplots_adjust(hspace=0.05)  # adjust space between axes
+		fig, axs = plt.subplots(1, 3, gridspec_kw={'width_ratios': [main_ratio_x_component, 1, 1]}, figsize=(main_ratio_x_component+2, main_ratio_y_component))
+		fig.subplots_adjust(hspace=hspace, wspace=wspace)  # adjust space between axes
 
 		main_ax = axs[0]
 		violin_ax = axs[1]
@@ -40,8 +50,8 @@ def drawSRFig(option) :
 	elif ('split_right'  not in option or  option['split_right']  != True) and \
 	     ('triple_right'     in option and option['triple_right'] == True) :
 		# 4 subfigures
-		fig, axs = plt.subplots(1, 4, gridspec_kw={'width_ratios': [5, 1, 1, 1]})
-		fig.subplots_adjust(hspace=0.05)  # adjust space between axes
+		fig, axs = plt.subplots(1, 4, gridspec_kw={'width_ratios': [main_ratio_x_component, 1, 1, 1]}, figsize=(main_ratio_x_component+3, main_ratio_y_component))
+		fig.subplots_adjust(hspace=hspace, wspace=wspace)  # adjust space between axes
 
 		main_ax = axs[0]
 		violin_ax = axs[1]
@@ -52,12 +62,10 @@ def drawSRFig(option) :
 	     ('double_right' not in option or  option['double_right'] != True) and \
 	     ('triple_right' not in option or  option['triple_right'] != True) :
 		# 4 subfigures
-		height_ratios = [1, 8]
-		if 'height_ratios' in option :
-			height_ratios = option['height_ratios']
 
-		fig, axs = plt.subplots(2, 2, gridspec_kw={'width_ratios': [5, 1], 'height_ratios': height_ratios})
-		fig.subplots_adjust(hspace=0.05)  # adjust space between axes
+
+		fig, axs = plt.subplots(2, 2, gridspec_kw={'width_ratios': [main_ratio_x_component, 1], 'height_ratios': height_ratios}, figsize=(main_ratio_x_component+1, main_ratio_y_component*top_ratio_y_scalar))
+		fig.subplots_adjust(hspace=hspace, wspace=wspace)  # adjust space between axes
 
 		axs[0,0].axis('off')
 		main_ax = axs[1,0]
@@ -71,8 +79,8 @@ def drawSRFig(option) :
 		if 'height_ratios' in option :
 			height_ratios = option['height_ratios']
 
-		fig, axs = plt.subplots(2, 3, gridspec_kw={'width_ratios': [5, 1, 1], 'height_ratios': height_ratios})
-		fig.subplots_adjust(hspace=0.05)  # adjust space between axes
+		fig, axs = plt.subplots(2, 3, gridspec_kw={'width_ratios': [main_ratio_x_component, 1, 1], 'height_ratios': height_ratios}, figsize=(main_ratio_x_component+2, main_ratio_y_component*top_ratio_y_scalar))
+		fig.subplots_adjust(hspace=hspace, wspace=wspace)  # adjust space between axes
 
 		axs[0,0].axis('off')
 		main_ax = axs[1,0]
@@ -89,8 +97,8 @@ def drawSRFig(option) :
 		if 'height_ratios' in option :
 			height_ratios = option['height_ratios']
 
-		fig, axs = plt.subplots(2, 4, gridspec_kw={'width_ratios': [5, 1, 1, 1], 'height_ratios': height_ratios})
-		fig.subplots_adjust(hspace=0.05)  # adjust space between axes
+		fig, axs = plt.subplots(2, 4, gridspec_kw={'width_ratios': [main_ratio_x_component, 1, 1, 1], 'height_ratios': height_ratios}, figsize=(main_ratio_x_component+3, main_ratio_y_component*top_ratio_y_scalar))
+		fig.subplots_adjust(hspace=hspace, wspace=wspace)  # adjust space between axes
 
 		axs[0,0].axis('off')
 		main_ax = axs[1,0]
@@ -162,15 +170,27 @@ def drawSRFig(option) :
 	if violin3_ax != None:
 		violin3_ax.set_ylim(option['main_ax_lim'])
 
-	main_ax.set_xlabel('Time(s)')
-	main_ax.set_ylabel('Error(m)')
-
+	plt.rcParams["font.family"] = "Arial"
+	label_font = "Arial Black"
+	main_ax.set_xlabel('Time (s)', fontname=label_font, )
+	main_ax.set_ylabel('Error $E$ (m)', fontname=label_font)
+	# rotate ticks
+	main_ax.set_yticklabels(main_ax.get_yticks(), rotation = 45)
+	# set ticks size
+	tick_label_size = 8
+	main_ax.yaxis.set_tick_params(labelsize=tick_label_size)
+	main_ax.xaxis.set_tick_params(labelsize=tick_label_size)
+	# set digits after .
 	main_ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 	# set right x lim and tick
 	if violin_ax != None :
+		violin_ax.set_ylabel('Error $E$ (m)', fontname=label_font)
 		violin_ax.set_xlim([0.7, 1.3])
 		violin_ax.set_xticks([])
-		violin_ax.set_yticks([])
+		#violin_ax.set_yticks([])
+		violin_ax.set_yticklabels(main_ax.get_yticks(), rotation = 45)
+		violin_ax.yaxis.set_tick_params(labelsize=tick_label_size)
+		violin_ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 	if violin2_ax != None :
 		violin2_ax.set_xlim([0.7, 1.3])
 		violin2_ax.set_xticks([])
@@ -183,7 +203,9 @@ def drawSRFig(option) :
 		violin_ax_top.set_xlim([0.7, 1.3])
 		violin_ax_top.set_xticks([])
 		violin_ax_top.set_yticks([])
-		violin_ax_top.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+		#violin_ax_top.set_yticklabels(violin_ax_top.get_yticks(), rotation = 45) # do this later after setmaxvalue
+		violin_ax_top.yaxis.set_tick_params(labelsize=tick_label_size)
+		#violin_ax_top.yaxis.set_major_formatter(FormatStrFormatter('%.2f')) # do this later after set maxvalue
 	if violin2_ax_top != None :
 		violin2_ax_top.set_xlim([0.7, 1.3])
 		violin2_ax_top.set_xticks([])
@@ -220,16 +242,19 @@ def drawSRFig(option) :
 		#drawDataWithXInSubplot(X, sparseLowerbound, axs[0], 'hotpink')
 		legend_handle_lowerbound, = drawDataInSubplot(sparseLowerbound, main_ax, 'hotpink')
 
-		# draw lowerbound as green
+		'''
+		# draw old lowerbound as green
 		X, sparseLowerbound = sparceDataEveryXSteps(readDataFrom(subFolder + "result_lowerbound_data.txt"), 5)
 		#drawDataWithXInSubplot(X, sparseLowerbound, axs[0], 'hotpink')
 		legend_handle_lowerbound, = drawDataInSubplot(sparseLowerbound, main_ax, 'green')
+		'''
 
 		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
 			robotsData.append(readDataFrom(subFile))
 			#drawDataInSubplot(readDataFrom(subFile), main_ax)
 
 		# check switch time
+		legend_handle_black_line = None
 		if os.path.isfile(subFolder + "formationSwitch.txt") :
 			switchSteps = readDataFrom(subFolder + "formationSwitch.txt")
 			switchTime = []
@@ -238,15 +263,16 @@ def drawSRFig(option) :
 
 			# draw vertical line for switch
 			for data in switchTime :
-				main_ax.axvline(x = data, color="black", linestyle=":")
+				legend_handle_black_line = main_ax.axvline(x = data, color="black", linestyle=":")
 		
 		# check failure time
+		legend_handle_red_line = None
 		if os.path.isfile(subFolder + "failure_step.txt") :
 			failure_step = readDataFrom(subFolder + "failure_step.txt")[0]
 			if os.path.isfile(subFolder + "saveStartStep.txt") :
 				failure_step = failure_step - readDataFrom(subFolder + "saveStartStep.txt")[0] + 1
 			failure_time = failure_step / 5
-			main_ax.axvline(x = failure_time, color="red", linestyle=":")
+			legend_handle_red_line = main_ax.axvline(x = failure_time, color="red", linestyle=":")
 
 		break
 
@@ -323,16 +349,30 @@ def drawSRFig(option) :
 	legend_handle_lowerupper = main_ax.fill_between(
 	    #positions, lower, upper, color='b', alpha=.30)
 	    X, lower, upper, color='b', alpha=.30)
-	main_ax.legend([legend_handle_mean,
-	                legend_handle_lowerupper,
-	                legend_handle_minmax,
-	                legend_handle_lowerbound], 
-	               ['mean',
-	                '95% confidence interval',
-	                '99.999% confidence interval',
-	                'lowerbound'],
+
+	legend_handles = [legend_handle_mean,
+	                  legend_handle_lowerupper,
+	                  legend_handle_minmax,
+	                  legend_handle_lowerbound]
+	legend_labels = ['mean',
+	                 '95% CI',
+	                 '99.999% CI',
+	                 'lower bound $B$']
+	legend_columns = 1
+	if legend_handle_black_line != None : 
+		legend_handles.append(legend_handle_black_line)
+		legend_labels.append('SoNS target change')
+		legend_columns = 2
+	if legend_handle_red_line != None : 
+		legend_handles.append(legend_handle_red_line)
+		legend_labels.append('robots failure')
+
+	main_ax.legend(legend_handles, 
+	               legend_labels,
 	    loc="upper right",
-	    fontsize="xx-small"
+	    #fontsize="xx-small",
+	    fontsize="small",
+		ncol=legend_columns
 	)
 
 	#-------------------------------------------------------------------------
@@ -429,6 +469,8 @@ def drawSRFig(option) :
 		maxvalue = max(boxdata)
 		max_values.append(maxvalue)
 		violin_ax_top.yaxis.set_ticks(max_values)
+		violin_ax_top.set_yticklabels(violin_ax_top.get_yticks(), rotation = 45)
+		violin_ax_top.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 
 	#-------------------------------------------------------------------------
 	# save or show plot

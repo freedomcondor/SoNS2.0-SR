@@ -107,3 +107,6 @@ logReader.saveEachRobotDataWithFailurePlaceHolder(robotsData, "result_each_robot
 
 logReader.saveData(robotsData, "result_lowerbound_data.txt", "lowerBoundError", saveStartStep)
 logReader.saveData(robotsData, "result_lowerbound_inc_data.txt", "lowerBoundInc", saveStartStep)
+
+logReader.markFailedRobot(robotsData, logReader.getEndStep(robotsData))
+logReader.saveFailedRobot(robotsData, "failure_robots.txt")

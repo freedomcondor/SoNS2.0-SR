@@ -13,7 +13,7 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 option = {
-	'dataFolder' : "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_1_simu_08_split/data_simu/data",
+	'dataFolder' : "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_1_simu_08_split/data_simu/data",
 	'sample_run'             : "run1",
 	'SRFig_save'             : "exp_1_simu_08_split_SRFig.pdf",
 	'trackLog_save'          : "exp_1_simu_08_split_trackLog.pdf",
@@ -26,6 +26,7 @@ option = {
 	'violin_ax_top_lim'      : [4.2, 4.4],
 
 #------------------------------------------------
+	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	'key_frame' :  [0] ,
 #	'overwrite_trackFig_log_foler' : 
 #		"@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_1_simu_08_split/data_simu/track_fig_logs"
