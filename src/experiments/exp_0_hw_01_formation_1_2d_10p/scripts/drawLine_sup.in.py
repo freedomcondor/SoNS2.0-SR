@@ -168,8 +168,12 @@ for sample_run in sampleList :
 	track_option = track_option_base.copy()
 	track_option['sample_run'] = sample_run
 	track_option['trackLog_save'] = savePDFNameBase + sample_run + ".pdf"
-	track_option['key_frame'] = key_frame_list[sample_run]
-	track_option['key_frame_parent_index'] = key_frame_parent_index_list[sample_run]
+	if sample_run in key_frame_list:
+		track_option['key_frame'] = key_frame_list[sample_run]
+	else :
+		track_option['key_frame'] = key_frame_example
+	if sample_run in key_frame_parent_index_list :
+		track_option['key_frame_parent_index'] = key_frame_parent_index_list[sample_run]
 
 	if sample_run in x_lim_list :
 		track_option['x_lim'] = x_lim_list[sample_run]
