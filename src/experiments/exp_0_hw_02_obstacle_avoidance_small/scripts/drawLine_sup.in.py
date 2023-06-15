@@ -13,7 +13,7 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_hw/data"
-savePDFNameBase = "sup_test_exp01_"
+savePDFNameBase = "sup_test"
 sampleList = [
 	"test_20220621_6_success_1",
 	"test_20220621_7_success_2",
@@ -35,8 +35,6 @@ track_option_base = {
 	'x_lim'             :    [-1.5, 3.5],
 	'y_lim'             :    [-2.5, 2.5],
 	'z_lim'             :    [-1.0, 3.0],
-
-	'showRobotName'     : False,
 }
 
 #----------------------------------
@@ -167,7 +165,7 @@ x_lim_list["test_20220621_6_success_1"] = [-2, 3]
 for sample_run in sampleList :
 	track_option = track_option_base.copy()
 	track_option['sample_run'] = sample_run
-	track_option['trackLog_save'] = savePDFNameBase + sample_run + ".pdf"
+	track_option['trackLog_save'] = "sup_test_" + sample_run + ".pdf"
 	track_option['key_frame'] = key_frame_list[sample_run]
 	track_option['key_frame_parent_index'] = key_frame_parent_index_list[sample_run]
 

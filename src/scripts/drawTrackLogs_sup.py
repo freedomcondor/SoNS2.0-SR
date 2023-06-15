@@ -337,6 +337,15 @@ def drawTrackLog(option):
 			          marker = marker,
 			          markersize=markersize
 			         )
+
+			if "color" not in robotData and 'showRobotName' in option and option['showRobotName'] == True:
+				ax.text(robotData["position"][0],
+				        robotData["position"][1],
+				        robotData["position"][2],
+				        robotID,
+				        size=4,
+						color="red"
+				)
 			# draw parent line
 			if robotData["parent"] != "nil" :
 				parentData = key_frame[robotData["parent"]]
