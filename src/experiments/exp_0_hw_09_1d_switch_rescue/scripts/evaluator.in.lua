@@ -24,8 +24,7 @@ local gene = {
 
 local geneIndex = logReader.calcMorphID(gene)
 
---local robotsData = logReader.loadData("./logs")  -- for simulation
-local robotsData = logReader.loadData("./logs_pkl")  -- for hardware
+local robotsData = logReader.loadData("./logs")
 
 local stage2Step = logReader.checkIDFirstAppearStep(robotsData, structure2.idN, nil)
 local stage3Step = logReader.checkIDFirstAppearStep(robotsData, structure3.idN, nil)
