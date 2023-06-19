@@ -29,9 +29,13 @@ def drawSRFig(option) :
 		height_ratios = option['height_ratios']
 	top_ratio_y_scalar = (height_ratios[0] + height_ratios[1]) / height_ratios[1]
 	
-	if ('split_right'  not in option or option['split_right']  != True) and \
-	   ('double_right' not in option or option['double_right'] != True) and \
-	   ('triple_right' not in option or option['triple_right'] != True) :
+	if ('no_violin' in option and option['no_violin'] == True) :
+		fig, ax = plt.subplots(1, 1, figsize=(main_ratio_x_component, main_ratio_y_component))
+		main_ax = ax
+
+	elif ('split_right'  not in option or option['split_right']  != True) and \
+	     ('double_right' not in option or option['double_right'] != True) and \
+	     ('triple_right' not in option or option['triple_right'] != True) :
 		# 2 subfigures
 		fig, axs = plt.subplots(1, 2, gridspec_kw={'width_ratios': [main_ratio_x_component, 1]}, figsize=(margin+main_ratio_x_component+1*(1+wspace*wspace_fig_size_scalar), main_ratio_y_component))
 		fig.subplots_adjust(hspace=hspace, wspace=wspace)  # adjust space between axes
@@ -166,7 +170,8 @@ def drawSRFig(option) :
 
 	# set main lim
 	main_ax.set_ylim(option['main_ax_lim'])
-	violin_ax.set_ylim(option['main_ax_lim'])
+	if violin_ax != None :
+		violin_ax.set_ylim(option['main_ax_lim'])
 	if violin2_ax != None:
 		violin2_ax.set_ylim(option['main_ax_lim'])
 	if violin3_ax != None:
@@ -389,6 +394,16 @@ def drawSRFig(option) :
 	    #fontsize="small",
 		ncol=legend_columns
 	)
+
+	# if no violin
+	if 'no_violin' in option and option['no_violin'] == True :
+		#-------------------------------------------------------------------------
+		# save or show plot
+		if 'SRFig_save' in option :
+			plt.savefig(option['SRFig_save'])
+		if 'SRFig_show' in option and option['SRFig_show'] == True :
+			plt.show()
+		return 
 
 	#-------------------------------------------------------------------------
 	# read all each robot data and make it a total box/violin plot

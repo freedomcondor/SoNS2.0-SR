@@ -5,4 +5,5 @@ configure_file( run_cluster.in.slurm run_cluster.slurm)
 configure_file( readPkl.in.py        readPkl.py)
 configure_file( replayLogs.in.py     replayLogs.py)
 
-configure_file( drawLine_sup.in.py       drawLine_sup.py)
+configure_file( drawLine_sup_hw.in.py       drawLine_sup_hw.py)
+configure_file( drawLine_sup_simu.in.py       drawLine_sup_simu.py)
