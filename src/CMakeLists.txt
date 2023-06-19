@@ -60,6 +60,8 @@ set(CMAKE_MNS_DATA_PATH /media/harry/Expansion/Storage/mns2.0-data)
 make_directory(logs)
 #add experiments sub directory
 add_subdirectory(experiments)
+#add testing sub directory
+add_subdirectory(testing)
 #add script sub directory
 add_subdirectory(scripts)
 
