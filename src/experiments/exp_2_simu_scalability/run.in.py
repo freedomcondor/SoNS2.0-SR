@@ -7,6 +7,8 @@ import math
 
 exp_scale = 4
 
+# for video, use randomseed -r 3
+
 n_drone = exp_scale * 6 + 1
 n_pipuck = n_drone * 4
 arena_size = exp_scale * 10 + 8 + (n_drone)/math.pi
@@ -99,6 +101,7 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos",
                     "vns.argos",
 	[
 		["RANDOMSEED",        str(Inputseed)],
+		["MULTITHREADS",      str(MultiThreads)],
 		["TOTALLENGTH",       str((Experiment_length or 6500)/5)],
 		["DRONES",            drone_xml], 
 		["PIPUCKS",           pipuck_xml], 

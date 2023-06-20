@@ -73,7 +73,7 @@ function step()
 
 	vns.logLoopFunctionInfo(vns)
 	-- debug
-	api.debug.showChildren(vns)
+	api.debug.showChildren(vns, nil, true) -- color nil, withoutBrain true
 	-- comment out draw parent circle in showChildren in core/api/commonAPI.lua
 	--api.debug.showObstacles(vns)
 end

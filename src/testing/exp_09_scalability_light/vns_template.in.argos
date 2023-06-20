@@ -5,7 +5,7 @@
   <!-- * General configuration * -->
   <!-- ************************* -->
   <framework>
-    <system threads="0" />
+    <system threads="MULTITHREADS" />
     <experiment length="TOTALLENGTH" ticks_per_second="5" random_seed="RANDOMSEED" />
   </framework>
   
@@ -21,7 +21,7 @@
   <!-- * Arena configuration * -->
   <!-- *********************** -->
   <arena size="ARENA_SIZE, ARENA_SIZE, 3.5" center="0, 0, 1">
-    <floor id="floor" source="loop_functions" pixels_per_meter="1" />
+    <floor id="floor" source="image" path="wood_floor_large.png" />
     <!-- real scenario -->
     REAL_SCENARIO
 
@@ -66,6 +66,7 @@
   <!-- ****************** -->
   <visualization>
     <qt-opengl lua_editor="true" show_boundary="false">
+      <frame_grabbing quality="100" />
       <user_functions library="@CMAKE_BINARY_DIR@/libmy_qtopengl_extensions"
                       label="my_qtopengl_user_functions" />
       <camera>

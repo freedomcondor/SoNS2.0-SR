@@ -5,18 +5,19 @@ import time
 
 #----------------------------------------------------------------------------------------------
 # usage message 
-usage="[usage] example: python3 xxx.py -r 1 -l 1000 -v true"
+usage="[usage] example: python3 xxx.py -r 1 -l 1000 -v true -m 10"
 
 #----------------------------------------------------------------------------------------------
 # parse opts
 try:
-	optlist, args = getopt.getopt(sys.argv[1:], "r:l:v:h")
+	optlist, args = getopt.getopt(sys.argv[1:], "r:l:v:m:h")
 except:
 	print("[error] unexpected opts")
 	print(usage)
 	sys.exit(0)
 
 Inputseed = None
+MultiThreads = None
 Experiment_length = None
 Visualization = True
 VisualizationArgosFlag = ""
@@ -32,6 +33,9 @@ for opt, value in optlist:
 		if value == "False" or value == "false" :
 			Visualization = False
 		print("visualization provided:", Visualization)
+	elif opt == "-m":
+            MultiThreads = int(value) 
+            print("Multi threads provided:", MultiThreads)
 	elif opt == "-h":
 		print(usage)
 		exit()
@@ -39,6 +43,10 @@ for opt, value in optlist:
 if Inputseed == None :
 	Inputseed = int(time.time())
 	print("Inputseed not provided, using:", Inputseed)
+
+if MultiThreads == None :
+	MultiThreads = 0
+	print("MultiThreads not provided, using:", MultiThreads)
 
 if Visualization == False :
 	VisualizationArgosFlag = " -z"

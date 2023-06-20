@@ -88,6 +88,62 @@ function reset()
 	}}
 end
 
+function showParentInThick(vns, color)
+	if vns.parentR ~= nil then
+		local robotR = vns.parentR
+		local offset_l = 0.05
+		local offset_left = api.virtualFrame.V3_VtoR(offset_l * vector3(0,0,1):cross(robotR.positionV3):normalize())
+		local offset_right = api.virtualFrame.V3_VtoR(offset_l * vector3(0,0,-1):cross(robotR.positionV3):normalize())
+		api.debug.drawArrow(color, vector3(),             api.virtualFrame.V3_VtoR(vector3(robotR.positionV3)),             true)
+		api.debug.drawArrow(color, vector3()+offset_left, api.virtualFrame.V3_VtoR(vector3(robotR.positionV3))+offset_left, true)
+		api.debug.drawArrow(color, vector3()+offset_right,api.virtualFrame.V3_VtoR(vector3(robotR.positionV3))+offset_right,true)
+	end
+end
+
+function showChildrenInThick(vns, color, withoutBrain)
+	if color == nil then color = "blue" end
+	-- draw children location
+	for i, robotR in pairs(vns.childrenRT) do
+		local target = 
+			api.virtualFrame.V3_VtoR(
+				vector3(
+					robotR.positionV3 * (
+						(robotR.positionV3:length() - 0.2) / robotR.positionV3:length()
+					)
+				)
+			)
+
+		local offset_l = 0.05
+		local offset_left = api.virtualFrame.V3_VtoR(offset_l * vector3(0,0,1):cross(robotR.positionV3):normalize())
+		local offset_right = api.virtualFrame.V3_VtoR(offset_l * vector3(0,0,-1):cross(robotR.positionV3):normalize())
+	
+		api.debug.drawArrow(color, vector3(),              target,              true)
+		api.debug.drawArrow(color, vector3()+offset_left,  target+offset_left,  true)
+		api.debug.drawArrow(color, vector3()+offset_right, target+offset_right, true)
+		--[[
+		api.debug.drawArrow("blue", 
+			api.virtualFrame.V3_VtoR(robotR.positionV3) + vector3(0,0,0.1),
+			api.virtualFrame.V3_VtoR(robotR.positionV3) + vector3(0,0,0.1) +
+			vector3(0.1, 0, 0):rotate(
+				api.virtualFrame.Q_VtoR(quaternion(robotR.orientationQ))
+			),
+			true
+		)
+		--]]
+	end
+
+	if withoutBrain ~= true then
+		if vns.parentR == nil then
+			api.debug.drawRing(
+				color,
+				vector3(0,0,0.08),
+				0.15,
+				true
+			)
+		end
+	end
+end
+
 --- step
 function step()
 	-- prestep
@@ -113,26 +169,31 @@ function step()
 
 
 	-- up signal
-	local up_color = "255, 0, 50"
-	local down_color = "255, 0, 255"
+	local signal_color = "255, 0, 255"
+	local up_color = signal_color
+	local down_color = signal_color
 	if robot.id == "pipuck76" and vns.api.stepCount == 100 then 
-		api.debug.showParent(vns, up_color)
+		--api.debug.showParent(vns, up_color)
+		showParentInThick(vns, up_color)
 	end 
 
 	for _, msgM in ipairs(vns.Msg.getAM("ALLMSG", "led_signal_up")) do
 		if vns.parentR ~= nil then 
-			api.debug.showParent(vns, up_color)
+			--api.debug.showParent(vns, up_color)
+			showParentInThick(vns, up_color)
 		else
-			api.debug.showChildren(vns, down_color)
+			--api.debug.showChildren(vns, down_color, true) -- without brain true
+			showChildrenInThick(vns, down_color, true)
 		end
 	end
 
 	if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "led_signal")) do
-		api.debug.showChildren(vns, down_color)
+		--api.debug.showChildren(vns, down_color, true) -- without brain true
+		showChildrenInThick(vns, down_color, true)
 	end end
 
 	-- debug
-	api.debug.showChildren(vns)
+	api.debug.showChildren(vns, nil, true) -- color nil, without brain true
 	if vns.robotTypeS == "drone" then api.debug.showObstacles(vns) end
 	--ExperimentCommon.detectGates(vns, 253, 1.5) -- gate brick id and longest possible gate size
 end
@@ -596,16 +657,23 @@ end
 
 -- drone avoider led node ---------------------
 function create_led_node(vns)
+	local signal_color = "255, 0, 255"
+	local up_color = signal_color
+	local down_color = signal_color
 	return function()
 		if vns.api.stepCount == 100 then
 			if robot.id == "pipuck76" then
 				vns.Msg.send(vns.parentR.idS, "led_signal_up")
-				vns.api.debug.drawRing("255, 0, 50", vector3(0,0,0), 0.15, true)
+				vns.api.debug.drawRing(up_color, vector3(0,0,0), 0.15, true)
+				vns.api.debug.drawRing(up_color, vector3(0,0,0), 0.175, true)
+				vns.api.debug.drawRing(up_color, vector3(0,0,0), 0.20, true)
 			end
 		end
 
 		for _, msgM in ipairs(vns.Msg.getAM("ALLMSG", "led_signal_up")) do
-			vns.api.debug.drawRing("255, 0, 50", vector3(0,0,0), 0.15, true)
+			vns.api.debug.drawRing(up_color, vector3(0,0,0), 0.15, true)
+			vns.api.debug.drawRing(up_color, vector3(0,0,0), 0.175, true)
+			vns.api.debug.drawRing(up_color, vector3(0,0,0), 0.20, true)
 			if vns.parentR ~= nil then
 				vns.Msg.send(vns.parentR.idS, "led_signal_up")
 			end
@@ -619,7 +687,9 @@ function create_led_node(vns)
 		if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "led_signal")) do
 			for idS, childR in pairs(vns.childrenRT) do
 				vns.Msg.send(idS, "led_signal")
-				vns.api.debug.drawRing("255, 0, 255", vector3(0,0,0), 0.15, true)
+				vns.api.debug.drawRing(down_color, vector3(0,0,0), 0.15, true)
+				vns.api.debug.drawRing(down_color, vector3(0,0,0), 0.175, true)
+				vns.api.debug.drawRing(down_color, vector3(0,0,0), 0.20, true)
 			end
 		end end
 		-- signal led

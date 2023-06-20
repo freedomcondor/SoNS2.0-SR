@@ -4,6 +4,9 @@ exec(compile(open(createArgosFileName, "rb").read(), createArgosFileName, 'exec'
 
 import os
 
+# note: for video, run with random seed 2 on mac
+# note: for video, run with random seed 4 on ubuntu
+
 # drone and pipuck
 drone_locations = [
     [0.5, -0.6],

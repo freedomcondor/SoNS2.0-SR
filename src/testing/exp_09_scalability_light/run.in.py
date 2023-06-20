@@ -5,6 +5,8 @@ exec(compile(open(createArgosFileName, "rb").read(), createArgosFileName, 'exec'
 import os
 import math
 
+# note: for video, run with random seed 1
+
 #------------- over write
 #- random locations ------------------------------------------------------------------------
 def generate_random_locations(n, origin_x,    origin_y, 
@@ -132,6 +134,7 @@ exp_scale = 4
 n_drone = exp_scale * 6 + 1
 n_pipuck = n_drone * 4
 arena_size = exp_scale * 10 + 8 + (n_drone)/math.pi
+print("arena_size = ", arena_size)
 
 # drone and pipuck
 drone_locations = generate_random_locations(n_drone,                        # total number
@@ -205,7 +208,8 @@ params = '''
               drone_tag_detection_rate="1"
               drone_default_height="1.8"
               drone_default_start_height="1.8"
-              dangerzone_drone="1.3"
+              dangerzone_drone="1.25"
+              dangerzone_pipuck="0.37"
               dangerzone_reference_pipuck_scalar="1.3"
               deadzone_reference_pipuck_scalar="2"
               obstacle_unseen_count="0"
@@ -221,6 +225,7 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos",
                     "vns.argos",
 	[
 		["RANDOMSEED",        str(Inputseed)],
+		["MULTITHREADS",      str(MultiThreads)],
 		["TOTALLENGTH",       str((Experiment_length or 6500)/5)],
 		["DRONES",            drone_xml], 
 		["PIPUCKS",           pipuck_xml], 

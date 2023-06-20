@@ -6,7 +6,7 @@
   <!-- ************************* -->
   <framework>
     <system threads="0" />
-    <experiment length="TOTALLENGTH" ticks_per_second="5" random_seed="2" />
+    <experiment length="TOTALLENGTH" ticks_per_second="5" random_seed="RANDOMSEED" />
   </framework>
   
   <!-- *************** -->
@@ -69,6 +69,7 @@
   <!-- ****************** -->
   <visualization>
     <qt-opengl lua_editor="true" show_boundary="false">
+      <frame_grabbing quality="100" />
       <user_functions library="@CMAKE_BINARY_DIR@/libmy_qtopengl_extensions"
                       label="my_qtopengl_user_functions" />
       <camera>
