@@ -1,0 +1,43 @@
+diff --git a/src/testing/exp_09_scalability_light/run.in.py b/src/testing/exp_09_scalability_light/run.in.py
+index 51fcc4b..43ccbfd 100644
+--- a/src/testing/exp_09_scalability_light/run.in.py
++++ b/src/testing/exp_09_scalability_light/run.in.py
+@@ -129,7 +129,7 @@ def generate_slave_locations_with_origin(n, master_locations,
+ 			break
+ 	return a
+ 
+-exp_scale = 4
++exp_scale = 8
+ 
+ n_drone = exp_scale * 6 + 1
+ n_pipuck = n_drone * 4
+diff --git a/src/testing/exp_09_scalability_light/vns_template.in.argos b/src/testing/exp_09_scalability_light/vns_template.in.argos
+index 8cec3a9..3fb4262 100644
+--- a/src/testing/exp_09_scalability_light/vns_template.in.argos
++++ b/src/testing/exp_09_scalability_light/vns_template.in.argos
+@@ -71,7 +71,8 @@
+                       label="my_qtopengl_user_functions" />
+       <camera>
+         <placements>
+-          <placement index="0" position="0.263763,-0.0355953,9.55429" look_at="0.263763,-0.0355953,8.55429" up="0.999982,0.0059975,0" lens_focal_length="90" />
++          <placement index="0" position="1.72925,-0.284212,71.5901" look_at="1.72925,-0.284212,40.5901" up="0.999982,0.0059975,0" lens_focal_length="90" />
++          <!--placement index="0" position="0.263763,-0.0355953,9.55429" look_at="0.263763,-0.0355953,8.55429" up="0.999982,0.0059975,0" lens_focal_length="90" /-->
+           <placement index="1" position="1.72925,-0.284212,41.5901" look_at="1.72925,-0.284212,40.5901" up="0.999982,0.0059975,0" lens_focal_length="90" />
+           <placement index="2" position="-3.02801,-1.96146,2.09701" look_at="-2.19123,-1.48518,1.82689" up="0.234754,0.133616,0.962828" lens_focal_length="30" />
+           <placement index="3" position="-4.02475,-2.03309,4.80951" look_at="-3.29636,-1.69228,4.21513" up="0.538369,0.251902,0.804179" lens_focal_length="30" />
+@@ -83,13 +84,13 @@
+           <placement index="8" position="5.59254,-9.39234,11.9809" look_at="6.03213,-8.89779,11.2311" up="0.498125,0.560406,0.661678" lens_focal_length="30" />
+           <placement index="9" position="-21.8353,11.9569,22.1408" look_at="-21.148,11.6001,21.5081" up="0.561529,-0.291516,0.774405" lens_focal_length="90" />
+         </placements>
+-        <timeline loop="10000">
++        <!--timeline loop="10000">
+           <keyframe placement="0" step="1" />
+           <keyframe placement="0" step="50" />
+           <interpolate />
+           <keyframe placement="1" step="80" />
+           <keyframe placement="1" step="500" />
+-        </timeline>
++        </timeline-->
+       </camera>
+     </qt-opengl>
+   </visualization>
