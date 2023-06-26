@@ -6,20 +6,28 @@ SCRIPT_SIMU_PATH=scripts/drawLine_sup_simu.py
 EXPERIMENT_LIST=( \
 # mission 1 formation
 # 01 clustered positions
-exp_0_hw_10_formation_1_2d_6p_group_start \
 # 02 clustered positions 10 drone
-exp_1_simu_10_formation_10d_group_start \
 # 03 scattered positions
-exp_0_hw_01_formation_1_2d_10p \
 # 04 scattered positions 10 drone
-exp_1_simu_1_formation_10d \
 
-#exp_1_simu_01_formation_10d \
-# mission 2
-#exp_0_hw_02_obstacle_avoidance_small \
-#exp_1_simu_02_obstacle_avoidance_small_10d \
+#exp_0_hw_10_formation_1_2d_6p_group_start \
+#exp_1_simu_10_formation_10d_group_start \
+#exp_0_hw_01_formation_1_2d_10p \
+#exp_1_simu_1_formation_10d \
+
+# mission 2 obstacle avoidance
+# 01 small obstacles
+# 02 small obstacles 10 drone
+# 03 large obstacles
+# 04 large obstacles 10 drone
+
+exp_0_hw_02_obstacle_avoidance_small
+exp_1_simu_02_obstacle_avoidance_small_10d
+exp_0_hw_03_obstacle_avoidance_large
+exp_1_simu_03_obstacle_avoidance_large_10d
+
 # mission 3
-#exp_0_hw_04_switch_line \
+#exp_0_hw_04_switch_line
 #exp_1_simu_04_switch_line \
 # mission 4
 #exp_0_hw_05_gate_switch \

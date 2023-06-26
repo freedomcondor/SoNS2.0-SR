@@ -13,15 +13,15 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data"
-savePDFNameBase = "sup_test_exp02_"
+savePDFNameBase = "mission2_small_obstacle_exp0_02_hw_"
 sampleList = [
-#	"test_20220622_success_1",
-#	"test_20220622_success_2",
-#	"test_20220622_success_3",
-#	"test_20220622_success_4_ULB",
-#	"test_20220622_success_5",
-#	"test_20220623_success_0",
-#	"test_20220623_success_1",
+	"test_20220622_success_1",
+	"test_20220622_success_2",
+	"test_20220622_success_3",
+	"test_20220622_success_4_ULB",
+	"test_20220622_success_5",
+	"test_20220623_success_0",
+	"test_20220623_success_1",
 	"test_20220623_success_2",
 ]
 
@@ -40,6 +40,10 @@ track_option_base = {
 	'z_lim'     :  [-1.0, 7.5]         ,
 
 	'showRobotName'     : False,
+
+	'SRFig_show'        : False,
+	'no_violin'         : True,
+	'main_ax_lim'            : [-0.1, 3],
 }
 
 #----------------------------------
@@ -280,7 +284,7 @@ key_frame_parent_index_list["test_20220623_success_2"] = [
 for sample_run in sampleList :
 	track_option = track_option_base.copy()
 	track_option['sample_run'] = sample_run
-	track_option['trackLog_save'] = savePDFNameBase + sample_run + ".pdf"
+	track_option['trackLog_save'] = savePDFNameBase + sample_run + "_TrackLog.pdf"
 	if sample_run in key_frame_list:
 		track_option['key_frame'] = key_frame_list[sample_run]
 	else :
@@ -296,3 +300,6 @@ for sample_run in sampleList :
 		track_option['z_lim'] = z_lim_list[sample_run]
 
 	drawTrackLog(track_option)
+
+	track_option['SRFig_save'] = savePDFNameBase + sample_run + "_ErrorLog.pdf"
+	drawSRFig(track_option)
