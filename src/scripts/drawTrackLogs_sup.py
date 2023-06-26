@@ -32,7 +32,7 @@ def setAxParameters(ax, option):
 	ax.w_yaxis.line.set_lw(0)
 
 	# draw border
-	ax.patch.set_edgecolor('black')  
+	ax.patch.set_edgecolor('black')
 	ax.spines['bottom'].set_color('0.5')
 	ax.spines['top'].set_color('0.5')
 	ax.spines['right'].set_color('0.5')
@@ -87,7 +87,7 @@ def setAxParameters(ax, option):
 
 	# look from
 	if 'look_from' in option:
-		ax.view_init(option['look_from'])
+		ax.view_init(option['look_from'][0], option['look_from'][1])
 	else:
 		ax.view_init(89.99999, -90.00001) # to make X axis on the bottom and Y on the left
 
@@ -97,7 +97,7 @@ def setAxParameters(ax, option):
 		ax.grid(b=None)        # for linux
 	else :
 		ax.grid(visible=None)   # for mac
-	
+
 
 def drawTrackLog(option):
 	dataFolder = option['dataFolder']
@@ -142,8 +142,8 @@ def drawTrackLog(option):
 	stepLength = 1
 
 	# colors and key frames
-	n_colors = len(pipuckLogs + droneLogs)
-	#n_colors = 3
+	n_robots = len(pipuckLogs + droneLogs)
+	n_colors = n_robots
 	colours = cm.rainbow(np.linspace(0, 1, n_colors))
 
 	key_frame = option['key_frame']
@@ -174,7 +174,7 @@ def drawTrackLog(option):
 					break
 			if step == None :
 				break
-		
+
 			X.append(step['position'][0])
 			Y.append(step['position'][1])
 			Z.append(step['position'][2])
@@ -205,15 +205,17 @@ def drawTrackLog(option):
 		i = window
 		interval = 1
 		key_frame_i = 0
-		while i < len(T_smooth)-window : 
+		color = colours[robot_count-1]
+
+		while i < len(T_smooth)-window :
 			if i != 0 :
-				drawVector3(ax, 
-				            [X_smooth[i-interval], Y_smooth[i-interval], Z_smooth[i-interval]], 
-				            [X_smooth[i],          Y_smooth[i],          Z_smooth[i]], 
-				            colours[robot_count-1],
+				drawVector3(ax,
+				            [X_smooth[i-interval], Y_smooth[i-interval], Z_smooth[i-interval]],
+				            [X_smooth[i],          Y_smooth[i],          Z_smooth[i]],
+				            color,
 				            0.7
 				)
-		
+
 			# record key_frame
 			if i * stepLength > key_frame[key_frame_i] :
 				if robot_count == 1:
@@ -236,6 +238,12 @@ def drawTrackLog(option):
 				if key_frame[key_frame_i] == 0 :
 					key_frame_robots[key_frame_i][robotName]["color"] = colours[robot_count - 1]
 					key_frame_robots[key_frame_i][robotName]["parent"] = "nil"
+				else :
+					if 'colored_key_frame' in option and option['colored_key_frame'] == True :
+						if key_frame_i % 2 == 0 :
+							key_frame_robots[key_frame_i][robotName]["color"] = 'dimgray'
+						else :
+							key_frame_robots[key_frame_i][robotName]["color"] = 'black'
 
 				key_frame_i = key_frame_i + 1
 			'''
@@ -247,7 +255,7 @@ def drawTrackLog(option):
 			i = i + interval
 		#end while i < total_step
 
-		# record last step into key frame 
+		# record last step into key frame
 		if robot_count == 1:
 			key_frame_robots.append({})
 		key_frame_robots[key_frame_i][robotName] = {
@@ -271,7 +279,7 @@ def drawTrackLog(option):
 	for obstacleLog in obstacleLogs:
 		step = readNextLine(obstacleLog, True)    # True means asking readNextLine to return none if pipuckLog ends, otherwise it returns exit()
 		# draw dot
-		ax.plot3D([step["position"][0]], 
+		ax.plot3D([step["position"][0]],
 		          [step["position"][1]],
 		          [step["position"][2]],
 		          color = color, linewidth='0.5', markersize='2.5', marker = 's')
@@ -279,7 +287,7 @@ def drawTrackLog(option):
 	for obstacleLog in targetLogs:
 		step = readNextLine(obstacleLog, True)    # True means asking readNextLine to return none if pipuckLog ends, otherwise it returns exit()
 		# draw dot
-		ax.plot3D([step["position"][0]], 
+		ax.plot3D([step["position"][0]],
 		          [step["position"][1]],
 		          [step["position"][2]],
 		          color = color, linewidth='0.5', markersize='2.5', marker = 'v')
@@ -312,7 +320,7 @@ def drawTrackLog(option):
 		print("drawing keyframe " + str(key_frame_i) + " at step " + str(step_number))
 		key_frame_i = key_frame_i + 1
 
-		for robotID, robotData in key_frame.items() : 
+		for robotID, robotData in key_frame.items() :
 			# draw regular robots
 			robotType = robotID.rstrip(string.digits)
 			marker = 'o'
@@ -330,10 +338,10 @@ def drawTrackLog(option):
 			if "color" in robotData :
 				color = robotData["color"]
 			# draw dot
-			ax.plot3D([robotData["position"][0]], 
+			ax.plot3D([robotData["position"][0]],
 			          [robotData["position"][1]],
 			          [robotData["position"][2]],
-			          color = color, 
+			          color = color,
 			          marker = marker,
 			          markersize=markersize
 			         )
@@ -349,7 +357,7 @@ def drawTrackLog(option):
 			# draw parent line
 			if robotData["parent"] != "nil" :
 				parentData = key_frame[robotData["parent"]]
-				ax.plot3D([robotData["position"][0], parentData["position"][0]], 
+				ax.plot3D([robotData["position"][0], parentData["position"][0]],
 				          [robotData["position"][1], parentData["position"][1]],
 				          [robotData["position"][2], parentData["position"][2]],
 				          linewidth="1.2",
@@ -362,17 +370,21 @@ def drawTrackLog(option):
 		print("drawing keyframe " + str(key_frame_i) + " at step " + str(step_number))
 		key_frame_i = key_frame_i + 1
 
-		for robotID, robotData in key_frame.items() : 
+		for robotID, robotData in key_frame.items() :
 			if robotData['brain'] == robotID and \
 			   not (robotID in failed_robots and step_number >= failed_step) and \
-			   "color" not in robotData: # color not in robotData means not the first frame
+			   key_frame_i != 1 : # color not in robotData means not the first frame
+			   #"color" not in robotData: # color not in robotData means not the first frame
 				# check if it is a true brain (not failed robot)
 				true_brain_flag = False
-				for j_robotID, j_robotData in key_frame.items() : 
+				for j_robotID, j_robotData in key_frame.items() :
 					if j_robotData["parent"] == robotID :
-						true_brain_flag = True 
+						true_brain_flag = True
 						break
-					
+
+				if 'colored_key_frame' in option and option['colored_key_frame'] == True :
+					true_brain_flag = True
+
 				brain_svg_front_path, attributes = svg2paths(brain_marker_svg_path)
 				brain_svg_marker = parse_path(attributes[0]['d'])
 				brain_svg_marker.vertices -= brain_svg_marker.vertices.mean(axis=0)
@@ -405,19 +417,19 @@ def drawTrackLog(option):
 
 	# legend
 	legend_handle_usual_robot, = ax.plot([], [],
-	          color = usualcolor, 
+	          color = usualcolor,
 	          marker = 'o',
 	          markersize = '3.5',
 	          linestyle = 'None'
 	)
 	legend_handle_usual_drone, = ax.plot([], [],
-	          color = usualcolor, 
+	          color = usualcolor,
 	          marker = '*',
 	          markersize = '7',
 	          linestyle = 'None'
 	)
 	legend_handle_brain_drone, = ax.plot([], [],
-	          color = "black", 
+	          color = "black",
 	          marker = brain_svg_marker,
 	          markersize = '9',
 	          linestyle = 'None'
@@ -438,7 +450,7 @@ def drawTrackLog(option):
 
 	if 'legend_obstacle' in option and option['legend_obstacle'] :
 		legend_handle_obstacle, = ax.plot([], [],
-		          color = 'red', 
+		          color = 'red',
 		          marker = 's',
 		          markersize = '2.5',
 		          linestyle = 'None'
@@ -447,7 +459,7 @@ def drawTrackLog(option):
 		labels.append('obstacles')
 
 		legend_handle_target, = ax.plot([], [],
-		          color = 'red', 
+		          color = 'red',
 		          marker = 'v',
 		          markersize = '2.5',
 		          linestyle = 'None'
@@ -457,16 +469,16 @@ def drawTrackLog(option):
 
 		#legend_position = (0.815, 0.73)  # col = 2 and position doesn't need to change
 		legend_col = 2
-	
+
 	if failed_robot_flag == True :
 		legend_handle_failed_robot, = ax.plot([], [],
-		          color = failedcolor, 
+		          color = failedcolor,
 		          marker = 'o',
 		          markersize = '3.5',
 		          linestyle = 'None'
 		)
 		legend_handle_failed_drone, = ax.plot([], [],
-		          color = failedcolor, 
+		          color = failedcolor,
 		          marker = '*',
 		          markersize = '7',
 		          linestyle = 'None'
@@ -477,9 +489,9 @@ def drawTrackLog(option):
 		if not ('legend_obstacle' in option and option['legend_obstacle']) :
 			# then we have 4 rows
 			legend_position = (0.815, 0.74) # position for xx-small
-	
+
 	ax.legend(
-	    legend_handles, 
+	    legend_handles,
 	    labels,
 	    handler_map={tuple: HandlerTuple(ndivide=None)},  # to make two markers share one label [(a, b)], ['label']
 	    loc="right",

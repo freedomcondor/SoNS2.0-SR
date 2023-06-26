@@ -116,3 +116,7 @@ For detailed information on how python generates argos files, there is a file in
 
 1. On the cluster, ARGOS_CMAKE_DIR is not found, cmake like the following will work
 `cmake ../src/ -DARGOS_CMAKE_DIR=/home/wzhu/Programs/argos3/install/share/argos3/cmake`
+
+2. For generating figures, a python tool is used for draw special markers in matplot
+`pip3 install svgpathtools`
+`pip3 install svgpath2mpl`
