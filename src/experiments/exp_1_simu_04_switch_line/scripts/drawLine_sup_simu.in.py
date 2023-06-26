@@ -16,10 +16,10 @@ dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_1_simu_04_switch_line/da
 savePDFNameBase = "mission3_switch_funnel_10drones_exp1_04_simu_"
 sampleList = [
 	"run13",
-#	"run23",
-#	"run35",
-#	"run40",
-#	"run50",
+	"run23",
+	"run35",
+	"run40",
+	"run50",
 ]
 
 #----------------------------------

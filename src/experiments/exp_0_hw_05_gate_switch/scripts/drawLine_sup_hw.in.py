@@ -13,13 +13,13 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_hw/data"
-savePDFNameBase = "sup_test_exp05_"
+savePDFNameBase = "mission4_choosing_gates_exp0_05_hw"
 sampleList = [
 	"test_20220629_1_success_1",
-#	"test_20220630_10_success_1",
-#	"test_20220630_11_success_2",
-#	"test_20220630_12_success_3",
-#	"test_20220702_1_success_4",
+	"test_20220630_10_success_1",
+	"test_20220630_11_success_2",
+	"test_20220630_12_success_3",
+	"test_20220702_1_success_4",
 ]
 
 #----------------------------------

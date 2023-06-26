@@ -31,11 +31,15 @@ EXPERIMENT_LIST=( \
 	# 02 funnel 10 drone
 
 exp_0_hw_04_switch_line
-#exp_1_simu_04_switch_line
+exp_1_simu_04_switch_line
 
-# mission 4
-#exp_0_hw_05_gate_switch \
-#scalablity scale 2 \  # run seperately later
+	# mission 4
+	# 01 choosing gates
+	# 02 choosing gates -- scalability scale 2 13 drones
+
+exp_0_hw_05_gate_switch
+#scalablity scale 2   # run seperately later
+
 # mission 5
 #exp_0_hw_08_split \
 # fault tolerance
