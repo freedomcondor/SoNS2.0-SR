@@ -1,0 +1,62 @@
+diff --git a/src/experiments/exp_2_simu_scalability/common.in.lua b/src/experiments/exp_2_simu_scalability/common.in.lua
+index 75545af..b688bb8 100755
+--- a/src/experiments/exp_2_simu_scalability/common.in.lua
++++ b/src/experiments/exp_2_simu_scalability/common.in.lua
+@@ -330,7 +330,7 @@ function create_reaction_node(vns)
+ 							stateCountMark = stateCount
+ 							logger(robot.id, "reach gate, start counting")
+ 						else
+-							if stateCount - stateCountMark > 175 * expScale then
++							if stateCount - stateCountMark > 175 * expScale * 2.5 then
+ 								switchAndSendNewState(vns, "forward_again")
+ 								logger(robot.id, "forward_again")
+ 							end
+diff --git a/src/experiments/exp_2_simu_scalability/run.in.py b/src/experiments/exp_2_simu_scalability/run.in.py
+index e61f30b..fa44da7 100755
+--- a/src/experiments/exp_2_simu_scalability/run.in.py
++++ b/src/experiments/exp_2_simu_scalability/run.in.py
+@@ -5,9 +5,10 @@ exec(compile(open(createArgosFileName, "rb").read(), createArgosFileName, 'exec'
+ import os
+ import math
+ 
+-exp_scale = 4
++exp_scale = 8
+ 
+ # for video, use randomseed -r 3
++# for video 200, use randomseed -r 12
+ 
+ n_drone = exp_scale * 6 + 1
+ n_pipuck = n_drone * 4
+@@ -102,7 +103,8 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos",
+ 	[
+ 		["RANDOMSEED",        str(Inputseed)],
+ 		["MULTITHREADS",      str(MultiThreads)],
+-		["TOTALLENGTH",       str((Experiment_length or 6500)/5)],
++#		["TOTALLENGTH",       str((Experiment_length or 6500)/5)],
++		["TOTALLENGTH",       str((Experiment_length or 0)/5)],
+ 		["DRONES",            drone_xml], 
+ 		["PIPUCKS",           pipuck_xml], 
+ 		["WALL",              wall_xml], 
+diff --git a/src/experiments/exp_2_simu_scalability/vns_template.in.argos b/src/experiments/exp_2_simu_scalability/vns_template.in.argos
+index 1e198d3..b95ee09 100755
+--- a/src/experiments/exp_2_simu_scalability/vns_template.in.argos
++++ b/src/experiments/exp_2_simu_scalability/vns_template.in.argos
+@@ -22,7 +22,7 @@
+   <!-- *********************** -->
+   <arena size="ARENA_SIZE, ARENA_SIZE, 3.5" center="0, 0, 1">
+     <!--floor id="floor" source="loop_functions" pixels_per_meter="1" /-->
+-    <floor id="floor" source="image" path="wood_floor_large.png" />
++    <floor id="floor" source="image" path="@CMAKE_BINARY_DIR@/wood_floor_large.png" />
+     <!-- real scenario -->
+     REAL_SCENARIO
+ 
+@@ -75,7 +75,8 @@
+                       label="my_qtopengl_user_functions" />
+       <camera>
+         <placements>
+-          <placement index="0" position="2,-0.1,61" look_at="2,0,0" up="0,0,1" lens_focal_length="90" />
++          <placement index="0" position="2,-0.1,130" look_at="2,0,0" up="0,0,1" lens_focal_length="90" />
++          <!--placement index="0" position="2,-0.1,61" look_at="2,0,0" up="0,0,1" lens_focal_length="90" /-->
+         </placements>
+       </camera>
+     </qt-opengl>
