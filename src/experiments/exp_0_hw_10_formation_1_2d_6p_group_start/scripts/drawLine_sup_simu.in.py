@@ -12,14 +12,14 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_simu/data"
-savePDFNameBase = "mission1_scattered_positions_exp0_01_simu_"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_simu/data"
+savePDFNameBase = "mission1_clustered_positions_exp0_10_simu_"
 sampleList = [
-	"run14",
-	"run31",
-	"run32",
-	"run40",
-	"run41",
+	"run7",
+	"run16",
+	"run13",
+	"run22",
+	"run49",
 ]
 
 #----------------------------------
@@ -42,7 +42,7 @@ track_option_base = {
 
 	'SRFig_show'        : False,
 	'no_violin'         : True,
-	'main_ax_lim'            : [-0.2, 3],
+	'main_ax_lim'            : [-0.2, 4],
 }
 
 #----------------------------------
@@ -75,5 +75,6 @@ for sample_run in sampleList :
 
 	drawTrackLog(track_option)
 
+	track_option['no_violin'] = True
 	track_option['SRFig_save'] = savePDFNameBase + sample_run + "_ErrorLog.pdf"
 	drawSRFig(track_option)

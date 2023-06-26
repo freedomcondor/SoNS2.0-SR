@@ -15,11 +15,11 @@ exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exe
 dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_hw/data"
 savePDFNameBase = "sup_test_exp05_"
 sampleList = [
-#	"test_20220629_1_success_1",
+	"test_20220629_1_success_1",
 #	"test_20220630_10_success_1",
 #	"test_20220630_11_success_2",
 #	"test_20220630_12_success_3",
-	"test_20220702_1_success_4",
+#	"test_20220702_1_success_4",
 ]
 
 #----------------------------------
@@ -37,6 +37,10 @@ track_option_base = {
 	'z_lim'     :  [-1.0, 7.0]    ,
 
 	'showRobotName'     : False,
+
+	'SRFig_show'        : False,
+	'no_violin'         : True,
+	'main_ax_lim'       : [-0.3, 4.0],
 }
 
 #----------------------------------
@@ -229,7 +233,7 @@ key_frame_parent_index_list["test_20220702_1_success_4"] = [
 for sample_run in sampleList :
 	track_option = track_option_base.copy()
 	track_option['sample_run'] = sample_run
-	track_option['trackLog_save'] = savePDFNameBase + sample_run + ".pdf"
+	track_option['trackLog_save'] = savePDFNameBase + sample_run + "_TrackLog.pdf"
 	if sample_run in key_frame_list:
 		track_option['key_frame'] = key_frame_list[sample_run]
 	else :
@@ -245,3 +249,6 @@ for sample_run in sampleList :
 		track_option['z_lim'] = z_lim_list[sample_run]
 
 	drawTrackLog(track_option)
+
+	track_option['SRFig_save'] = savePDFNameBase + sample_run + "_ErrorLog.pdf"
+	drawSRFig(track_option)

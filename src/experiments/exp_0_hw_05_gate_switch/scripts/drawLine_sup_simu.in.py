@@ -12,14 +12,14 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_simu/data"
-savePDFNameBase = "mission1_scattered_positions_exp0_01_simu_"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_simu/data"
+savePDFNameBase = "sup_test_exp05_"
 sampleList = [
-	"run14",
-	"run31",
-	"run32",
-	"run40",
-	"run41",
+	"run6",
+#	"run10",
+#	"run13",
+#	"run22",
+#	"run37",
 ]
 
 #----------------------------------
@@ -32,9 +32,9 @@ track_option_base = {
 #	'trackLog_save'     : savePDFNameBase + sample_run + ".pdf",
 	'trackLog_show'     : False,
 
-	'x_lim'             :    [-2.5, 2.5],
-	'y_lim'             :    [-2.5, 2.5],
-	'z_lim'             :    [-1.0, 4.0],
+	'x_lim'     :  [-3.5, 4.5]    ,
+	'y_lim'     :  [-4, 4]        ,
+	'z_lim'     :  [-1.0, 7.0]    ,
 
 	'showRobotName'     : False,
 
@@ -42,7 +42,7 @@ track_option_base = {
 
 	'SRFig_show'        : False,
 	'no_violin'         : True,
-	'main_ax_lim'            : [-0.2, 3],
+	'main_ax_lim'       : [-0.3, 4.0],
 }
 
 #----------------------------------
@@ -52,7 +52,7 @@ x_lim_list = {}
 y_lim_list = {}
 z_lim_list = {}
 
-key_frame_example = [0]
+key_frame_example = [0, 300, 1200]
 
 #-----------------------------------------------------------
 for sample_run in sampleList :

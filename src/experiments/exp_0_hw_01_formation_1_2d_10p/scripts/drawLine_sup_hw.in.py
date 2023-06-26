@@ -13,7 +13,7 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_hw/data"
-savePDFNameBase = "sup_test_exp01_hw_"
+savePDFNameBase = "mission1_scattered_positions_exp0_01_hw_"
 sampleList = [
 	"test_20220621_6_success_1",
 	"test_20220621_7_success_2",
@@ -40,7 +40,7 @@ track_option_base = {
 
 	'SRFig_show'        : False,
 	'no_violin'         : True,
-	'main_ax_lim'            : [-0.2, 2],
+	'main_ax_lim'            : [-0.2, 3],
 }
 
 #----------------------------------

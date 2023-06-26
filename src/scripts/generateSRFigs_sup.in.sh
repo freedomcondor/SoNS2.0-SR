@@ -4,8 +4,16 @@ SCRIPT_HW_PATH=scripts/drawLine_sup_hw.py
 SCRIPT_SIMU_PATH=scripts/drawLine_sup_simu.py
 
 EXPERIMENT_LIST=( \
-# mission 1
+# mission 1 formation
+# 01 clustered positions
+exp_0_hw_10_formation_1_2d_6p_group_start \
+# 02 clustered positions 10 drone
+exp_1_simu_10_formation_10d_group_start \
+# 03 scattered positions
 exp_0_hw_01_formation_1_2d_10p \
+# 04 scattered positions 10 drone
+exp_1_simu_1_formation_10d \
+
 #exp_1_simu_01_formation_10d \
 # mission 2
 #exp_0_hw_02_obstacle_avoidance_small \
@@ -33,12 +41,16 @@ exp_0_hw_01_formation_1_2d_10p \
 for exp_name in ${EXPERIMENT_LIST[@]}
 do
 	drawLinePyScript=$EXP_DIR/$exp_name/$SCRIPT_HW_PATH
-	echo "running" $drawLinePyScript
-	python3 $drawLinePyScript
+	if [ -f "$drawLinePyScript" ]; then
+		echo "running" $drawLinePyScript
+		python3 $drawLinePyScript
+	fi
 
 	drawLinePyScript=$EXP_DIR/$exp_name/$SCRIPT_SIMU_PATH
-	echo "running" $drawLinePyScript
-	python3 $drawLinePyScript
+	if [ -f "$drawLinePyScript" ]; then
+		echo "running" $drawLinePyScript
+		python3 $drawLinePyScript
+	fi
 done
 
 #SPECIAL_LIST=( \
