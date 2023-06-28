@@ -31,7 +31,16 @@ logReader.saveData(robotsData, "result_data.txt")
 logReader.smoothData(robotsData, 200)
 logReader.calcSegmentData(robotsData, geneIndex)
 logReader.saveData(robotsData, "result_smoothed_data.txt")
---logReader.saveData(robotsData, "result_lowerbound.txt", "lowerBoundError")
+
+lowerBoundParameters = {
+	time_period = 0.2,
+	default_speed = 0.1,
+	slowdown_dis = 0.1,
+	stop_dis = 0.01,
+}
+logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters)
+logReader.saveData(robotsData, "result_lowerbound.txt", "lowerBoundError")
+logReader.saveEachRobotData(robotsData, "result_each_robot_error", "error")
 
 ------- error and converge speed measure  -------------------------------------------------------------------
 -- average error from the last 50 steps

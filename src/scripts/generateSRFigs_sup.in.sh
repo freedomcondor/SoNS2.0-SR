@@ -10,10 +10,10 @@ EXPERIMENT_LIST=( \
 	# 03 scattered positions
 	# 04 scattered positions 10 drone
 
-exp_0_hw_10_formation_1_2d_6p_group_start \
-exp_1_simu_10_formation_10d_group_start \
-exp_0_hw_01_formation_1_2d_10p \
-exp_1_simu_1_formation_10d \
+#exp_0_hw_10_formation_1_2d_6p_group_start \
+#exp_1_simu_10_formation_10d_group_start \
+#exp_0_hw_01_formation_1_2d_10p \
+#exp_1_simu_1_formation_10d \
 
 	# mission 2 obstacle avoidance
 	# 01 small obstacles
@@ -21,23 +21,23 @@ exp_1_simu_1_formation_10d \
 	# 03 large obstacles
 	# 04 large obstacles 10 drone
 
-exp_0_hw_02_obstacle_avoidance_small
-exp_1_simu_02_obstacle_avoidance_small_10d
-exp_0_hw_03_obstacle_avoidance_large
-exp_1_simu_03_obstacle_avoidance_large_10d
+#exp_0_hw_02_obstacle_avoidance_small
+#exp_1_simu_02_obstacle_avoidance_small_10d
+#exp_0_hw_03_obstacle_avoidance_large
+#exp_1_simu_03_obstacle_avoidance_large_10d
 
 	# mission 3
 	# 01 funnel
 	# 02 funnel 10 drone
 
-exp_0_hw_04_switch_line
-exp_1_simu_04_switch_line
+#exp_0_hw_04_switch_line
+#exp_1_simu_04_switch_line
 
 	# mission 4
 	# 01 choosing gates
 	# 02 choosing gates -- scalability scale 2 13 drones
 
-exp_0_hw_05_gate_switch
+#exp_0_hw_05_gate_switch
 
 #scalablity scale 2   # run seperately later TODO
 
@@ -47,9 +47,16 @@ exp_0_hw_05_gate_switch
 	# 03 move circle 
 	# 04 move circle 10 drone
 
-exp_0_hw_08_split
-exp_1_simu_08_split
-exp_0_hw_09_1d_switch_rescue
+#exp_0_hw_08_split
+#exp_1_simu_08_split
+#exp_0_hw_09_1d_switch_rescue
+
+	# mission 6
+	# scalability gate choosing
+	# scalability analyze
+
+exp_2_simu_scalability
+#exp_2_simu_scalability_analyze
 
 # fault tolerance
 #exp_0_hw_07_fault_tolerance \
