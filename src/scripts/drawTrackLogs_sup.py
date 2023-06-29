@@ -376,14 +376,24 @@ def drawTrackLog(option):
 			   key_frame_i != 1 : # color not in robotData means not the first frame
 			   #"color" not in robotData: # color not in robotData means not the first frame
 				# check if it is a true brain (not failed robot)
+				'''
 				true_brain_flag = False
 				for j_robotID, j_robotData in key_frame.items() :
 					if j_robotData["parent"] == robotID :
 						true_brain_flag = True
 						break
-
+				# in simu data, we don't have parent info, so in colored_key_frame mode draw brain in any case
 				if 'colored_key_frame' in option and option['colored_key_frame'] == True :
 					true_brain_flag = True
+				'''
+				true_brain_flag = False
+				children_count = 0
+				for j_robotID, j_robotData in key_frame.items() :
+					if j_robotData["brain"] == robotID :
+						children_count = children_count + 1
+				if children_count > 1 :
+					true_brain_flag = True
+
 
 				brain_svg_front_path, attributes = svg2paths(brain_marker_svg_path)
 				brain_svg_marker = parse_path(attributes[0]['d'])

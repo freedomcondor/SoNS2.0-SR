@@ -339,7 +339,8 @@ def drawTrackLog(option):
 				# check if it is a true brain (not failed robot)
 				true_brain_flag = False
 				for j_robotID, j_robotData in key_frame.items() : 
-					if j_robotData["parent"] == robotID :
+					#if j_robotData["parent"] == robotID :
+					if j_robotData["brain"] == robotID :
 						true_brain_flag = True 
 						break
 					

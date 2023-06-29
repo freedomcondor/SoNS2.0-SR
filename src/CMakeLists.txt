@@ -31,7 +31,7 @@ add_library(my_extensions SHARED
   extensions/debug/debug_default_actuator.cpp
   # add the extended pipuck model
   extensions/pipuck_ext/pipuck_ext_entity.h
-  extensions/pipuck_ext/pipuck_ext_entity.cpp  
+  extensions/pipuck_ext/pipuck_ext_entity.cpp
   extensions/pipuck_ext/dynamics3d_pipuck_ext_model.h
   extensions/pipuck_ext/dynamics3d_pipuck_ext_model.cpp
   # include the loop function
@@ -55,8 +55,8 @@ if(ARGOS_QTOPENGL_FOUND)
 endif(ARGOS_QTOPENGL_FOUND)
 
 #set(CMAKE_MNS_DATA_PATH ${CMAKE_SOURCE_DIR}/../../mns2.0-data)
-set(CMAKE_MNS_DATA_PATH /media/harry/Expansion/Storage/mns2.0-data)
-#set(CMAKE_MNS_DATA_PATH /Volumes/Expansion/Storage/mns2.0-data)
+#set(CMAKE_MNS_DATA_PATH /media/harry/Expansion/Storage/mns2.0-data)
+set(CMAKE_MNS_DATA_PATH /Volumes/Expansion/Storage/mns2.0-data)
 
 #create a logs folder for logs
 make_directory(logs)

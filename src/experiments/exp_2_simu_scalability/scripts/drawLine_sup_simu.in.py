@@ -124,7 +124,6 @@ track_option['figsize'] = [10, 10]
 
 track_option['main_ax_lim'] = [-0.5, 13]
 
-'figsize'          : [10, 10],
 drawTrackLog(track_option)
 track_option['SRFig_save'] = savePDFNameBase + "scale4_25drones_" + sample_run + "_ErrorLog.pdf"
 drawSRFig(track_option)

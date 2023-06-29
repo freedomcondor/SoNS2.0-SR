@@ -12,19 +12,14 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-#dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
-dataFolder = "@CMAKE_MNS_DATA_PATH@/../scalability_analyze_data/data_simu_1-750"
-savePDFNameBase = "mission6_scalability_formation_analyze_"
+dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_simu/data"
+savePDFNameBase = "mission7_fault_tolerance_exp07_simu_"
 sampleList = [
-#	"run150",  # 5
-#	"run300",  # 10
-#	"run450",  # 15
-#	"run600",  # 20
-#	"run750",  # 25
-	"run210",  # 7
-	"run390",  # 13
-	"run570",  # 19
-	"run750",  # 25
+	"run2",
+	"run18",
+	"run22",
+	"run42",
+	"run48",
 ]
 
 #----------------------------------
@@ -37,9 +32,9 @@ track_option_base = {
 #	'trackLog_save'     : savePDFNameBase + sample_run + ".pdf",
 	'trackLog_show'     : False,
 
-	'x_lim'             :    [-8, 8],
-	'y_lim'             :    [-8, 8],
-	'z_lim'             :    [-1.0, 7.0],
+	'x_lim'     :  [-3.5, 4.5]           ,
+	'y_lim'     :  [-4, 4]       ,
+	'z_lim'     :  [-1.0, 7.0]         ,
 
 	'showRobotName'     : False,
 
@@ -47,7 +42,7 @@ track_option_base = {
 
 	'SRFig_show'        : False,
 	'no_violin'         : True,
-	'main_ax_lim'       : [-0.5, 6],
+	'main_ax_lim'       : [-0.5, 3.5],
 }
 
 #----------------------------------
@@ -57,7 +52,8 @@ x_lim_list = {}
 y_lim_list = {}
 z_lim_list = {}
 
-key_frame_example = [0]
+#key_frame_example = [0, 250, 950]
+key_frame_example = [0, 250, 1000]
 
 #-----------------------------------------------------------
 for sample_run in sampleList :
