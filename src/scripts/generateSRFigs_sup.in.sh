@@ -54,18 +54,18 @@ exp_0_hw_09_1d_switch_rescue \
 	# scalability gate choosing
 	# scalability analyze
 
-exp_2_simu_scalability
-exp_2_simu_scalability_analyze
+exp_2_simu_scalability \
+exp_2_simu_scalability_analyze \
 
 	# mission 7 fault tolerance
 	# 01 fault tolerance hw
 	# 02 fault tolerance 33 loss
 	# 03 fault tolerance comm loss
 
-exp_0_hw_07_fault_tolerance
-exp_3_simu_02_fault_tolerance_33
-exp_3_simu_03_fault_tolerance_communication
-exp_3_simu_04_fault_tolerance_visual
+exp_0_hw_07_fault_tolerance \
+exp_3_simu_02_fault_tolerance_33 \
+exp_3_simu_03_fault_tolerance_communication \
+exp_3_simu_04_fault_tolerance_visual \
 )
 
 for exp_name in ${EXPERIMENT_LIST[@]}
