@@ -5,11 +5,38 @@ exec(compile(open(drawDataFileName, "rb").read(), drawDataFileName, 'exec'))
 from scipy.stats import mannwhitneyu
 from scipy.stats import ttest_ind 
 
+import numpy as np
+from statsmodels.graphics.gofplots import qqplot_2samples
+import statsmodels.api as sm
+
+from matplotlib.ticker import FormatStrFormatter
+
+def readDataFromFolderWithCut(dataFolder) :
+	boxdata = []
+	for subFolder in getSubfolders(dataFolder) :
+		# calc cut time
+		origin_single_data = readDataFrom(subFolder + "result_data.txt")
+		length = len(origin_single_data)
+		tail_data = origin_single_data[length-20:]
+		end_error = sum(tail_data) / len(tail_data)
+		cut_time = 0
+		for i in range(0, length) :
+			if origin_single_data[i] < end_error :
+				cut_time = i
+				break
+
+		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+			origin_each_robot_data = readDataFrom(subFile)
+			boxdata = boxdata + origin_each_robot_data[cut_time:]
+
+	return boxdata
+
 def readDataFromFolder(dataFolder) :
 	boxdata = []
 	for subFolder in getSubfolders(dataFolder) :
 		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
 			boxdata = boxdata + readDataFrom(subFile)
+#		boxdata = readDataFrom(subFolder + "result_data.txt")
 	return boxdata
 
 
@@ -32,21 +59,25 @@ folder_pairs = [
 		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_hw/data",
 		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_simu/data",
 		"SoNS Establishing\n(scattered)",
+		[0, 1.0]
 	],
 	[
 		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_hw/data",
 		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_simu/data",
 		"SoNS Establishing\n(clustered)",
+		[0, 0.5]
 	],
 	[
 		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data",
 		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_simu/data",
 		"Obstacle Avoidance\n(smaller obstacles)",
+		[0, 2.5]
 	],
 	[
 		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_hw/data",
 		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_simu/data",
 		"Obstacle Avoidance\n(larger obstacles)",
+		[0, 2.5]
 	],
 	[
 		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_04_switch_line/data_hw/data",
@@ -82,20 +113,26 @@ offset = 0.15
 distance = 1
 index = 0
 
+index_number = 0
 f = open('violin_compares.dat', "w")
 for folder_pair in folder_pairs :
 	index = index + distance
+	index_number = index_number + 1
 
 	tick_index.append(index+offset)
 	tick_label.append(folder_pair[2])
 
 	print("reading : " + folder_pair[0])
 	data_left = readDataFromFolder(folder_pair[0])
+	if index_number == 1 or index_number == 2 :
+		data_left = readDataFromFolderWithCut(folder_pair[0])
 	datas_left.append(data_left)
 	positions_left.append(index - offset)
 
 	print("reading : " + folder_pair[1])
 	data_right = readDataFromFolder(folder_pair[1])
+	if index_number == 1 or index_number == 2 :
+		data_right = readDataFromFolderWithCut(folder_pair[1])
 	datas_right.append(data_right)
 	positions_right.append(index + offset)
 
@@ -108,8 +145,51 @@ for folder_pair in folder_pairs :
 	f.write("\tU = {}\n".format(U))
 	f.write("\tT = {}\n".format(T))
 
+	'''
+	if True :
+		pp_left  = sm.ProbPlot(np.array(data_left))
+		pp_right = sm.ProbPlot(np.array(data_right))
+		qqplot_2samples(pp_left, pp_right)
+	'''
+
 f.close()
 
+# draw qq plot ---------------------------------------------------------------------
+fig, axs = plt.subplots(2, 4, figsize=(10,5.5))
+fig.subplots_adjust(
+	top=0.9,
+	bottom=0.1,
+	left=0.075,
+	right=0.975,
+	hspace=0.700,
+	wspace=0.400
+)
+for i in range(0, 8) :
+	axs_i = int(i / 4)
+	axs_j = i % 4
+
+	pp_left  = sm.ProbPlot(np.array(datas_left[i]))
+	pp_right = sm.ProbPlot(np.array(datas_right[i]))
+	qqplot_2samples(
+		pp_left,
+		pp_right,
+		ax=axs[axs_i, axs_j],
+		xlabel="hardware",
+		ylabel="simulation",
+		line="45"
+	)
+
+	axs[axs_i, axs_j].set_title(folder_pairs[i][2])
+	axs[axs_i, axs_j].xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+	axs[axs_i, axs_j].yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+
+	if len(folder_pairs[i]) == 4 :
+		axs[axs_i, axs_j].set_xlim(folder_pairs[i][3])
+
+plt.show()
+fig.savefig("qqplot.pdf")
+
+# draw violin plot ---------------------------------------------------------------------
 fig, ax = plt.subplots(1, 1)
 fig.subplots_adjust(
 	top=0.945,
@@ -140,7 +220,7 @@ ax.legend(legend_handles,
     fontsize="small",
 )
 
-plt.savefig("violin_compares.pdf")
+fig.savefig("violin_compares.pdf")
 
 '''
 color = 'blue'
