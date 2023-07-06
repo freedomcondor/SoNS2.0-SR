@@ -10,6 +10,10 @@ for EXP_DIR in "$EXPS_DIR"*/ ; do
 	echo $EXP_DIR
 	# looping data_hw/data and data_simu/data
 	for DATA_SET_NAME in data_hw data_simu ; do
+		if [ ! -d "$EXP_DIR"$DATA_SET_NAME ]; then
+			echo skiping "$EXP_DIR"$DATA_SET_NAME
+			continue
+		fi
 		# check data_hw/data or data_hw
 		if [ -d "$EXP_DIR"$DATA_SET_NAME/data ]; then
 			DATA_SET_NAME=$DATA_SET_NAME/data
