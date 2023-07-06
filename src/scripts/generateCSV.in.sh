@@ -14,10 +14,10 @@ for EXP_DIR in "$EXPS_DIR"*/ ; do
 	for DATA_SET_NAME in data_simu* hw_simu*; do
 		echo checking $DATA_SET_NAME
 		# skipping data_hw and data_simu for the second round
-		if [ "$DATA_SET_NAME" == "data_hw" ] || [ "$DATA_SET_NAME" == "data_simu" ]; then 
-			echo skipping $DATA_SET_NAME
-			continue
-		fi
+		#if [ "$DATA_SET_NAME" == "data_hw" ] || [ "$DATA_SET_NAME" == "data_simu" ]; then 
+		#	echo skipping $DATA_SET_NAME
+		#	continue
+		#fi
 
 		if [ ! -d "$EXP_DIR"$DATA_SET_NAME ]; then
 			echo doesn\'t exist: "$EXP_DIR"$DATA_SET_NAME
