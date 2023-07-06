@@ -9,9 +9,18 @@ echo $EXPS_DIR
 for EXP_DIR in "$EXPS_DIR"*/ ; do
 	echo $EXP_DIR
 	# looping data_hw/data and data_simu/data
-	for DATA_SET_NAME in data_hw data_simu ; do
+	cd $EXP_DIR
+	#for DATA_SET_NAME in data_hw data_simu data_simu*; do
+	for DATA_SET_NAME in data_simu* hw_simu*; do
+		echo checking $DATA_SET_NAME
+		# skipping data_hw and data_simu for the second round
+		if [ "$DATA_SET_NAME" == "data_hw" ] || [ "$DATA_SET_NAME" == "data_simu" ]; then 
+			echo skipping $DATA_SET_NAME
+			continue
+		fi
+
 		if [ ! -d "$EXP_DIR"$DATA_SET_NAME ]; then
-			echo skiping "$EXP_DIR"$DATA_SET_NAME
+			echo doesn\'t exist: "$EXP_DIR"$DATA_SET_NAME
 			continue
 		fi
 		# check data_hw/data or data_hw
