@@ -11,7 +11,7 @@ for EXP_DIR in "$EXPS_DIR"*/ ; do
 	# looping data_hw/data and data_simu/data
 	cd $EXP_DIR
 	#for DATA_SET_NAME in data_hw data_simu data_simu*; do
-	for DATA_SET_NAME in data_simu* hw_simu*; do
+	for DATA_SET_NAME in data_simu* data_hw*; do
 		echo checking $DATA_SET_NAME
 		# skipping data_hw and data_simu for the second round
 		#if [ "$DATA_SET_NAME" == "data_hw" ] || [ "$DATA_SET_NAME" == "data_simu" ]; then 

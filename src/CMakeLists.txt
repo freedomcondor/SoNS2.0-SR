@@ -59,6 +59,9 @@ set(CMAKE_MNS_DATA_PATH /media/harry/Expansion/Storage/mns2.0-data)
 #set(CMAKE_MNS_DATA_PATH /Volumes/Expansion/Storage/mns2.0-data)
 #set(CMAKE_MNS_DATA_PATH ${CMAKE_BINARY_DIR}/temp-mns2.0-data)
 
+set(CMAKE_PUB_DATA_PATH /media/harry/Expansion/Storage/mns2.0-public-data)
+#set(CMAKE_PUB_DATA_PATH ${CMAKE_BINARY_DIR}/temp-mns2.0-public-data)
+
 #create a logs folder for logs
 make_directory(logs)
 #add experiments sub directory
