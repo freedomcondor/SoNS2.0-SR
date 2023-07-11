@@ -1,6 +1,3 @@
---[[
---	drone api
---]]
 logger.register("droneAPI")
 
 local api = require("commonAPI")
@@ -24,7 +21,11 @@ function api.actuator.setNewLocation(locationV3, rad)
 end
 
 -- drone flight preparation sequence
----- take off reparation -------------------
+-- In hardware, the drone follows a procedure to take off
+-- 1. set armed, the propeller start to rotate
+-- 2. set offboard mode, the pixhawk start take commands from the upcore, and upcore should set (0,0,1.5) so that the drone takes off
+-- 3. After the drone takes off, we go to navigation mode, where the upcore can freely navigate the drone
+
 api.actuator.flight_preparation = {
 	state = "pre_flight",
 	state_duration = 25,
@@ -75,6 +76,12 @@ api.actuator.flight_preparation.run_state = function()
 end
 
 ---- Virtual Frame and tilt ---------------------
+-- For explanation of virtual frame, please refer to the virtual frame section in commonAPI.lua
+-- For drones, since the drones tilts when moving around, the virtual frame of drones also serves to cancel that tilt,
+-- so that the turret of virtual frame will always be horizontal.
+-- Here we use logicOrientationQ for rotation as the same as orientationQ in commonAPI,
+-- And anti-tilt logicOrientationQ into orientationQ,
+-- In this way, api.virtualFrame.orientationQ will be the horizontal virtual frame
 api.virtualFrame.orientationQ = quaternion(math.pi/4, vector3(0,0,1))
 api.virtualFrame.logicOrientationQ = api.virtualFrame.orientationQ
 -- overwrite rotateInspeed to change logicOrientation
@@ -105,9 +112,10 @@ function api.droneTiltVirtualFrame()
 	api.virtualFrame.orientationQ = tilt * api.virtualFrame.logicOrientationQ
 end
 
----- overload Step Function ---------------------
--- 5 step functions :
--- init, reset, destroy, preStep, postStep
+---- overwrite Step Function ---------------------
+-- api inherits step functions from commonAPI
+-- 5 step functions: init, reset, destroy, preStep, postStep
+-- Here we overwrite these functions adding specific drone operations (if needed).
 api.commonInit = api.init
 function api.init()
 	api.commonInit()

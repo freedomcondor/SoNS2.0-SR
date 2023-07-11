@@ -60,15 +60,18 @@ function api.postStep()
 end
 
 ---- Location Estimate ------------------------
-	-- estimates the location and orientation of the next step relative to current step
+	-- estimates the location and orientation of the next step relative to those at the current one
 api.estimateLocation = {
 	positionV3 = vector3(),
 	orientationQ = quaternion(),
 }
 
 ---- Virtual Coordinate Frame -----------------
-	-- instead of turn the real robot, we turn the virtual coordinate frame, 
-	-- so that a pipuck can be "omni directional"
+	-- The purpose of virtual coordinate frame is to give a "tank turret" to a robot, 
+	-- All the vns level operation is relative to this "turret", the virtual coordinate frame
+	-- when a robot is turning, instead of turning the real robot, we turn the virtual coordinate frame, 
+	-- so that a non-omni directional robot like a pipuck can moving left while heading ahead (with respect to the turret).
+	-- in this way, a pipuck can be operate "omni directionally"
 api.virtualFrame = {}
 api.virtualFrame.orientationQ = quaternion()
 function api.virtualFrame.rotateInSpeed(speedV3)

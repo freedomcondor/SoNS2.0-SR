@@ -6,8 +6,9 @@ local api = require("commonAPI")
 
 ---- actuator --------------------------
 api.actuator = {}
--- idealy, I would like to use robot.diff_drive.set_t_velocity only once per step
--- newLeft and newRight are recorded, and enforced at last in dronePostStep
+-- in each step, robot.differential_drive.set_linear_velocity should only be called once at last
+-- vns and api level uses setNewWheelSpeed to command pipuck's speed
+-- no matter how many command is given, newLeft and newRight are recorded, and enforced to set_linear_velocity at last in dronePostStep
 api.actuator = {}
 api.actuator.newLeft = 0
 api.actuator.newRight = 0

@@ -1,10 +1,11 @@
---------------------------------------------
---	Version 1.1 : start basic function, but didn't handle minus situation very well
---------------------------------------------
+-- This is a big number library, it handles a basic add operations for super large numbers that exceeds 2^32
+-- All the BaseNumber is expressed in N = Base^exp[0] + Base^exp[1] + Base^exp[2] ...
+-- vns only requires numbers with the base to add
+
 local BaseNumber = {CLASSBASENUMBER = true}
 BaseNumber.__index = BaseNumber
 
--- call with B a se Nu m b er(0,0,0)
+-- call with BaseNumber(x,{y1, y2, y3, ...}) -- produce a number x^y1 + x^y2 + x^y3 ...
 local BaseNumbermt = {}
 setmetatable(BaseNumber, BaseNumbermt)
 function BaseNumbermt:__call(base, exp)
@@ -53,22 +54,23 @@ function BaseNumber:create(base, exp)
 	return instance
 end
 
+-- add the "exp"th level by "amount"
 function BaseNumber:inc(exp, amount)
 	self.exp[exp] = self.exp[exp] + amount or 1
 end
 
+-- create a base number with only 1 exp level as 1
 function BaseNumber:createWithInc(base, dit)
 	local exp = {}
 	exp[dit] = 1
 	return BaseNumber:create(base, exp)
 end
 
-
 -------------------------------------------------------------------------
 -- every operator below should not change the parameters, 
--- for example if b = a:nor(), then a remains the same and b is a's normalization
--- except for regulate()
+-- for example if b = a:nor(), then a remains the same and b is a's normalization, except for regulate()
 
+-- regulate exp list, combine same ones and remove 0
 function BaseNumber:regulate()
 	for i = 0, self.highestBit do
 		if self.exp[i] ~= nil then
@@ -83,7 +85,7 @@ function BaseNumber:regulate()
 	end
 end
 
--- c = a + b
+-- Add two base numbers
 function BaseNumber.__add(a,b)
 	if type(a) == "number" and a == 0 and 
 	   type(b) == "table" and b.CLASSBASENUMBER == true then
@@ -106,6 +108,7 @@ function BaseNumber.__add(a,b)
 	return BaseNumber:create(a.base)
 end
 
+-- Add minus base number
 function BaseNumber.__unm(b)
 	local c = BaseNumber:create(b)
 	for i, v in pairs(c.exp) do
@@ -114,14 +117,14 @@ function BaseNumber.__unm(b)
 	return c
 end
 
+-- Subtrack two base numbers
 function BaseNumber.__sub(a,b)
 	local c = BaseNumber:create(-b)
 	c = c + a
 	return c
 end
 
--- the result of * is a Vector, cross multi of Vectors, or number multi like 5 * a
-	-- for productive multi, see __pow
+-- For * operator handles only number multiply, like 5 * a
 function BaseNumber.__mul(a,b)
 	if type(a) == "table" and a.CLASSBASENUMBER == true and
 	   type(b) == "number" then
@@ -143,13 +146,14 @@ function BaseNumber.__mul(a,b)
 	end
 end
 
+-- a divided by b, b has to be a number
 function BaseNumber.__div(a,b)
 	if type(b) == "number" and b ~= 0 then
 		return a * (1/b)
 	end
 end
 
--- the result of ^ is a number : productive multi, you can write a ^ a, or a ^ 2
+-- check whether a == b
 function BaseNumber.__eq(a,b)
 	if a.base ~= b.base then
 		return false
@@ -166,7 +170,8 @@ function BaseNumber.__eq(a,b)
 	return true
 end
 
-function BaseNumber.__lt(a,b)  -- <
+-- check whether a < b
+function BaseNumber.__lt(a,b)
 	if a == math.huge then return false end
 	if b == math.huge then return true end
 
@@ -200,7 +205,9 @@ function BaseNumber.__lt(a,b)  -- <
 		return false
 	end
 end
-function BaseNumber.__le(a,b)  -- <=
+
+-- check whether a >= b
+function BaseNumber.__le(a,b)
 	if b == math.huge then return true end
 	if a == math.huge then return false end
 
@@ -235,6 +242,7 @@ function BaseNumber.__le(a,b)  -- <=
 	end
 end
 
+-- convert to string for print
 function BaseNumber:__tostring()
 	local str = "(" .. self.base .. ": ("
 	for i = 0, self.highestBit do

@@ -1,3 +1,8 @@
+-- in Lua, in a loop like "for i,v in pairs() do", pairs() produces different order every time.
+-- in order to repeat the same experiment, AlphaPairs.lua and RandomPairs.lua are used to overwrite pairs() to produce a stable output when looping.
+-- AlphaPairs sorts all the index in the table in an alphabet order (first numbers, and then string in alphabet order)
+-- RandomPairs generates the same random sequence of the indices every time.
+
 rawpairs = pairs
 local random_pairs = function(intable)
     -- create index as a alpha ordered index of intable
@@ -21,6 +26,7 @@ local random_pairs = function(intable)
     end
     local n = #index
 
+    --[[
     -- create a random sequence of 1 to n
     local random_list = {}
     for i = 1, n do random_list[i] = i end
@@ -32,6 +38,7 @@ local random_pairs = function(intable)
         random_list[i], random_list[random_number] = 
         random_list[random_number], random_list[i]
     end
+    --]]
 
 	local i = 0;
 	return 

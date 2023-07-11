@@ -9,13 +9,7 @@ if [ ! -d "$public_dir" ]; then
 	mkdir $public_dir
 fi
 
-# list of experiments and their public names
-lists=(
-	"exp_0_hw_01_formation_1_2d_10p    mission1_hw_exp_formation_scatter"
-#	"exp_0_hw_05_gate_switch           mission4_hw_exp_gate_switch"
-	"exp_3_simu_01_fault_tolerance_66  mission5_hw_exp_fault_tolerance"
-)
-
+#-----------------------------------------------------------------------------------
 copy_run() {
 	# all parameter folder ends with /
 	input_run_folder=$1
@@ -51,6 +45,13 @@ copy_run() {
 	#	fi
 	#fi
 }
+
+#-----------------------------------------------------------------------------------
+# list of experiments and their public names
+exp_folder_lists=(
+	"exp_0_hw_01_formation_1_2d_10p    mission1_hw_exp_formation_scatter"
+	"exp_0_hw_05_gate_switch           mission4_hw_exp_gate_switch"
+)
 
 copy_exp_folder() {
 	input_folder=$1
@@ -119,11 +120,45 @@ copy_exp_folder() {
 		done
 	done
 }
+#-----------------------------------------------------------------------------------
+# list of data sets and their public names
+data_set_lists=(
+	"exp_0_hw_01_formation_1_2d_10p/data_hw/data    1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robots_experiments"
+	"exp_0_hw_01_formation_1_2d_10p/data_simu/data  1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/12robots"
+)
 
-for i in ${!lists[@]}; do
-	read -a exp_tuple <<< ${lists[$i]}
-	copy_exp_folder ${exp_tuple[0]} ${exp_tuple[1]}
+copy_data_set_folder() {
+	input_data_set_folder=$1
+	output_data_set_folder=$2
+	echo "copying from $input_data_set_folder"
+	echo "          to $output_data_set_folder"
 
+	if [ ! -d $raw_exps_dir/$input_data_set_folder ]; then
+		echo "[Waring]: input data set doesn't exist, skipped: $public_dir/$output_data_set_folder"
+		continue
+	fi
+
+	mkdir -p $public_dir/$output_data_set_folder
+	cd $raw_exps_dir/$input_data_set_folder
+	i=0
+	for run_folder in */; do
+		echo $run_folder
+		((i=i+1))
+		output_run_folder=$public_dir/$output_data_set_folder/$run_folder
+		if [[ $run_folder != run* ]]; then
+			echo "            " $run_folder is not run*, renaming to run$i
+			output_run_folder=$public_dir/$output_data_set_folder/run$i/
+		fi
+
+		mkdir -p $output_run_folder
+		copy_run $raw_exps_dir/$input_data_set_folder/$run_folder $output_run_folder #$run_folder
+	done
+}
+#-----------------------------------------------------------------------------------
+
+for i in ${!data_set_lists[@]}; do
+	read -a exp_tuple <<< ${data_set_lists[$i]}
+	copy_data_set_folder ${exp_tuple[0]} ${exp_tuple[1]}
 done
 
 cd $ORIGIN_DIR
