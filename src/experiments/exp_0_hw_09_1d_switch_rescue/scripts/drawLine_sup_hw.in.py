@@ -15,13 +15,14 @@ exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exe
 dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw"
 savePDFNameBase = "mission5_search_rescue_exp0_09_hw_"
 sampleList = [
-	"test_20220803_1_success_1" ,
 	"test_20220804_1_success_2" ,
 	"test_20220804_2_success_3" ,
 	"test_20220804_3_success_4" ,
 	"test_20220804_4_success_5" ,
 	"test_20220804_5_success_6" ,
 ]
+
+#	"test_20220803_1_success_1" ,
 
 #----------------------------------
 track_option_base = {

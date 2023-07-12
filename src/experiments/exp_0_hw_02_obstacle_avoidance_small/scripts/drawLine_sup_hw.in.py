@@ -18,12 +18,13 @@ sampleList = [
 	"test_20220622_success_1",
 	"test_20220622_success_2",
 	"test_20220622_success_3",
-	"test_20220622_success_4_ULB",
 	"test_20220622_success_5",
-	"test_20220623_success_0",
 	"test_20220623_success_1",
-	"test_20220623_success_2",
 ]
+
+#	"test_20220622_success_4_ULB",
+#	"test_20220623_success_0",
+#	"test_20220623_success_2",
 
 #----------------------------------
 track_option_base = {
