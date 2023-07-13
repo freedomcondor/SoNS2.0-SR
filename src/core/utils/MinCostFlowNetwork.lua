@@ -1,7 +1,10 @@
+--------------------------------------------------------------------------------------
+-- Dijkstra algorithm finding shortest path
+-- w is a square of weight, w[i][j] = nil means no connect
+-- if w[i][j] is a table, means multiple connects between i and j
+-- return D: an array from 1 to n, D[i] means the shortest path distance from 1 to i
+--        L: an array from 1 to n, L[i] means the last node from the shortest path
 local Dijkstra = function(w)
-	-- w is a square of weight, w[i][j] = nil means no connect
-	-- if w[i][j] is a table, means multiple connects between i and j
-	-- find shortest path from 1 to i
 
 	local INF = 1 / 0
 
@@ -49,12 +52,17 @@ local Dijkstra = function(w)
 	return D, L
 end
 
+--------------------------------------------------------------------------------------
+-- Find Minimum Cost Flow Network
+-- w is the weight
+-- c is the capacity  c[i][j] = nil means no connect
+-- assume the flow is one-directional 
+-- if c[j][i] = xxx then c[j][i] = nil
+
+-- output: f[i][j]: how much flow from i to j
+
 function MinCostFlowNetwork(c, w)
 	local INF = 1/0
-	-- w is the weight
-	-- c is the capacity  c[i][j] = nil means no connect
-	-- assume the flow is one-directional 
-	-- if c[j][i] = xxx then c[j][i] = nil
 
 	-- n is the number of nodes
 	local n = #c

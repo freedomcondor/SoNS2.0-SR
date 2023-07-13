@@ -1,3 +1,25 @@
+-- This is a library doing linear operations on position and orientation
+-- A transform is defined as a combination of position and orientation, it describes where an object is relative to another
+-- Here, a transformed is represented by a table with two elemets: positionV3 and orientationQ
+-- t = {
+--          positionV3 = vector3(xxx)
+--          orientationQ = quaternion(xxx)
+--     }
+
+-- Operation between transforms can be considered as a group (group from group, ring, field ... )
+-- For example, the transform of Object B relative to Object A can be considered as a : A -> B (A see B at a)
+--              the transform of Object C relative to Object B is   b : B -> C                 (B see C at b)
+--        Then, the transform of Object C relative to Object A is   c : A -> C = a x b         (A see C at axb)
+
+--    a
+-- A --> B
+--  \    |
+--   \   |b
+--  c \  v
+--     \ C
+
+-- The following functions provides basic calculations around axb=c
+
 local Transform = {}
 
 -- C = A x B
@@ -55,6 +77,11 @@ end
 
 -------------------------------------------------------------------
 -- Accumulator
+-- This section provides a accumulator and averager of transforms
+-- What is the average of several transforms?
+-- It is used when multiple robots see the same object, the brain or common parent needs to decide where this object is.
+
+-- Creates an accumulator
 function Transform.createAccumulator()
 	return {
 		positionV3 = vector3(),
@@ -65,6 +92,7 @@ function Transform.createAccumulator()
 	}
 end
 
+-- Add a transform into an accumulator
 function Transform.addAccumulator(accumulator, transform)
 	accumulator.n = accumulator.n + 1
 	accumulator.positionV3 = accumulator.positionV3 + transform.positionV3
@@ -73,6 +101,7 @@ function Transform.addAccumulator(accumulator, transform)
 	accumulator.orientation_Z_V3 = accumulator.orientation_Z_V3 + vector3(0,0,1):rotate(transform.orientationQ)
 end
 
+-- subtract a transform from an accumulator
 function Transform.subAccumulator(accumulator, transform)
 	accumulator.n = accumulator.n - 1
 	accumulator.positionV3 = accumulator.positionV3 - transform.positionV3
@@ -81,6 +110,7 @@ function Transform.subAccumulator(accumulator, transform)
 	accumulator.orientation_Z_V3 = accumulator.orientation_Z_V3 - vector3(0,0,1):rotate(transform.orientationQ)
 end
 
+-- average an accumulator and return the average transform
 function Transform.averageAccumulator(accumulator, transform)
 	if transform == nil then transform = {} end
 	transform.positionV3 = accumulator.positionV3 * (1/accumulator.n)
@@ -93,6 +123,8 @@ end
 
 -------------------------------------------------------------------
 -- Average Quaternion 
+-- In the accumulator, the accumulation of a quaternion is implemented by accumulating the unit vectors in XYZ axis rotated by this quaternion
+-- So at last it is needed to calculate the quaternion back from two destiny vectors and the source vectors
 function Transform.fromToQuaternion(vec1, vec2)
 	-- assuming vec1 and vec2 are normal vectors
 	if vec1 == vec2 then return quaternion() end

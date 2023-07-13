@@ -1,7 +1,10 @@
+-- This file provides some common operations for many scenarios, for example detect wall, detect gates.. etc
+
 ExperimentCommon = {}
 
+-- This function iterates all the obstacles that are <wall_brick_type> in vns.avoider.obstacles
+-- Returns the nearest obstacle
 ExperimentCommon.detectWall = function(vns, wall_brick_type)
-	--return the nearest wall brick from vns.avoider.obstacles
 	local nearest = nil
 	local dis = math.huge
 	for i, ob in ipairs(vns.avoider.obstacles) do
@@ -15,8 +18,9 @@ ExperimentCommon.detectWall = function(vns, wall_brick_type)
 	return nearest
 end
 
+-- This function iterates all the obstacles that are <wall_brick_type> in vns.collectivesensor.receiveList
+-- Returns the nearest obstacle
 ExperimentCommon.detectWallFromReceives = function(vns, wall_brick_type)
-	--return the nearest wall brick from vns.avoider.obstacles
 	local nearest = nil
 	local dis = math.huge
 	for i, ob in ipairs(vns.collectivesensor.receiveList) do
@@ -30,6 +34,17 @@ ExperimentCommon.detectWallFromReceives = function(vns, wall_brick_type)
 	return nearest
 end
 
+-- This function matches two gate bricks into gates and detects the largest gate in a wall that it sees or receives from children
+-- input:  
+--     vns: checks from both vns.avoider.obstacles and vns.collectivesensor.receiveList
+--     gate_brick_type: gate brick type is <gate_brick_type>
+--     max_gate_size: the largest possible gate size,
+--          sometimes, robot may mistakenly match two gate side very far away, so max_gate_size is set so that robot knows it matches wrong
+--     report_all: if true, robot reports to its parent all the gate/gate side it sees, otherwise only the unmatched one
+--         
+-- output: 1. the table of the largest gate
+--         2. the size of the largest gate
+--         3. the total number of gates it and its downstream children have seen
 ExperimentCommon.detectAndReportGates = function(vns, gate_brick_type, max_gate_size, report_all)
 	if vns.robotTypeS ~= "drone" then return {}, nil end
 
@@ -175,6 +190,8 @@ ExperimentCommon.detectAndReportGates = function(vns, gate_brick_type, max_gate_
 	return gates, largest, gateNumber
 end
 
+-- This function iterates all the obstacles that are <target_type> in vns.avoider.obstacles
+-- Returns the nearest
 ExperimentCommon.detectTarget = function(vns, target_type)
 	--return the nearest target vns.avoider.obstacles
 	local nearest = nil
@@ -190,7 +207,9 @@ ExperimentCommon.detectTarget = function(vns, target_type)
 	return nearest
 end
 
---     from vns.collectivesensor.receiveList, or what I see to vns.collectivesensor.sendList
+-- This function checks if it sees obstacle of <wall_brick_type> and report to parent
+-- It first checks from vns.avoider.obstacles, if nothing, it checks vns.collectivesensor.receiveList (Only trust my eye first)
+
 ExperimentCommon.reportWall = function(vns, wall_brick_type)
 	local wall_brick 
 	if vns.robotTypeS == "drone" then

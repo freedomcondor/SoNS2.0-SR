@@ -1,16 +1,5 @@
------------------------------------------------------------
--- 	Weixu Zhu
--- 		zhuweixu_harry@126.com
---
--- 	Version 1.1 : 
--- 		add function for Vector3 and Quaternion recover
--- 	Version 2.0 :  
--- 		upgrade message searching problem
--- 	Version 3.0 :  
--- 		for vns2.0, delete vector3 and quaternion
--- 	Version 4.0 :  
---		send only one message per step
------------------------------------------------------------
+-- Message library, it provides operation to for robots to send message between each other
+
 local Message = {}
 
 Message.list = {}
@@ -33,6 +22,7 @@ function Message.preStep()
 	Message.arrange()
 end
 
+-- At the last of the step, send all the messages stored in waitToSend
 function Message.postStep(stepCount)
 	--[[ send one big table
 	Message.sendTable{
@@ -57,29 +47,9 @@ function Message.postStep(stepCount)
 	--]]
 end
 
+-- iterate from Message.getTablesAT(), which are all the messages it receives
+-- arrange these messages by command type and destiny, so that can be indexed quickly
 function Message.arrange()
-	--[[ receive one big table
-	for iN, msgFromEachRobot in ipairs(Message.getTablesAT()) do
-		for toS, msgArray in pairs(msgFromEachRobot.message) do
-			if toS == Message.myIDS() or toS == "ALLMSG" then
-				for jN, msgM in ipairs(msgArray) do
-					msgM.fromS = msgFromEachRobot.fromS
-					msgM.toS = toS
-					if Message.list[msgM.cmdS] == nil then
-						Message.list[msgM.cmdS] = {}
-					end
-					Message.list[msgM.cmdS][#Message.list[msgM.cmdS] + 1] = msgM
-					-- for ALLMSG
-					if Message.list["ALLMSG"] == nil then
-						Message.list["ALLMSG"] = {}
-					end
-					Message.list["ALLMSG"][#Message.list["ALLMSG"] + 1] = msgM
-				end
-			end
-		end
-	end
-	--]]
-
 	---[[ receive small tables
 	for iN, msgArray_with_key in ipairs(Message.getTablesAT()) do
 		local msgArray
@@ -106,6 +76,10 @@ function Message.arrange()
 	--]]
 end
 
+-- send a message (to store it in waitToSend list)
+-- toIDS: message destiny
+-- cmdS:  command type
+-- dataT: message data table
 function Message.send(toIDS, cmdS, dataT)
 	if Message.waitToSend[toIDS] == nil then
 		Message.waitToSend[toIDS] = {}
@@ -117,6 +91,7 @@ function Message.send(toIDS, cmdS, dataT)
 	}
 end
 
+-- Search a message from arranged list, by message source <fromS> and command type <cmdS>
 function Message.getAM(fromS, cmdS)
 	local listAM = {}
 	local i = 0
@@ -133,6 +108,7 @@ function Message.getAM(fromS, cmdS)
 	return listAM
 end
 
+-- link api, my ID, send table, and get received table needs to linked with argos api by commonAPI or certain robot API 
 function Message.myIDS()
 	print("Message.myIDS() needs to be implement")
 end

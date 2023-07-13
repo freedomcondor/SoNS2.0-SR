@@ -1,3 +1,7 @@
+-- This file generates C/C++ code that describes a tree morphology from a morphology written in lua
+-- It is used when evaluating the error using C code.
+-- It is depricated in the latest evaluator
+
 local file
 local count 
 
