@@ -1,3 +1,10 @@
+#----------------------------------------------------------------------------------------------
+# This file provides basic function to configure .argos file
+# Usually, in an experiment setup, there is a run.py that includes this file, and generate a
+# .argos file and run it with argos3
+# In this way, to run the experiment, do : python3 run.py -r x -l xx -v xx -m xxx
+# -r -l ... parameters will be explained in following section
+#----------------------------------------------------------------------------------------------
 import random
 import sys
 import getopt
@@ -9,6 +16,11 @@ usage="[usage] example: python3 xxx.py -r 1 -l 1000 -v true -m 10"
 
 #----------------------------------------------------------------------------------------------
 # parse opts
+# -r x means setting the randomseed to x, if not set, the default takes the current time
+# -l x means setting the randomseed to x, if not set, the default is None, so that run.py for each scenario uses it own defualt experiment length
+# -v True/False means sets whether to enable GUI. When we are doing large scale parallel experiments, we do not need GUI, so use -v False
+# -m x means using x threads in parallel
+
 try:
 	optlist, args = getopt.getopt(sys.argv[1:], "r:l:v:m:h")
 except:
@@ -51,12 +63,15 @@ if MultiThreads == None :
 if Visualization == False :
 	VisualizationArgosFlag = " -z"
 
-#######################################################################
+#----------------------------------------------------------------------------------------------
 # random seed
 random.seed(Inputseed)
 
-#######################################################################
+#----------------------------------------------------------------------------------------------
 # Controller
+# Generates controller <xml> section in .argos file
+# input params will be inserted in <params> as attributes
+# for example, a basic usage is generate_drone_controller('''script="pipuck_controller.lua"''')
 def generate_drone_controller(params) :
 	text = '''
     <!-- Drone Controller -->
@@ -99,6 +114,10 @@ def generate_pipuck_controller(params) :
 
 	return text
 
+#----------------------------------------------------------------------------------------------
+# This function generates <xml> sections in .argos for physcis engines, media, loop functions and visualizations
+# This part of code is commonly used for all the experiments, so we don't have to repeat these codes in every experiment scenario
+# Parameter cmake_binary_dir is the path where argos loop function and user functions are located
 def generate_physics_media_loop_visualization(cmake_binary_dir) :
 	text = '''
   <!-- ******************* -->
@@ -145,8 +164,10 @@ def generate_physics_media_loop_visualization(cmake_binary_dir) :
 
 	return text
 
-#######################################################################
+#----------------------------------------------------------------------------------------------
 # real lab scenario
+# This function generates <xml> sections in .argos for real lab scenario
+# It draws several boxes to resemble the wardrobes, tables, arena, and a man, the same as in the lab.
 def generate_real_scenario_object() :
 	if Visualization == False :
 		return ""
@@ -308,8 +329,14 @@ def generate_real_scenario_object() :
 	'''
 	return text
 
-#######################################################################
-# add xml of drone, pipuck, obstacle, targets
+#----------------------------------------------------------------------------------------------
+# These functions generate <xml> sections in .argos for obstacles, pipuck, drones
+# In general, the parameters starts with i, x, y, th, which mean the (i)th obstacle/pipuck/drone, and the x, y location in m, and orientation th in rad
+
+# For obstacles, type means the payload of the tag on the obstacle
+# generate_obstacle_box_xml generates a box with a tag on it
+# generate_obstacle_cylinder_xml generates a cylinder with a tag on it
+# by default, generate_obstacle_xml generates a box obstacle
 def generate_obstacle_xml(i, x, y, th, type) :
 	return generate_obstacle_box_xml(i, x, y, th, type)
 
@@ -358,6 +385,10 @@ def generate_block_xml(i, x, y, th, type) :
 	'''.format(i, type, x, y, th)
 	return tag
 
+# For drones and pipucks, i, x, y, th is the same as described above
+# wifi_range changes the robot's communication range,
+# ARGoS's default range is 10m, it is too much,
+# So wifi_range is used together with argos-patch/RadioUpgrade.patch so that we can customize the communication range
 def generate_drone_xml(i, x, y, th, wifi_range=None) :
 	wifi_range_xml = ""
 	if wifi_range != None:
@@ -382,7 +413,17 @@ def generate_pipuck_xml(i, x, y, th, wifi_range=None) :
 	'''.format(i, wifi_range_xml, x, y, th)
 	return tag
 
-########## target ##############################################################
+#----------------------------------------------------------------------------------------------
+# Target is a big flat cylinder for the swarm to surround
+# On the big flat cylinder, there will be a circle of tags shows the edge of the cylinder so that robots can avoid it.
+# generate_target_xml() takes :
+#   x, y, th  :     position and orientation in m and rad
+#   mark_type :     The payload of the tag that identifies the target
+#   obstacle_type : The payload of the tags shows the edge of the target
+#   radius:         radius of the cylinder
+#   tag_edge_distance:   the distance between the cylinder edge and the edge-indicating tags
+#   tag_distance:        the distance between adjacent edge-indicating tags
+# generate_target_tag_xml and generate_target_tags_xml are accessory functions used by generate_target_xml()
 def generate_target_tag_xml(x, y, payload):
 	tag = '''
 		<tag anchor="base" observable_angle="75" side_length="0.1078" payload="{}"
@@ -424,18 +465,25 @@ def generate_target_xml(x, y, th, mark_type, obstacle_type, radius, tag_edge_dis
 	'''.format(x, y, th, radius, generate_target_tags_xml(radius-tag_edge_distance, tag_distance, mark_type, obstacle_type))
 	return tag
 
-#######################################################################
+#----------------------------------------------------------------------------------------------
 # generate random locations
+# In this section, there are functions to generate random positions with certain constrains for drones and pipucks' initial positions
+#                                      to generate a wall with gates
+#                                      etc
 
-# from <left_end> to <right_end>, generate <gate_number> gates of different sizes ranging from <small_limit> and <large_limit>
+# generate_gate_locations() from <left_end> to <right_end>, generate <gate_number> gates of different sizes ranging from <small_limit> and <large_limit>
+# it makes sure that the biggest gates has the size <max_size>
 # return an array of gates in order
 #	[
 #		[left1, right1],
 #		[left2, right2],
 #	]
 #	and the middle of the largest gate
+
+# How many attempts of random number before giving up
 #attempt_count_down_default = 1000
 attempt_count_down_default = 100000
+
 def generate_gate_locations(gate_number, left_end, right_end, small_limit, large_limit, max_size) :
 	margin = 0.4
 	a = []
@@ -493,6 +541,7 @@ def generate_gate_locations(gate_number, left_end, right_end, small_limit, large
 				a[j] = temp
 	return a, largest_loc
 
+#----------------------------------------------------------------------------------------------
 # from <left_end> to <right_end>, generate <gate_number> gates of different sizes ranging from <small_limit> and <large_limit>
 # fill the wall with <step>
 # return an array of gates in order
@@ -563,7 +612,19 @@ def generate_line_locations(number, x_left, y_left, x_right, y_right) :
 		y = y + y_inc
 
 	return a
-#- random locations ------------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------------------------------
+# Generate random locations for pipuck and drones
+# generate_random_locations() generates n random locations, with the first one at <origin_x, origin_y>,
+# All the locations in range with x falling in (x_min_limit, x_max_limit), and y (y_min_limit, y_max_limit)
+# Distance between adjacent positions falls in (near_limit,  far_limit)
+# Outputs a list
+# [
+#	[x1, y1],
+#	[x2, y2],
+#   ...
+# ]
 def generate_random_locations(n, origin_x,    origin_y, 
                                  x_min_limit, x_max_limit,
                                  y_min_limit, y_max_limit, 
@@ -615,6 +676,12 @@ def generate_random_locations(n, origin_x,    origin_y,
 			break
 	return a
 
+#----------------------------------------------------------------------------------------------
+# Generates <n> random positions with referencing an existing list of locations, 
+# The range falls in <x_min_limit, x_max_limit>, and <y_min_limit, y_max_limit>
+# Each position references a position in <master_locations> with a distance between <near_limit, far_limit>
+
+# It is used to generate pipuck locations after drone locations are generated, so that pipucks can be seen by drones
 def generate_slave_locations(n, master_locations,
                                 x_min_limit, x_max_limit,
                                 y_min_limit, y_max_limit,
@@ -676,6 +743,10 @@ def generate_slave_locations_with_origin(n, master_locations,
 			break
 	return a
 
+#----------------------------------------------------------------------------------------------
+# From a list of locations generate <xml> sections for all the drones, pipucks, and obstatcles
+# start_id means the start index.
+# For example generate_drones([pos1, pos2, pos3], 3) will generate xmls for drone3, drone4, drone5 at pos1, pos2, pos3
 def generate_drones(locations, start_id, wifi_range=None) :
 	tagstr = ""
 	i = start_id
@@ -699,8 +770,11 @@ def generate_obstacles(locations, start_id, type) :
 		tagstr = tagstr + generate_obstacle_xml(i, loc[0], loc[1], 0, type)
 		i = i + 1
 	return tagstr
-#######################################################################
+
+#----------------------------------------------------------------------------------------------
 # create argos file
+# This function takes an .argos template file, replace certain words from it, and generate a .argos file that is ready to run.
+# An example is given below, in this example, all "RANDOMSEED" in the template file will be replaced with "500"
 def generate_argos_file(template_name, argos_name, replacements) :
 	'''
 	replacements = 

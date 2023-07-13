@@ -1,3 +1,19 @@
+-- This is an extension of BehaviorTree.lua
+-- It adds the operation for a node to add a new node as its sibling
+-- For example:
+--[[
+      bt = BehaviorTree:create{
+         type="sequence",
+         dynamic=true,
+         children = {
+            function(children)
+               table.insert(children, function() print("I'm an added node") end,)
+               return false, true
+            end,
+         }
+      }
+--]]
+
    local function create(node)
       -- execution node
       if type(node) == 'function' then

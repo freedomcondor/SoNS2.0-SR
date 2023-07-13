@@ -1,3 +1,35 @@
+-- This a library of behavior tree
+-- Usage example:
+--[[
+   BT = require("BehaviorTree")
+   bt = BT:create{
+      type="sequence",
+      children = {
+         function()
+            print("I'm the first node of sequence")
+            return false, true
+         end,
+         {
+            type="selector",
+            children = {
+               function()
+                  print("I'm the second node under sequence, and the first node of the selector")
+                  return false, false
+               end,
+               function()
+                  print("I'm the second node under sequence, and the second node of the selector")
+                  return false, true
+               end,
+            }
+         }
+      }
+   }
+
+   return true means running, this is useful for sequence* and selector*, they will remember running node
+   return false, true  means node success
+   return false, false means node failure
+--]]
+
    local function create(node)
       -- execution node
       if type(node) == 'function' then
