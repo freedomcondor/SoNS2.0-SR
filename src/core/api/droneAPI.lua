@@ -5,8 +5,13 @@ if robot.params.simulation == true then local DroneRealistSimulator = require("D
 local Transform = require("Transform")
 
 ---- actuator --------------------------
--- Idealy, I would like to use robot.flight_system.set_targets only once per step
+-- in each step, robot.flight_system.set_targets should only be called once at last
 -- newPosition and newRad are recorded, and enforced at last in dronePostStep
+
+-- To control the drone directly, us api.actuator.setNewLocation(vector3(x,y,z), rad),
+--     where vector3(x,y,z) and rad are the new waypoint with respect to the drone's home position.
+-- But more usually, api.setSpeed(x,y,z) is used to control the drone in the speed level.
+-- Note that z compoment will be overwritten by height control which make sure the drone fly in a certain height.
 api.actuator = {}
 if robot.flight_system ~= nil then
 	api.actuator.newPosition = robot.flight_system.position
@@ -24,8 +29,7 @@ end
 -- In hardware, the drone follows a procedure to take off
 -- 1. set armed, the propeller start to rotate
 -- 2. set offboard mode, the pixhawk start take commands from the upcore, and upcore should set (0,0,1.5) so that the drone takes off
--- 3. After the drone takes off, we go to navigation mode, where the upcore can freely navigate the drone
-
+-- 3. After the drone takes off, we go to navigation mode, where the upcore can freely navigate the drone by using either setNewLocation or setSpeed
 api.actuator.flight_preparation = {
 	state = "pre_flight",
 	state_duration = 25,
@@ -154,10 +158,20 @@ function api.postStep()
 end
 
 ---- Height control --------------------
+-- In real experiments, the result of rider measurements on different drones is different.
+-- This will cause drones fly in different heights even if we set all drones the same target height.
+-- Height control tries to solve this problem by using cameras and tags on the ground to measure the current height,
+-- and make a feedback control on the setting the target height.
+
+-- api.droneAdjustHeight(z) is called in postStep() to make sure the drone fly in a height of z
+
 api.droneCheckHeightCountDown = api.actuator.flight_preparation.state_duration * 3
 api.droneLastHeight = api.parameters.droneDefaultStartHeight
 
 function api.droneAdjustHeight(z)
+	-- Sometimes, if we check the tags distances and adjust target height every step, the drones may fly in a not very stable way.
+	-- droneCheckHeightCountDown tries not to do the feedback control every step, but checking tags distances every droneCheckHeightCountDown steps
+	-- So that the drone can keep a steady height and only adjust the height occasionaly.
 	--[[
 	if api.droneCheckHeightCountDown > 0 then
 		api.actuator.newPosition.z = api.droneLastHeight
@@ -220,6 +234,12 @@ function api.droneEstimateHeight()
 end
 
 ---- speed control --------------------
+-- drone's speed is commanded by api.droneSetSpeed(x, y, z, th) 
+-- x,y,z is the movement speed in m/s and th the rotation angular speed in rad/s
+-- For the fluent of the flying, when setting droneSetSpeed(x,y,z,th), the actual target speed
+-- is the average of the last speed setting and the new one.
+-- The last speed setting is remembered by api.rememberLastSpeed and updateLastSpeed
+
 -- everything in robot hardware's coordinate frame
 -- Speed maybe set multiple times in a step, remember it in justSetSpeed, and push to lastSetSpeed in postStep
 function api.rememberLastSpeed(x,y,z,th)
@@ -291,6 +311,12 @@ api.setSpeed = api.droneSetSpeed
 --api.move is implemented in commonAPI
 
 ---- Cameras -------------------------
+-- The cameras needs to be enabled at the beginning and disable at the end by api.droneEnableCameras() and api.droneDisableCameras()
+-- api.droneDetectTag() combines the tags seen by all four cameras, convert the position and orientation from camera's frame into drone's body frame
+-- api.droneDetectLeds() is optinal, it tries to detect the color of LEDs surrounding the tag in some scenario setups.
+-- api.droneAddSeenRobots() and api.droneAddObstacles() takes the detected tags as input, and distinguish each tag represents a drone/a pipuck/an obstacle ...
+-- api.tagLabelIndex used to set the range of tag id for each type of robots. For example tag number 1-500 is considered as pipucks ...
+-- This range can be set by .argos parameters for each scenario
 function api.droneEnableCameras()
 	for index, camera in pairs(robot.cameras_system) do
 		camera.enable()
@@ -364,6 +390,8 @@ function api.droneDetectTags()
 			end
 
 			-- check orientation Z up
+			-- Sometimes, in hardware, Apriltag library may gives a wrong tag orientation
+			-- This part checks whether the tag's z axis points up, if not, disgard this tag.
 			if (vector3(0,0,1):rotate(orientationQ) - vector3(0,0,1)):length() > 0.3 then
 				logger("bad tag orientation, ignore tag", newTag.id)
 				logger("                     positionV3", positionV3)

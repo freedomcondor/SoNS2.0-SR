@@ -20,6 +20,9 @@ if robot.params.hardware == "true" then robot.params.hardware = true end
 if robot.params.simulation == "true" then robot.params.simulation = true end
 
 ---- Time -------------------------------------
+-- api.time is used for measuring how much time has past from the last step to the current step
+-- The result is in api.time.period
+-- For example, when calculating the distance the robot has moved, dis = speed * api.time.period
 api.time = {}
 api.time.currentTime = robot.system.time
 api.time.period = 0.2
@@ -29,11 +32,17 @@ function api.processTime()
 end
 
 ---- step count -------------------------------
+-- api.stepCount counts the step number in the experiment. It is incremented in api.preStep()
 api.stepCount = 0
 
 ---- Step Function ----------------------------
 -- 5 step functions :
 -- init, reset, destroy, preStep, postStep
+-- api.init() should be called when the experiment starts
+-- api.reset() should be called when resetting the experiment
+-- api.distroy() should be called when the experiment ends
+-- api.preStep() should be called at the beginning of each step
+-- api.postStep() should be called at the end of each step
 function api.init()
 	--api.reset()
 end
@@ -84,6 +93,10 @@ function api.virtualFrame.rotateInSpeed(speedV3)
 		) * api.virtualFrame.orientationQ
 end
 
+-- V3 and Q represents vector3 and quaternion
+-- R represents for read coordinate frame (robot's body frame)
+-- V represents for virtual frame (robot's "turret" frame)
+-- For example, V3_RtoV converts the coordinate of a vector3 from read coordinate frame to virtual frame
 function api.virtualFrame.V3_RtoV(vec)
 	return vector3(vec):rotate(api.virtualFrame.orientationQ:inverse())
 end
@@ -98,6 +111,10 @@ function api.virtualFrame.Q_VtoR(q)
 end
 
 ---- Speed Control ---------------------------
+-- SoNS uses api.move(<vector3>, <vector3>) to command a robot to move
+-- The first vector3 parameter is the velocity of the movement, the second vector3 parameter is the angular speed of the rotation
+-- In api.move(), api.setSpeed is used to make the robot move in the desired speed.
+--            and api.virtualFrame.rotateInSpeed is used to make the robot's virtualFrame rotate
 function api.setSpeed()
 	print("api.setSpeed needs to be implemented for specific robot")
 end
@@ -118,6 +135,9 @@ function api.move(transV3, rotateV3)
 end
 
 ---- Debug Draw -------------------------------
+-- api.debug.drawArrow() and api.debug.drawRing() is used to draw arrows and circles in the simulator, so that it will be easy to debug
+-- Sometimes, we don't want the all the debug information is drawn, so :
+-- api.debug.show_all == true triggers everything gets drawn, otherwise only whose with essential parameter set to true gets drawn
 api.debug = {}
 function api.debug.drawArrow(color, begin, finish, essential)
 	if api.debug.show_all ~= true and essential ~= true then return end
@@ -158,6 +178,7 @@ function api.debug.drawRing(color, middle, radius, essential)
 	end
 end
 
+-- api.debug.showVirtualFrame() draws x,y,z axis to show the virtual frame
 function api.debug.showVirtualFrame()
 	api.debug.drawArrow(
 		"green",
@@ -175,6 +196,7 @@ function api.debug.showVirtualFrame()
 	)
 end
 
+-- api.debug.showEstimateLocation() draws an arrow showing the estimate location
 function api.debug.showEstimateLocation()
 	api.debug.drawArrow(
 		"red", 
@@ -185,6 +207,9 @@ function api.debug.showEstimateLocation()
 	)
 end
 
+-- api.debug.showParent() draws an arrow pointing the parent of the robot in SoNS
+-- api.debug.showChildren() draws arrows pointing the children of the robot in SoNS
+-- Note the essential is true, these arrows will always be drawn
 function api.debug.showParent(vns, color)
 	if color == nil then color = "blue" end
 	if vns.parentR ~= nil then
@@ -243,6 +268,7 @@ function api.debug.showChildren(vns, color, withoutBrain)
 	end
 end
 
+-- api.debug.showObstacles() draws arrows pointing the obstacles that the robot detects
 function api.debug.showObstacles(vns, essential)
 	for i, obstacle in ipairs(vns.avoider.obstacles) do
 		api.debug.drawArrow("red", vector3(),
@@ -259,6 +285,7 @@ function api.debug.showObstacles(vns, essential)
 end
 
 ------------------------------------------------------
+-- This is to wrap argos apis, in case that argos upgrades and change some of the apis.
 function api.linkRobotInterface(VNS)
 	VNS.Msg.sendTable = function(table)
 		robot.radios.wifi.send(table)

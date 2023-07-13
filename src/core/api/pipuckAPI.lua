@@ -17,9 +17,10 @@ function api.actuator.setNewWheelSpeed(x, y)
 	api.actuator.newRight = y
 end
 
----- Step Function ---------------------
---function api.preStep() api.preStep() end
-
+---- overwrite Step Function ---------------------
+-- api inherits step functions from commonAPI
+-- 5 step functions: init, reset, destroy, preStep, postStep
+-- Here we overwrite these functions adding specific drone operations (if needed).
 api.commonPreStep = api.preStep
 function api.preStep()
 	if robot.leds ~= nil then
@@ -38,7 +39,11 @@ function api.postStep()
 end
 
 ---- speed control --------------------
--- everything in robot hardware's coordinate frame
+-- Pipuck is non-omni-directional, so speed control for pipuck follows basic differential drive principle
+-- everything in robot body coordinate frame
+
+-- pipuckSetWheelSpeed(x,y) sets pipuck left wheel and right wheel speed
+-- In the meantime, counter rotate the virtual frame to keep the virtual frame steady if the pipuck body is rotating
 function api.pipuckSetWheelSpeed(x, y)
 	-- x, y in m/s
 	-- the scalar is to make x,y match m/s
@@ -83,6 +88,8 @@ function api.pipuckSetWheelSpeed(x, y)
 	api.virtualFrame.rotateInSpeed(vector3(0,0,1) * (-th))
 end
 
+-- pipuckSetRotationSpeed(x, th) moves the pipuck forward by a speed of x m/s
+-- in the meantime rotates by a speed of th rad/s in the direction of anti-clockwise
 function api.pipuckSetRotationSpeed(x, th)
 	-- x, in m/s, x front,
 	-- th in rad/s, counter-clockwise positive
@@ -91,6 +98,9 @@ function api.pipuckSetRotationSpeed(x, th)
 	api.pipuckSetWheelSpeed(x - aug, x + aug)
 end
 
+-- pipuckSetRotationSpeed(x, y) moves the pipuck roughly in a velocity of (x, y)
+-- X axis points front and Y axis points left
+-- Since pipuck is non-omni directional, y will makes the pipuck rotate
 function api.pipuckSetSpeed(x, y)
 	local th = math.atan(y/x)
 	--local limit = math.pi / 3 * 2
@@ -108,7 +118,9 @@ api.setSpeed = api.pipuckSetSpeed
 --api.move is implemented in commonAPI
 
 ---- Debugs --------------------
-api.debug.commonShowChildren = api.debug.showChildren -- TODO: change to show parent
+-- This funcion overwrites api.debug.showChildren in commonAPI
+-- It not only draws an arrow to the children, but also lights the body leds to indicate the direction of the parent.
+api.debug.commonShowChildren = api.debug.showChildren
 function api.debug.showChildren(vns, color, withoutBrain)
 	api.debug.commonShowChildren(vns, color, withoutBrain)
 	-- draw children location
@@ -122,13 +134,13 @@ function api.debug.showChildren(vns, color, withoutBrain)
 end
 
 ---- LEDs --------------------
--- everything in robot hardware's coordinate frame
 function api.pipuckShowAllLEDs()
 	for count = 1, 8 do
 		robot.leds.set_ring_led_index(count, true)
 	end
 end
 
+-- pipuckShowLED takes a vector3 in robot's body frame, and lights the LED towards that direction
 function api.pipuckShowLED(vec)
 	-- direction is a vector3, x front, y left
 	-- th = 0 front, clockwise, -180 to 180
