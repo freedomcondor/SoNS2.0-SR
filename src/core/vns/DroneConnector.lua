@@ -1,12 +1,12 @@
---[[
---	Drone connector
---	the drone will always try to recruit seen pipucks
---]]
+--- Drone connector -------------------------------------------------
+-- Drone connector makes two drones see each other if they can see a common pipuck on the ground
+-- It checks tags it sees, convert them into robots or obstacles and store in vns.connector.seenRobots and vns.avoider.seenObstacles
+-- So that connector may handle the connection later
+---------------------------------------------------------------------
 
 require("DeepCopy")
 local SensorUpdater = require("SensorUpdater")
 local Transform = require("Transform")
-
 
 local DroneConnector = {}
 
@@ -28,7 +28,7 @@ function DroneConnector.step(vns)
 	)
 
 	-- report my sight to all seen pipucks, and drones in parent and children
-	--[[
+	--[[ -- legancy code from the 1st version. could be useful
 	if vns.parentR ~= nil and vns.parentR.robotTypeS == "drone" then
 		vns.Msg.send(vns.parentR.idS, "reportSight", {mySight = vns.connector.seenRobots})
 	end
@@ -125,6 +125,8 @@ function DroneConnector.step(vns)
 	--]]
 end
 
+-- Generate a drone robot from the ground robots I have seen <myVehiclesTR> and another drone have seen <yourVehiclesTR>
+-- Return the drone robot table
 function DroneConnector.calcQuadR(idS, myVehiclesTR, yourVehiclesTR)
 	local quadR = nil
 	local n = 0

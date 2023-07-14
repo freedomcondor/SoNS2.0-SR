@@ -1,24 +1,35 @@
--- Assigner -----------------------------------------
+-- Assigner ------------------------------------------
+-- Assigner is the module that handles handover operation of SoNS
+-- Handover means A robot gives one of its children to another robot
+-- The operation is like this:
+--     The parent tells the child to whom it will be handover to
+--     The child get the messages, and listens to the recruitment from the new parent
+--     Once the new parent recruits, the child answers the recruitment and break the link with the old parent.
 ------------------------------------------------------
 local Assigner = {}
 
 --[[
 --	related data
---	vns.assigner.targetS
+--	vns.assigner.targetS                -- means to whom I will be handover to
 --	vns.childrenRT[xxid].assigner = {
---		targetS
---		scale_assign_offset
+--		targetS                         -- to whom my children will be handover to
+--		scale_assign_offset             -- At the time of the parent switch, there will be short period of time when the scale (the number of downstream robots) gets calculated twice
+--		                                -- This offset tries to cancel that error
 --	}
 --]]
 
+-- This function is called by VNS.create
 function Assigner.create(vns)
 	vns.assigner = {}
 end
 
+-- This function is called by VNS.reset
 function Assigner.reset(vns)
 	vns.assigner.targetS = nil
 end
 
+-- This function is called by VNS.addparent,
+-- <robotR> is the table of the new robot
 function Assigner.addParent(vns, robotR)
 	robotR.assigner = {
 		scale_assign_offset = vns.ScaleManager.Scale:new(),
@@ -29,6 +40,8 @@ function Assigner.addParent(vns, robotR)
 	end
 end
 
+-- This function is called by VNS.addChild,
+-- <robotR> is the table of the new robot
 function Assigner.addChild(vns, robotR)
 	robotR.assigner = {
 		scale_assign_offset = vns.ScaleManager.Scale:new(),
@@ -39,6 +52,7 @@ function Assigner.addChild(vns, robotR)
 	end
 end
 
+-- This function is called by VNS.deleteParent,
 function Assigner.deleteParent(vns)
 	vns.assigner.targetS = nil
 	for idS, childR in pairs(vns.childrenRT) do
@@ -48,6 +62,8 @@ function Assigner.deleteParent(vns)
 	end
 end
 
+-- This function is called by VNS.deleteChild,
+-- <deleting_idS> is the id of the child to be deleted
 function Assigner.deleteChild(vns, deleting_idS)
 	for idS, childR in pairs(vns.childrenRT) do
 		if childR.assigner.targetS == deleting_idS then
@@ -56,6 +72,7 @@ function Assigner.deleteChild(vns, deleting_idS)
 	end
 end
 
+-- This function is called by VNS.preStep,
 function Assigner.preStep(vns)
 	for idS, childR in pairs(vns.childrenRT) do
 		childR.assigner.scale_assign_offset = vns.ScaleManager.Scale:new()
@@ -65,6 +82,8 @@ function Assigner.preStep(vns)
 	end
 end
 
+-- This function is the key handover operation
+-- It sends a message to the child, and update the data
 function Assigner.assign(vns, childIdS, assignToIdS)
 	local childR = vns.childrenRT[childIdS]
 	if childR == nil then return end
@@ -73,6 +92,7 @@ function Assigner.assign(vns, childIdS, assignToIdS)
 	childR.assigner.targetS = assignToIdS
 end
 
+-- This function is called by VNS.step,
 function Assigner.step(vns)
 	-- listen to assign
 	if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "assign")) do
@@ -134,7 +154,7 @@ function Assigner.step(vns)
 		end
 	end
 
-	-- listen to assign_dismiss
+	-- listen to assign_ack
 	for _, msgM in ipairs(vns.Msg.getAM("ALLMSG", "assign_ack")) do
 		if vns.childrenRT[msgM.fromS] ~= nil then
 			local assignFrom = msgM.dataT.oldParent
@@ -152,6 +172,7 @@ function Assigner.step(vns)
 end
 
 ------ behaviour tree ---------------------------------------
+-- A behavior tree node containing step()
 function Assigner.create_assigner_node(vns)
 	return function()
 		Assigner.step(vns)

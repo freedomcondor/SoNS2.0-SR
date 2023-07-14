@@ -1,4 +1,7 @@
--- Avoider -----------------------------------------
+-- Avoider -------------------------------------------
+-- Avoider is the module that handles obstacle avoidance
+-- For each obstacle/other robots, it generates an avoidance velocity according to a log curve (explained later)
+-- The summation of the avoidance velocity is stored in avoid_speed, and got added into goal.transV3, which is used in Driver module
 ------------------------------------------------------
 local Avoider = {}
 
@@ -194,6 +197,12 @@ function Avoider.step(vns, drone_pipuck_avoidance)
 	--]]
 end
 
+-- This function calculates the avoidance velocity
+-- For each obstacle at <obLocV3>, a virtual force field is generated
+-- The robot at <myLocV3> is pushed by the force field
+-- The velocity is added into <accumulatorV3>
+-- <deadzone>, <threshold> is explained in the following graph
+-- Vortex tries to vertex the field to help the robot move around the obstacle
 function Avoider.add(myLocV3, obLocV3, accumulatorV3, threshold, vortex, deadzone)
 	-- calculate the avoid speed from obLoc to myLoc,
 	-- add the result into accumulator
@@ -259,6 +268,8 @@ function Avoider.add(myLocV3, obLocV3, accumulatorV3, threshold, vortex, deadzon
 	return ans
 end
 
+------ behaviour tree ---------------------------------------
+-- A behavior tree node containing step()
 function Avoider.create_avoider_node(vns, option)
 	return function()
 		Avoider.step(vns, option.drone_pipuck_avoidance)

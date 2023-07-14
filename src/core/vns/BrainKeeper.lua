@@ -1,4 +1,6 @@
 -- BrainKeeper ---------------------------------------
+-- The BrainKeeper module remembers the position of the brain for each robot in the SoNS.
+-- So that if the robot got seperated from the swarm, the robot could choose to move towards the last brain location trying to get re-connected
 ------------------------------------------------------
 
 local BrainKeeper = {}
@@ -8,6 +10,8 @@ local BrainKeeper = {}
 --]]
 
 function BrainKeeper.create(vns)
+	-- forget the brain after countdown
+	-- countdown time is set from vns.Parameters.brainkeeper_time
 	vns.brainkeeper = {countdown = 0}
 end
 

@@ -1,4 +1,10 @@
 -- IntersectionDetector ------------------------------
+-- IntersectionDetector handles the following situation:
+--        R  --  R \ / R -- R
+--   R <            X
+--        R  --  R / \ R -- R
+-- If two parents each have a child, and the links are spacially intersected, it will be difficult for SoNS to resolve the situation.
+-- In this case, one parent would handover the child to the other, so that SoNS can use a usual allocator way to solve the problem.
 ------------------------------------------------------
 local IntersectionDetector = {}
 

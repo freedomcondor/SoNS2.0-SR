@@ -1,4 +1,6 @@
 -- connector -----------------------------------------
+-- Connector is the key module to establish a SoNS
+-- It handles recruitment, keeps the connection and breaks the connection
 ------------------------------------------------------
 local Connector = {}
 
@@ -61,6 +63,7 @@ function Connector.deleteParent(vns)
 	vns.parentR = nil
 end
 
+-- Try to recruit a seen robot <robotR>, put it in waiting list until get ack from it.
 function Connector.recruit(vns, robotR)
 	vns.Msg.send(robotR.idS, "recruit", {	
 		positionV3 = vns.api.virtualFrame.V3_VtoR(robotR.positionV3),
@@ -79,6 +82,8 @@ function Connector.recruit(vns, robotR)
 	}
 end
 
+-- A new brain changes the Rank <idN>, and inform all the down stream robots
+-- In the meantime, remembers the last id for <lastidPeriod> time, and ignore recruitment from the old SoNS ID to prevent loop
 function Connector.newVnsID(vns, idN, lastidPeriod)
 	local _idS = vns.Msg.myIDS()
 	local _idN = idN or robot.random.uniform()
@@ -86,6 +91,8 @@ function Connector.newVnsID(vns, idN, lastidPeriod)
 	Connector.updateVnsID(vns, _idS, _idN, lastidPeriod)
 end
 
+-- Change a new SoNS ID <idS>, and rank <idN>, and inform all the down stream robots
+-- In the meantime, remembers the last id for <lastidPeriod> time, and ignore recruitment from the old SoNS ID to prevent loop
 function Connector.updateVnsID(vns, _idS, _idN, lastidPeriod)
 	vns.connector.lastid[vns.idS] = lastidPeriod or (vns.scalemanager.depth + 2)
 	vns.connector.locker_count = vns.scalemanager.depth + 2
@@ -100,6 +107,10 @@ function Connector.updateVnsID(vns, _idS, _idN, lastidPeriod)
 	end
 end
 
+-- Update all the robot information based on what it sees on this step
+-- 1. Update the parent/children position and orientations
+-- 2. Update the positions/orientations for robots in the waiting list
+-- 3. Listen to heartbeat from parent/children, break the link if heartbeat is lost
 function Connector.update(vns)
 	-- estimate new position orientation
 	local inverseOri = quaternion(vns.api.estimateLocation.orientationQ):inverse()
@@ -186,6 +197,7 @@ function Connector.update(vns)
 	end
 end
 
+-- count down for waiting list, forget the robot if count down ends
 function Connector.waitingCount(vns)
 	for idS, robotR in pairs(vns.connector.waitingRobots) do
 		robotR.waiting_count = robotR.waiting_count - 1
@@ -201,6 +213,7 @@ function Connector.waitingCount(vns)
 	end
 end
 
+-- called by VNS.step(), it is the function that runs every step
 function Connector.step(vns)
 	Connector.update(vns)
 	Connector.waitingCount(vns)
@@ -256,6 +269,7 @@ function Connector.step(vns)
 	end
 end
 
+-- try to recruit all the robots the it sees
 function Connector.recruitAll(vns)
 	-- calculate children robot number
 	-- count pipucks
@@ -312,8 +326,8 @@ function Connector.recruitAll(vns)
 	end
 end
 
+-- only recruit robot that doesn't have a nearer robot in between
 function Connector.recruitNear(vns)
-	-- only recruit robot that doesn't have a nearer robot in between
 	-- create a available robot list
 	local list = {}
 	for idS, robotR in pairs(vns.connector.seenRobots) do
@@ -363,10 +377,12 @@ function Connector.recruitNear(vns)
 	end
 end
 
+-- acknowlege all the recruitment message
 function Connector.ackAll(vns, option)
 	return Connector.ackSpecific(vns, "ALLMSG", option)
 end
 
+-- acknowlege recruitment from a specific robot <specific_name>
 function Connector.ackSpecific(vns, specific_name, option)
 	-- check acks, ack the nearest valid recruit
 	--for _, msgM in pairs(vns.Msg.getAM("ALLMSG", "recruit")) do

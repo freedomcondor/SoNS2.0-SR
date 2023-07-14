@@ -1,3 +1,11 @@
+-- CollectiveSensor ---------------------------------------
+-- Collective Sensor is used for a child report to its parent the obstacles it sees,
+-- and the parent keeps reporting upstream optionally
+-- Data structure: 
+--    vns.collectivesensor.receiveList keeps received reports from children
+--    vns.collectivesensor.sendList    keeps what needs to be reported to the parent in the end of the step
+-----------------------------------------------------------
+
 local DeepCopy = require("DeepCopy")
 
 local CollectiveSensor = {}
@@ -36,7 +44,7 @@ function CollectiveSensor.addToSendList(vns, object)
 end
 
 function CollectiveSensor.postStep(vns)
-	-- send vns.collectivesensor.reportList
+	-- send vns.collectivesensor.sendList
 	if vns.parentR ~= nil and vns.collectivesensor.sendList ~= nil then
 		vns.Msg.send(vns.parentR.idS, "sensor_report", {reportList = vns.collectivesensor.sendList})
 	end
@@ -53,7 +61,7 @@ function CollectiveSensor.step(vns)
 						object[j] = vns.api.virtualFrame.V3_RtoV(
 							vector3(v):rotate(vns.api.virtualFrame.Q_VtoR(robotR.orientationQ)) + 
 							vns.api.virtualFrame.V3_VtoR(robotR.positionV3)
-						)							  
+						)
 						--]]
 						object[j] = 
 							vector3(v):rotate(robotR.orientationQ) + robotR.positionV3
@@ -66,7 +74,7 @@ function CollectiveSensor.step(vns)
 						object[j] = vns.api.virtualFrame.Q_RtoV(
 							vns.api.virtualFrame.Q_VtoR(robotR.orientationQ)
 							* v
-						)							  
+						)
 						--]]
 					end
 				end
@@ -83,6 +91,7 @@ function CollectiveSensor.step(vns)
 	end
 end
 
+-- Report everything to the parent from vns.avoider.obstacles and vns.collectivesensor.receiveList
 function CollectiveSensor.reportAll(vns)
 	for i, ob in pairs(vns.avoider.obstacles) do
 		CollectiveSensor.addToSendList(vns, ob)

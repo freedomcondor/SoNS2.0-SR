@@ -1,4 +1,10 @@
--- Driver -----------------------------------------
+-- Driver --------------------------------------------
+-- Driver handles the movement of the robot
+-- It takes data from vns.goal
+--     From vns.goal.positionV3 and orientationQ, it generates velocity to move to that position (explained later)
+--     From vns.goal.transV3 and rotateV3, it takes additional velocity (for example, to avoid obstacles)
+-- It adds these velocity together and use VNS.move() to move the robot
+-- VNS.move() links to the api of each type of robot to actually move the robot
 ------------------------------------------------------
 local Driver = {}
 
@@ -14,6 +20,8 @@ function Driver.create(vns)
 		}
 		--]]
 	}
+	-- arrive signal marks if all the down stream children has arrived at the goal positionV3
+	-- It lets brain know if the swarm has formed the target formation
 	vns.driver = {
 		all_arrive = false,
 		drone_arrive = false,
@@ -60,6 +68,7 @@ function Driver.setGoal(vns, positionV3, orientationQ)
 	vns.goal.orientationQ = orientationQ
 end
 
+-- <waiting> is a swith flag, indicating which method to use to stop children/parent move too far away (explained in the following section)
 function Driver.step(vns, waiting)
 	-- waiting is a flag, true or false or nil,
 	--	   means whether robot stop moving when neighbour out of the safe zone
@@ -73,7 +82,6 @@ function Driver.step(vns, waiting)
 		end
 	end
 
-
 	-- calculate transV3 and rotateV3 from goal.positionV3 and orientation
 	local transV3 = vector3()
 	local rotateV3 = vector3()
@@ -83,6 +91,16 @@ function Driver.step(vns, waiting)
 	local threshold = vns.Parameters.driver_slowdown_zone
 	local reach_threshold = vns.Parameters.driver_stop_zone
 	local rotate_speed_scalar = vns.Parameters.driver_default_rotate_scalar
+
+	--[[
+	        |          slowdown            
+	        |              /----------- default_speed
+	speed   |             /
+	        |            /
+	        |       stop/ 
+	        |-----------------------------------
+	                      distance
+	--]]
 
 	-- calc transV3
 	local dV3 = vector3(vns.goal.positionV3)
@@ -109,7 +127,8 @@ function Driver.step(vns, waiting)
 	transV3 = transV3 + vns.goal.transV3
 	rotateV3 = rotateV3 + vns.goal.rotateV3
 
-	-- safezone check -- stop the robot if it is going to seperate with neighbours
+	-- safezone check : try not to let neighbours go too far away
+	-- if waiting == true, stop the robot if it is going to far enough
 	if waiting == true then
 		local safezone_half
 
@@ -169,6 +188,7 @@ function Driver.step(vns, waiting)
 				)
 			end
 		end
+	-- if waiting == "spring", use a spring model to attract neighbours
 	elseif waiting == "spring" and vns.stabilizer.referencing_me ~= true then
 		-- create neighbour table
 		local neighbours = {}
@@ -292,6 +312,7 @@ function Driver.step(vns, waiting)
 	end
 end
 
+-- Behavior tree node for driver
 function Driver.create_driver_node(vns, option)
 	-- option = {
 	--      waiting = true or false or nil
@@ -303,6 +324,7 @@ function Driver.create_driver_node(vns, option)
 	end
 end
 
+-- Driver.move is implement in VNS.lua
 function Driver.move(transV3, rotateV3)
 	print("VNS.Driver.move needs to be implemented")
 end

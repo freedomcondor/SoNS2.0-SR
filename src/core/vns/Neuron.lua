@@ -1,3 +1,9 @@
+-- Neuron---------------------------------------------
+-- Neuron make a robot works as a neuron, draw input from neighour robots and output to neighour robot
+
+-- Working in progress
+------------------------------------------------------
+
 logger.register("Neuron")
 
 local Neuron = {}

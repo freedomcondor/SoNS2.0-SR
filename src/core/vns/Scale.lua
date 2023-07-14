@@ -1,6 +1,27 @@
+--- Scale -----------------------------------------------------------
+-- Scale is a library counts the number of each type of robots in the swarm, namely the "scale" of a swarm
+-- Basically, it handles vector add
+-- For example :
+-- scale A = {
+--     pipuck = 5,
+--     drone = 3,
+-- }
+-- B = {
+--     pipuck = 1,
+--     drone = 2,
+-- }
+-- A + B = {
+--     pipuck = 6,
+--     drone = 5,
+-- }
+-- It is used by ScaleManager to calculate the scale of the each branch of the SoNS
+---------------------------------------------------------------------
 local Scale = {}
 Scale.__index = Scale
 
+-- create a scale
+-- The input can be another scale or a table with same structure
+-- Or simply a string as the type name of a robot type ("drone"), and it will create a scale with 1 that type
 function Scale:new(table)
 	local instance = {}
 	setmetatable(instance, self)
@@ -15,6 +36,7 @@ function Scale:new(table)
 	return instance
 end
 
+-- Increment one for <robotTypeS> type of robot
 function Scale:inc(robotTypeS)
 	if self[robotTypeS] == nil then
 		self[robotTypeS] = 1
@@ -23,6 +45,7 @@ function Scale:inc(robotTypeS)
 	end
 end
 
+-- Decrease one for <robotTypeS> type of robot
 function Scale:dec(robotTypeS)
 	if self[robotTypeS] == nil then
 		self[robotTypeS] = -1
@@ -31,6 +54,7 @@ function Scale:dec(robotTypeS)
 	end
 end
 
+-- Count the total number of robots from all the types
 function Scale:totalNumber()
 	local sum = 0
 	for i, v in pairs(self) do
@@ -39,6 +63,7 @@ function Scale:totalNumber()
 	return sum
 end
 
+-- Add two scales
 function Scale.__add(A, B)
 	local C = Scale:new(A)
 	if B == nil then return C end
@@ -52,6 +77,7 @@ function Scale.__add(A, B)
 	return C
 end
 
+-- subtract two scales
 function Scale.__sub(A, B)
 	local C = Scale:new(A)
 	if B == nil then return C end
@@ -65,6 +91,7 @@ function Scale.__sub(A, B)
 	return C
 end
 
+-- Check if two scales equal
 function Scale.__eq(A, B)
 	if A == nil and B ~= nil then return false end
 	if A ~= nil and B == nil then return false end

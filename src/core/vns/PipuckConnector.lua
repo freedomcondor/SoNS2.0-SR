@@ -1,7 +1,9 @@
---[[
---	Pipuck connector
---	the Pipuck listen to drone's recruit message, with deny
---]]
+--- Pipuck connector -------------------------------------------------
+-- Pipuck connector makes a pipucks see a drone if it is seen by a drone
+--             also makes two pipucks see each other if they can be seen by a common drone
+-- It checks messages from drones, convert them into robots or obstacles and store in vns.connector.seenRobots and vns.avoider.seenObstacles
+-- So that connector may handle the connection later
+---------------------------------------------------------------------
 
 local PipuckConnector = {}
 local SensorUpdater = require("SensorUpdater")

@@ -1,3 +1,18 @@
+-- Parameters ---------------------------------------------
+-- This is a list of parameters of SoNS
+-- It will be required in VNS.lua, served each instance as vns.Parameters
+-- To change these parameters, declare the new value in .argos file
+-- Example :
+--[[
+	<lua_controller>
+	  <params script="pipuck_controller.lua"
+	          stabilizer_preference_robot="pipuck1"
+	          stabilizer_preference_brain="drone1" />
+	</lua_controller>
+--]]
+-- Attributes in <params> will appear as robot.params.xxxx
+------------------------------------------------------
+
 return {
 	connector_pipuck_children_max_count = tonumber(robot.params.connector_pipuck_children_max_count or 0),
 	connector_drone_children_max_count = tonumber(robot.params.connector_drone_children_max_count or 0),

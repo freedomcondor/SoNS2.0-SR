@@ -1,5 +1,10 @@
--- This module works with dynamic behavior tree
--- vns has to be global
+-- Learner ------------------------------
+-- This module tries to make a robot receives the code of a whole behavior block from another robot,
+-- and dynamically inserted it into its own behavior tree on the fly.
+-- It works with dynamic behavior tree
+
+-- Working in progress - return in mns3.0
+------------------------------------------------------
 
 local Learner = {}
 
