@@ -1,7 +1,13 @@
+-- SensorUpdater --------------------------------------------------
+-- Unlike each robot that has a unique id, obstacles are all the same
+-- Sensor Updater is to match the new obstacles that a robot sees in the current step with the old obstacles in the vns.avoider.seenObstacles list
+-- It also predictes the positions of an obstacle based on its movement last step when the tag got blurred for a short while
+-------------------------------------------------------------------
 local Transform = require("Transform")
 
 local SensorUpdater = {}
 
+-- Updates memObstacles with seenObstacles (in robots virtual frame)
 function SensorUpdater.updateObstacles(vns, seenObstacles, memObstacles)
 	vns.avoider.seenObstacles = seenObstacles
 	local offset = {positionV3 = vns.api.estimateLocation.positionV3, orientationQ = vns.api.estimateLocation.orientationQ}
@@ -64,6 +70,7 @@ function SensorUpdater.updateObstacles(vns, seenObstacles, memObstacles)
 	end
 end
 
+-- Updates memObstacles with seenObstacles in robot's body frame
 function SensorUpdater.updateObstaclesByRealFrame(vns, seenObstacles, memObstacles)
 	vns.avoider.seenObstacles = seenObstacles
 	--local offset = {positionV3 = vns.api.estimateLocation.positionV3, orientationQ = vns.api.estimateLocation.orientationQ}

@@ -1,4 +1,8 @@
 -- Spreader -----------------------------------------
+-- Spreader spreads a message to the whole SoNS.
+-- It is used when a robot sees an (for example) predator, and wants the whole swarm to move towards a direction
+-- The message spread is started by emergency() function, explained below
+-- Each robot receives a spread message from a neighbour (parent or children), and send it to other neighbours
 ------------------------------------------------------
 local Spreader = {}
 
@@ -17,10 +21,17 @@ function Spreader.preStep(vns)
 	vns.spreader.spreading_speed.flag = nil
 end
 
+-- Issue a emergency message after the VNS core module get executed
+-- <transV3> and <rotateV3> is the velocity and rotation velocity the robot wants the whole swarm to move
+-- <flag> is just an additional payload that the robot wants the whole swarm to know, can be anything
 function Spreader.emergency_after_core(vns, transV3, rotateV3, flag)
 	Spreader.emergency(vns, transV3, rotateV3, flag, true)
 end
 
+-- Issue a emergency message
+-- <transV3> and <rotateV3> is the velocity and rotation velocity the robot wants the whole swarm to move
+-- <flag> is just an additional payload that the robot wants the whole swarm to know, can be anything
+-- <after_core> is a flag showing whether this emergency is before or after VNS core module executed
 function Spreader.emergency(vns, transV3, rotateV3, flag, after_core)
 	vns.spreader.spreading_speed.positionV3 = vns.spreader.spreading_speed.positionV3 + transV3
 	vns.spreader.spreading_speed.orientationV3 = vns.spreader.spreading_speed.orientationV3 + rotateV3
@@ -52,6 +63,7 @@ function Spreader.emergency(vns, transV3, rotateV3, flag, after_core)
 	end
 end
 
+-- <surpress_or_not> if true, the spread speed will surpress other velocity component from vns.goal.transV3
 function Spreader.step(vns, surpress_or_not)
 	for _, msgM in ipairs(vns.Msg.getAM("ALLMSG", "emergency")) do
 		if vns.childrenRT[msgM.fromS] ~= nil or 

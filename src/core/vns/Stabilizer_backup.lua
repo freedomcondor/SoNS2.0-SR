@@ -1,4 +1,5 @@
 -- stabilizer -----------------------------------------
+-- This is an old version Stabilizer, please refer to Stabilizer.lua
 ------------------------------------------------------
 logger.register("Stabilizer")
 local Stabilizer = {}

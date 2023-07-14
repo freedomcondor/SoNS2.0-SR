@@ -1,4 +1,9 @@
 -- stabilizer -----------------------------------------
+-- The drone drifts in the air, stabilizer is used for a brain drone to reference a pipuck of obstacles on the ground to stabilize itself
+-- If there are obstacles on the ground, the drone brain will reference the obstacles, remember the relative transforms of these obstacles,
+-- and tries to maintain the same transforms.
+-- If there are no obstacles, the drone will choose one of pipucks to reference. In this case, the pipuck gets excluded from
+--  allocator process, stays where it is, and only answers emergency movements.
 ------------------------------------------------------
 logger.register("Stabilizer")
 local Transform = require("Transform")
@@ -56,6 +61,7 @@ function Stabilizer.postStep(vns)
 	end
 end
 
+-- called by VNS.setGoal. If a goal is set for the robot, all the stabilizer info for obstacles needs to be updated
 function Stabilizer.setGoal(vns, positionV3, orientationQ)
 	local newGoal = {positionV3 = positionV3, orientationQ = orientationQ}
 	for i, ob in ipairs(vns.avoider.obstacles) do
@@ -227,6 +233,8 @@ function Stabilizer.step(vns)
 	--]]
 end
 
+-- Choose a reference pipuck
+-- if vns.Parameters.stabilizer_preference_robot is set, first try to find this robot
 function Stabilizer.getReferenceChild(vns)
 	-- get a reference pipuck
 	---[[
@@ -280,6 +288,8 @@ function Stabilizer.getReferenceChild(vns)
 	end
 end
 
+-- If I am a referenced pipuck
+-- I try to stay, and ask other pipuck to avoid me harder (when the swarm is too crowded, there may be other pipuck bumping)
 function Stabilizer.pipuckListenRequest(vns)
 	-- listen to referencing pipuck, avoid it harder in avoider
 	vns.stabilizer.referencing_pipuck_neighbour = nil
@@ -360,6 +370,7 @@ function Stabilizer.pipuckListenRequest(vns)
 	end
 end
 
+-- If I see no obstacles, I run this function, choose a pipuck and reference it to stabilzer myself
 function Stabilizer.robotReference(vns)
 	local refRobot = Stabilizer.getReferenceChild(vns)
 	if refRobot == nil then return nil end

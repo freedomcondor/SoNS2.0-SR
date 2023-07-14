@@ -1,3 +1,15 @@
+-- VNS ------------------------------------------------------
+-- This is the root file for VNS library. It serves as a container that arranges all the VNS function modules
+-- For a robot, to create a VNS data structure, do something like
+--      vns = VNS:create("pipuck")
+-- and vns will be the data structure of VNS, it contains datas such as which robot is my parent, my children ...
+-- vns has basic functions such as vns.addChild(), which adds a child into the data structure
+-- in each of these functions, vns iterates all the modules and call the module function with the same name if implemented
+-- 
+-- At last, it provides create_vns_node() function to return a behavior tree node that contains the basic type of vns behavior tree
+--
+-- In addition, it provides functions to log vns datas into experiment logs through argos loop function in simulation, or message system in hardware
+-------------------------------------------------------------
 local VNS = {VNSCLASS = true}
 VNS.__index = VNS
 

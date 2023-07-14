@@ -1,4 +1,8 @@
 -- Allocator -----------------------------------------
+-- Allocator is key module enables formation
+-- It matches the current children with the current target formation branch in an optimaized way
+-- And handles handovers, and allocate down the target formation branch
+-- For details, please refer to the paper which describe the algorithm in detail.
 ------------------------------------------------------
 logger.register("Allocator")
 --local Arrangement = require("Arrangement")
@@ -75,6 +79,7 @@ function Allocator.deleteParent(vns)
 	-- TODO: resetMorphology?
 end
 
+-- Gene is a "gene" that contains all the target formations
 function Allocator.setGene(vns, morph)
 	vns.allocator.morphIdCount = 0
 	vns.allocator.gene_index = {}
@@ -89,6 +94,7 @@ function Allocator.setGene(vns, morph)
 	vns.Allocator.setMorphology(vns, morph)
 end
 
+-- set target morphology of the swarm
 function Allocator.setMorphology(vns, morph)
 	-- issue a temporary morph if the morph is not valid
 	if morph == nil then
