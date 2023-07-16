@@ -21,6 +21,8 @@ or
 	if vns.api.stepCount == 1000 and robot.random.uniform() < 0.66 and vns.robotTypeS == "pipuck" then
 
 
-Video:
-	1. Mostly top down video would be enough
-	2. The failed robots would switch one the red leds. It is not very noticeable in simulation. I'm thinking maybe we can zoom in a bit to show the red leds.
+To run this experiment : `python3 build/experiments/exp_xxx/run.py -r 1 -l 1000`
+run.py will generate a vns.argos file and run command argos3 -c vns.argos automatically
+where -r and -l are optional,
+-r means the random seed, if not given, the current time is used,
+-l means the experiment length, if not given, the one set in run.py is used.

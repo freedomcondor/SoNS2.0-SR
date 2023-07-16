@@ -34,7 +34,8 @@ pipuck_xml = generate_pipuck_xml(1, 1, 0.7, 90) + \
 
 obstacle_xml = generate_obstacle_xml(1, -1, 0.35, 90, 100)
 
-# generate argos file
+# generate vns.argos file, replacing each MARKWORD in the vns_template.argos with the content.
+# and call argos3 -c vns.argos
 generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos", 
 #                    "@CMAKE_CURRENT_BINARY_DIR@/vns.argos",
                     "vns.argos",

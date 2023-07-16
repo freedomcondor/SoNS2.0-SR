@@ -7,8 +7,8 @@ In this scenario, there are 2 drones and 6 pipucks, the swarm firstly form a for
             d            o              
          p     p               o         (o: obstacles, e: end marker)
 
-
-Video tips:
-
-I think top-down for all the time should be ok.
-If you want to do better, it could be cool to zoom in to show how a pipuck moves around to avoid an obstacle.
+To run this experiment : `python3 build/experiments/exp_xxx/run.py -r 1 -l 1000`
+run.py will generate a vns.argos file and run command argos3 -c vns.argos automatically
+where -r and -l are optional,
+-r means the random seed, if not given, the current time is used,
+-l means the experiment length, if not given, the one set in run.py is used.

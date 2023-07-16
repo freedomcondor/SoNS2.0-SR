@@ -41,8 +41,8 @@ The swarm switches formation for two times to adapt to the width of the tunnel.
                              ooo                
                           ooo                   
 
-
-Video tips:
-
-     I think top down is ok enough.
-
+To run this experiment : `python3 build/experiments/exp_xxx/run.py -r 1 -l 1000`
+run.py will generate a vns.argos file and run command argos3 -c vns.argos automatically
+where -r and -l are optional,
+-r means the random seed, if not given, the current time is used,
+-l means the experiment length, if not given, the one set in run.py is used.

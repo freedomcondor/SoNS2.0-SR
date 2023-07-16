@@ -30,3 +30,10 @@ to (1s):
 
 to (30s):
 	if 500 < api.stepCount and api.stepCount <= 650 then  
+
+
+To run this experiment : `python3 build/experiments/exp_xxx/run.py -r 1 -l 1000`
+run.py will generate a vns.argos file and run command argos3 -c vns.argos automatically
+where -r and -l are optional,
+-r means the random seed, if not given, the current time is used,
+-l means the experiment length, if not given, the one set in run.py is used.

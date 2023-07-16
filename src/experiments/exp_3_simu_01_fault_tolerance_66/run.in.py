@@ -51,7 +51,8 @@ target_xml = generate_target_xml(exp_scale * 2.9 + 0.5, 0, 0,      # x, y, th
                                  252, 255,                           # payload
                                  radius, 0.1, 0.2)                   # radius and edge and tag distance
 
-# generate argos file
+# generate vns.argos file, replacing each MARKWORD in the vns_template.argos with the content.
+# and call argos3 -c vns.argos
 params = '''
     stabilizer_preference_robot="pipuck1"
     stabilizer_preference_brain="drone1"

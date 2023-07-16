@@ -1,5 +1,7 @@
-In this scenario, the swarm will do the formation switch with the tunnel scenario (exp_0_hw_04_switch_line). However, there will be a certain percentage of the robots fail in the middle.
-The failure happens at step 500.
+This is a demo scenario for video
+
+This is a copy of scalability gate choosing scenario, but before movement, one of the robots will start a signal dipicted in red arrows.
+This signal will spread to the whole body the swarm
 
 To run this experiment : `python3 build/experiments/exp_xxx/run.py -r 1 -l 1000`
 run.py will generate a vns.argos file and run command argos3 -c vns.argos automatically

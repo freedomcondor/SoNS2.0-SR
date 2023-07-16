@@ -96,7 +96,8 @@ params = '''
               deadzone_block="0.2"
 '''.format(exp_scale, n_drone, gate_number)
 
-# generate argos file
+# generate vns.argos file, replacing each MARKWORD in the vns_template.argos with the content.
+# and call argos3 -c vns.argos
 generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos", 
                     "vns.argos",
 	[

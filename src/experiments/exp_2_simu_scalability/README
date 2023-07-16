@@ -9,3 +9,11 @@ scale      drone       pipuck
   2          13          52
   3          19          76
   4          25          100
+
+To switch scales, adjust line 8 in run.py
+
+To run this experiment : `python3 build/experiments/exp_xxx/run.py -r 1 -l 1000`
+run.py will generate a vns.argos file and run command argos3 -c vns.argos automatically
+where -r and -l are optional,
+-r means the random seed, if not given, the current time is used,
+-l means the experiment length, if not given, the one set in run.py is used.

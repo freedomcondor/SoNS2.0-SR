@@ -9,7 +9,8 @@ robots scatter randomly in the beginning. In the end, the swarm forms the follow
         p         p         p         p
              p         p         p
 
-Video: 
- 1. Top down view to show how the topology changes and converge towards the target formation.
- 2. (Optional) 3D view to show the 3D structure like this:
-
+To run this experiment : `python3 build/experiments/exp_xxx/run.py -r 1 -l 1000`
+run.py will generate a vns.argos file and run command argos3 -c vns.argos automatically
+where -r and -l are optional,
+-r means the random seed, if not given, the current time is used,
+-l means the experiment length, if not given, the one set in run.py is used.

@@ -1,11 +1,8 @@
- This is scalability case for exp_0_hw_05_gate_switch
+ This is analyze the performance of the swarm when the size scaling up.
 
- The swarm forms a line, moves in front of a wall with two gates, and chooses the larger one to move through, and at last surrounds a target behind it.
+The swarm will simply do a chain formation with each knot contains 3 drones and 12 pipucks
 
-We do this for differenct scales of swarm. We do it with :
+In the run.py of this scenario, we abuse -l option as the number of drones
+`python3 run.py -r 1 -l 1` means run with random seed 1, and the swarm size is 1 drone 4 pipucks
 
-scale      drone       pipuck
-  1          7           28
-  2          13          52
-  3          19          76
-  4          25          100
+We iterate -l from 1 to 25, and measure the formation error, calculation time, etc. See the paper for details

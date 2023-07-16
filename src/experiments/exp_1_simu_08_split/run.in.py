@@ -42,7 +42,8 @@ pipuck_xml = generate_pipuck_xml(1, 0, 0, 90) + \
 #pipuck_xml = generate_pipuck_xml(1, -3, 0) + \                 # an extra pipuck and pipuck1
 #             generate_pipucks(pipuck_locations, 2)             # from label 2 generate pipuck xml tags
 
-# generate argos file
+# generate vns.argos file, replacing each MARKWORD in the vns_template.argos with the content.
+# and call argos3 -c vns.argos
 generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos", 
 #                    "@CMAKE_CURRENT_BINARY_DIR@/vns.argos",
                     "vns.argos",
