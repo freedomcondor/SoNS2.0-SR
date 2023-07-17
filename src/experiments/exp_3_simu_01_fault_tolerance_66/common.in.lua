@@ -3,7 +3,7 @@ local myType = robot.params.my_type
 --[[
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/api/?.lua"
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/utils/?.lua"
-package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/vns/?.lua"
+package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/sons/?.lua"
 package.path = package.path .. ";@CMAKE_CURRENT_BINARY_DIR@/?.lua"
 --]]
 if robot.params.hardware ~= "true" then
@@ -27,7 +27,7 @@ logger.disable("droneAPI")
 
 -- datas ----------------
 local bt
---local vns
+--local sons
 local droneDis = 1.5
 local pipuckDis = 0.7
 local height = api.parameters.droneDefaultHeight
@@ -51,17 +51,17 @@ local gene = {
 -- SoNS.Allocator.calcBaseValue = SoNS.Allocator.calcBaseValue_oval -- default is oval
 
 -- called when a child lost its parent
-function SoNS.Allocator.resetMorphology(vns)
-	vns.Allocator.setMorphology(vns, structure1)
+function SoNS.Allocator.resetMorphology(sons)
+	sons.Allocator.setMorphology(sons, structure1)
 end
 
 if myType == "drone" then
 	SoNS.Connector.newSonsID = 
-	function(vns, idN, lastidPeriod)
-		local _idS = vns.Msg.myIDS()
+	function(sons, idN, lastidPeriod)
+		local _idS = sons.Msg.myIDS()
 		local _idN = idN or robot.random.uniform() + 1
 	
-		SoNS.Connector.updateSonsID(vns, _idS, _idN, lastidPeriod)
+		SoNS.Connector.updateSonsID(sons, _idS, _idN, lastidPeriod)
 	end
 end
 
@@ -70,26 +70,26 @@ end
 function init()
 	api.linkRobotInterface(SoNS)
 	api.init() 
-	vns = SoNS.create(myType)
+	sons = SoNS.create(myType)
 	reset()
 end
 
 --- reset
 function reset()
-	vns.reset(vns)
-	--if vns.idS == "pipuck1" then vns.idN = 1 end
-	if vns.idS == robot.params.stabilizer_preference_brain then vns.idN = 2 end
-	vns.setGene(vns, gene)
-	vns.setMorphology(vns, structure1)
+	sons.reset(sons)
+	--if sons.idS == "pipuck1" then sons.idN = 1 end
+	if sons.idS == robot.params.stabilizer_preference_brain then sons.idN = 2 end
+	sons.setGene(sons, gene)
+	sons.setMorphology(sons, structure1)
 
 	bt = BT.create
 	{ type = "sequence", children = {
-		create_failure_node(vns),
-		vns.create_preconnector_node(vns),
-		vns.create_vns_core_node(vns),
-		vns.CollectiveSensor.create_collectivesensor_node_reportAll(vns),
-		create_head_navigate_node(vns),
-		vns.Driver.create_driver_node(vns),
+		create_failure_node(sons),
+		sons.create_preconnector_node(sons),
+		sons.create_sons_core_node(sons),
+		sons.CollectiveSensor.create_collectivesensor_node_reportAll(sons),
+		create_head_navigate_node(sons),
+		sons.Driver.create_driver_node(sons),
 	}}
 end
 
@@ -98,20 +98,20 @@ function step()
 	-- prestep
 	--logger(robot.id, "-----------------------")
 	api.preStep()
-	vns.preStep(vns)
+	sons.preStep(sons)
 
 	-- step
 	bt()
 
 	-- poststep
-	vns.postStep(vns)
+	sons.postStep(sons)
 	api.postStep()
 
-	vns.logLoopFunctionInfo(vns)
+	sons.logLoopFunctionInfo(sons)
 	-- debug
-	api.debug.showChildren(vns)
-	if vns.robotTypeS == "drone" then
-		api.debug.showObstacles(vns, true)
+	api.debug.showChildren(sons)
+	if sons.robotTypeS == "drone" then
+		api.debug.showObstacles(sons, true)
 	end
 end
 
@@ -121,44 +121,44 @@ function destroy()
 end
 
 ----------------------------------------------------------------------------------
-function create_head_navigate_node(vns)
+function create_head_navigate_node(sons)
 local state = 1
 local left_obstacle_type = 101
 local right_obstacle_type = 102
 local target_type = 255
 
-	local function sendChilrenNewState(vns, newState)
-		for idS, childR in pairs(vns.childrenRT) do
-			vns.Msg.send(idS, "switch_to_state", {state = newState})
+	local function sendChilrenNewState(sons, newState)
+		for idS, childR in pairs(sons.childrenRT) do
+			sons.Msg.send(idS, "switch_to_state", {state = newState})
 		end
 	end
 
-	local function newState(vns, _newState)
+	local function newState(sons, _newState)
 		stateCount = 0
 		state = _newState
 	end
 
-	local function switchAndSendNewState(vns, _newState)
-		newState(vns, _newState)
-		sendChilrenNewState(vns, _newState)
+	local function switchAndSendNewState(sons, _newState)
+		newState(sons, _newState)
+		sendChilrenNewState(sons, _newState)
 	end
 
 return function()
 	-- for debug
-	vns.state = state
+	sons.state = state
 
 	-- if I receive switch state cmd from parent
-	if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "switch_to_state")) do
-		switchAndSendNewState(vns, msgM.dataT.state)
+	if sons.parentR ~= nil then for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "switch_to_state")) do
+		switchAndSendNewState(sons, msgM.dataT.state)
 	end end
 
-	if vns.parentR == nil then
+	if sons.parentR == nil then
 		-- brain detect width
 		local middle = 0
 
 		local left = 10
 		local right = -10
-		for i, ob in ipairs(vns.avoider.obstacles) do
+		for i, ob in ipairs(sons.avoider.obstacles) do
 			if ob.type == left_obstacle_type and
 			   ob.positionV3.y < left then
 				left = ob.positionV3.y
@@ -168,7 +168,7 @@ return function()
 				right = ob.positionV3.y
 			end
 		end
-		for i, ob in ipairs(vns.collectivesensor.receiveList) do
+		for i, ob in ipairs(sons.collectivesensor.receiveList) do
 			if ob.type == left_obstacle_type and
 			   ob.positionV3.y < left then
 				left = ob.positionV3.y
@@ -185,32 +185,32 @@ return function()
 		if state == 1 then
 			if width < 5.0 then
 				state = 3
-				vns.setMorphology(vns, structure2)
+				sons.setMorphology(sons, structure2)
 				logger("state2")
 			end
 		--[[
 		elseif state == 2 then
-			vns.Parameters.stabilizer_preference_robot = nil
+			sons.Parameters.stabilizer_preference_robot = nil
 			if width < 1.5 then
 				state = 3
-				vns.setMorphology(vns, structure3)
+				sons.setMorphology(sons, structure3)
 				logger("state3")
 			end
 		--]]
 		elseif state == 3 then
-			vns.Parameters.stabilizer_preference_robot = nil
-			for id, ob in ipairs(vns.avoider.obstacles) do
+			sons.Parameters.stabilizer_preference_robot = nil
+			for id, ob in ipairs(sons.avoider.obstacles) do
 				if ob.type == target_type then
 					state = 4
-					vns.setMorphology(vns, structure3)
+					sons.setMorphology(sons, structure3)
 				end
 			end
 		elseif state == 4 then
-			for id, ob in ipairs(vns.avoider.obstacles) do
+			for id, ob in ipairs(sons.avoider.obstacles) do
 				if ob.type == target_type then
-					vns.setGoal(vns, ob.positionV3 - vector3(1.0, 0, 0), ob.orientationQ)
+					sons.setGoal(sons, ob.positionV3 - vector3(1.0, 0, 0), ob.orientationQ)
 					--[[
-					if vns.goal.positionV3:length() < 0.3 then
+					if sons.goal.positionV3:length() < 0.3 then
 						state = 5
 					end
 					--]]
@@ -223,15 +223,15 @@ return function()
 		end
 
 		-- align with the average direction of the obstacles
-		if #vns.avoider.obstacles ~= 0 or #vns.collectivesensor.receiveList ~= 0 then
+		if #sons.avoider.obstacles ~= 0 or #sons.collectivesensor.receiveList ~= 0 then
 			local orientationAcc = Transform.createAccumulator()
 
-			-- add vns.avoider.obstacles and vns.collectivesensor.receiveList together
+			-- add sons.avoider.obstacles and sons.collectivesensor.receiveList together
 			local totalGateSideList = {}
-			for i, ob in ipairs(vns.avoider.obstacles) do
+			for i, ob in ipairs(sons.avoider.obstacles) do
 				totalGateSideList[#totalGateSideList + 1] = ob
 			end
-			for i, ob in ipairs(vns.collectivesensor.receiveList) do
+			for i, ob in ipairs(sons.collectivesensor.receiveList) do
 				totalGateSideList[#totalGateSideList + 1] = ob
 			end
 
@@ -252,12 +252,12 @@ return function()
 
 			local averageOri = Transform.averageAccumulator(orientationAcc).orientationQ
 
-			if vns.stabilizer.referencing_robot ~= nil then
-				vns.Msg.send(vns.stabilizer.referencing_robot.idS, "new_heading", 
-					{heading = vns.api.virtualFrame.Q_VtoR(averageOri)}
+			if sons.stabilizer.referencing_robot ~= nil then
+				sons.Msg.send(sons.stabilizer.referencing_robot.idS, "new_heading", 
+					{heading = sons.api.virtualFrame.Q_VtoR(averageOri)}
 				)
 			else
-				vns.setGoal(vns, vns.goal.positionV3, averageOri)
+				sons.setGoal(sons, sons.goal.positionV3, averageOri)
 			end
 		end
 
@@ -272,25 +272,25 @@ return function()
 		end
 
 		-- brain move forward
-		if vns.api.stepCount < 250 then return false, true end
+		if sons.api.stepCount < 250 then return false, true end
 		local speed = 0.03
-		vns.Spreader.emergency_after_core(vns, vector3(speed,SpeedY * speed,0), vector3())
+		sons.Spreader.emergency_after_core(sons, vector3(speed,SpeedY * speed,0), vector3())
 	end
 
 	-- reference lead move
-	if vns.stabilizer.referencing_me == true then
+	if sons.stabilizer.referencing_me == true then
 		-- receive from brain information about heading and middle
-		vns.stabilizer.referencing_me_goal_overwrite = {}
-		for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "new_heading")) do
-			vns.stabilizer.referencing_me_goal_overwrite = {orientationQ = vns.parentR.orientationQ * msgM.dataT.heading}
+		sons.stabilizer.referencing_me_goal_overwrite = {}
+		for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "new_heading")) do
+			sons.stabilizer.referencing_me_goal_overwrite = {orientationQ = sons.parentR.orientationQ * msgM.dataT.heading}
 		end
 
 		--[[
-		for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "middleY")) do
-			local middleV3 = vns.parentR.positionV3 + (msgM.dataT.positionY * vector3(0,1,0)):rotate(vns.parentR.orientationQ)
-			newGoalPosition = vector3(vns.goal.positionV3)
+		for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "middleY")) do
+			local middleV3 = sons.parentR.positionV3 + (msgM.dataT.positionY * vector3(0,1,0)):rotate(sons.parentR.orientationQ)
+			newGoalPosition = vector3(sons.goal.positionV3)
 			newGoalPosition.y = middleV3.y
-			vns.stabilizer.referencing_me_goal_overwrite = {positionV3 = newGoalPosition}
+			sons.stabilizer.referencing_me_goal_overwrite = {positionV3 = newGoalPosition}
 		end
 		--]]
 	end
@@ -299,20 +299,20 @@ return function()
 end end
 
 -- fail node
-function create_failure_node(vns)
+function create_failure_node(sons)
 	local fail_return = true
 return function()
-	if vns.api.stepCount == 1000 and robot.random.uniform() < 0.66 then
-		vns.reset(vns)
+	if sons.api.stepCount == 1000 and robot.random.uniform() < 0.66 then
+		sons.reset(sons)
 		fail_return = false
 	end
 	if fail_return == false then
-		if vns.robotTypeS == "pipuck" then
-			vns.api.move(vector3(), vector3())
-			vns.api.pipuckShowAllLEDs()
-		elseif vns.robotTypeS == "drone" then
-			vns.api.parameters.droneDefaultHeight = -0.2
-			vns.api.move(vector3(0,0,-0.02), vector3())
+		if sons.robotTypeS == "pipuck" then
+			sons.api.move(vector3(), vector3())
+			sons.api.pipuckShowAllLEDs()
+		elseif sons.robotTypeS == "drone" then
+			sons.api.parameters.droneDefaultHeight = -0.2
+			sons.api.move(vector3(0,0,-0.02), vector3())
 			robot.leds.set_leds("red")
 		end
 	end

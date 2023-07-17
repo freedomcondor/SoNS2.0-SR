@@ -5,38 +5,38 @@
 ------------------------------------------------------
 local Avoider = {}
 
-function Avoider.create(vns)
-	vns.avoider = {
+function Avoider.create(sons)
+	sons.avoider = {
 		obstacles = {}
 	}
 end
 
-function Avoider.reset(vns)
-	vns.avoider.obstacles = {}
+function Avoider.reset(sons)
+	sons.avoider.obstacles = {}
 end
 
-function Avoider.preStep(vns)
+function Avoider.preStep(sons)
 end
 
-function Avoider.step(vns, drone_pipuck_avoidance)
+function Avoider.step(sons, drone_pipuck_avoidance)
 	local avoid_speed = {positionV3 = vector3(), orientationV3 = vector3()}
 
-	local backup_avoid_speed_scalar = vns.Parameters.avoid_speed_scalar
+	local backup_avoid_speed_scalar = sons.Parameters.avoid_speed_scalar
 
 	-- avoid seen robots
 	-- the brain is not influenced by other robots
-	if vns.parentR ~= nil and vns.stabilizer.referencing_me ~= true then
-		for idS, robotR in pairs(vns.connector.seenRobots) do
+	if sons.parentR ~= nil and sons.stabilizer.referencing_me ~= true then
+		for idS, robotR in pairs(sons.connector.seenRobots) do
 			-- avoid drone
-			if robotR.robotTypeS == vns.robotTypeS and
+			if robotR.robotTypeS == sons.robotTypeS and
 			   robotR.robotTypeS == "drone" then
 				if robot.params.hardware == true then
-					vns.Parameters.avoid_speed_scalar = vns.Parameters.avoid_speed_scalar * 15
+					sons.Parameters.avoid_speed_scalar = sons.Parameters.avoid_speed_scalar * 15
 				end
 				-- check vortex
-				local drone_vortex = vns.Parameters.avoid_drone_vortex
+				local drone_vortex = sons.Parameters.avoid_drone_vortex
 				if drone_vortex == "goal" then
-					drone_vortex = vns.goal.positionV3
+					drone_vortex = sons.goal.positionV3
 				elseif drone_vortex == "true" then
 					drone_vortex = true 
 				elseif drone_vortex == "nil" then
@@ -46,28 +46,28 @@ function Avoider.step(vns, drone_pipuck_avoidance)
 				avoid_speed.positionV3 =
 					Avoider.add(vector3(), robotR.positionV3,
 					            avoid_speed.positionV3,
-					            vns.Parameters.dangerzone_drone,
+					            sons.Parameters.dangerzone_drone,
 					            drone_vortex,
-					            vns.Parameters.deadzone_drone)
+					            sons.Parameters.deadzone_drone)
 				if robot.params.hardware == true then
-					vns.Parameters.avoid_speed_scalar = backup_avoid_speed_scalar
+					sons.Parameters.avoid_speed_scalar = backup_avoid_speed_scalar
 				end
 			end
 			-- avoid pipuck
-			if robotR.robotTypeS == vns.robotTypeS and
+			if robotR.robotTypeS == sons.robotTypeS and
 			   robotR.robotTypeS == "pipuck" then
-				local dangerzone = vns.Parameters.dangerzone_pipuck
-				local deadzone = vns.Parameters.deadzone_pipuck
+				local dangerzone = sons.Parameters.dangerzone_pipuck
+				local deadzone = sons.Parameters.deadzone_pipuck
 				-- avoid referenced pipuck 10 times harder
-				if idS == vns.stabilizer.referencing_pipuck_neighbour then
-					vns.Parameters.avoid_speed_scalar = vns.Parameters.avoid_speed_scalar * 15
-					dangerzone = dangerzone * vns.Parameters.dangerzone_reference_pipuck_scalar
-					deadzone = deadzone * vns.Parameters.deadzone_reference_pipuck_scalar
+				if idS == sons.stabilizer.referencing_pipuck_neighbour then
+					sons.Parameters.avoid_speed_scalar = sons.Parameters.avoid_speed_scalar * 15
+					dangerzone = dangerzone * sons.Parameters.dangerzone_reference_pipuck_scalar
+					deadzone = deadzone * sons.Parameters.deadzone_reference_pipuck_scalar
 				end
 				-- check vortex
-				local pipuck_vortex = vns.Parameters.avoid_pipuck_vortex
+				local pipuck_vortex = sons.Parameters.avoid_pipuck_vortex
 				if pipuck_vortex == "goal" then
-					pipuck_vortex = vns.goal.positionV3
+					pipuck_vortex = sons.goal.positionV3
 				elseif pipuck_vortex == "true" then
 					pipuck_vortex = true 
 				elseif pipuck_vortex == "nil" then
@@ -82,17 +82,17 @@ function Avoider.step(vns, drone_pipuck_avoidance)
 					            deadzone
 					           )
 				-- resume
-				vns.Parameters.avoid_speed_scalar = backup_avoid_speed_scalar
+				sons.Parameters.avoid_speed_scalar = backup_avoid_speed_scalar
 			end
 			-- avoidance between drone and pipuck
 			if drone_pipuck_avoidance == true and
-			   robotR.robotTypeS ~= vns.robotTypeS then
-				local dangerzone = vns.Parameters.dangerzone_pipuck
-				local deadzone = vns.Parameters.deadzone_pipuck
+			   robotR.robotTypeS ~= sons.robotTypeS then
+				local dangerzone = sons.Parameters.dangerzone_pipuck
+				local deadzone = sons.Parameters.deadzone_pipuck
 				-- check vortex
-				local drone_vortex = vns.Parameters.avoid_pipuck_vortex
+				local drone_vortex = sons.Parameters.avoid_pipuck_vortex
 				if drone_vortex == "goal" then
-					drone_vortex = vns.goal.positionV3
+					drone_vortex = sons.goal.positionV3
 				elseif drone_vortex == "true" then
 					drone_vortex = true 
 				elseif drone_vortex == "nil" then
@@ -111,8 +111,8 @@ function Avoider.step(vns, drone_pipuck_avoidance)
 	end
 
 	-- avoid obstacles
-	if vns.robotTypeS ~= "drone" then
-		for i, obstacle in ipairs(vns.avoider.obstacles) do if obstacle.added ~= true then
+	if sons.robotTypeS ~= "drone" then
+		for i, obstacle in ipairs(sons.avoider.obstacles) do if obstacle.added ~= true then
 			--local vortex = false
 			--if obstacle.type == 1 then
 			--	vortex = true
@@ -122,8 +122,8 @@ function Avoider.step(vns, drone_pipuck_avoidance)
 			-- counting in nearby obstacles and average
 			--local virtualOb = {positionV3 = obstacle.positionV3, number = 1}
 			local virtualOb = {positionV3 = vector3(), number = 0}
-			for j, nearbyOb in ipairs(vns.avoider.obstacles) do
-				if (nearbyOb.positionV3 - obstacle.positionV3):length() < vns.api.parameters.obstacle_match_distance * 2 then
+			for j, nearbyOb in ipairs(sons.avoider.obstacles) do
+				if (nearbyOb.positionV3 - obstacle.positionV3):length() < sons.api.parameters.obstacle_match_distance * 2 then
 					virtualOb.positionV3 = virtualOb.positionV3 + nearbyOb.positionV3
 					virtualOb.number = virtualOb.number + 1
 					nearbyOb.added = true
@@ -131,19 +131,19 @@ function Avoider.step(vns, drone_pipuck_avoidance)
 			end
 			virtualOb.positionV3 = virtualOb.positionV3 * (1 / virtualOb.number)
 			local longest = 0
-			for j, nearbyOb in ipairs(vns.avoider.obstacles) do
-				if (nearbyOb.positionV3 - obstacle.positionV3):length() < vns.api.parameters.obstacle_match_distance * 2 and
+			for j, nearbyOb in ipairs(sons.avoider.obstacles) do
+				if (nearbyOb.positionV3 - obstacle.positionV3):length() < sons.api.parameters.obstacle_match_distance * 2 and
 				   (nearbyOb.positionV3 - virtualOb.positionV3):length() > longest then
 					longest = (nearbyOb.positionV3 - virtualOb.positionV3):length()
 				end
 			end
-			local virtual_danger_zone = vns.Parameters.dangerzone_block + longest
-			                            --vns.api.parameters.obstacle_match_distance * (virtualOb.number - 1) / 2
+			local virtual_danger_zone = sons.Parameters.dangerzone_block + longest
+			                            --sons.api.parameters.obstacle_match_distance * (virtualOb.number - 1) / 2
 			--]]
 			-- check vortex
-			local block_vortex = vns.Parameters.avoid_block_vortex
+			local block_vortex = sons.Parameters.avoid_block_vortex
 			if block_vortex == "goal" then
-				block_vortex = vns.goal.positionV3
+				block_vortex = sons.goal.positionV3
 			elseif block_vortex == "true" then
 				block_vortex = true 
 			elseif block_vortex == "nil" then
@@ -152,15 +152,15 @@ function Avoider.step(vns, drone_pipuck_avoidance)
 			avoid_speed.positionV3 = 
 				Avoider.add(vector3(), obstacle.positionV3,
 				            avoid_speed.positionV3,
-				            vns.Parameters.dangerzone_block,
+				            sons.Parameters.dangerzone_block,
 				            block_vortex,
-				            vns.Parameters.deadzone_block
+				            sons.Parameters.deadzone_block
 				)
 				            --virtual_danger_zone)
-				            --vns.goal.positionV3)
+				            --sons.goal.positionV3)
 		end end -- end of obstacle.added ~= true and for
 		--[[
-		for i, obstacle in ipairs(vns.avoider.obstacles) do
+		for i, obstacle in ipairs(sons.avoider.obstacles) do
 			obstacle.added = nil
 		end
 		--]]
@@ -168,30 +168,30 @@ function Avoider.step(vns, drone_pipuck_avoidance)
 
 	-- avoid predators
 	--[[
-	for i, obstacle in ipairs(vns.avoider.obstacles) do
-		if obstacle.type == 3 and vns.robotTypeS == "drone" then
+	for i, obstacle in ipairs(sons.avoider.obstacles) do
+		if obstacle.type == 3 and sons.robotTypeS == "drone" then
 			local runawayV3 = vector3()
 			runawayV3 = vector3() - obstacle.positionV3
 			runawayV3.z = 0
 			runawayV3:normalize()
-			runawayV3 = runawayV3 * vns.Parameters.driver_default_speed
-			vns.Spreader.emergency(vns, runawayV3, vector3(), "green") -- TODO: run away from predator
+			runawayV3 = runawayV3 * sons.Parameters.driver_default_speed
+			sons.Spreader.emergency(sons, runawayV3, vector3(), "green") -- TODO: run away from predator
 		end
 	end
 	--]]
 
 	-- TODO: maybe add surpress or not
 	-- add the speed to goal -- the brain can't be influended
-	vns.goal.transV3 = vns.goal.transV3 + avoid_speed.positionV3
-	vns.goal.rotateV3 = vns.goal.rotateV3 + avoid_speed.orientationV3
+	sons.goal.transV3 = sons.goal.transV3 + avoid_speed.positionV3
+	sons.goal.rotateV3 = sons.goal.rotateV3 + avoid_speed.orientationV3
 
 
 	---[[
 	--if robot.id == "pipuck6" then
 		local color = "255,0,0,0"
-		vns.api.debug.drawArrow(color,
-		                        vns.api.virtualFrame.V3_VtoR(vector3(0,0,0.1)),
-		                        vns.api.virtualFrame.V3_VtoR(vns.goal.transV3 * 1 + vector3(0,0,0.1))
+		sons.api.debug.drawArrow(color,
+		                        sons.api.virtualFrame.V3_VtoR(vector3(0,0,0.1)),
+		                        sons.api.virtualFrame.V3_VtoR(sons.goal.transV3 * 1 + vector3(0,0,0.1))
 		                       )
 	--end
 	--]]
@@ -239,11 +239,11 @@ function Avoider.add(myLocV3, obLocV3, accumulatorV3, threshold, vortex, deadzon
 	if d <= 0 then d = 0.000000000000001 end -- TODO: maximum
 	local ans = accumulatorV3
 	if d < threshold - deadzone then
-		if vns.robotTypeS == "drone" and robot.params.hardware == true then
+		if sons.robotTypeS == "drone" and robot.params.hardware == true then
 			robot.leds.set_leds("blue")
 		end
 		dV3:normalize()
-		local transV3 = - vns.Parameters.avoid_speed_scalar 
+		local transV3 = - sons.Parameters.avoid_speed_scalar 
 		                * math.log(d/(threshold-deadzone)) 
 		                * dV3:normalize()
 		if type(vortex) == "bool" and vortex == true then
@@ -270,9 +270,9 @@ end
 
 ------ behaviour tree ---------------------------------------
 -- A behavior tree node containing step()
-function Avoider.create_avoider_node(vns, option)
+function Avoider.create_avoider_node(sons, option)
 	return function()
-		Avoider.step(vns, option.drone_pipuck_avoidance)
+		Avoider.step(sons, option.drone_pipuck_avoidance)
 	end
 end
 

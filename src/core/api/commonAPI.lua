@@ -77,7 +77,7 @@ api.estimateLocation = {
 
 ---- Virtual Coordinate Frame -----------------
 	-- The purpose of virtual coordinate frame is to give a "tank turret" to a robot, 
-	-- All the vns level operation is relative to this "turret", the virtual coordinate frame
+	-- All the sons level operation is relative to this "turret", the virtual coordinate frame
 	-- when a robot is turning, instead of turning the real robot, we turn the virtual coordinate frame, 
 	-- so that a non-omni directional robot like a pipuck can moving left while heading ahead (with respect to the turret).
 	-- in this way, a pipuck can be operate "omni directionally"
@@ -210,10 +210,10 @@ end
 -- api.debug.showParent() draws an arrow pointing the parent of the robot in SoNS
 -- api.debug.showChildren() draws arrows pointing the children of the robot in SoNS
 -- Note the essential is true, these arrows will always be drawn
-function api.debug.showParent(vns, color)
+function api.debug.showParent(sons, color)
 	if color == nil then color = "blue" end
-	if vns.parentR ~= nil then
-		local robotR = vns.parentR
+	if sons.parentR ~= nil then
+		local robotR = sons.parentR
 		api.debug.drawArrow(color, vector3(), api.virtualFrame.V3_VtoR(vector3(robotR.positionV3)), true)
 		--[[
 		api.debug.drawArrow(color, 
@@ -228,10 +228,10 @@ function api.debug.showParent(vns, color)
 	end
 end
 
-function api.debug.showChildren(vns, color, withoutBrain)
+function api.debug.showChildren(sons, color, withoutBrain)
 	if color == nil then color = "blue" end
 	-- draw children location
-	for i, robotR in pairs(vns.childrenRT) do
+	for i, robotR in pairs(sons.childrenRT) do
 		api.debug.drawArrow(
 			color,
 			vector3(),
@@ -257,7 +257,7 @@ function api.debug.showChildren(vns, color, withoutBrain)
 	end
 
 	if withoutBrain ~= true then
-		if vns.parentR == nil then
+		if sons.parentR == nil then
 			api.debug.drawRing(
 				color,
 				vector3(0,0,0.08),
@@ -269,8 +269,8 @@ function api.debug.showChildren(vns, color, withoutBrain)
 end
 
 -- api.debug.showObstacles() draws arrows pointing the obstacles that the robot detects
-function api.debug.showObstacles(vns, essential)
-	for i, obstacle in ipairs(vns.avoider.obstacles) do
+function api.debug.showObstacles(sons, essential)
+	for i, obstacle in ipairs(sons.avoider.obstacles) do
 		api.debug.drawArrow("red", vector3(),
 		                           api.virtualFrame.V3_VtoR(vector3(obstacle.positionV3)),
 		                           essential

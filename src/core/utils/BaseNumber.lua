@@ -1,6 +1,6 @@
 -- This is a big number library, it handles a basic add operations for super large numbers that exceeds 2^32
 -- All the BaseNumber is expressed in N = Base^exp[0] + Base^exp[1] + Base^exp[2] ...
--- vns only requires numbers with the base to add
+-- sons only requires numbers with the base to add
 
 local BaseNumber = {CLASSBASENUMBER = true}
 BaseNumber.__index = BaseNumber

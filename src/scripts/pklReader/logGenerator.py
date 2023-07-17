@@ -171,6 +171,6 @@ def logStepLine(file, optitrack_step_data, message_step_data):
 	'''
 	# targetID
 	file.write(str(getTupleListByFirstElement(message_step_data, 'targetID')) + ',')
-	# vnsID(brainName)
-	file.write(getTupleListByFirstElement(message_step_data, 'vnsID') + '\n')
+	# sonsID(brainName)
+	file.write(getTupleListByFirstElement(message_step_data, 'sonsID') + '\n')
 

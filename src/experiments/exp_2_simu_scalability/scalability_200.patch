@@ -2,13 +2,13 @@ diff --git a/src/experiments/exp_2_simu_scalability/common.in.lua b/src/experime
 index 75545af..b688bb8 100755
 --- a/src/experiments/exp_2_simu_scalability/common.in.lua
 +++ b/src/experiments/exp_2_simu_scalability/common.in.lua
-@@ -330,7 +330,7 @@ function create_reaction_node(vns)
+@@ -330,7 +330,7 @@ function create_reaction_node(sons)
  							stateCountMark = stateCount
  							logger(robot.id, "reach gate, start counting")
  						else
 -							if stateCount - stateCountMark > 175 * expScale then
 +							if stateCount - stateCountMark > 175 * expScale * 2.5 then
- 								switchAndSendNewState(vns, "forward_again")
+ 								switchAndSendNewState(sons, "forward_again")
  								logger(robot.id, "forward_again")
  							end
 diff --git a/src/experiments/exp_2_simu_scalability/run.in.py b/src/experiments/exp_2_simu_scalability/run.in.py

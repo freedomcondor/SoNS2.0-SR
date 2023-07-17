@@ -14,18 +14,18 @@ local Allocator = {}
 
 --[[
 --	related data
---	vns.allocator.target = {positionV3, orientationQ, robotTypeS, children}
---	vns.allocator.gene
---	vns.allocator.gene_index
---	vns.childrenRT[xx].allocator.match
+--	sons.allocator.target = {positionV3, orientationQ, robotTypeS, children}
+--	sons.allocator.gene
+--	sons.allocator.gene_index
+--	sons.childrenRT[xx].allocator.match
 --]]
 
-function Allocator.create(vns)
-	vns.allocator = {
+function Allocator.create(sons)
+	sons.allocator = {
 		target = {
 			positionV3 = vector3(),
 			orientationQ = quaternion(),
-			robotTypeS = vns.robotTypeS,
+			robotTypeS = sons.robotTypeS,
 			idN = -1,
 		},
 		parentGoal = {
@@ -42,12 +42,12 @@ function Allocator.create(vns)
 	}
 end
 
-function Allocator.reset(vns)
-	vns.allocator = {
+function Allocator.reset(sons)
+	sons.allocator = {
 		target = {
 			positionV3 = vector3(),
 			orientationQ = quaternion(),
-			robotTypeS = vns.robotTypeS,
+			robotTypeS = sons.robotTypeS,
 			idN = -1,
 		},
 		parentGoal = {
@@ -59,147 +59,147 @@ function Allocator.reset(vns)
 	}
 end
 
-function Allocator.addChild(vns, robotR)
+function Allocator.addChild(sons, robotR)
 	robotR.allocator = {match = nil}
 end
 
---function Allocator.deleteChild(vns)
+--function Allocator.deleteChild(sons)
 --end
 
-function Allocator.addParent(vns)
-	vns.mode_switch = "allocate"
+function Allocator.addParent(sons)
+	sons.mode_switch = "allocate"
 end
 
-function Allocator.deleteParent(vns)
-	vns.allocator.parentGoal = {
+function Allocator.deleteParent(sons)
+	sons.allocator.parentGoal = {
 		positionV3 = vector3(),
 		orientationQ = quaternion(),
 	}
-	--vns.Allocator.setMorphology(vns, vns.allocator.gene)
+	--sons.Allocator.setMorphology(sons, sons.allocator.gene)
 	-- TODO: resetMorphology?
 end
 
 -- Gene is a "gene" that contains all the target formations
-function Allocator.setGene(vns, morph)
-	vns.allocator.morphIdCount = 0
-	vns.allocator.gene_index = {}
-	vns.allocator.gene_index[-1] = {
+function Allocator.setGene(sons, morph)
+	sons.allocator.morphIdCount = 0
+	sons.allocator.gene_index = {}
+	sons.allocator.gene_index[-1] = {
 		positionV3 = vector3(),
 		orientationQ = quaternion(),
 		idN = -1,
-		robotTypeS = vns.robotTypeS,
+		robotTypeS = sons.robotTypeS,
 	}
-	Allocator.calcMorphScale(vns, morph)
-	vns.allocator.gene = morph
-	vns.Allocator.setMorphology(vns, morph)
+	Allocator.calcMorphScale(sons, morph)
+	sons.allocator.gene = morph
+	sons.Allocator.setMorphology(sons, morph)
 end
 
 -- set target morphology of the swarm
-function Allocator.setMorphology(vns, morph)
+function Allocator.setMorphology(sons, morph)
 	-- issue a temporary morph if the morph is not valid
 	if morph == nil then
 		morph = {
 			idN = -1,
 			positionV3 = vector3(),
 			orientationQ = quaternion(),
-			robotTypeS = vns.robotTypeS,
+			robotTypeS = sons.robotTypeS,
 		} 
-	elseif morph.robotTypeS ~= vns.robotTypeS then 
+	elseif morph.robotTypeS ~= sons.robotTypeS then 
 		morph = {
 			idN = -1,
 			positionV3 = morph.positionV3,
 			orientationQ = morph.orientationQ,
-			robotTypeS = vns.robotTypeS,
+			robotTypeS = sons.robotTypeS,
 		} 
 	end
-	vns.allocator.target = morph
+	sons.allocator.target = morph
 end
 
-function Allocator.resetMorphology(vns)
-	vns.Allocator.setMorphology(vns, vns.allocator.gene)
+function Allocator.resetMorphology(sons)
+	sons.Allocator.setMorphology(sons, sons.allocator.gene)
 end
 
-function Allocator.preStep(vns)
-	for idS, childR in pairs(vns.childrenRT) do
+function Allocator.preStep(sons)
+	for idS, childR in pairs(sons.childrenRT) do
 		childR.allocator.match = nil
 	end
-	if vns.parentR ~= nil then
-		local inverseOri = quaternion(vns.api.estimateLocation.orientationQ):inverse()
-		vns.allocator.parentGoal.positionV3 = (vns.allocator.parentGoal.positionV3 - vns.api.estimateLocation.positionV3):rotate(inverseOri)
-		vns.allocator.parentGoal.orientationQ = vns.allocator.parentGoal.orientationQ * inverseOri
+	if sons.parentR ~= nil then
+		local inverseOri = quaternion(sons.api.estimateLocation.orientationQ):inverse()
+		sons.allocator.parentGoal.positionV3 = (sons.allocator.parentGoal.positionV3 - sons.api.estimateLocation.positionV3):rotate(inverseOri)
+		sons.allocator.parentGoal.orientationQ = sons.allocator.parentGoal.orientationQ * inverseOri
 	end
 end
 
-function Allocator.sendStationary(vns)
-	for idS, robotR in pairs(vns.childrenRT) do
-		vns.Msg.send(idS, "allocator_stationary")
+function Allocator.sendStationary(sons)
+	for idS, robotR in pairs(sons.childrenRT) do
+		sons.Msg.send(idS, "allocator_stationary")
 	end
 end
 
-function Allocator.sendAllocate(vns)
-	for idS, robotR in pairs(vns.childrenRT) do
-		vns.Msg.send(idS, "allocator_allocate")
+function Allocator.sendAllocate(sons)
+	for idS, robotR in pairs(sons.childrenRT) do
+		sons.Msg.send(idS, "allocator_allocate")
 	end
 end
 
-function Allocator.sendKeep(vns)
-	for idS, robotR in pairs(vns.childrenRT) do
-		vns.Msg.send(idS, "allocator_keep")
-		vns.Msg.send(idS, "parentGoal", {
-			positionV3 = vns.api.virtualFrame.V3_VtoR(vns.goal.positionV3 or vector3()),
-			orientationQ = vns.api.virtualFrame.Q_VtoR(vns.goal.orientationQ or quaternion()),
+function Allocator.sendKeep(sons)
+	for idS, robotR in pairs(sons.childrenRT) do
+		sons.Msg.send(idS, "allocator_keep")
+		sons.Msg.send(idS, "parentGoal", {
+			positionV3 = sons.api.virtualFrame.V3_VtoR(sons.goal.positionV3 or vector3()),
+			orientationQ = sons.api.virtualFrame.Q_VtoR(sons.goal.orientationQ or quaternion()),
 		})
 	end
 end
 
-function Allocator.step(vns)
-	vns.api.debug.drawRing(vns.lastcolor or "black", vector3(0,0,0.3), 0.1)
+function Allocator.step(sons)
+	sons.api.debug.drawRing(sons.lastcolor or "black", vector3(0,0,0.3), 0.1)
 	-- update parentGoal
-	if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "parentGoal")) do
-		vns.allocator.parentGoal.positionV3 = vns.parentR.positionV3 +
-			vector3(msgM.dataT.positionV3):rotate(vns.parentR.orientationQ)
-		vns.allocator.parentGoal.orientationQ = vns.parentR.orientationQ * msgM.dataT.orientationQ 
+	if sons.parentR ~= nil then for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "parentGoal")) do
+		sons.allocator.parentGoal.positionV3 = sons.parentR.positionV3 +
+			vector3(msgM.dataT.positionV3):rotate(sons.parentR.orientationQ)
+		sons.allocator.parentGoal.orientationQ = sons.parentR.orientationQ * msgM.dataT.orientationQ 
 	end end
 
 	-- receive mode switch command
-	if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "allocator_stationary")) do
-		vns.allocator.mode_switch = "stationary"
+	if sons.parentR ~= nil then for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "allocator_stationary")) do
+		sons.allocator.mode_switch = "stationary"
 	end end
-	if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "allocator_keep")) do
-		vns.allocator.mode_switch = "keep"
+	if sons.parentR ~= nil then for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "allocator_keep")) do
+		sons.allocator.mode_switch = "keep"
 	end end
-	if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "allocator_allocate")) do
-		vns.allocator.mode_switch = "allocate"
+	if sons.parentR ~= nil then for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "allocator_allocate")) do
+		sons.allocator.mode_switch = "allocate"
 	end end
 
 	-- stationary mode
-	if vns.allocator.mode_switch == "stationary" then
-		-- vns.goal.positionV3 and orientationQ remain nil
-		if vns.stabilizer.stationary_referencing ~= true then
-			vns.goal.positionV3 = vector3()
-			vns.goal.orientationQ = quaternion()
+	if sons.allocator.mode_switch == "stationary" then
+		-- sons.goal.positionV3 and orientationQ remain nil
+		if sons.stabilizer.stationary_referencing ~= true then
+			sons.goal.positionV3 = vector3()
+			sons.goal.orientationQ = quaternion()
 		end
-		Allocator.sendStationary(vns)
+		Allocator.sendStationary(sons)
 		return 
 	end
 
 	-- keep mode
-	if vns.allocator.mode_switch == "keep" then
-		vns.goal.positionV3 = vns.allocator.parentGoal.positionV3 +
-			vector3(vns.allocator.target.positionV3):rotate(vns.allocator.parentGoal.orientationQ)
-		vns.goal.orientationQ = vns.allocator.parentGoal.orientationQ * vns.allocator.target.orientationQ
-		Allocator.sendKeep(vns)
+	if sons.allocator.mode_switch == "keep" then
+		sons.goal.positionV3 = sons.allocator.parentGoal.positionV3 +
+			vector3(sons.allocator.target.positionV3):rotate(sons.allocator.parentGoal.orientationQ)
+		sons.goal.orientationQ = sons.allocator.parentGoal.orientationQ * sons.allocator.target.orientationQ
+		Allocator.sendKeep(sons)
 		return 
 	end
 
 	-- allocate mode
-	if vns.allocator.mode_switch == "allocate" then
-		Allocator.sendAllocate(vns)
+	if sons.allocator.mode_switch == "allocate" then
+		Allocator.sendAllocate(sons)
 	end
 
 	-- if I just handovered a child to parent, then I will receive an outdated allocate command, ignore this cmd
-	if vns.parentR ~= nil and vns.parentR.assigner.scale_assign_offset:totalNumber() ~= 0 then
-		for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "branches")) do
+	if sons.parentR ~= nil and sons.parentR.assigner.scale_assign_offset:totalNumber() ~= 0 then
+		for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "branches")) do
 			msgM.ignore = true
 		end
 	end
@@ -209,7 +209,7 @@ function Allocator.step(vns)
 	local second_level
 	local self_align
 	local temporary_goal
-	if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "branches")) do 
+	if sons.parentR ~= nil then for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "branches")) do 
 	if msgM.ignore ~= true then
 		flag = true
 		second_level = msgM.dataT.branches.second_level
@@ -220,17 +220,17 @@ function Allocator.step(vns)
 
 		if #msgM.dataT.branches == 1 then
 			local color = "green"
-			vns.lastcolor = color
-			vns.api.debug.drawRing(color, vector3(), 0.12)
+			sons.lastcolor = color
+			sons.api.debug.drawRing(color, vector3(), 0.12)
 		elseif #msgM.dataT.branches > 1 then
 			local color = "blue"
-			vns.lastcolor = color
-			vns.api.debug.drawRing(color, vector3(), 0.12)
+			sons.lastcolor = color
+			sons.api.debug.drawRing(color, vector3(), 0.12)
 		end
 		if second_level == true then
 			local color = "red"
-			vns.lastcolor = color
-			vns.api.debug.drawRing(color, vector3(0,0,0.01), 0.11)
+			sons.lastcolor = color
+			sons.api.debug.drawRing(color, vector3(0,0,0.01), 0.11)
 		end
 		for i, received_branch in ipairs(msgM.dataT.branches) do
 			-- branches = 
@@ -248,83 +248,83 @@ function Allocator.step(vns)
 			--     self_align - nil or true
 			--         -- indicates whether this child should ignore second_level parent chase
 			--	}
-			received_branch.positionV3 = vns.parentR.positionV3 +
-				vector3(received_branch.positionV3):rotate(vns.parentR.orientationQ)
-			received_branch.orientationQ = vns.parentR.orientationQ * received_branch.orientationQ
-			received_branch.robotTypeS = vns.allocator.gene_index[received_branch.idN].robotTypeS -- TODO: consider
+			received_branch.positionV3 = sons.parentR.positionV3 +
+				vector3(received_branch.positionV3):rotate(sons.parentR.orientationQ)
+			received_branch.orientationQ = sons.parentR.orientationQ * received_branch.orientationQ
+			received_branch.robotTypeS = sons.allocator.gene_index[received_branch.idN].robotTypeS -- TODO: consider
 		end
 		if msgM.dataT.branches.goal ~= nil then
-			msgM.dataT.branches.goal.positionV3 = vns.parentR.positionV3 +
-				vector3(msgM.dataT.branches.goal.positionV3):rotate(vns.parentR.orientationQ)
-			msgM.dataT.branches.goal.orientationQ = vns.parentR.orientationQ * msgM.dataT.branches.goal.orientationQ
+			msgM.dataT.branches.goal.positionV3 = sons.parentR.positionV3 +
+				vector3(msgM.dataT.branches.goal.positionV3):rotate(sons.parentR.orientationQ)
+			msgM.dataT.branches.goal.orientationQ = sons.parentR.orientationQ * msgM.dataT.branches.goal.orientationQ
 			temporary_goal = msgM.dataT.branches.goal
 		end
 
-		Allocator.multi_branch_allocate(vns, msgM.dataT.branches)
+		Allocator.multi_branch_allocate(sons, msgM.dataT.branches)
 	end end end
 
 	-- I should have a target (either updated or not), 
 	-- a goal for this step
 	-- a group of children with match = nil
 
-	-- check vns.allocator.goal_overwrite
-	if vns.allocator.goal_overwrite ~= nil then
-		local newPositionV3 = vns.goal.positionV3
-		local newOrientationQ = vns.goal.orientationQ
-		if vns.allocator.goal_overwrite.positionV3.x ~= nil then
-			newPositionV3.x = vns.allocator.goal_overwrite.positionV3.x
+	-- check sons.allocator.goal_overwrite
+	if sons.allocator.goal_overwrite ~= nil then
+		local newPositionV3 = sons.goal.positionV3
+		local newOrientationQ = sons.goal.orientationQ
+		if sons.allocator.goal_overwrite.positionV3.x ~= nil then
+			newPositionV3.x = sons.allocator.goal_overwrite.positionV3.x
 		end
-		if vns.allocator.goal_overwrite.positionV3.y ~= nil then
-			logger(robot.id, "positionV3.y", vns.allocator.goal_overwrite.positionV3.y)
-			newPositionV3.y = vns.allocator.goal_overwrite.positionV3.y
+		if sons.allocator.goal_overwrite.positionV3.y ~= nil then
+			logger(robot.id, "positionV3.y", sons.allocator.goal_overwrite.positionV3.y)
+			newPositionV3.y = sons.allocator.goal_overwrite.positionV3.y
 		end
-		if vns.allocator.goal_overwrite.positionV3.z ~= nil then
-			newPositionV3.z = vns.allocator.goal_overwrite.positionV3.z
+		if sons.allocator.goal_overwrite.positionV3.z ~= nil then
+			newPositionV3.z = sons.allocator.goal_overwrite.positionV3.z
 		end
-		if vns.allocator.goal_overwrite.orientationQ ~= nil then
-			newOrientationQ = vns.allocator.goal_overwrite.orientationQ
+		if sons.allocator.goal_overwrite.orientationQ ~= nil then
+			newOrientationQ = sons.allocator.goal_overwrite.orientationQ
 		end
-		vns.setGoal(vns, newPositionV3, newOrientationQ)
-		vns.allocator.goal_overwrite = nil
+		sons.setGoal(sons, newPositionV3, newOrientationQ)
+		sons.allocator.goal_overwrite = nil
 	end
 
 	--if I'm brain, if no stabilizer than stay still
 	--[[
-	if vns.parentR == nil and
-	   vns.stabilizer ~= nil and
-	   vns.stabilizer.allocator_signal == nil and
-	   vns.allocator.keepBrainGoal == nil then
-		vns.goal.positionV3 = vector3()
-		vns.goal.orientationQ = quaternion()
+	if sons.parentR == nil and
+	   sons.stabilizer ~= nil and
+	   sons.stabilizer.allocator_signal == nil and
+	   sons.allocator.keepBrainGoal == nil then
+		sons.goal.positionV3 = vector3()
+		sons.goal.orientationQ = quaternion()
 	end
 	--]]
 	--[[
-	if vns.parentR == nil and vns.allocator.keepBrainGoal == nil then
-		vns.goal.positionV3 = vector3()
-		vns.goal.orientationQ = quaternion()
+	if sons.parentR == nil and sons.allocator.keepBrainGoal == nil then
+		sons.goal.positionV3 = vector3()
+		sons.goal.orientationQ = quaternion()
 	end
 	--]]
 
 	-- tell my children my goal
-	if flag ~= true and vns.parentR ~= nil then
+	if flag ~= true and sons.parentR ~= nil then
 		local color = "yellow"
-		vns.lastcolor = color
-		vns.api.debug.drawRing(color, vector3(), 0.12)
+		sons.lastcolor = color
+		sons.api.debug.drawRing(color, vector3(), 0.12)
 
 		-- if I don't receive branches cmd, update my goal according to parentGoal
 		--[[
-		vns.goal.positionV3 = vns.allocator.parentGoal.positionV3 + 
-			vector3(vns.allocator.target.positionV3):rotate(vns.allocator.parentGoal.orientationQ)
-		vns.goal.orientationQ = vns.allocator.parentGoal.orientationQ * vns.allocator.target.orientationQ
+		sons.goal.positionV3 = sons.allocator.parentGoal.positionV3 + 
+			vector3(sons.allocator.target.positionV3):rotate(sons.allocator.parentGoal.orientationQ)
+		sons.goal.orientationQ = sons.allocator.parentGoal.orientationQ * sons.allocator.target.orientationQ
 		--]]
 
 		-- send my new goal and don't send command for my children, everyone keep still
 		-- send my new goal to children
-		for idS, robotR in pairs(vns.childrenRT) do
-			vns.Assigner.assign(vns, idS, nil)	
-			vns.Msg.send(idS, "parentGoal", {
-				positionV3 = vns.api.virtualFrame.V3_VtoR(vns.goal.positionV3 or vector3()),
-				orientationQ = vns.api.virtualFrame.Q_VtoR(vns.goal.orientationQ or quaternion()),
+		for idS, robotR in pairs(sons.childrenRT) do
+			sons.Assigner.assign(sons, idS, nil)	
+			sons.Msg.send(idS, "parentGoal", {
+				positionV3 = sons.api.virtualFrame.V3_VtoR(sons.goal.positionV3 or vector3()),
+				orientationQ = sons.api.virtualFrame.Q_VtoR(sons.goal.orientationQ or quaternion()),
 			})
 		end
 		return
@@ -334,40 +334,40 @@ function Allocator.step(vns)
 	-- TODO: what if I'm already in the brain and I have more children 
 	-- somethings when topology changing, there will be -1 perturbation shortly, ignore this -1
 	---[[
-	if vns.allocator.target.idN == -1 and (vns.allocator.extraCount or 0) < 5 then
+	if sons.allocator.target.idN == -1 and (sons.allocator.extraCount or 0) < 5 then
 		second_level = true
 	end
-	if vns.allocator.target.idN == -1 then
-		vns.allocator.extraCount = (vns.allocator.extraCount or 0) + 1
+	if sons.allocator.target.idN == -1 then
+		sons.allocator.extraCount = (sons.allocator.extraCount or 0) + 1
 	else
-		vns.allocator.extraCount = nil
+		sons.allocator.extraCount = nil
 	end
 	--]]
 
 	-- assign better child
-	if vns.parentR ~= nil then
+	if sons.parentR ~= nil then
 		local calcBaseValue = Allocator.calcBaseValue
-		if type(vns.allocator.target.calcBaseValue) == "function" then
-			calcBaseValue = vns.allocator.target.calcBaseValue
+		if type(sons.allocator.target.calcBaseValue) == "function" then
+			calcBaseValue = sons.allocator.target.calcBaseValue
 		end
-		local myValue = calcBaseValue(vns.allocator.parentGoal.positionV3, vector3(), vns.goal.positionV3)
-		--local myValue = Allocator.calcBaseValue(vns.parentR.positionV3, vector3(), vns.goal.positionV3)
-		for idS, robotR in pairs(vns.childrenRT) do
+		local myValue = calcBaseValue(sons.allocator.parentGoal.positionV3, vector3(), sons.goal.positionV3)
+		--local myValue = Allocator.calcBaseValue(sons.parentR.positionV3, vector3(), sons.goal.positionV3)
+		for idS, robotR in pairs(sons.childrenRT) do
 			if robotR.allocator.match == nil then
-				local value = calcBaseValue(vns.allocator.parentGoal.positionV3, robotR.positionV3, vns.goal.positionV3)
-				--local value = Allocator.calcBaseValue(vns.parentR.positionV3, robotR.positionV3, vns.goal.positionV3)
-				if robotR.robotTypeS == vns.robotTypeS and value < myValue then
+				local value = calcBaseValue(sons.allocator.parentGoal.positionV3, robotR.positionV3, sons.goal.positionV3)
+				--local value = Allocator.calcBaseValue(sons.parentR.positionV3, robotR.positionV3, sons.goal.positionV3)
+				if robotR.robotTypeS == sons.robotTypeS and value < myValue then
 					local send_branches = {}
 					send_branches[1] = {
-						idN = vns.allocator.target.idN,
-						number = vns.allocator.target.scale,
-						positionV3 = vns.api.virtualFrame.V3_VtoR(vns.goal.positionV3),
-						orientationQ = vns.api.virtualFrame.Q_VtoR(vns.goal.orientationQ),
+						idN = sons.allocator.target.idN,
+						number = sons.allocator.target.scale,
+						positionV3 = sons.api.virtualFrame.V3_VtoR(sons.goal.positionV3),
+						orientationQ = sons.api.virtualFrame.Q_VtoR(sons.goal.orientationQ),
 					}
 					send_branches.second_level = second_level
-					vns.Msg.send(idS, "branches", {branches = send_branches})
+					sons.Msg.send(idS, "branches", {branches = send_branches})
 					if second_level ~= true then
-						vns.Assigner.assign(vns, idS, vns.parentR.idS)	
+						sons.Assigner.assign(sons, idS, sons.parentR.idS)	
 					end
 					robotR.allocator.match = send_branches
 				end
@@ -377,15 +377,15 @@ function Allocator.step(vns)
 
 	-- create branches from target children, with goal drifted position
 	local branches = {second_level = second_level}
-	if vns.allocator.target.children ~= nil then
-		for _, branch in ipairs(vns.allocator.target.children) do
+	if sons.allocator.target.children ~= nil then
+		for _, branch in ipairs(sons.allocator.target.children) do
 			branches[#branches + 1] = {
 				idN = branch.idN,
 				number = branch.scale,
-				-- for brain, vns.goal.positionV3 = nil
-				positionV3 = (vns.goal.positionV3) +
-					vector3(branch.positionV3):rotate(vns.goal.orientationQ),
-				orientationQ = vns.goal.orientationQ * branch.orientationQ, 
+				-- for brain, sons.goal.positionV3 = nil
+				positionV3 = (sons.goal.positionV3) +
+					vector3(branch.positionV3):rotate(sons.goal.orientationQ),
+				orientationQ = sons.goal.orientationQ * branch.orientationQ, 
 				robotTypeS = branch.robotTypeS,
 				-- calcBaseValue function
 				calcBaseValue = branch.calcBaseValue,
@@ -394,8 +394,8 @@ function Allocator.step(vns)
 			}
 
 			-- do not drift if self align switch is on
-			if vns.allocator.self_align == true and
-			   vns.robotTypeS == "drone" and
+			if sons.allocator.self_align == true and
+			   sons.robotTypeS == "drone" and
 			   branch.robotTypeS == "pipuck" then
 				branches[#branches].positionV3 = branch.positionV3
 				branches[#branches].orientationQ = branch.orientationQ
@@ -406,13 +406,13 @@ function Allocator.step(vns)
 
 	-- Stabilizer hack ------------------------------------------------------
 	-- get a reference in branches
-	if vns.stabilizer.referencing_robot ~= nil then
+	if sons.stabilizer.referencing_robot ~= nil then
 		local flag = false
 		for _, branch in ipairs(branches) do
 			if branch.reference == true then
 				branch.robotTypeS = "reference_pipuck"
 				flag = true
-				branch.number = vns.ScaleManager.Scale:new(branch.number)
+				branch.number = sons.ScaleManager.Scale:new(branch.number)
 				branch.number:dec("pipuck")
 				branch.number:inc("reference_pipuck")
 				break
@@ -422,7 +422,7 @@ function Allocator.step(vns)
 			for _, branch in ipairs(branches) do
 				if branch.robotTypeS == "pipuck" then
 					branch.robotTypeS = "reference_pipuck"
-					branch.number = vns.ScaleManager.Scale:new(branch.number)
+					branch.number = sons.ScaleManager.Scale:new(branch.number)
 					branch.number:dec("pipuck")
 					branch.number:inc("reference_pipuck")
 					break
@@ -432,8 +432,8 @@ function Allocator.step(vns)
 	end
 	-- Stabilizer hack ------------------------------------------------------
 	-- change reference pipuck to reference_pipuck
-	if vns.stabilizer.referencing_robot ~= nil then
-		local ref = vns.stabilizer.referencing_robot
+	if sons.stabilizer.referencing_robot ~= nil then
+		local ref = sons.stabilizer.referencing_robot
 		if ref.scalemanager.scale["reference_pipuck"] == nil or
 		   ref.scalemanager.scale["reference_pipuck"] == 0 then
 			ref.robotTypeS = "reference_pipuck"
@@ -444,30 +444,30 @@ function Allocator.step(vns)
 	-- end Stabilizer hack ------------------------------------------------------
 
 	-- hack branch position to save far away drone
-	local goalPositionV2 = vns.goal.positionV3
+	local goalPositionV2 = sons.goal.positionV3
 	goalPositionV2.z = 0
-	if vns.robotTypeS == "drone" and
+	if sons.robotTypeS == "drone" and
 	   --goalPositionV2:length() > 0.5 then
-	   vns.driver.drone_arrive == false and
-	   vns.allocator.pipuck_bridge_switch == true then
+	   sons.driver.drone_arrive == false and
+	   sons.allocator.pipuck_bridge_switch == true then
 		local neighbours = {}
-		if vns.parentR ~= nil and vns.parentR.robotTypeS == "drone" then
-			neighbours[#neighbours + 1] = vns.parentR
-			vns.parentR.parent = true
+		if sons.parentR ~= nil and sons.parentR.robotTypeS == "drone" then
+			neighbours[#neighbours + 1] = sons.parentR
+			sons.parentR.parent = true
 		end
 		---[[
-		for idS, robotR in pairs(vns.childrenRT) do
+		for idS, robotR in pairs(sons.childrenRT) do
 			if robotR.robotTypeS == "drone" then
 				neighbours[#neighbours + 1] = robotR
 			end
 		end
 		--]]
-		--for idS, robotR in pairs(vns.childrenRT) do
+		--for idS, robotR in pairs(sons.childrenRT) do
 		for idS, robotR in ipairs(neighbours) do
 			--local disV2 = vector3(robotR.positionV3)
 			--disV2.z = 0
 			--if robotR.robotTypeS == "drone" and
-			--   disV2:length() > vns.Parameters.safezone_drone_drone then
+			--   disV2:length() > sons.Parameters.safezone_drone_drone then
 			--if robotR.robotTypeS == "drone" then
 				-- this drone needs a pipuck in the middle
 				-- get the nearest pipuck
@@ -485,7 +485,7 @@ function Allocator.step(vns)
 				if nearestBranch ~= nil then
 					nearestBranch.positionV3 = robotR.positionV3 * 0.5
 					local offset = vector3(robotR.positionV3):normalize():rotate(quaternion(math.pi/2, vector3(0,0,1)))
-					               * vns.Parameters.dangerzone_pipuck
+					               * sons.Parameters.dangerzone_pipuck
 					nearestBranch.positionV3 = nearestBranch.positionV3 + offset
 					nearestBranch.drone_bridge_hack = true
 				end
@@ -493,12 +493,12 @@ function Allocator.step(vns)
 		end
 	end
 
-	Allocator.allocate(vns, branches)
+	Allocator.allocate(sons, branches)
 
 	-- Stabilizer hack ------------------------------------------------------
 	-- change reference pipuck back to pipuck
-	if vns.stabilizer.referencing_robot ~= nil then
-		local ref = vns.stabilizer.referencing_robot
+	if sons.stabilizer.referencing_robot ~= nil then
+		local ref = sons.stabilizer.referencing_robot
 		if ref.scalemanager.scale["reference_pipuck"] == 1 then
 			ref.robotTypeS = "pipuck"
 			ref.scalemanager.scale:inc("pipuck")
@@ -509,63 +509,63 @@ function Allocator.step(vns)
 
 	-- Stabilizer hack ------------------------------------------------------
 	-- stop moving is I'm referenced  TODO: combine with goal_overwrite
-	if vns.stabilizer.referencing_me == true then
-		vns.goal.positionV3 = vector3()
-		vns.goal.orientationQ = quaternion()
-		if vns.stabilizer.referencing_me_goal_overwrite ~= nil then
-			if vns.stabilizer.referencing_me_goal_overwrite.positionV3 ~= nil then
-				vns.goal.positionV3 = vns.stabilizer.referencing_me_goal_overwrite.positionV3
+	if sons.stabilizer.referencing_me == true then
+		sons.goal.positionV3 = vector3()
+		sons.goal.orientationQ = quaternion()
+		if sons.stabilizer.referencing_me_goal_overwrite ~= nil then
+			if sons.stabilizer.referencing_me_goal_overwrite.positionV3 ~= nil then
+				sons.goal.positionV3 = sons.stabilizer.referencing_me_goal_overwrite.positionV3
 			end
-			if vns.stabilizer.referencing_me_goal_overwrite.orientationQ ~= nil then
-				vns.goal.orientationQ = vns.stabilizer.referencing_me_goal_overwrite.orientationQ
+			if sons.stabilizer.referencing_me_goal_overwrite.orientationQ ~= nil then
+				sons.goal.orientationQ = sons.stabilizer.referencing_me_goal_overwrite.orientationQ
 			end
-			vns.stabilizer.referencing_me_goal_overwrite = nil
+			sons.stabilizer.referencing_me_goal_overwrite = nil
 		end
 	end
 	-- end Stabilizer hack ------------------------------------------------------
 
-	if second_level == true and self_align ~= true and vns.parentR ~= nil then -- parent may be deleted by intersection
-		vns.goal.positionV3 = vns.parentR.positionV3
-		vns.goal.orientationQ = vns.parentR.orientationQ
+	if second_level == true and self_align ~= true and sons.parentR ~= nil then -- parent may be deleted by intersection
+		sons.goal.positionV3 = sons.parentR.positionV3
+		sons.goal.orientationQ = sons.parentR.orientationQ
 	end
 	if temporary_goal ~= nil then
-		vns.goal.positionV3 = temporary_goal.positionV3
-		vns.goal.orientationQ = temporary_goal.orientationQ
+		sons.goal.positionV3 = temporary_goal.positionV3
+		sons.goal.orientationQ = temporary_goal.orientationQ
 	end
 
 	-- send my new goal to children
-	for idS, robotR in pairs(vns.childrenRT) do
-		vns.Msg.send(idS, "parentGoal", {
-			positionV3 = vns.api.virtualFrame.V3_VtoR(vns.goal.positionV3 or vector3()),
-			orientationQ = vns.api.virtualFrame.Q_VtoR(vns.goal.orientationQ or quaternion()),
+	for idS, robotR in pairs(sons.childrenRT) do
+		sons.Msg.send(idS, "parentGoal", {
+			positionV3 = sons.api.virtualFrame.V3_VtoR(sons.goal.positionV3 or vector3()),
+			orientationQ = sons.api.virtualFrame.Q_VtoR(sons.goal.orientationQ or quaternion()),
 		})
 	end
 
 end
 
-function Allocator.multi_branch_allocate(vns, branches)
+function Allocator.multi_branch_allocate(sons, branches)
 	--- Stabilizer hack -------------------
-	if vns.stabilizer.referencing_me == true then
-		vns.robotTypeS = "reference_pipuck"
+	if sons.stabilizer.referencing_me == true then
+		sons.robotTypeS = "reference_pipuck"
 	end
 	--- end Stabilizer hack -------------------
 
 	local sourceList = {}
 	-- create sources from myself
-	local tempScale = vns.ScaleManager.Scale:new()
-	tempScale:inc(vns.robotTypeS)
+	local tempScale = sons.ScaleManager.Scale:new()
+	tempScale:inc(sons.robotTypeS)
 	sourceList[#sourceList + 1] = {
 		number = tempScale,
 		index = {
 			positionV3 = vector3(),
-			robotTypeS = vns.robotTypeS,
+			robotTypeS = sons.robotTypeS,
 		},
 	}
 
 	-- create sources from children
-	for idS, robotR in pairs(vns.childrenRT) do
+	for idS, robotR in pairs(sons.childrenRT) do
 		sourceList[#sourceList + 1] = {
-			number = vns.ScaleManager.Scale:new(robotR.scalemanager.scale),
+			number = sons.ScaleManager.Scale:new(robotR.scalemanager.scale),
 			index = robotR,
 		}
 	end
@@ -576,7 +576,7 @@ function Allocator.multi_branch_allocate(vns, branches)
 	local targetList = {}
 	for _, branchR in ipairs(branches) do
 		targetList[#targetList + 1] = {
-			number = vns.ScaleManager.Scale:new(branchR.number),
+			number = sons.ScaleManager.Scale:new(branchR.number),
 			index = branchR
 		}
 	end
@@ -628,8 +628,8 @@ function Allocator.multi_branch_allocate(vns, branches)
 	--]]
 
 	--- Stabilizer hack -------------------
-	if vns.stabilizer.referencing_me == true then
-		vns.robotTypeS = "pipuck"
+	if sons.stabilizer.referencing_me == true then
+		sons.robotTypeS = "pipuck"
 	end
 	--- end Stabilizer hack -------------------
 
@@ -638,18 +638,18 @@ function Allocator.multi_branch_allocate(vns, branches)
 	if #(sourceList[1].to) == 1 then
 		myTarget = targetList[sourceList[1].to[1].target]
 		local branchID = myTarget.index.idN
-		Allocator.setMorphology(vns, vns.allocator.gene_index[branchID])
-		vns.goal.positionV3 = myTarget.index.positionV3
-		vns.goal.orientationQ = myTarget.index.orientationQ
+		Allocator.setMorphology(sons, sons.allocator.gene_index[branchID])
+		sons.goal.positionV3 = myTarget.index.positionV3
+		sons.goal.orientationQ = myTarget.index.orientationQ
 		---[[ sometimes when topology changes, these maybe a -1 misjudge shortly, ignore this -1
-		if branchID == -1 and (vns.allocator.extraCount or 0) < 5 then
+		if branchID == -1 and (sons.allocator.extraCount or 0) < 5 then
 			branches.second_level = true
 		end
 		--]]
 	elseif #(sourceList[1].to) == 0 then
-		Allocator.setMorphology(vns, vns.allocator.gene_index[-1])
-		vns.goal.positionV3 = vns.allocator.parentGoal.positionV3
-		vns.goal.orientationQ = vns.allocator.parentGoal.orientationQ
+		Allocator.setMorphology(sons, sons.allocator.gene_index[-1])
+		sons.goal.positionV3 = sons.allocator.parentGoal.positionV3
+		sons.goal.orientationQ = sons.allocator.parentGoal.orientationQ
 	elseif #(sourceList[1].to) > 1 then
 		logger("Impossible! Myself is split in multi_branch_allocation")
 	end
@@ -666,8 +666,8 @@ function Allocator.multi_branch_allocate(vns, branches)
 				send_branches[#send_branches+1] = {
 					idN = target_branch.index.idN,
 					number = targetItem.number,
-					positionV3 = vns.api.virtualFrame.V3_VtoR(target_branch.index.positionV3),
-					orientationQ = vns.api.virtualFrame.Q_VtoR(target_branch.index.orientationQ),
+					positionV3 = sons.api.virtualFrame.V3_VtoR(target_branch.index.positionV3),
+					orientationQ = sons.api.virtualFrame.Q_VtoR(target_branch.index.orientationQ),
 				}
 			end
 			send_branches.second_level = true
@@ -675,16 +675,16 @@ function Allocator.multi_branch_allocate(vns, branches)
 			-- if I'm a first level split node, send a temporary goal for grand parent location
 			if branches.second_level ~= true then
 				send_branches.goal = {
-					positionV3 = vns.api.virtualFrame.V3_VtoR(vns.parentR.positionV3),
-					orientationQ = vns.api.virtualFrame.Q_VtoR(vns.parentR.orientationQ),
+					positionV3 = sons.api.virtualFrame.V3_VtoR(sons.parentR.positionV3),
+					orientationQ = sons.api.virtualFrame.Q_VtoR(sons.parentR.orientationQ),
 				}
 			end
 
-			vns.Msg.send(sourceChild.idS, "branches", {branches = send_branches})
+			sons.Msg.send(sourceChild.idS, "branches", {branches = send_branches})
 			if branches.second_level ~= true then
-				vns.Assigner.assign(vns, sourceChild.idS, vns.parentR.idS)	
+				sons.Assigner.assign(sons, sourceChild.idS, sons.parentR.idS)	
 			else
-				vns.Assigner.assign(vns, sourceChild.idS, nil)	
+				sons.Assigner.assign(sons, sourceChild.idS, nil)	
 			end
 			sourceChild.allocator.match = send_branches
 		end
@@ -705,28 +705,28 @@ function Allocator.multi_branch_allocate(vns, branches)
 			send_branches[1] = {
 				idN = target_branch.idN,
 				number = sourceList[i].to[1].number,
-				positionV3 = vns.api.virtualFrame.V3_VtoR(target_branch.positionV3),
-				orientationQ = vns.api.virtualFrame.Q_VtoR(target_branch.orientationQ),
+				positionV3 = sons.api.virtualFrame.V3_VtoR(target_branch.positionV3),
+				orientationQ = sons.api.virtualFrame.Q_VtoR(target_branch.orientationQ),
 			}
 			-- if I'm a first level split node, send a temporary goal for grand parent location
 			if branches.second_level ~= true then
 				send_branches.goal = {
-					positionV3 = vns.api.virtualFrame.V3_VtoR(vns.parentR.positionV3),
-					orientationQ = vns.api.virtualFrame.Q_VtoR(vns.parentR.orientationQ),
+					positionV3 = sons.api.virtualFrame.V3_VtoR(sons.parentR.positionV3),
+					orientationQ = sons.api.virtualFrame.Q_VtoR(sons.parentR.orientationQ),
 				}
 			end
 			--send_branches.second_level = branches.second_level
 			send_branches.second_level = true
-			vns.Msg.send(source_child.idS, "branches", {branches = send_branches})
+			sons.Msg.send(source_child.idS, "branches", {branches = send_branches})
 
 			-- calculate farthest value
 			local calcBaseValue = Allocator.calcBaseValue
 			if type(target_branch.calcBaseValue) == "function" then
 				calcBaseValue = target_branch.calcBaseValue
 			end
-			local value = calcBaseValue(vns.allocator.parentGoal.positionV3, source_child.positionV3, target_branch.positionV3)
-			--local value = Allocator.calcBaseValue(vns.parentR.positionV3, source_child.positionV3, target_branch.positionV3)
-			if source_child.robotTypeS == vns.allocator.gene_index[target_branch.idN].robotTypeS and 
+			local value = calcBaseValue(sons.allocator.parentGoal.positionV3, source_child.positionV3, target_branch.positionV3)
+			--local value = Allocator.calcBaseValue(sons.parentR.positionV3, source_child.positionV3, target_branch.positionV3)
+			if source_child.robotTypeS == sons.allocator.gene_index[target_branch.idN].robotTypeS and 
 			   value < farthest_value then
 				farthest_id = i
 				farthest_value = value
@@ -742,36 +742,36 @@ function Allocator.multi_branch_allocate(vns, branches)
 			local source_child_id = sourceList[i].index.idS
 			if i == farthest_id then
 				if branches.second_level ~= true then
-					vns.Assigner.assign(vns, source_child_id, vns.parentR.idS)	
+					sons.Assigner.assign(sons, source_child_id, sons.parentR.idS)	
 				else
-					vns.Assigner.assign(vns, source_child_id, nil)	
+					sons.Assigner.assign(sons, source_child_id, nil)	
 				end
 			elseif farthest_id ~= nil then
 				if branches.second_level ~= true then
-					--vns.Assigner.assign(vns, source_child_id, sourceList[farthest_id].index.idS)	-- can't hand up and hand among siblings at the same time
-					vns.Assigner.assign(vns, source_child_id, vns.parentR.idS)	
+					--sons.Assigner.assign(sons, source_child_id, sourceList[farthest_id].index.idS)	-- can't hand up and hand among siblings at the same time
+					sons.Assigner.assign(sons, source_child_id, sons.parentR.idS)	
 				else
-					vns.Assigner.assign(vns, source_child_id, nil)	
+					sons.Assigner.assign(sons, source_child_id, nil)	
 				end
 			elseif farthest_id == nil then -- the children are all different type, no farthest one is chosen
 				if branches.second_level ~= true then
-					vns.Assigner.assign(vns, source_child_id, vns.parentR.idS)	
+					sons.Assigner.assign(sons, source_child_id, sons.parentR.idS)	
 				else
-					vns.Assigner.assign(vns, source_child_id, nil)	
+					sons.Assigner.assign(sons, source_child_id, nil)	
 				end
 			end
 		end end
 	end end
 end
 
-function Allocator.allocate(vns, branches)
+function Allocator.allocate(sons, branches)
 	-- create sources from children
 	local sourceList = {}
-	local sourceSum = vns.ScaleManager.Scale:new()
-	for idS, robotR in pairs(vns.childrenRT) do
+	local sourceSum = sons.ScaleManager.Scale:new()
+	for idS, robotR in pairs(sons.childrenRT) do
 		if robotR.allocator.match == nil then
 			sourceList[#sourceList + 1] = {
-				number = vns.ScaleManager.Scale:new(robotR.scalemanager.scale),
+				number = sons.ScaleManager.Scale:new(robotR.scalemanager.scale),
 				index = robotR,
 			}
 			sourceSum = sourceSum + robotR.scalemanager.scale
@@ -782,10 +782,10 @@ function Allocator.allocate(vns, branches)
 
 	-- create targets from branches
 	local targetList = {}
-	local targetSum = vns.ScaleManager.Scale:new()
+	local targetSum = sons.ScaleManager.Scale:new()
 	for _, branchR in ipairs(branches) do
 		targetList[#targetList + 1] = {
-			number = vns.ScaleManager.Scale:new(branchR.number),
+			number = sons.ScaleManager.Scale:new(branchR.number),
 			index = branchR
 		}
 		targetSum = targetSum + branchR.number
@@ -798,16 +798,16 @@ function Allocator.allocate(vns, branches)
 			diffSum[i] = 0
 		end
 	end
-	if diffSum:totalNumber() > 0 and vns.parentR ~= nil then
+	if diffSum:totalNumber() > 0 and sons.parentR ~= nil then
 		targetList[#targetList + 1] = {
 			number = diffSum,
 			index = {
 				idN = -1,
-				positionV3 = vns.parentR.positionV3,
-				orientationQ = vns.parentR.orientationQ,
+				positionV3 = sons.parentR.positionV3,
+				orientationQ = sons.parentR.orientationQ,
 			}
 		}
-	elseif diffSum:totalNumber() > 0 and vns.parentR == nil then
+	elseif diffSum:totalNumber() > 0 and sons.parentR == nil then
 		targetList[#targetList + 1] = {
 			number = diffSum,
 			index = {
@@ -874,14 +874,14 @@ function Allocator.allocate(vns, branches)
 				send_branches[#send_branches+1] = {
 					idN = target_branch.index.idN,
 					number = targetItem.number,
-					positionV3 = vns.api.virtualFrame.V3_VtoR(target_branch.index.positionV3),
-					orientationQ = vns.api.virtualFrame.Q_VtoR(target_branch.index.orientationQ),
+					positionV3 = sons.api.virtualFrame.V3_VtoR(target_branch.index.positionV3),
+					orientationQ = sons.api.virtualFrame.Q_VtoR(target_branch.index.orientationQ),
 				}
 			end
 			send_branches.second_level = branches.second_level
 
-			vns.Msg.send(sourceChild.idS, "branches", {branches = send_branches})
-			vns.Assigner.assign(vns, sourceChild.idS, nil)	
+			sons.Msg.send(sourceChild.idS, "branches", {branches = send_branches})
+			sons.Assigner.assign(sons, sourceChild.idS, nil)	
 			sourceChild.allocator.match = send_branches
 		end
 	end
@@ -900,22 +900,22 @@ function Allocator.allocate(vns, branches)
 			send_branches[1] = {
 				idN = target_branch.idN,
 				number = sourceList[i].to[1].number,
-				positionV3 = vns.api.virtualFrame.V3_VtoR(target_branch.positionV3),
-				orientationQ = vns.api.virtualFrame.Q_VtoR(target_branch.orientationQ),
+				positionV3 = sons.api.virtualFrame.V3_VtoR(target_branch.positionV3),
+				orientationQ = sons.api.virtualFrame.Q_VtoR(target_branch.orientationQ),
 			}
 			send_branches.second_level = branches.second_level
 			send_branches.self_align = target_branch.self_align
-			vns.Msg.send(source_child.idS, "branches", {branches = send_branches})
+			sons.Msg.send(source_child.idS, "branches", {branches = send_branches})
 
 			-- calculate farthest value
 			local calcBaseValue = Allocator.calcBaseValue
 			if type(target_branch.calcBaseValue) == "function" then
 				calcBaseValue = target_branch.calcBaseValue
 			end
-			local value = calcBaseValue(vns.goal.positionV3, source_child.positionV3, target_branch.positionV3)
+			local value = calcBaseValue(sons.goal.positionV3, source_child.positionV3, target_branch.positionV3)
 			--local value = Allocator.calcBaseValue(vector3(), source_child.positionV3, target_branch.positionV3)
 
-			if source_child.robotTypeS == vns.allocator.gene_index[target_branch.idN].robotTypeS and 
+			if source_child.robotTypeS == sons.allocator.gene_index[target_branch.idN].robotTypeS and 
 			   value < farthest_value then
 				farthest_id = i
 				farthest_value = value
@@ -930,12 +930,12 @@ function Allocator.allocate(vns, branches)
 		for i = 1, #sourceList do if #(sourceList[i].to) == 1 and sourceList[i].to[1].target == j then
 			local source_child_id = sourceList[i].index.idS
 			if i == farthest_id then
-				vns.Assigner.assign(vns, source_child_id, nil)	
+				sons.Assigner.assign(sons, source_child_id, nil)	
 			elseif farthest_id ~= nil then
 				if branches.second_level ~= true then
-					vns.Assigner.assign(vns, source_child_id, sourceList[farthest_id].index.idS)	
+					sons.Assigner.assign(sons, source_child_id, sourceList[farthest_id].index.idS)	
 				else
-					vns.Assigner.assign(vns, source_child_id, nil)	
+					sons.Assigner.assign(sons, source_child_id, nil)	
 				end
 			end
 		end end
@@ -949,23 +949,23 @@ function Allocator.allocate(vns, branches)
 			local target_branch = targetList[j].index
 			local send_branches = {}
 			send_branches[1] = {
-				--idN = vns.allocator.target.idN,
+				--idN = sons.allocator.target.idN,
 				idN = target_branch.idN, --(-1)
 				number = sourceList[i].to[1].number,
-				positionV3 = vns.api.virtualFrame.V3_VtoR(target_branch.positionV3),
-				orientationQ = vns.api.virtualFrame.Q_VtoR(target_branch.orientationQ),
+				positionV3 = sons.api.virtualFrame.V3_VtoR(target_branch.positionV3),
+				orientationQ = sons.api.virtualFrame.Q_VtoR(target_branch.orientationQ),
 			}
 			send_branches.second_level = branches.second_level
 			-- stop children handing over for extre children
 			--send_branches.second_level = true 
 
-			vns.Msg.send(source_child.idS, "branches", {branches = send_branches})
-			if vns.parentR ~= nil then
+			sons.Msg.send(source_child.idS, "branches", {branches = send_branches})
+			if sons.parentR ~= nil then
 				if branches.second_level ~= true then
-					vns.Assigner.assign(vns, source_child.idS, vns.parentR.idS)	
+					sons.Assigner.assign(sons, source_child.idS, sons.parentR.idS)	
 				end
 			else
-				vns.Assigner.assign(vns, source_child.idS, nil)	
+				sons.Assigner.assign(sons, source_child.idS, nil)	
 			end
 			source_child.allocator.match = send_branches
 		end end
@@ -1099,7 +1099,7 @@ function Allocator.GraphMatch(sourceList, targetList, originCost, type)
 					end
 				end
 				if exist == false then
-					local newNumber = vns.ScaleManager.Scale:new()
+					local newNumber = sons.ScaleManager.Scale:new()
 					newNumber[type] = F[1 + i][#sourceList+1 + j]
 					sourceList[i].to[#(sourceList[i].to) + 1] = 
 						{
@@ -1118,7 +1118,7 @@ function Allocator.GraphMatch(sourceList, targetList, originCost, type)
 					end
 				end
 				if exist == false then
-					local newNumber = vns.ScaleManager.Scale:new()
+					local newNumber = sons.ScaleManager.Scale:new()
 					newNumber[type] = F[1 + i][#sourceList+1 + j]
 					targetList[j].from[#(targetList[j].from) + 1] = 
 						{
@@ -1162,22 +1162,22 @@ end
 Allocator.calcBaseValue = Allocator.calcBaseValue_oval
 
 -------------------------------------------------------------------------------
-function Allocator.calcMorphScale(vns, morph)
-	Allocator.calcMorphChildrenScale(vns, morph)
-	Allocator.calcMorphParentScale(vns, morph)
+function Allocator.calcMorphScale(sons, morph)
+	Allocator.calcMorphChildrenScale(sons, morph)
+	Allocator.calcMorphParentScale(sons, morph)
 end
 
-function Allocator.calcMorphChildrenScale(vns, morph, level)
-	vns.allocator.morphIdCount = vns.allocator.morphIdCount + 1
-	morph.idN = vns.allocator.morphIdCount 
+function Allocator.calcMorphChildrenScale(sons, morph, level)
+	sons.allocator.morphIdCount = sons.allocator.morphIdCount + 1
+	morph.idN = sons.allocator.morphIdCount 
 	level = level or 1
 	morph.level = level
-	vns.allocator.gene_index[morph.idN] = morph
+	sons.allocator.gene_index[morph.idN] = morph
 
-	local sum = vns.ScaleManager.Scale:new()
+	local sum = sons.ScaleManager.Scale:new()
 	if morph.children ~= nil then
 		for i, branch in ipairs(morph.children) do
-			sum = sum + Allocator.calcMorphChildrenScale(vns, branch, level + 1)
+			sum = sum + Allocator.calcMorphChildrenScale(sons, branch, level + 1)
 		end
 	end
 	if sum[morph.robotTypeS] == nil then
@@ -1189,9 +1189,9 @@ function Allocator.calcMorphChildrenScale(vns, morph, level)
 	return sum
 end
 
-function Allocator.calcMorphParentScale(vns, morph)
+function Allocator.calcMorphParentScale(sons, morph)
 	if morph.parentScale == nil then
-		morph.parentScale = vns.ScaleManager.Scale:new()
+		morph.parentScale = sons.ScaleManager.Scale:new()
 	end
 	local sum = morph.parentScale + morph.scale
 	if morph.children ~= nil then
@@ -1199,15 +1199,15 @@ function Allocator.calcMorphParentScale(vns, morph)
 			branch.parentScale = sum - branch.scale
 		end
 		for i, branch in ipairs(morph.children) do
-			Allocator.calcMorphParentScale(vns, branch)
+			Allocator.calcMorphParentScale(sons, branch)
 		end
 	end
 end
 
 -------------------------------------------------------------------------------
-function Allocator.create_allocator_node(vns)
+function Allocator.create_allocator_node(sons)
 	return function()
-		Allocator.step(vns)
+		Allocator.step(sons)
 		return false, true
 	end
 end

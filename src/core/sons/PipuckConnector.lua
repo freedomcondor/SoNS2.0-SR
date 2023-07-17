@@ -1,25 +1,25 @@
 --- Pipuck connector -------------------------------------------------
 -- Pipuck connector makes a pipucks see a drone if it is seen by a drone
 --             also makes two pipucks see each other if they can be seen by a common drone
--- It checks messages from drones, convert them into robots or obstacles and store in vns.connector.seenRobots and vns.avoider.seenObstacles
+-- It checks messages from drones, convert them into robots or obstacles and store in sons.connector.seenRobots and sons.avoider.seenObstacles
 -- So that connector may handle the connection later
 ---------------------------------------------------------------------
 
 local PipuckConnector = {}
 local SensorUpdater = require("SensorUpdater")
 
-function PipuckConnector.preStep(vns)
-	vns.connector.seenRobots = {}
+function PipuckConnector.preStep(sons)
+	sons.connector.seenRobots = {}
 end
 
-function PipuckConnector.step(vns)
+function PipuckConnector.step(sons)
 	local seenObstacles = {}
 
 	-- For any sight report, update quadcopter and other pipucks to seenRobots
-	for _, msgM in ipairs(vns.Msg.getAM("ALLMSG", "reportSight")) do
-		if msgM.dataT.mySight[vns.Msg.myIDS()] ~= nil then
+	for _, msgM in ipairs(sons.Msg.getAM("ALLMSG", "reportSight")) do
+		if msgM.dataT.mySight[sons.Msg.myIDS()] ~= nil then
 			-- I'm seen in this report sight, add this drone into seenRobots
-			local common = msgM.dataT.mySight[vns.Msg.myIDS()]
+			local common = msgM.dataT.mySight[sons.Msg.myIDS()]
 			local quad = {
 				idS = msgM.fromS,
 				positionV3 = 
@@ -30,15 +30,15 @@ function PipuckConnector.step(vns)
 				robotTypeS = "drone",
 			}
 
-			if vns.connector.seenRobots[quad.idS] == nil then --TODO average
-				vns.connector.seenRobots[quad.idS] = quad
+			if sons.connector.seenRobots[quad.idS] == nil then --TODO average
+				sons.connector.seenRobots[quad.idS] = quad
 			end
 
 			-- add other pipucks to seenRobots
 			for idS, R in pairs(msgM.dataT.mySight) do
-				if idS ~= vns.Msg.myIDS() and vns.connector.seenRobots[idS] == nil and 
+				if idS ~= sons.Msg.myIDS() and sons.connector.seenRobots[idS] == nil and 
 				   R.robotTypeS ~= "drone" then -- TODO average
-					vns.connector.seenRobots[idS] = {
+					sons.connector.seenRobots[idS] = {
 						idS = idS,
 						positionV3 = quad.positionV3 + 
 						             vector3(R.positionV3):rotate(quad.orientationQ),
@@ -59,7 +59,7 @@ function PipuckConnector.step(vns)
 					-- check positionV3 in existing obstacles
 					local flag = true
 					for j, existing_ob in ipairs(seenObstacles) do
-						if (existing_ob.positionV3 - positionV3):length() < vns.api.parameters.obstacle_match_distance then
+						if (existing_ob.positionV3 - positionV3):length() < sons.api.parameters.obstacle_match_distance then
 							flag = false
 							break
 						end
@@ -78,15 +78,15 @@ function PipuckConnector.step(vns)
 		end
 	end
 
-	-- convert vns.connector.seenRobots from real frame into virtual frame
-	local seenRobotinR = vns.connector.seenRobots
-	vns.connector.seenRobots = {}
+	-- convert sons.connector.seenRobots from real frame into virtual frame
+	local seenRobotinR = sons.connector.seenRobots
+	sons.connector.seenRobots = {}
 	for idS, robotR in pairs(seenRobotinR) do
-		vns.connector.seenRobots[idS] = {
+		sons.connector.seenRobots[idS] = {
 			idS = idS,
 			robotTypeS = robotR.robotTypeS,
-			positionV3 = vns.api.virtualFrame.V3_RtoV(robotR.positionV3),
-			orientationQ = vns.api.virtualFrame.Q_RtoV(robotR.orientationQ),
+			positionV3 = sons.api.virtualFrame.V3_RtoV(robotR.positionV3),
+			orientationQ = sons.api.virtualFrame.Q_RtoV(robotR.orientationQ),
 		}
 	end
 
@@ -96,32 +96,32 @@ function PipuckConnector.step(vns)
 		seenObstaclesInVirtualFrame[i] = {
 			type = v.type,
 			robotTypeS = v.robotTypeS,
-			positionV3 = vns.api.virtualFrame.V3_RtoV(v.positionV3),
-			orientationQ = vns.api.virtualFrame.Q_RtoV(v.orientationQ),
+			positionV3 = sons.api.virtualFrame.V3_RtoV(v.positionV3),
+			orientationQ = sons.api.virtualFrame.Q_RtoV(v.orientationQ),
 		}
 	end
 
-	SensorUpdater.updateObstacles(vns, seenObstaclesInVirtualFrame, vns.avoider.obstacles)
+	SensorUpdater.updateObstacles(sons, seenObstaclesInVirtualFrame, sons.avoider.obstacles)
 
 	--[[
-	for i, ob in ipairs(vns.avoider.obstacles) do
+	for i, ob in ipairs(sons.avoider.obstacles) do
 		local color = "green"
 		if ob.unseen_count ~= 3 then color = "red" end
-		vns.api.debug.drawArrow(color,
-		                        vns.api.virtualFrame.V3_VtoR(vector3(0,0,0)),
-		                        vns.api.virtualFrame.V3_VtoR(vector3(ob.positionV3))
+		sons.api.debug.drawArrow(color,
+		                        sons.api.virtualFrame.V3_VtoR(vector3(0,0,0)),
+		                        sons.api.virtualFrame.V3_VtoR(vector3(ob.positionV3))
 		                       )
-		vns.api.debug.drawArrow(color,
-		                        vns.api.virtualFrame.V3_VtoR(vector3(ob.positionV3)),
-		                        vns.api.virtualFrame.V3_VtoR(vector3(ob.positionV3) + vector3(0.1,0,0):rotate(ob.orientationQ))
+		sons.api.debug.drawArrow(color,
+		                        sons.api.virtualFrame.V3_VtoR(vector3(ob.positionV3)),
+		                        sons.api.virtualFrame.V3_VtoR(vector3(ob.positionV3) + vector3(0.1,0,0):rotate(ob.orientationQ))
 		                       )
 	end
 	--]]
 end
 
-function PipuckConnector.create_pipuckconnector_node(vns)
+function PipuckConnector.create_pipuckconnector_node(sons)
 	return function()
-		vns.PipuckConnector.step(vns)
+		sons.PipuckConnector.step(sons)
 		return false, true
 	end
 end

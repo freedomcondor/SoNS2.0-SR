@@ -3,7 +3,7 @@ local myType = robot.params.my_type
 --[[
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/api/?.lua"
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/utils/?.lua"
-package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/vns/?.lua"
+package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/sons/?.lua"
 package.path = package.path .. ";@CMAKE_CURRENT_BINARY_DIR@/?.lua"
 --]]
 if robot.params.hardware ~= "true" then
@@ -33,7 +33,7 @@ logger.disable("droneAPI")
 
 -- datas ----------------
 local bt
---local vns
+--local sons
 local droneDis = 1.5
 local pipuckDis = 0.7
 local height = api.parameters.droneDefaultHeight
@@ -44,7 +44,7 @@ Message = SoNS.Msg
 -- SoNS option
 SoNS.Allocator.calcBaseValue = SoNS.Allocator.calcBaseValue_vertical
 
-function SoNS.create_vns_core_node(vns, option)
+function SoNS.create_sons_core_node(sons, option)
 	-- option = {
 	--      connector_no_recruit = true or false or nil,
 	--      connector_no_parent_ack = true or false or nil,
@@ -53,41 +53,41 @@ function SoNS.create_vns_core_node(vns, option)
 	--          -- If I am stabilizer_preference_robot then ack to only drone1 for 150 steps
 	-- }
 	if option == nil then option = {} end
-	if robot.id == vns.Parameters.stabilizer_preference_robot then
-		option.specific_name = vns.Parameters.stabilizer_preference_brain
-		option.specific_time = vns.Parameters.stabilizer_preference_brain_time
+	if robot.id == sons.Parameters.stabilizer_preference_robot then
+		option.specific_name = sons.Parameters.stabilizer_preference_brain
+		option.specific_time = sons.Parameters.stabilizer_preference_brain_time
 	end
 	return 
 	{type = "sequence", children = {
-		--vns.create_preconnector_node(vns),
+		--sons.create_preconnector_node(sons),
 		function()           timeCoreStart = getCurrentTime() return false, true end,	
-		vns.Connector.create_connector_node(vns, 
+		sons.Connector.create_connector_node(sons, 
 			{	no_recruit = option.connector_no_recruit,
 				no_parent_ack = option.connector_no_parent_ack,
 				specific_name = option.specific_name,
 				specific_time = option.specific_time,
 			}),
 		function()  timeCoreAfterConnector = getCurrentTime() return false, true end,	
-		vns.Assigner.create_assigner_node(vns),
+		sons.Assigner.create_assigner_node(sons),
 		function()  timeCoreAfterAssigner  = getCurrentTime() return false, true end,	
-		vns.ScaleManager.create_scalemanager_node(vns),
+		sons.ScaleManager.create_scalemanager_node(sons),
 		function()  timeCoreAfterScalemanager  = getCurrentTime() return false, true end,	
-		vns.Stabilizer.create_stabilizer_node(vns),
+		sons.Stabilizer.create_stabilizer_node(sons),
 		function()  timeCoreAfterStabilizer = getCurrentTime() return false, true end,	
-		vns.Allocator.create_allocator_node(vns),
+		sons.Allocator.create_allocator_node(sons),
 		function()  timeCoreAfterAllocator = getCurrentTime() return false, true end,	
-		vns.IntersectionDetector.create_intersectiondetector_node(vns),
+		sons.IntersectionDetector.create_intersectiondetector_node(sons),
 		function()  timeCoreAfterIntersectiondetector = getCurrentTime() return false, true end,	
-		vns.Avoider.create_avoider_node(vns, {
+		sons.Avoider.create_avoider_node(sons, {
 			drone_pipuck_avoidance = option.drone_pipuck_avoidance
 		}),
 		function()  timeCoreAfterAvoider = getCurrentTime() return false, true end,	
-		vns.Spreader.create_spreader_node(vns),
+		sons.Spreader.create_spreader_node(sons),
 		function()  timeCoreAfterSpreader = getCurrentTime() return false, true end,	
-		vns.BrainKeeper.create_brainkeeper_node(vns),
+		sons.BrainKeeper.create_brainkeeper_node(sons),
 		function()  timeCoreAfterBrainkeeper = getCurrentTime() return false, true end,	
-		--vns.CollectiveSensor.create_collectivesensor_node(vns),
-		--vns.Driver.create_driver_node(vns),
+		--sons.CollectiveSensor.create_collectivesensor_node(sons),
+		--sons.Driver.create_driver_node(sons),
 	}}
 end
 
@@ -99,27 +99,27 @@ local commMeasureDataFile = "logs/" .. robot.id .. ".comm_dat"
 function init()
 	api.linkRobotInterface(SoNS)
 	api.init() 
-	vns = SoNS.create(myType)
+	sons = SoNS.create(myType)
 	reset()
 	os.execute("rm -f " .. timeMeasureDataFile)
 end
 
 --- reset
 function reset()
-	vns.reset(vns)
-	if vns.idS == robot.params.stabilizer_preference_brain then vns.idN = 1 end
-	if vns.robotTypeS == "pipuck" then vns.idN = 0 end
-	vns.setGene(vns, gene)
+	sons.reset(sons)
+	if sons.idS == robot.params.stabilizer_preference_brain then sons.idN = 1 end
+	if sons.robotTypeS == "pipuck" then sons.idN = 0 end
+	sons.setGene(sons, gene)
 
-	vns.setMorphology(vns, gene)
+	sons.setMorphology(sons, gene)
 
 	bt = BT.create
 	{ type = "sequence", children = {
-		vns.create_preconnector_node(vns),
+		sons.create_preconnector_node(sons),
 		function() timeAfterPre = getCurrentTime() return false, true end,
-		vns.create_vns_core_node(vns, option),
-		vns.CollectiveSensor.create_collectivesensor_node(vns),
-		vns.Driver.create_driver_node(vns, {waiting = "spring"}),
+		sons.create_sons_core_node(sons, option),
+		sons.CollectiveSensor.create_collectivesensor_node(sons),
+		sons.Driver.create_driver_node(sons, {waiting = "spring"}),
 	}}
 end
 
@@ -136,7 +136,7 @@ function step()
 
 	--logger(robot.id, api.stepCount, "-----------------------")
 	api.preStep()
-	vns.preStep(vns)
+	sons.preStep(sons)
 
 	-- step
 	bt()
@@ -144,14 +144,14 @@ function step()
 	local timeAfterBT = getCurrentTime()
 
 	-- poststep
-	vns.postStep(vns)
+	sons.postStep(sons)
 	api.postStep()
 
 	local timeAfterPost = getCurrentTime()
 
-	vns.logLoopFunctionInfo(vns)
+	sons.logLoopFunctionInfo(sons)
 	-- debug
-	api.debug.showChildren(vns)
+	api.debug.showChildren(sons)
 
 	local timeStepEnd = getCurrentTime()
 
@@ -186,7 +186,7 @@ function step()
 	                      tostring(timeMeasureCoreBrainkeeper)  .. ' ' ..
 	           ' >> ' .. timeMeasureDataFile
 	          )
-	local commMeasure = countMessage(vns.Msg.waitToSend)
+	local commMeasure = countMessage(sons.Msg.waitToSend)
 	os.execute('echo ' .. tostring(commMeasure) .. ' >> ' .. commMeasureDataFile)
 end
 

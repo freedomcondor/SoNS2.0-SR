@@ -1,6 +1,6 @@
 -- SensorUpdater --------------------------------------------------
 -- Unlike each robot that has a unique id, obstacles are all the same
--- Sensor Updater is to match the new obstacles that a robot sees in the current step with the old obstacles in the vns.avoider.seenObstacles list
+-- Sensor Updater is to match the new obstacles that a robot sees in the current step with the old obstacles in the sons.avoider.seenObstacles list
 -- It also predictes the positions of an obstacle based on its movement last step when the tag got blurred for a short while
 -------------------------------------------------------------------
 local Transform = require("Transform")
@@ -8,9 +8,9 @@ local Transform = require("Transform")
 local SensorUpdater = {}
 
 -- Updates memObstacles with seenObstacles (in robots virtual frame)
-function SensorUpdater.updateObstacles(vns, seenObstacles, memObstacles)
-	vns.avoider.seenObstacles = seenObstacles
-	local offset = {positionV3 = vns.api.estimateLocation.positionV3, orientationQ = vns.api.estimateLocation.orientationQ}
+function SensorUpdater.updateObstacles(sons, seenObstacles, memObstacles)
+	sons.avoider.seenObstacles = seenObstacles
+	local offset = {positionV3 = sons.api.estimateLocation.positionV3, orientationQ = sons.api.estimateLocation.orientationQ}
 	-- match seenObstacles TODO: hungarian
 	for i, seenOb in ipairs(seenObstacles) do
 		local nearestDis = math.huge
@@ -19,7 +19,7 @@ function SensorUpdater.updateObstacles(vns, seenObstacles, memObstacles)
 			-- I used to see memOb, I now should be offset(estimated), I should see memOb at X.   offset x X = memOb
 			local estimate_memOb = Transform.AxCisB(offset, memOb)
 			local dis = (estimate_memOb.positionV3 - seenOb.positionV3):length()
-			if dis < nearestDis and dis < vns.api.parameters.obstacle_match_distance and memOb.type == seenOb.type and memOb.matched == nil then
+			if dis < nearestDis and dis < sons.api.parameters.obstacle_match_distance and memOb.type == seenOb.type and memOb.matched == nil then
 				nearestDis = dis
 				nearestOb = memOb
 			end
@@ -28,7 +28,7 @@ function SensorUpdater.updateObstacles(vns, seenObstacles, memObstacles)
 		if nearestOb == nil then
 			-- add seenOb to memObstacles
 			seenOb.matched = true
-			seenOb.unseen_count = vns.api.parameters.obstacle_unseen_count
+			seenOb.unseen_count = sons.api.parameters.obstacle_unseen_count
 			memObstacles[#memObstacles + 1] = seenOb
 		else
 			-- Update nearestOb
@@ -37,7 +37,7 @@ function SensorUpdater.updateObstacles(vns, seenObstacles, memObstacles)
 			nearestOb.positionV3 = seenOb.positionV3
 			nearestOb.orientationQ = seenOb.orientationQ
 			nearestOb.matched = true
-			nearestOb.unseen_count = vns.api.parameters.obstacle_unseen_count
+			nearestOb.unseen_count = sons.api.parameters.obstacle_unseen_count
 		end
 	end
 
@@ -71,9 +71,9 @@ function SensorUpdater.updateObstacles(vns, seenObstacles, memObstacles)
 end
 
 -- Updates memObstacles with seenObstacles in robot's body frame
-function SensorUpdater.updateObstaclesByRealFrame(vns, seenObstacles, memObstacles)
-	vns.avoider.seenObstacles = seenObstacles
-	--local offset = {positionV3 = vns.api.estimateLocation.positionV3, orientationQ = vns.api.estimateLocation.orientationQ}
+function SensorUpdater.updateObstaclesByRealFrame(sons, seenObstacles, memObstacles)
+	sons.avoider.seenObstacles = seenObstacles
+	--local offset = {positionV3 = sons.api.estimateLocation.positionV3, orientationQ = sons.api.estimateLocation.orientationQ}
 	local offset = {positionV3 = vector3(), orientationQ = quaternion()}
 	-- match seenObstacles TODO: hungarian
 	for i, seenOb in ipairs(seenObstacles) do
@@ -83,7 +83,7 @@ function SensorUpdater.updateObstaclesByRealFrame(vns, seenObstacles, memObstacl
 			-- I used to see memOb, I now should be offset(estimated), I should see memOb at X.   offset x X = memOb
 			local estimate_memOb_inReal = Transform.AxCisB(offset, memOb.locationInRealFrame)
 			local dis = (estimate_memOb_inReal.positionV3 - seenOb.locationInRealFrame.positionV3):length()
-			if dis < nearestDis and dis < vns.api.parameters.obstacle_match_distance and memOb.type == seenOb.type and memOb.matched == nil then
+			if dis < nearestDis and dis < sons.api.parameters.obstacle_match_distance and memOb.type == seenOb.type and memOb.matched == nil then
 				nearestDis = dis
 				nearestOb = memOb
 			end
@@ -92,7 +92,7 @@ function SensorUpdater.updateObstaclesByRealFrame(vns, seenObstacles, memObstacl
 		if nearestOb == nil then
 			-- add seenOb to memObstacles
 			seenOb.matched = true
-			seenOb.unseen_count = vns.api.parameters.obstacle_unseen_count
+			seenOb.unseen_count = sons.api.parameters.obstacle_unseen_count
 			memObstacles[#memObstacles + 1] = seenOb
 		else
 			-- Update nearestOb
@@ -102,7 +102,7 @@ function SensorUpdater.updateObstaclesByRealFrame(vns, seenObstacles, memObstacl
 			nearestOb.orientationQ = seenOb.orientationQ
 			nearestOb.locationInRealFrame = seenOb.locationInRealFrame
 			nearestOb.matched = true
-			nearestOb.unseen_count = vns.api.parameters.obstacle_unseen_count
+			nearestOb.unseen_count = sons.api.parameters.obstacle_unseen_count
 		end
 	end
 

@@ -7,7 +7,7 @@ local api = require("commonAPI")
 ---- actuator --------------------------
 api.actuator = {}
 -- in each step, robot.differential_drive.set_linear_velocity should only be called once at last
--- vns and api level uses setNewWheelSpeed to command pipuck's speed
+-- sons and api level uses setNewWheelSpeed to command pipuck's speed
 -- no matter how many command is given, newLeft and newRight are recorded, and enforced to set_linear_velocity at last in dronePostStep
 api.actuator = {}
 api.actuator.newLeft = 0
@@ -121,11 +121,11 @@ api.setSpeed = api.pipuckSetSpeed
 -- This funcion overwrites api.debug.showChildren in commonAPI
 -- It not only draws an arrow to the children, but also lights the body leds to indicate the direction of the parent.
 api.debug.commonShowChildren = api.debug.showChildren
-function api.debug.showChildren(vns, color, withoutBrain)
-	api.debug.commonShowChildren(vns, color, withoutBrain)
+function api.debug.showChildren(sons, color, withoutBrain)
+	api.debug.commonShowChildren(sons, color, withoutBrain)
 	-- draw children location
-	if vns.parentR ~= nil then
-		api.pipuckShowLED(api.virtualFrame.V3_VtoR(vector3(vns.parentR.positionV3)))
+	if sons.parentR ~= nil then
+		api.pipuckShowLED(api.virtualFrame.V3_VtoR(vector3(sons.parentR.positionV3)))
 	else
 		if robot.leds ~= nil then
 			robot.leds.set_body_led(true)

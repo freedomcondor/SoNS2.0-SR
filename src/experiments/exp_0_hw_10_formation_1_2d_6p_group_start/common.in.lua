@@ -3,7 +3,7 @@ local myType = robot.params.my_type
 --[[
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/api/?.lua"
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/utils/?.lua"
-package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/vns/?.lua"
+package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/sons/?.lua"
 package.path = package.path .. ";@CMAKE_CURRENT_BINARY_DIR@/?.lua"
 --]]
 if robot.params.hardware ~= "true" then
@@ -24,7 +24,7 @@ logger.disable("droneAPI")
 
 -- datas ----------------
 local bt
---local vns
+--local sons
 local gene = require("morphology")
 
 -- SoNS option
@@ -35,24 +35,24 @@ local gene = require("morphology")
 function init()
 	api.linkRobotInterface(SoNS)
 	api.init() 
-	vns = SoNS.create(myType)
+	sons = SoNS.create(myType)
 	reset()
 end
 
 --- reset
 function reset()
-	vns.reset(vns)
-	if vns.idS == robot.params.stabilizer_preference_brain then vns.idN = 1 end
-	vns.setGene(vns, gene)
-	vns.setMorphology(vns, gene)
+	sons.reset(sons)
+	if sons.idS == robot.params.stabilizer_preference_brain then sons.idN = 1 end
+	sons.setGene(sons, gene)
+	sons.setMorphology(sons, gene)
 
 	bt = BT.create
 	{ type = "sequence", children = {
-		vns.create_preconnector_node(vns),
-		create_led_node(vns),
-		vns.create_vns_core_node(vns),
-		create_head_navigate_node(vns),
-		vns.Driver.create_driver_node(vns, {waiting = "spring"}),
+		sons.create_preconnector_node(sons),
+		create_led_node(sons),
+		sons.create_sons_core_node(sons),
+		create_head_navigate_node(sons),
+		sons.Driver.create_driver_node(sons, {waiting = "spring"}),
 	}}
 end
 
@@ -61,20 +61,20 @@ function step()
 	-- prestep
 	--logger(robot.id, "-----------------------")
 	api.preStep()
-	vns.preStep(vns)
+	sons.preStep(sons)
 
 	-- step
 	bt()
 
 	-- poststep
-	vns.postStep(vns)
+	sons.postStep(sons)
 	api.postStep()
 
-	vns.logLoopFunctionInfo(vns)
+	sons.logLoopFunctionInfo(sons)
 	-- debug
-	api.debug.showChildren(vns)
-	--if vns.parentR == nil then
-		--api.debug.showObstacles(vns)
+	api.debug.showChildren(sons)
+	--if sons.parentR == nil then
+		--api.debug.showObstacles(sons)
 	--end
 end
 
@@ -84,12 +84,12 @@ function destroy()
 end
 
 -- drone avoider led node ---------------------
-function create_led_node(vns)
+function create_led_node(sons)
 	return function()
 		-- signal led
-		if vns.robotTypeS == "drone" then
+		if sons.robotTypeS == "drone" then
 			local flag = false
-			for idS, robotR in pairs(vns.connector.seenRobots) do
+			for idS, robotR in pairs(sons.connector.seenRobots) do
 				if robotR.robotTypeS == "drone" then
 					flag = true
 				end
@@ -105,27 +105,27 @@ function create_led_node(vns)
 end
 
 -- drone navigation node ---------------------
-function create_head_navigate_node(vns)
+function create_head_navigate_node(sons)
 	local marker_type = 33
 	local obstacle_type = 34
 return function()
 	-- only run for brain
-	if vns.parentR == nil then 
-		for id, ob in ipairs(vns.avoider.obstacles) do
+	if sons.parentR == nil then 
+		for id, ob in ipairs(sons.avoider.obstacles) do
 			if ob.type == marker_type then
-				vns.setGoal(vns, ob.positionV3 - vector3(0.7, 0.5, 0), ob.orientationQ * quaternion(math.pi/2, vector3(0,0,1)))
+				sons.setGoal(sons, ob.positionV3 - vector3(0.7, 0.5, 0), ob.orientationQ * quaternion(math.pi/2, vector3(0,0,1)))
 			--[[
-			if vns.goal.positionV3:length() < 0.3 then
+			if sons.goal.positionV3:length() < 0.3 then
 				state = 5
 			end
 			--]]
 				return false, true
 			end
 		end
-	elseif vns.robotTypeS == "pipuck" then
-		for id, ob in ipairs(vns.avoider.obstacles) do
+	elseif sons.robotTypeS == "pipuck" then
+		for id, ob in ipairs(sons.avoider.obstacles) do
 			if ob.positionV3:length() < 0.5 then
-				vns.goal.transV3 = vns.goal.transV3 + vector3(-0.02, 0, 0):rotate(ob.orientationQ)
+				sons.goal.transV3 = sons.goal.transV3 + vector3(-0.02, 0, 0):rotate(ob.orientationQ)
 			end
 		end
 	end

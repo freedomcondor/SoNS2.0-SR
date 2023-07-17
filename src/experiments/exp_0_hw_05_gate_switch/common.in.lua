@@ -3,7 +3,7 @@ local myType = robot.params.my_type
 --[[
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/api/?.lua"
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/utils/?.lua"
-package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/vns/?.lua"
+package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/sons/?.lua"
 package.path = package.path .. ";@CMAKE_CURRENT_BINARY_DIR@/?.lua"
 --]]
 if robot.params.hardware ~= "true" then
@@ -25,7 +25,7 @@ logger.disable("droneAPI")
 
 -- datas ----------------
 local bt
---local vns
+--local sons
 local structure1 = require("morphology1")
 local structure2 = require("morphology2")
 local structure3 = require("morphology3")
@@ -44,8 +44,8 @@ local gene = {
 SoNS.Allocator.calcBaseValue = SoNS.Allocator.calcBaseValue_vertical
 
 -- called when a child lost its parent
-function SoNS.Allocator.resetMorphology(vns)
-	vns.Allocator.setMorphology(vns, structure1)
+function SoNS.Allocator.resetMorphology(sons)
+	sons.Allocator.setMorphology(sons, structure1)
 end
 
 -- argos functions -----------------------------------------------
@@ -53,25 +53,25 @@ end
 function init()
 	api.linkRobotInterface(SoNS)
 	api.init() 
-	vns = SoNS.create(myType)
+	sons = SoNS.create(myType)
 	reset()
 end
 
 --- reset
 function reset()
-	vns.reset(vns)
-	if vns.idS == robot.params.stabilizer_preference_brain then vns.idN = 1 end
-	if vns.robotTypeS == "pipuck" then vns.idN = 0 end
-	vns.setGene(vns, gene)
+	sons.reset(sons)
+	if sons.idS == robot.params.stabilizer_preference_brain then sons.idN = 1 end
+	if sons.robotTypeS == "pipuck" then sons.idN = 0 end
+	sons.setGene(sons, gene)
 
-	vns.setMorphology(vns, structure1)
+	sons.setMorphology(sons, structure1)
 	bt = BT.create
 	{ type = "sequence", children = {
-		vns.create_preconnector_node(vns),
-		vns.create_vns_core_node(vns),
-		vns.CollectiveSensor.create_collectivesensor_node(vns),
-		create_reaction_node(vns),
-		vns.Driver.create_driver_node(vns, {waiting = "spring"}),
+		sons.create_preconnector_node(sons),
+		sons.create_sons_core_node(sons),
+		sons.CollectiveSensor.create_collectivesensor_node(sons),
+		create_reaction_node(sons),
+		sons.Driver.create_driver_node(sons, {waiting = "spring"}),
 	}}
 end
 
@@ -80,21 +80,21 @@ function step()
 	-- prestep
 	--logger(robot.id, "-----------------------")
 	api.preStep()
-	vns.preStep(vns)
+	sons.preStep(sons)
 
 	-- step
 	bt()
 
 	-- poststep
-	vns.postStep(vns)
+	sons.postStep(sons)
 	api.postStep()
 
-	vns.logLoopFunctionInfo(vns)
+	sons.logLoopFunctionInfo(sons)
 	-- debug
-	api.debug.showChildren(vns)
-	if vns.robotTypeS == "drone" then api.debug.showObstacles(vns) end
+	api.debug.showChildren(sons)
+	if sons.robotTypeS == "drone" then api.debug.showObstacles(sons) end
 
-	--ExperimentCommon.detectGates(vns, 253, 1.5) -- gate brick id and longest possible gate size
+	--ExperimentCommon.detectGates(sons, 253, 1.5) -- gate brick id and longest possible gate size
 end
 
 --- destroy
@@ -103,7 +103,7 @@ function destroy()
 end
 
 -- Strategy -----------------------------------------------
-function create_reaction_node(vns)
+function create_reaction_node(sons)
 	local state = "waiting"
 	local stateCount = 0
 
@@ -116,88 +116,88 @@ function create_reaction_node(vns)
 	local totalGateNumber = 2
 	local n_drone = 2
 
-	local function sendChilrenNewState(vns, newState)
-		for idS, childR in pairs(vns.childrenRT) do
-			vns.Msg.send(idS, "switch_to_state", {state = newState})
+	local function sendChilrenNewState(sons, newState)
+		for idS, childR in pairs(sons.childrenRT) do
+			sons.Msg.send(idS, "switch_to_state", {state = newState})
 		end
 	end
 
-	local function newState(vns, _newState)
+	local function newState(sons, _newState)
 		stateCount = 0
 		state = _newState
 	end
 
-	local function switchAndSendNewState(vns, _newState)
-		newState(vns, _newState)
-		sendChilrenNewState(vns, _newState)
+	local function switchAndSendNewState(sons, _newState)
+		newState(sons, _newState)
+		sendChilrenNewState(sons, _newState)
 	end
 
 	return function()
 		-- if I receive switch state cmd from parent
-		if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "switch_to_state")) do
-			switchAndSendNewState(vns, msgM.dataT.state)
+		if sons.parentR ~= nil then for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "switch_to_state")) do
+			switchAndSendNewState(sons, msgM.dataT.state)
 		end end
 		-------------------------------------------------------------
 		-- waiting for sometime for the 1st formation
 		if state == "waiting" then
-			vns.stabilizer.force_pipuck_reference = true
-			--vns.allocator.pipuck_bridge_switch = true
+			sons.stabilizer.force_pipuck_reference = true
+			--sons.allocator.pipuck_bridge_switch = true
 			stateCount = stateCount + 1
 			--if stateCount == 150 + expScale * 50 then
 			-- brain wait for sometime and say move_forward
-			if vns.parentR == nil then
-				--if stateCount > 75 and vns.driver.all_arrive == true then
+			if sons.parentR == nil then
+				--if stateCount > 75 and sons.driver.all_arrive == true then
 				if (stateCount > 150) then
-					switchAndSendNewState(vns, "move_forward")
+					switchAndSendNewState(sons, "move_forward")
 				end
 			end
 
 		elseif state == "move_forward" then
-			vns.stabilizer.force_pipuck_reference = nil
-			--vns.allocator.pipuck_bridge_switch = nil
+			sons.stabilizer.force_pipuck_reference = nil
+			--sons.allocator.pipuck_bridge_switch = nil
 			stateCount = stateCount + 1
 
 			-- everyone reports wall and gates
-			ExperimentCommon.reportWall(vns, wall_brick_type)
-			local _, _, gateNumber = ExperimentCommon.detectAndReportGates(vns, gate_brick_type, max_gate_length)
+			ExperimentCommon.reportWall(sons, wall_brick_type)
+			local _, _, gateNumber = ExperimentCommon.detectAndReportGates(sons, gate_brick_type, max_gate_length)
 			--logger(robot.id, "gateNumber = ", gateNumber)
 
 			-- referencing pipuck gives the moving forward command
 				-- and listen newheading command from the brain
-			if vns.stabilizer.referencing_me == true then
-				vns.Spreader.emergency_after_core(vns, vector3(0.03,0,0), vector3())
-				for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "new_heading")) do
-					vns.stabilizer.referencing_me_goal_overwrite = {orientationQ = vns.parentR.orientationQ * msgM.dataT.heading}
+			if sons.stabilizer.referencing_me == true then
+				sons.Spreader.emergency_after_core(sons, vector3(0.03,0,0), vector3())
+				for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "new_heading")) do
+					sons.stabilizer.referencing_me_goal_overwrite = {orientationQ = sons.parentR.orientationQ * msgM.dataT.heading}
 				end
 				-- stop moving forward if other pipucks are in the way
-				for idS, robotR in pairs(vns.connector.seenRobots) do
+				for idS, robotR in pairs(sons.connector.seenRobots) do
 					if robotR.robotTypeS == "pipuck" and
 					   robotR.positionV3.x > 0 and robotR.positionV3.x < 0.25 and
 					   robotR.positionV3.y > -0.25 and robotR.positionV3.y < 0.25 then
-						vns.goal.transV3.x = 0
+						sons.goal.transV3.x = 0
 					end
 				end
 			end
 
 			-- brain checks the wall and adjust heading
-			if vns.parentR == nil then
-				if vns.stabilizer.referencing_robot == nil then
-					vns.Spreader.emergency_after_core(vns, vector3(0.03,0,0), vector3())
+			if sons.parentR == nil then
+				if sons.stabilizer.referencing_robot == nil then
+					sons.Spreader.emergency_after_core(sons, vector3(0.03,0,0), vector3())
 				end
-				local receiveWall = ExperimentCommon.detectWall(vns, wall_brick_type)
-				if receiveWall == nil then receiveWall = ExperimentCommon.detectWallFromReceives(vns, wall_brick_type) end
+				local receiveWall = ExperimentCommon.detectWall(sons, wall_brick_type)
+				if receiveWall == nil then receiveWall = ExperimentCommon.detectWallFromReceives(sons, wall_brick_type) end
 				if receiveWall ~= nil then
-					vns.api.debug.drawArrow("red", vector3(),
-						vns.api.virtualFrame.V3_VtoR(receiveWall.positionV3)
+					sons.api.debug.drawArrow("red", vector3(),
+						sons.api.virtualFrame.V3_VtoR(receiveWall.positionV3)
 					)
 			
-					if vns.stabilizer.referencing_robot ~= nil then
-						vns.Msg.send(vns.stabilizer.referencing_robot.idS, "new_heading", {heading = vns.api.virtualFrame.Q_VtoR(receiveWall.orientationQ)})
+					if sons.stabilizer.referencing_robot ~= nil then
+						sons.Msg.send(sons.stabilizer.referencing_robot.idS, "new_heading", {heading = sons.api.virtualFrame.Q_VtoR(receiveWall.orientationQ)})
 					else
-						vns.setGoal(vns, vns.goal.positionV3, receiveWall.orientationQ)
+						sons.setGoal(sons, sons.goal.positionV3, receiveWall.orientationQ)
 					end
 		
-					vns.api.debug.drawArrow("blue",  
+					sons.api.debug.drawArrow("blue",  
 						api.virtualFrame.V3_VtoR(vector3(receiveWall.positionV3)),
 						api.virtualFrame.V3_VtoR(vector3(receiveWall.positionV3) + vector3(0.2, 0, 0):rotate(receiveWall.orientationQ))
 					)
@@ -206,7 +206,7 @@ function create_reaction_node(vns)
 					local disToTheWall = receiveWall.positionV3:dot(vector3(1,0,0):rotate(receiveWall.orientationQ))
 					logger("disToTheWall = ", disToTheWall, "gateNumber = ", gateNumber)
 					if gateNumber == totalGateNumber and disToTheWall < 1.5 then
-						switchAndSendNewState(vns, "check_gate")
+						switchAndSendNewState(sons, "check_gate")
 						logger(robot.id, "check_gate")
 					end
 				end
@@ -214,73 +214,73 @@ function create_reaction_node(vns)
 
 		elseif state == "check_gate" then
 			stateCount = stateCount + 1
-			vns.Parameters.stabilizer_preference_robot = nil
+			sons.Parameters.stabilizer_preference_robot = nil
 
 			-- If I see the gate and I'm a drone
-			local gateList, gate = ExperimentCommon.detectAndReportGates(vns, gate_brick_type, max_gate_length)
-			if gate ~= nil and vns.robotTypeS == "drone" then
+			local gateList, gate = ExperimentCommon.detectAndReportGates(sons, gate_brick_type, max_gate_length)
+			if gate ~= nil and sons.robotTypeS == "drone" then
 				-- remember this gate, I may lost it later
-				vns.gate = gate
+				sons.gate = gate
 				-- break with my parent
-				if vns.parentR ~= nil then
-					vns.Msg.send(vns.parentR.idS, "dismiss")
-					vns.deleteParent(vns)
+				if sons.parentR ~= nil then
+					sons.Msg.send(sons.parentR.idS, "dismiss")
+					sons.deleteParent(sons)
 				end
-				vns.Connector.newSonsID(vns, 1 + gate.length, 1)
-				vns.BrainKeeper.reset(vns)
-				vns.allocator.mode_switch = "stationary"
-				vns.setMorphology(vns, structure2)
+				sons.Connector.newSonsID(sons, 1 + gate.length, 1)
+				sons.BrainKeeper.reset(sons)
+				sons.allocator.mode_switch = "stationary"
+				sons.setMorphology(sons, structure2)
 
-				newState(vns, "break_and_recruit")
+				newState(sons, "break_and_recruit")
 				logger(robot.id, "I have a gate, breaking and recruiting")
 			end
 		elseif state == "break_and_recruit" then
 			stateCount = stateCount + 1
 
-			if vns.parentR == nil and vns.scalemanager.scale["drone"] == n_drone and stateCount >= 20 then
+			if sons.parentR == nil and sons.scalemanager.scale["drone"] == n_drone and stateCount >= 20 then
 				logger(robot.id, "I got everyone, switch to structure2")
-				switchAndSendNewState(vns, "switch_to_structure2")
-				vns.setMorphology(vns, structure2)
-				vns.allocator.mode_switch = "allocate"
-				--vns.Allocator.sendAllocate(vns) -- necessary ?
+				switchAndSendNewState(sons, "switch_to_structure2")
+				sons.setMorphology(sons, structure2)
+				sons.allocator.mode_switch = "allocate"
+				--sons.Allocator.sendAllocate(sons) -- necessary ?
 			end
 		elseif state == "switch_to_structure2" then
-			--vns.allocator.pipuck_bridge_switch = true
+			--sons.allocator.pipuck_bridge_switch = true
 			stateCount = stateCount + 1
 			-- If I see the gate and I'm a drone
 
 			-- everyone reports wall and gates
-			ExperimentCommon.reportWall(vns, wall_brick_type)
-			local gateList, gate = ExperimentCommon.detectAndReportGates(vns, gate_brick_type, max_gate_length, true) -- true means all report
+			ExperimentCommon.reportWall(sons, wall_brick_type)
+			local gateList, gate = ExperimentCommon.detectAndReportGates(sons, gate_brick_type, max_gate_length, true) -- true means all report
 			-- detect wall from myself, if not, from receives
-			local wall = ExperimentCommon.detectWall(vns, wall_brick_type)
-			if wall == nil then wall = ExperimentCommon.detectWallFromReceives(vns, wall_brick_type) end
+			local wall = ExperimentCommon.detectWall(sons, wall_brick_type)
+			if wall == nil then wall = ExperimentCommon.detectWallFromReceives(sons, wall_brick_type) end
 
 			-- Brain detects gate, send gate and wall information to the referenced pipuck
-			if vns.parentR == nil then
-				--vns.stabilizer.force_pipuck_reference = true
-				if gate ~= nil and math.abs(gate.length - vns.gate.length) < 0.2 then
-					vns.gate = gate
-					vns.setGoal(vns, gate.positionV3 + vector3(-0.5, 0, 0):rotate(gate.orientationQ), gate.orientationQ)
+			if sons.parentR == nil then
+				--sons.stabilizer.force_pipuck_reference = true
+				if gate ~= nil and math.abs(gate.length - sons.gate.length) < 0.2 then
+					sons.gate = gate
+					sons.setGoal(sons, gate.positionV3 + vector3(-0.5, 0, 0):rotate(gate.orientationQ), gate.orientationQ)
 					-- TODO: go to next state
 					local disV2 = gate.positionV3 + vector3(-0.5, 0, 0):rotate(gate.orientationQ)
 					disV2.z = 0
 					if disV2:length() < 0.1 then
 						logger(robot.id, "I reach gate, switch to wait_forward_again")
-						switchAndSendNewState(vns, "wait_forward_again")
+						switchAndSendNewState(sons, "wait_forward_again")
 					end
 				else
-					-- I don't see gate this step, move towards vns.gate
-					if vns.gate ~= nil then
-						local speed = vector3(vns.gate.positionV3)
+					-- I don't see gate this step, move towards sons.gate
+					if sons.gate ~= nil then
+						local speed = vector3(sons.gate.positionV3)
 						speed = speed:normalize() * 0.03
-						vns.Spreader.emergency_after_core(vns, speed, vector3())
+						sons.Spreader.emergency_after_core(sons, speed, vector3())
 					end
 				end
 			end
 
 			-- other robot try not exceed wall
-			if vns.parentR ~= nil and vns.stabilizer.referencing_me ~= true then
+			if sons.parentR ~= nil and sons.stabilizer.referencing_me ~= true then
 				if wall ~= nil then
 					local disV2 = vector3(wall.positionV3)
 					disV2.z = 0
@@ -288,13 +288,13 @@ function create_reaction_node(vns)
 					dis = disV2:dot(baseNormalV2)
 
 					local color = "128,128,0,0"
-					vns.api.debug.drawArrow(color,
-					                        vns.api.virtualFrame.V3_VtoR(vector3(0,0,0.1)),
-					                        vns.api.virtualFrame.V3_VtoR(baseNormalV2 * dis + vector3(0,0,0.1))
+					sons.api.debug.drawArrow(color,
+					                        sons.api.virtualFrame.V3_VtoR(vector3(0,0,0.1)),
+					                        sons.api.virtualFrame.V3_VtoR(baseNormalV2 * dis + vector3(0,0,0.1))
 					                       )
 
 					if dis < 0.2 then
-						vns.goal.transV3 = vns.goal.transV3 + baseNormalV2 * (dis - 0.2)
+						sons.goal.transV3 = sons.goal.transV3 + baseNormalV2 * (dis - 0.2)
 					end
 				end
 			end
@@ -302,78 +302,78 @@ function create_reaction_node(vns)
 		elseif state == "wait_forward_again" then
 			stateCount = stateCount + 1
 
-			if vns.parentR == nil then
+			if sons.parentR == nil then
 				if stateCount > 175 * 1 then
-					switchAndSendNewState(vns, "forward_again")
+					switchAndSendNewState(sons, "forward_again")
 					logger(robot.id, "forward_again")
 				end
 			end
 
 		elseif state == "forward_again" then
-			--vns.allocator.pipuck_bridge_switch = nil
+			--sons.allocator.pipuck_bridge_switch = nil
 			stateCount = stateCount + 1
 
 			-- everyone reports wall and gates
-			ExperimentCommon.reportWall(vns, wall_brick_type)
-			local _, gate, gateNumber = ExperimentCommon.detectAndReportGates(vns, gate_brick_type, max_gate_length)
+			ExperimentCommon.reportWall(sons, wall_brick_type)
+			local _, gate, gateNumber = ExperimentCommon.detectAndReportGates(sons, gate_brick_type, max_gate_length)
 			--logger(robot.id, "gateNumber = ", gateNumber)
 
 			-- referencing pipuck gives the moving forward command
 				-- and listen newheading command from the brain
-			if vns.stabilizer.referencing_me == true then
-				vns.Spreader.emergency_after_core(vns, vector3(0.03,0,0), vector3())
-				for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "new_heading")) do
-					vns.stabilizer.referencing_me_goal_overwrite = {orientationQ = vns.parentR.orientationQ * msgM.dataT.heading}
+			if sons.stabilizer.referencing_me == true then
+				sons.Spreader.emergency_after_core(sons, vector3(0.03,0,0), vector3())
+				for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "new_heading")) do
+					sons.stabilizer.referencing_me_goal_overwrite = {orientationQ = sons.parentR.orientationQ * msgM.dataT.heading}
 					if msgM.dataT.gate ~= nil then
-						vns.Spreader.emergency_after_core(vns, vector3(0,msgM.dataT.gate.positionV3.y * 0.1,0), vector3())
+						sons.Spreader.emergency_after_core(sons, vector3(0,msgM.dataT.gate.positionV3.y * 0.1,0), vector3())
 					end
 				end
 			end
 
 			-- brain checks the wall and adjust heading
-			if vns.parentR == nil then
-				vns.stabilizer.force_pipuck_reference = true
-				local receiveWall = ExperimentCommon.detectWall(vns, wall_brick_type)
-				if receiveWall == nil then receiveWall = ExperimentCommon.detectWallFromReceives(vns, wall_brick_type) end
+			if sons.parentR == nil then
+				sons.stabilizer.force_pipuck_reference = true
+				local receiveWall = ExperimentCommon.detectWall(sons, wall_brick_type)
+				if receiveWall == nil then receiveWall = ExperimentCommon.detectWallFromReceives(sons, wall_brick_type) end
 				if receiveWall ~= nil then
-					vns.api.debug.drawArrow("red", vector3(),
-						vns.api.virtualFrame.V3_VtoR(receiveWall.positionV3)
+					sons.api.debug.drawArrow("red", vector3(),
+						sons.api.virtualFrame.V3_VtoR(receiveWall.positionV3)
 					)
 			
-					if vns.stabilizer.referencing_robot ~= nil then
-						vns.Msg.send(vns.stabilizer.referencing_robot.idS, "new_heading", {
-							heading = vns.api.virtualFrame.Q_VtoR(receiveWall.orientationQ),
+					if sons.stabilizer.referencing_robot ~= nil then
+						sons.Msg.send(sons.stabilizer.referencing_robot.idS, "new_heading", {
+							heading = sons.api.virtualFrame.Q_VtoR(receiveWall.orientationQ),
 							gate = gate,
 						})
 					end
 		
-					vns.api.debug.drawArrow("blue",  
+					sons.api.debug.drawArrow("blue",  
 						api.virtualFrame.V3_VtoR(vector3(receiveWall.positionV3)),
 						api.virtualFrame.V3_VtoR(vector3(receiveWall.positionV3) + vector3(0.2, 0, 0):rotate(receiveWall.orientationQ))
 					)
 
 					-- brain checks target 
-					local target = ExperimentCommon.detectTarget(vns, target_type)
+					local target = ExperimentCommon.detectTarget(sons, target_type)
 					if target ~= nil then
 						local disV2 = target.positionV3
 						disV2.z = 0
 						logger("disV2 = ", disV2:length())
 						if disV2:length() < 1.5 then
-							vns.target = target
-							vns.stabilizer.force_pipuck_reference = nil
-							switchAndSendNewState(vns, "structure3")
+							sons.target = target
+							sons.stabilizer.force_pipuck_reference = nil
+							switchAndSendNewState(sons, "structure3")
 							logger(robot.id, "structure3")
-							vns.setMorphology(vns, structure3)
+							sons.setMorphology(sons, structure3)
 						end
 					end
 				end
 			end
 
 			-- other drones that is not the brain checks the gate and try to stay middle of the gate
-			if vns.robotTypeS == "drone" and vns.parentR ~= nil then
+			if sons.robotTypeS == "drone" and sons.parentR ~= nil then
 				if gate ~= nil then
-					if vns.allocator.goal_overwrite == nil then
-						vns.allocator.goal_overwrite = {
+					if sons.allocator.goal_overwrite == nil then
+						sons.allocator.goal_overwrite = {
 							positionV3 = {
 								y = gate.positionV3.y
 							}
@@ -383,23 +383,23 @@ function create_reaction_node(vns)
 			end
 
 		elseif state == "structure3" then
-			if vns.parentR == nil then
-				local target = ExperimentCommon.detectTarget(vns, target_type)
-				-- update vns.target
+			if sons.parentR == nil then
+				local target = ExperimentCommon.detectTarget(sons, target_type)
+				-- update sons.target
 				if target ~= nil then
-					vns.target = target
+					sons.target = target
 				end
 
-				-- move towards remembered vns.target
-				if vns.target ~= nil then
-					local new_target = Transform.AxBisC(vns.target, {positionV3 = vector3(-0.7,-0.7,0), orientationQ = quaternion()})
-					vns.setGoal(vns, new_target.positionV3, new_target.orientationQ)
+				-- move towards remembered sons.target
+				if sons.target ~= nil then
+					local new_target = Transform.AxBisC(sons.target, {positionV3 = vector3(-0.7,-0.7,0), orientationQ = quaternion()})
+					sons.setGoal(sons, new_target.positionV3, new_target.orientationQ)
 				end
 			end
 		end
 
 		-- for debug
-		vns.debugstate = {state = state, stateCount = stateCount}
+		sons.debugstate = {state = state, stateCount = stateCount}
 		return false, true
 	end
 end

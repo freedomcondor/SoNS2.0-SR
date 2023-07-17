@@ -3,7 +3,7 @@ local myType = robot.params.my_type
 --[[
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/api/?.lua"
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/utils/?.lua"
-package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/vns/?.lua"
+package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/sons/?.lua"
 package.path = package.path .. ";@CMAKE_CURRENT_BINARY_DIR@/?.lua"
 --]]
 if robot.params.hardware ~= "true" then
@@ -23,7 +23,7 @@ logger.disable("droneAPI")
 
 -- datas ----------------
 local bt
---local vns
+--local sons
 local structure1 = require("morphology1")
 local structure2 = require("morphology2")
 local structure3 = require("morphology3")
@@ -44,8 +44,8 @@ local gene = {
 SoNS.Allocator.calcBaseValue = SoNS.Allocator.calcBaseValue_vertical -- default is oval
 
 -- called when a child lost its parent
-function SoNS.Allocator.resetMorphology(vns)
-	vns.Allocator.setMorphology(vns, structure1)
+function SoNS.Allocator.resetMorphology(sons)
+	sons.Allocator.setMorphology(sons, structure1)
 end
 
 -- argos functions -----------------------------------------------
@@ -53,24 +53,24 @@ end
 function init()
 	api.linkRobotInterface(SoNS)
 	api.init() 
-	vns = SoNS.create(myType)
+	sons = SoNS.create(myType)
 	reset()
 end
 
 --- reset
 function reset()
-	vns.reset(vns)
-	--if vns.idS == "pipuck1" then vns.idN = 1 end
-	if vns.idS == robot.params.stabilizer_preference_brain then vns.idN = 1 end
-	vns.setGene(vns, gene)
-	vns.setMorphology(vns, structure1)
+	sons.reset(sons)
+	--if sons.idS == "pipuck1" then sons.idN = 1 end
+	if sons.idS == robot.params.stabilizer_preference_brain then sons.idN = 1 end
+	sons.setGene(sons, gene)
+	sons.setMorphology(sons, structure1)
 
 	bt = BT.create
 	{ type = "sequence", children = {
-		vns.create_preconnector_node(vns),
-		vns.create_vns_core_node(vns),
-		create_head_navigate_node(vns),
-		vns.Driver.create_driver_node(vns, {waiting = true}),
+		sons.create_preconnector_node(sons),
+		sons.create_sons_core_node(sons),
+		create_head_navigate_node(sons),
+		sons.Driver.create_driver_node(sons, {waiting = true}),
 	}}
 end
 
@@ -79,24 +79,24 @@ function step()
 	-- prestep
 	--logger(robot.id, "-----------------------")
 	api.preStep()
-	vns.preStep(vns)
+	sons.preStep(sons)
 
 	-- step
 	bt()
 
 	-- poststep
-	vns.postStep(vns)
+	sons.postStep(sons)
 	api.postStep()
 
-	vns.logLoopFunctionInfo(vns)
+	sons.logLoopFunctionInfo(sons)
 	-- debug
-	api.debug.showChildren(vns)
+	api.debug.showChildren(sons)
 
-	if vns.parentR == nil then
-		api.debug.showObstacles(vns)
+	if sons.parentR == nil then
+		api.debug.showObstacles(sons)
 	end
 
-	--ExperimentCommon.detectGates(vns, 253, 1.5) -- gate brick id and longest possible gate size
+	--ExperimentCommon.detectGates(sons, 253, 1.5) -- gate brick id and longest possible gate size
 end
 
 --- destroy
@@ -105,18 +105,18 @@ function destroy()
 end
 
 ----------------------------------------------------------------------------------
-function create_head_navigate_node(vns)
+function create_head_navigate_node(sons)
 local state = "reach"
 local count = 0
 return function()
 	-- only run for brain
-	if vns.parentR ~= nil then return false, true end
-	if vns.api.stepCount < 250 then return false, true end
+	if sons.parentR ~= nil then return false, true end
+	if sons.api.stepCount < 250 then return false, true end
 
 	-- detect target
 	local target = nil
 	local marker = nil
-	for i, ob in ipairs(vns.avoider.obstacles) do
+	for i, ob in ipairs(sons.avoider.obstacles) do
 		if ob.type == 100 then
 			target = {
 				positionV3 = ob.positionV3,
@@ -137,10 +137,10 @@ return function()
 		local speed = 0.03
 		local disV2 = nil
 		if target == nil then
-			vns.Spreader.emergency_after_core(vns, vector3(speed,0,0), vector3())
+			sons.Spreader.emergency_after_core(sons, vector3(speed,0,0), vector3())
 		else
 			local goal = target.positionV3 + vector3(-1.2, 0.8, 0):rotate(target.orientationQ)
-			vns.setGoal(vns, goal, vns.goal.orientationQ)
+			sons.setGoal(sons, goal, sons.goal.orientationQ)
 			disV2 = vector3(goal)
 			disV2.z = 0
 		end
@@ -149,60 +149,60 @@ return function()
 			state = "stretch"
 			logger("stretch")
 			count = 0
-			vns.setMorphology(vns, structure2)
+			sons.setMorphology(sons, structure2)
 		end
 	elseif state == "stretch" then
 		local disV2 = nil
 		if target ~= nil then
 			local goal = target.positionV3 + vector3(-1, 0, 0)
-			vns.setGoal(vns, goal, target.orientationQ)
+			sons.setGoal(sons, goal, target.orientationQ)
 			disV2 = vector3(goal)
 			disV2.z = 0
 		end
 
-		if disV2 ~= nil and disV2:length() < 0.30 and vns.driver.all_arrive == true then
+		if disV2 ~= nil and disV2:length() < 0.30 and sons.driver.all_arrive == true then
 			count = count + 1
 		end
 		if count == 100 then
 			state = "push"
 			logger("push")
 			count = 0
-			vns.setMorphology(vns, structure3)
+			sons.setMorphology(sons, structure3)
 		end
 
 	elseif state == "push" then
 		count = count + 1
-		vns.Allocator.calcBaseValue = function() return 0 end
+		sons.Allocator.calcBaseValue = function() return 0 end
 
-		if vns.robotTypeS == "drone" then
-			vns.api.parameters.droneDefaultHeight = 1.2
+		if sons.robotTypeS == "drone" then
+			sons.api.parameters.droneDefaultHeight = 1.2
 		end
 
-		vns.Spreader.emergency_after_core(vns, vector3(0.03,0,0), vector3())
+		sons.Spreader.emergency_after_core(sons, vector3(0.03,0,0), vector3())
 		if target ~= nil then
-			vns.setGoal(vns, vns.goal.positionV3, target.orientationQ)
+			sons.setGoal(sons, sons.goal.positionV3, target.orientationQ)
 		end
 
 		if marker ~= nil and marker.positionV3.x < 0 then
 			state = "resume"
 			logger("resume")
 			count = 0
-			vns.setMorphology(vns, structure1)
+			sons.setMorphology(sons, structure1)
 		end
 	elseif state == "resume" then
-		vns.Allocator.calcBaseValue = vns.Allocator.calcBaseValue_oval
+		sons.Allocator.calcBaseValue = sons.Allocator.calcBaseValue_oval
 		count = count + 1
 
 		if marker ~= nil then
 			local goal = marker.positionV3 + vector3(-1.0, -0.5, 0):rotate(marker.orientationQ)
-			vns.setGoal(vns, goal, marker.orientationQ)
+			sons.setGoal(sons, goal, marker.orientationQ)
 			disV2 = vector3(goal)
 			disV2.z = 0
 		end
 
-		if vns.robotTypeS == "drone" then
-			vns.api.parameters.droneDefaultHeight = 1.5
-			vns.api.tagLabelIndex.pipuck.from = 1
+		if sons.robotTypeS == "drone" then
+			sons.api.parameters.droneDefaultHeight = 1.5
+			sons.api.tagLabelIndex.pipuck.from = 1
 		end
 
 		if count == 200 then
@@ -212,15 +212,15 @@ return function()
 		end
 
 	elseif state == "end" then
-		vns.Spreader.emergency_after_core(vns, vector3(-0.03,0,0), vector3())
-		vns.stabilizer.force_pipuck_reference = true
+		sons.Spreader.emergency_after_core(sons, vector3(-0.03,0,0), vector3())
+		sons.stabilizer.force_pipuck_reference = true
 
 	--[[
 	elseif state == "stretch" then
 		count = count + 1
 
 		if target ~= nil then
-			vns.setGoal(vns, target.positionV3, target.orientationQ)
+			sons.setGoal(sons, target.positionV3, target.orientationQ)
 			target.positionV3.z = 0
 		end
 		
@@ -228,15 +228,15 @@ return function()
 			state = "clutch"
 			logger("clutch")
 			count = 0
-			vns.setMorphology(vns, structure3)
+			sons.setMorphology(sons, structure3)
 		end
 	elseif state == "clutch" then
 		count = count + 1
 
-		vns.Spreader.emergency_after_core(vns, vector3(-0.01,0,0), vector3())
+		sons.Spreader.emergency_after_core(sons, vector3(-0.01,0,0), vector3())
 
 		if target ~= nil then
-			vns.setGoal(vns, target.positionV3, target.orientationQ)
+			sons.setGoal(sons, target.positionV3, target.orientationQ)
 			target.positionV3.z = 0
 		end
 
@@ -244,23 +244,23 @@ return function()
 			state = "retrieve"
 			logger("retrieve")
 			count = 0
-			vns.setMorphology(vns, structure4)
+			sons.setMorphology(sons, structure4)
 		end
 	elseif state == "retrieve" then
-		vns.stabilizer.force_pipuck_reference = true
-		vns.Parameters.stabilizer_preference_robot = nil
-		vns.Parameters.dangerzone_pipuck = 0
-		vns.Parameters.deadzone_pipuck = 0
+		sons.stabilizer.force_pipuck_reference = true
+		sons.Parameters.stabilizer_preference_robot = nil
+		sons.Parameters.dangerzone_pipuck = 0
+		sons.Parameters.deadzone_pipuck = 0
 
-		vns.Spreader.emergency_after_core(vns, vector3(-0.03,0,0), vector3())
+		sons.Spreader.emergency_after_core(sons, vector3(-0.03,0,0), vector3())
 
 		count = count + 1
 		if count == 250 then
 			state = "end"
 			logger("end")
-			vns.Parameters.dangerzone_pipuck = 0.4
-			vns.Parameters.deadzone_pipuck = 0.2
-			vns.setMorphology(vns, structure1)
+			sons.Parameters.dangerzone_pipuck = 0.4
+			sons.Parameters.deadzone_pipuck = 0.2
+			sons.setMorphology(sons, structure1)
 		end
 	--]]
 	end

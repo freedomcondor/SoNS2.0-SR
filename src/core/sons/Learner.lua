@@ -8,16 +8,16 @@
 
 local Learner = {}
 
-function Learner.step(vns, BTchildren)
+function Learner.step(sons, BTchildren)
 
 end
 
-function Learner.create_learner_node(vns, option)
+function Learner.create_learner_node(sons, option)
 	-- option = {
 	-- }
 	return { type = "sequence", dynamic = true, children = {
 		function(BTchildren)
-			Learner.step(vns, BTchildren)
+			Learner.step(sons, BTchildren)
 		end,
 	}}
 end

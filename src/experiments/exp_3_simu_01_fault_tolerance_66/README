@@ -10,15 +10,15 @@ We do three sub tasks:
 
 To change this, change common.lua line 305 from:
 
-	if vns.api.stepCount == 1000 and robot.random.uniform() < 0.66 then
+	if sons.api.stepCount == 1000 and robot.random.uniform() < 0.66 then
 
 to: 
 
-	if vns.api.stepCount == 1000 and robot.random.uniform() < 0.66 and vns.robotTypeS == "drone" then
+	if sons.api.stepCount == 1000 and robot.random.uniform() < 0.66 and sons.robotTypeS == "drone" then
 
 or
 
-	if vns.api.stepCount == 1000 and robot.random.uniform() < 0.66 and vns.robotTypeS == "pipuck" then
+	if sons.api.stepCount == 1000 and robot.random.uniform() < 0.66 and sons.robotTypeS == "pipuck" then
 
 
 To run this experiment : `python3 build/experiments/exp_xxx/run.py -r 1 -l 1000`
