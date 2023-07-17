@@ -8,7 +8,7 @@ from scipy import stats
 import math
 from brokenaxes import brokenaxes
 
-dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_2_simu_scalability/data_simu_scale_2/data"
+dataFolder = "@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_2_simu_scalability/data_simu_scale_2/data"
 
 '''
 #-------------------------------------------------------------------------

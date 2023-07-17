@@ -1,7 +1,7 @@
 ## Guidelines
 0. Clone this repo.
 	```bash
-	git clone https://github.com/freedomcondor/mns2.0.git
+	git clone https://github.com/freedomcondor/SoNS2.0-SR.git
 	```
 1. This project requires a certain history version of argos3 (https://github.com/ilpincy/argos3) to be installed.
 	The version to work with is:
@@ -31,16 +31,16 @@
 	```
 	will do, but again, check carefully.
 
-	After removing old versions argos, and cloning and checking out the desired history version of argos, you may want to apply some patch for argos3 from folder `argos3-patch`, depends on what do you need. For our mns experiments, two essential patches are needed, which are the first two described below:
+	After removing old versions argos, and cloning and checking out the desired history version of argos, you may want to apply some patch for argos3 from folder `argos3-patch`, depends on what do you need. For our SoNS experiments, two essential patches are needed, which are the first two described below:
 * `new-camera-positions.patch` is essential, it makes drone cameras look farther than default, so that it works with pipuck-extension with larger tag. To apply the patch, go to argos3 folder and :
 	```bash
 	cd argos3
-	git apply ../mns2.0/argos3-patch/new-camera-positions.patch
+	git apply ../SoNS2.0-SR/argos3-patch/new-camera-positions.patch
 	```
-	NOTE: If you follow exactly the bash command above, you will have argos3 folder and mns2.0 in parallel, otherwise you may need to adjust the path to locate mns2.0 folder.
+	NOTE: If you follow exactly the bash command above, you will have argos3 folder and SoNS2.0 in parallel, otherwise you may need to adjust the path to locate SoNS2.0 folder.
 * `unstable-drone.patch` is essential, it makes drone gyro and accelero meters more noisy so that the stablebility of the drone matches reality. 
 	```bash
-	git apply ../mns2.0/argos3-patch/unstable-drone.patch
+	git apply ../SoNS2.0-SR/argos3-patch/unstable-drone.patch
 	```
 * `qtopengl-tweaks.patch` is used for fixing the argos qtopengl resolution to 1920x1080 and make drawings look nicer. This can be handy if you want to generate some fancy videos. WARNING: this patch may be outdated
 * `drone_model.patch` is also used for nice videos. It updates drone model to make the appearing of the drone looks like the real drone in hardware.
@@ -58,9 +58,9 @@
 	sudo make install
 	```
 
-4. After installing argos3, you are clear to build mns2.0 repository. Go to mns2.0 repository and run the following commands.
+4. After installing argos3, you are clear to build SoNS2.0 repository. Go to SoNS2.0 repository and run the following commands.
 	```bash
-	cd mns2.0
+	cd SoNS2.0
 	mkdir build
 	cd build
 	cmake ../src 
@@ -78,14 +78,14 @@
 	Date:   Fri Mar 4 15:41:23 2022 +0100
 	    Update README.md
 	```
-	The patch, `mns2.0/argos3-patch/supervisor-router.patch` is also recommended, which would significantly reduce the amount of wifi messages.
+	The patch, `SoNS2.0-SR/argos3-patch/supervisor-router.patch` is also recommended, which would significantly reduce the amount of wifi messages.
 
 ## Folder Explanation
 0. **argos3 and cmake :** `src/cmake` contains necessary cmake files to find argos3. `src/argos3` is a simbolic link to the parent folder, it is needed for loop function to compile. Usually you wouldn't need to touch these.
 
 1. **ARGoS loop function and user function :** They are located in `src/extensions` and `src/qtopengl_extensions`. They are based on argos3-pipuck-ext (https://github.com/iridia-ulb/argos3-pipuck-ext). Thanks to Michael, they provide a general function for most of the testing cases. For example loop function creates pipuck-exts with larger tags and records the location of each robot. user function provides function to draw arrows. For details, please refer to argos3-pipuck-ext.
 
-2. **SoNS core :**  The core source code of mns is located in `src/core`. Codes in these folders make the SoNS algorithm come true.
+2. **SoNS core :**  The core source code of SoNS is located in `src/core`. Codes in these folders make the SoNS algorithm come true.
 
 3. **experiments :** `src/experiments` is what the users play with. In this folder, each subfolder is a scenario case to test one or several features of SoNS, or an experiment in which a scenario got run for a load of times, and data collected, analyzed, and plotted. You can copy or create new subfolders to create your own scenarios and experiments.
 
@@ -101,12 +101,12 @@ The usual structure of each scenario is like this: the argos is wrapped by a pyt
 Therefore, to run an exp_* scenario, do:
 
 ```bash
-cd mns2.0/build
+cd SoNS2.0-SR/build
 python3 experiments/exp_0_hw_01_establish_formation_q_2d_10p/run.py -r 1
 ```
 where `-r 1` at the end means randomseed 1. If there are no `-r 1` specified, a randomseed based on the current time will be automatically used.
 
-Traverse all `exp_*` and you will see all the mns experiments. 
+Traverse all `exp_*` and you will see all the SoNS experiments. 
 
 There is a README file in each folder to explain what does the scenario do.
 

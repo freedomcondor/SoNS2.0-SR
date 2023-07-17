@@ -29,7 +29,7 @@ option = {
 	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	'key_frame' :  [0] ,
 #	'overwrite_trackFig_log_foler' : 
-#		"@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_1_simu_08_split/data_simu/track_fig_logs"
+#		"@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_1_simu_08_split/data_simu/track_fig_logs"
 #	,
 
 	'x_lim'     :  [-4, 6]    ,

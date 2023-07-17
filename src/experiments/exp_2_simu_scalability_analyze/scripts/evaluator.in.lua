@@ -102,7 +102,7 @@ local average_smoothed_error = sum * 1.0 / count
 -- calc converge from smoothed data
 local converge_step = findDataStepBelowValue(result_data, 100, 0.1)
 
--- calc mns recruit step
+-- calc SoNS recruit step
 local SoNS_number_data, data_length = readDataInFile("result_SoNSNumber_data.txt")
 local recruit_step = findDataStepBelowValue(SoNS_number_data, 1, 1.5)
 

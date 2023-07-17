@@ -19,7 +19,7 @@ dataFolder1 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolera
 dataFolder2 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_1s/data"
 dataFolder3 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
 
-#dataFolder1 = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
+#dataFolder1 = "@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
 
 option = {
 	'dataFolder'             : dataFolder,

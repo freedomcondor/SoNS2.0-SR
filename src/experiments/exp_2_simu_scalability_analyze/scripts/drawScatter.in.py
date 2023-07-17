@@ -87,8 +87,8 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 
 #----------------------------------------------------------------------------------
 #folder = "@CMAKE_CURRENT_SOURCE_DIR@/../data"
-#folder = "/home/harry/code/mns2.0/build/threads_finish"
-#folder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
+#folder = "/home/harry/code/SoNS2.0-SR/build/threads_finish"
+#folder = "@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
 #folder = "@CMAKE_BINARY_DIR@/data_simu_scalability_analyze_1-450"
 
 folders = ["/media/harry/Expansion/Storage/scalability_analyze_data/data_simu_1-750",

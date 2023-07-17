@@ -6,7 +6,7 @@ DATADIR=@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_la
 #DATADIR=@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_simu/data
 
 TMPDIR=threads
-#THREADS_LOG_OUTPUT="/home/harry/code/mns2.0/build/out.log"
+#THREADS_LOG_OUTPUT="/home/harry/code/SoNS2.0-SR/build/out.log"
 
 #run 2 3 "python3 @CMAKE_CURRENT_BINARY_DIR@/../run.py -l 50" $DATADIR
 #run_single_thread 2 4 4 "python3 @CMAKE_CURRENT_BINARY_DIR@/../run.py -l 60" $DATADIR

@@ -3,7 +3,7 @@
 -- and dynamically inserted it into its own behavior tree on the fly.
 -- It works with dynamic behavior tree
 
--- Working in progress - return in mns3.0
+-- Working in progress - return in SoNS3.0
 ------------------------------------------------------
 
 local Learner = {}

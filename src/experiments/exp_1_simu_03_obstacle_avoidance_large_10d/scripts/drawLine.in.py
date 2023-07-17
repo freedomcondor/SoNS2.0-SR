@@ -13,7 +13,7 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 option = {
-	'dataFolder' : "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_1_simu_03_obstacle_avoidance_large_10d/data_simu/data",
+	'dataFolder' : "@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_1_simu_03_obstacle_avoidance_large_10d/data_simu/data",
 	'sample_run'             : "run1",
 	'SRFig_save'             : "exp_1_simu_03_obstacle_avoidance_large_10d_SRFig.pdf",
 	'trackLog_save'          : "exp_1_simu_03_obstacle_avoidance_large_10d_trackLog.pdf",
@@ -29,7 +29,7 @@ option = {
 	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	'key_frame' :  [0, 800] ,
 	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_1_simu_03_obstacle_avoidance_large_10d/data_simu/track_fig_logs"
+		"@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_1_simu_03_obstacle_avoidance_large_10d/data_simu/track_fig_logs"
 	,
 
 	'legend_obstacle'  : True,

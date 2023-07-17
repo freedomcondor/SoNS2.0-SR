@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ## Resource Request
-#SBATCH --job-name=mns_exp01           # name of your job, will be shown when running squeue
-#SBATCH --output=mns_exp01_%A_%a.stdout   # name of the output file, %j will be replaced by the Job ID
-#SBATCH --error=mns_exp01_%A_%a.stderr    # name of the error file, %j will be replaced by the Job ID
+#SBATCH --job-name=SoNS_exp01           # name of your job, will be shown when running squeue
+#SBATCH --output=SoNS_exp01_%A_%a.stdout   # name of the output file, %j will be replaced by the Job ID
+#SBATCH --error=SoNS_exp01_%A_%a.stderr    # name of the error file, %j will be replaced by the Job ID
 #SBATCH --partition=Epyc7452           # the hardware that you want to run on
 #SBATCH --qos=short                    # the queue that you want to run on (short, long)
 #SBATCH --ntasks=1                     # the job will launch a single task, set higher for MPI programs
@@ -21,7 +21,7 @@ module load readline-8.1.mod
 
 #srun my_program   # run your program here 
 DATADIR=@CMAKE_CURRENT_BINARY_DIR@/../data
-TMPDIR=/tmp/wzhu/mns_exp/exp_3_simu_01_fault_tolerance_66
+TMPDIR=/tmp/wzhu/SoNS_exp/exp_3_simu_01_fault_tolerance_66
 
 # job id
 #JOB_ID=1

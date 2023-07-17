@@ -2,7 +2,7 @@
 source @CMAKE_SOURCE_DIR@/scripts/run_threads.sh
 
 #DATADIR=@CMAKE_CURRENT_SOURCE_DIR@/../data
-DATADIR=@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_3_simu_02_fault_tolerance_33/data_simu/data
+DATADIR=@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_3_simu_02_fault_tolerance_33/data_simu/data
 #DATADIR=/Users/harry/Desktop/exp_3_simu_02_fault_tolerance_33/data_simu/data
 
 TMPDIR=threads

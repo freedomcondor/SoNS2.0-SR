@@ -6,7 +6,7 @@ We do:
 
 1. A wifi cut for 0.5s
   
-         In this case, 0.5 second is shorter than SoNS break tolerance time, so the connections between robots will remain, the mns will go on as if nothing has happened.
+         In this case, 0.5 second is shorter than SoNS break tolerance time, so the connections between robots will remain, the SoNS will go on as if nothing has happened.
 
 2. A wifi cut for 1s
   

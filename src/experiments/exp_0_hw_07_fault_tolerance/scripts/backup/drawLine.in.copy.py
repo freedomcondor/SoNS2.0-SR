@@ -9,7 +9,7 @@ import math
 from brokenaxes import brokenaxes
 
 #dataFolder = "/Users/harry/Desktop/exp_0_hw_01_formation_1_2d_10p/data_hw/data"
-dataFolder = "@CMAKE_SOURCE_DIR@/../../mns2.0-data/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data"
+dataFolder = "@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data"
 
 
 '''
