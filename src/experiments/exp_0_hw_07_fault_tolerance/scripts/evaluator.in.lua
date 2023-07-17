@@ -150,7 +150,7 @@ os.execute("echo " .. tostring(structure2Step - saveStartStep) .. " > formationS
 os.execute("echo " .. tostring(stage4Step - saveStartStep) .. " >> formationSwitch.txt")
 os.execute("echo " .. tostring(stage5Step - saveStartStep) .. " >> formationSwitch.txt")
 
-logReader.saveSoNSNumber(robotsData, "result_SONSNumber_data.txt", saveStartStep)
+logReader.saveSoNSNumber(robotsData, "result_SoNSNumber_data.txt", saveStartStep)
 
 logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep)
 --logReader.saveDataAveragedBySwarmSize(robotsData, "result_data_averaged_by_focal_size.txt", "error", saveStartStep)
