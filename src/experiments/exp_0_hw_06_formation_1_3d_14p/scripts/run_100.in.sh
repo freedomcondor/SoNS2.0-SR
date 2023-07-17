@@ -2,7 +2,7 @@
 source @CMAKE_SOURCE_DIR@/scripts/run_threads.sh
 
 #DATADIR=@CMAKE_CURRENT_SOURCE_DIR@/../data
-DATADIR=@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_06_formation_1_3d_14p/data_simu/data
+DATADIR=@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_06_formation_1_3d_14p/data_simu/data
 TMPDIR=threads
 #run 2 3 "python3 @CMAKE_CURRENT_BINARY_DIR@/../run.py -l 50" $DATADIR
 #run_single_thread 2 4 4 "python3 @CMAKE_CURRENT_BINARY_DIR@/../run.py -l 60" $DATADIR

@@ -12,8 +12,8 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-#dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
-dataFolder = "@CMAKE_MNS_DATA_PATH@/../scalability_analyze_data/data_simu_1-750"
+#dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/../scalability_analyze_data/data_simu_1-750"
 savePDFNameBase = "mission6_scalability_formation_analyze_"
 sampleList = [
 #	"run150",  # 5

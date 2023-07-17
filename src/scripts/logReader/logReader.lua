@@ -200,7 +200,7 @@ function logReader.smoothData(robotsData, window)
 end
 
 function logReader.calcFirstRecruitStep(robotsData, saveFile)
-	local MNSs = nil
+	local SoNSs = nil
 	local step = 0
 	while true do
 		step = step + 1
@@ -221,17 +221,17 @@ function logReader.calcFirstRecruitStep(robotsData, saveFile)
 			count = count + 1
 		end
 
-		if MNSs == nil then
-			MNSs = count
+		if SoNSs == nil then
+			SoNSs = count
 		else
-			if MNSs ~= count then
+			if SoNSs ~= count then
 				return step
 			end
 		end
 	end
 end
 
-function logReader.saveMNSNumber(robotsData, saveFile, startStep, endStep)
+function logReader.saveSoNSNumber(robotsData, saveFile, startStep, endStep)
 	-- fill start and end if not provided
 	if startStep == nil then startStep = 1 end
 	if endStep == nil then 
@@ -256,7 +256,7 @@ function logReader.saveMNSNumber(robotsData, saveFile, startStep, endStep)
 		f:write(tostring(count).."\n")
 	end
 	io.close(f)
-	print("save MNSNumber finish")
+	print("save SoNSNumber finish")
 end
 
 function logReader.markFailedRobot(robotsData, endStep)

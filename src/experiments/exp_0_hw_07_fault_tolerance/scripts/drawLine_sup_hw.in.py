@@ -12,7 +12,7 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data"
 savePDFNameBase = "mission7_fault_tolerance_exp07_hw_"
 sampleList = [
 	"test_20220712_2_success_1",

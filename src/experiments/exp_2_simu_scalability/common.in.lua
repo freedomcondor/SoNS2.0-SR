@@ -24,7 +24,7 @@ local Transform = require("Transform")
 -- includes -------------
 logger = require("Logger")
 local api = require(myType .. "API")
-local VNS = require("VNS")
+local SoNS = require("SoNS")
 local BT = require("BehaviorTree")
 logger.enable()
 logger.disable("Allocator")
@@ -55,20 +55,20 @@ local gene = {
 	}
 }
 
--- VNS option
-VNS.Allocator.calcBaseValue = VNS.Allocator.calcBaseValue_vertical
+-- SoNS option
+SoNS.Allocator.calcBaseValue = SoNS.Allocator.calcBaseValue_vertical
 
 -- called when a child lost its parent
-function VNS.Allocator.resetMorphology(vns)
+function SoNS.Allocator.resetMorphology(vns)
 	vns.Allocator.setMorphology(vns, structure1)
 end
 
 -- argos functions -----------------------------------------------
 --- init
 function init()
-	api.linkRobotInterface(VNS)
+	api.linkRobotInterface(SoNS)
 	api.init() 
-	vns = VNS.create(myType)
+	vns = SoNS.create(myType)
 	reset()
 end
 

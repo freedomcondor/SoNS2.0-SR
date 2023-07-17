@@ -56,47 +56,47 @@ def set_violin_font(violin, color) :
 
 folder_pairs = [
 	[
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_hw/data",
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_simu/data",
 		"SoNS Establishing\n(scattered)",
 		[0, 1.0]
 	],
 	[
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_hw/data",
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_simu/data",
 		"SoNS Establishing\n(clustered)",
 		[0, 0.5]
 	],
 	[
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data",
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_simu/data",
 		"Obstacle Avoidance\n(smaller obstacles)",
 		[0, 2.5]
 	],
 	[
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_hw/data",
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_simu/data",
 		"Obstacle Avoidance\n(larger obstacles)",
 		[0, 2.5]
 	],
 	[
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_04_switch_line/data_hw/data",
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_04_switch_line/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_04_switch_line/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_04_switch_line/data_simu/data",
 		"Through the Funnel",
 	],
 	[
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_hw/data",
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_simu/data",
 		"Choosing Gates",
 	],
 	[
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_hw/data",
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_simu/data",
 		"Search and Rescue\n(split and searching)",
 	],
 	[
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw",
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw",
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data",
 		"Search and Rescue\n(moving the circle)",
 	],
 ]

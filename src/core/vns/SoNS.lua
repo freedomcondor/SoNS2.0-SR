@@ -1,8 +1,8 @@
--- VNS ------------------------------------------------------
--- This is the root file for VNS library. It serves as a container that arranges all the VNS function modules
--- For a robot, to create a VNS data structure, do something like
---      vns = VNS:create("pipuck")
--- and vns will be the data structure of VNS, it contains datas such as which robot is my parent, my children ...
+-- SoNS ------------------------------------------------------
+-- This is the root file for SoNS library. It serves as a container that arranges all the SoNS function modules
+-- For a robot, to create a SoNS data structure, do something like
+--      vns = SoNS:create("pipuck")
+-- and vns will be the data structure of SoNS, it contains datas such as which robot is my parent, my children ...
 -- vns has basic functions such as vns.addChild(), which adds a child into the data structure
 -- in each of these functions, vns iterates all the modules and call the module function with the same name if implemented
 -- 
@@ -10,50 +10,50 @@
 --
 -- In addition, it provides functions to log vns datas into experiment logs through argos loop function in simulation, or message system in hardware
 -------------------------------------------------------------
-local VNS = {VNSCLASS = true}
-VNS.__index = VNS
+local SoNS = {SoNSCLASS = true}
+SoNS.__index = SoNS
 
-VNS.Msg = require("Message")
-VNS.Parameters = require("Parameters")
+SoNS.Msg = require("Message")
+SoNS.Parameters = require("Parameters")
 
---VNS.Connector = require("Connector_backup")
-VNS.Connector = require("Connector")
-VNS.DroneConnector = require("DroneConnector")
-VNS.PipuckConnector = require("PipuckConnector")
+--SoNS.Connector = require("Connector_backup")
+SoNS.Connector = require("Connector")
+SoNS.DroneConnector = require("DroneConnector")
+SoNS.PipuckConnector = require("PipuckConnector")
 
-VNS.ScaleManager = require("ScaleManager")
-VNS.Assigner = require("Assigner")
-VNS.Allocator = require("Allocator")
-VNS.Avoider = require("Avoider")
-VNS.Spreader = require("Spreader")
-VNS.BrainKeeper = require("BrainKeeper")
-VNS.CollectiveSensor = require("CollectiveSensor")
-VNS.IntersectionDetector = require("IntersectionDetector")
-VNS.Neuron = require("Neuron")
-VNS.Stabilizer = require("Stabilizer")
+SoNS.ScaleManager = require("ScaleManager")
+SoNS.Assigner = require("Assigner")
+SoNS.Allocator = require("Allocator")
+SoNS.Avoider = require("Avoider")
+SoNS.Spreader = require("Spreader")
+SoNS.BrainKeeper = require("BrainKeeper")
+SoNS.CollectiveSensor = require("CollectiveSensor")
+SoNS.IntersectionDetector = require("IntersectionDetector")
+SoNS.Neuron = require("Neuron")
+SoNS.Stabilizer = require("Stabilizer")
 
-VNS.Driver= require("Driver")
+SoNS.Driver= require("Driver")
 
-VNS.Modules = {
-	VNS.DroneConnector,
-	VNS.PipuckConnector,
-	VNS.Connector,
-	VNS.Assigner,
+SoNS.Modules = {
+	SoNS.DroneConnector,
+	SoNS.PipuckConnector,
+	SoNS.Connector,
+	SoNS.Assigner,
 
-	VNS.ScaleManager,
-	VNS.Stabilizer,
+	SoNS.ScaleManager,
+	SoNS.Stabilizer,
 
-	VNS.Allocator,
-	VNS.IntersectionDetector,
+	SoNS.Allocator,
+	SoNS.IntersectionDetector,
 
-	VNS.Avoider,
-	VNS.Spreader,
-	VNS.CollectiveSensor,
-	VNS.BrainKeeper,
+	SoNS.Avoider,
+	SoNS.Spreader,
+	SoNS.CollectiveSensor,
+	SoNS.BrainKeeper,
 
-	VNS.Neuron,
+	SoNS.Neuron,
 
-	VNS.Driver,
+	SoNS.Driver,
 }
 
 --[[
@@ -69,7 +69,7 @@ VNS.Modules = {
 --	}
 --]]
 
-function VNS.create(myType)
+function SoNS.create(myType)
 
 	-- a robot =  {
 	--     idS,
@@ -81,44 +81,44 @@ function VNS.create(myType)
 	local vns = {}
 	vns.robotTypeS = myType
 
-	setmetatable(vns, VNS)
+	setmetatable(vns, SoNS)
 
-	for i, module in ipairs(VNS.Modules) do
+	for i, module in ipairs(SoNS.Modules) do
 		if type(module.create) == "function" then
 			module.create(vns)
 		end
 	end
 
-	VNS.reset(vns)
+	SoNS.reset(vns)
 	return vns
 end
 
-function VNS.reset(vns)
+function SoNS.reset(vns)
 	vns.parentR = nil
 	vns.childrenRT = {}
 
-	vns.idS = VNS.Msg.myIDS()
+	vns.idS = SoNS.Msg.myIDS()
 	vns.idN = robot.random.uniform()
 
-	for i, module in ipairs(VNS.Modules) do
+	for i, module in ipairs(SoNS.Modules) do
 		if type(module.reset) == "function" then
 			module.reset(vns)
 		end
 	end
 end
 
-function VNS.preStep(vns)
-	VNS.Msg.preStep()
-	for i, module in ipairs(VNS.Modules) do
+function SoNS.preStep(vns)
+	SoNS.Msg.preStep()
+	for i, module in ipairs(SoNS.Modules) do
 		if type(module.preStep) == "function" then
 			module.preStep(vns)
 		end
 	end
 end
 
-function VNS.postStep(vns)
-	for i = #VNS.Modules, 1, -1 do
-		local module = VNS.Modules[i]
+function SoNS.postStep(vns)
+	for i = #SoNS.Modules, 1, -1 do
+		local module = SoNS.Modules[i]
 		if type(module.postStep) == "function" then
 			module.postStep(vns)
 		end
@@ -126,64 +126,64 @@ function VNS.postStep(vns)
 	vns.Msg.postStep(vns.api.stepCount)
 end
 
-function VNS.addChild(vns, robotR)
-	for i, module in ipairs(VNS.Modules) do
+function SoNS.addChild(vns, robotR)
+	for i, module in ipairs(SoNS.Modules) do
 		if type(module.addChild) == "function" then
 			module.addChild(vns, robotR)
 		end
 	end
 end
-function VNS.deleteChild(vns, idS)
-	for i = #VNS.Modules, 1, -1 do
-		local module = VNS.Modules[i]
+function SoNS.deleteChild(vns, idS)
+	for i = #SoNS.Modules, 1, -1 do
+		local module = SoNS.Modules[i]
 		if type(module.deleteChild) == "function" then
 			module.deleteChild(vns, idS)
 		end
 	end
 end
 
-function VNS.addParent(vns, robotR)
-	for i, module in ipairs(VNS.Modules) do
+function SoNS.addParent(vns, robotR)
+	for i, module in ipairs(SoNS.Modules) do
 		if type(module.addParent) == "function" then
 			module.addParent(vns, robotR)
 		end
 	end
 end
-function VNS.deleteParent(vns)
-	for i = #VNS.Modules, 1, -1 do
-		local module = VNS.Modules[i]
+function SoNS.deleteParent(vns)
+	for i = #SoNS.Modules, 1, -1 do
+		local module = SoNS.Modules[i]
 		if type(module.deleteParent) == "function" then
 			module.deleteParent(vns)
 		end
 	end
 end
 
-function VNS.setGene(vns, morph)
-	for i, module in ipairs(VNS.Modules) do
+function SoNS.setGene(vns, morph)
+	for i, module in ipairs(SoNS.Modules) do
 		if type(module.setGene) == "function" then
 			module.setGene(vns, morph)
 		end
 	end
 end
 
-function VNS.setMorphology(vns, morph)
-	for i, module in ipairs(VNS.Modules) do
+function SoNS.setMorphology(vns, morph)
+	for i, module in ipairs(SoNS.Modules) do
 		if type(module.setMorphology) == "function" then
 			module.setMorphology(vns, morph)
 		end
 	end
 end
 
-function VNS.resetMorphology(vns)
-	for i, module in ipairs(VNS.Modules) do
+function SoNS.resetMorphology(vns)
+	for i, module in ipairs(SoNS.Modules) do
 		if type(module.resetMorphology) == "function" then
 			module.resetMorphology(vns)
 		end
 	end
 end
 
-function VNS.setGoal(vns, positionV3, orientationQ)
-	for i, module in ipairs(VNS.Modules) do
+function SoNS.setGoal(vns, positionV3, orientationQ)
+	for i, module in ipairs(SoNS.Modules) do
 		if type(module.setGoal) == "function" then
 			module.setGoal(vns, positionV3, orientationQ)
 		end
@@ -191,13 +191,13 @@ function VNS.setGoal(vns, positionV3, orientationQ)
 end
 
 ---- Print Debug Info ------------------------------------------
-VNS.debug = {}
-function VNS.debug.logInfo(vns, option, indent_str)
+SoNS.debug = {}
+function SoNS.debug.logInfo(vns, option, indent_str)
 	if option == nil then option = {ALL = true} end
 	if indent_str == nil then indent_str = "" end
 
 	logger(indent_str .. robot.id, vns.api.stepCount, "-----------------------") 
-	vns.debug.logVNSInfo(vns, option, indent_str)
+	vns.debug.logSoNSInfo(vns, option, indent_str)
 	logger(indent_str .. "    parent : ") 
 	if vns.parentR ~= nil then
 		vns.debug.logRobot(vns.parentR, option, indent_str .. "        ")
@@ -208,7 +208,7 @@ function VNS.debug.logInfo(vns, option, indent_str)
 	end
 end
 
-function VNS.debug.logVNSInfo(vns, option, indent_str)
+function SoNS.debug.logSoNSInfo(vns, option, indent_str)
 	if option == nil then option = {ALL = true} end
 	if indent_str == nil then indent_str = "" end
 
@@ -250,7 +250,7 @@ function VNS.debug.logVNSInfo(vns, option, indent_str)
 	end
 end
 
-function VNS.debug.logRobot(robotR, option, indent_str)
+function SoNS.debug.logRobot(robotR, option, indent_str)
 	if option == nil then option = {ALL = true} end
 	if indent_str == nil then indent_str = "" end
 
@@ -292,7 +292,7 @@ function VNS.debug.logRobot(robotR, option, indent_str)
 	end
 end
 
-function VNS.logLoopFunctionInfoHW(vns)
+function SoNS.logLoopFunctionInfoHW(vns)
 	local targetID = -2
 	if vns.allocator.target ~= nil then
 		targetID = vns.allocator.target.idN
@@ -302,7 +302,7 @@ function VNS.logLoopFunctionInfoHW(vns)
 	if vns.parentR ~= nil then
 		parentID = vns.parentR.idS
 	end
-	VNS.Msg.sendTable{
+	SoNS.Msg.sendTable{
 		toS = "LOGINFO",
 		stepCount = vns.api.stepCount,
 		virtualFrameQ = vns.api.virtualFrame.orientationQ,
@@ -314,9 +314,9 @@ function VNS.logLoopFunctionInfoHW(vns)
 	}
 end
 
-function VNS.logLoopFunctionInfo(vns)
+function SoNS.logLoopFunctionInfo(vns)
 	if robot.params.hardware == true then
-		return VNS.logLoopFunctionInfoHW(vns)
+		return SoNS.logLoopFunctionInfoHW(vns)
 	end
 	if robot.debug == nil or robot.debug.write == nil then return end
 
@@ -350,18 +350,18 @@ function VNS.logLoopFunctionInfo(vns)
 end
 
 ---- Behavior Tree Node ------------------------------------------
-function VNS.create_preconnector_node(vns)
+function SoNS.create_preconnector_node(vns)
 	local pre_connector_node
 	if vns.robotTypeS == "drone" then
-		return VNS.DroneConnector.create_droneconnector_node(vns)
+		return SoNS.DroneConnector.create_droneconnector_node(vns)
 	elseif vns.robotTypeS == "pipuck" then
-		return VNS.PipuckConnector.create_pipuckconnector_node(vns)
+		return SoNS.PipuckConnector.create_pipuckconnector_node(vns)
 	elseif vns.robotTypeS == "builderbot" then
-		return VNS.PipuckConnector.create_pipuckconnector_node(vns) -- TODO
+		return SoNS.PipuckConnector.create_pipuckconnector_node(vns) -- TODO
 	end
 end
 
-function VNS.create_vns_core_node(vns, option)
+function SoNS.create_vns_core_node(vns, option)
 	-- option = {
 	--      connector_no_recruit = true or false or nil,
 	--      connector_no_parent_ack = true or false or nil,
@@ -398,7 +398,7 @@ function VNS.create_vns_core_node(vns, option)
 	}}
 end
 
-function VNS.create_vns_node(vns, option)
+function SoNS.create_vns_node(vns, option)
 	-- option = {
 	--      connector_no_recruit = true or false or nil,
 	--      connector_no_parent_ack = true or false or nil,
@@ -413,4 +413,4 @@ function VNS.create_vns_node(vns, option)
 	}}
 end
 
-return VNS
+return SoNS

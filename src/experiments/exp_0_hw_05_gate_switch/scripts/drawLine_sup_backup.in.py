@@ -13,7 +13,7 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 option = {
-	'dataFolder' : "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_hw/data",
+	'dataFolder' : "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_hw/data",
 	'sample_run'             : "test_20220630_12_success_3",
 	'SRFig_save'             : "sup_test_mission4_hw_exp_0_hw_05_gate_switch_SRFig.pdf",
 	'trackLog_save'          : "sup_test_mission4_hw_exp_0_hw_05_gate_switch_trackLog.pdf",
@@ -73,7 +73,7 @@ drawSRFig(option)
 drawTrackLog(option)
 
 option = {
-	'dataFolder' : "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_simu/data",
+	'dataFolder' : "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_simu/data",
 	'sample_run'             : "run1",
 	'SRFig_save'             : "sup_mission4_simu_exp_0_hw_05_gate_switch_SRFig.pdf",
 	'SRFig_show'             : False,

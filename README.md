@@ -85,9 +85,9 @@
 
 1. **ARGoS loop function and user function :** They are located in `src/extensions` and `src/qtopengl_extensions`. They are based on argos3-pipuck-ext (https://github.com/iridia-ulb/argos3-pipuck-ext). Thanks to Michael, they provide a general function for most of the testing cases. For example loop function creates pipuck-exts with larger tags and records the location of each robot. user function provides function to draw arrows. For details, please refer to argos3-pipuck-ext.
 
-2. **MNS core :**  The core source code of mns is located in `src/core`. Codes in these folders make the MNS algorithm come true.
+2. **SoNS core :**  The core source code of mns is located in `src/core`. Codes in these folders make the SoNS algorithm come true.
 
-3. **experiments :** `src/experiments` is what the users play with. In this folder, each subfolder is a scenario case to test one or several features of MNS, or an experiment in which a scenario got run for a load of times, and data collected, analyzed, and plotted. You can copy or create new subfolders to create your own scenarios and experiments.
+3. **experiments :** `src/experiments` is what the users play with. In this folder, each subfolder is a scenario case to test one or several features of SoNS, or an experiment in which a scenario got run for a load of times, and data collected, analyzed, and plotted. You can copy or create new subfolders to create your own scenarios and experiments.
 
 	* **IMPORTANT NOTES:** The codes inside `src/experiments` are pre-executable. All the codes in `src/experiments` are generated executable by cmake in `build/experiments` folder.
 	For example, if you check `src/experiments/exp_0_hw_01_formation_1_2d_10p/run.in.py` 

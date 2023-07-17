@@ -3,8 +3,8 @@
 -- It takes data from vns.goal
 --     From vns.goal.positionV3 and orientationQ, it generates velocity to move to that position (explained later)
 --     From vns.goal.transV3 and rotateV3, it takes additional velocity (for example, to avoid obstacles)
--- It adds these velocity together and use VNS.move() to move the robot
--- VNS.move() links to the api of each type of robot to actually move the robot
+-- It adds these velocity together and use SoNS.move() to move the robot
+-- SoNS.move() links to the api of each type of robot to actually move the robot
 ------------------------------------------------------
 local Driver = {}
 
@@ -324,9 +324,9 @@ function Driver.create_driver_node(vns, option)
 	end
 end
 
--- Driver.move is implement in VNS.lua
+-- Driver.move is implement in SoNS.lua
 function Driver.move(transV3, rotateV3)
-	print("VNS.Driver.move needs to be implemented")
+	print("SoNS.Driver.move needs to be implemented")
 end
 
 return Driver

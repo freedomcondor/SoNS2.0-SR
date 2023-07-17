@@ -23,7 +23,7 @@ local geneIndex = logReader.calcMorphID(gene)
 
 local robotsData = logReader.loadData("./logs")
 
-logReader.saveMNSNumber(robotsData, "result_MNSNumber_data.txt")
+logReader.saveSoNSNumber(robotsData, "result_MNSNumber_data.txt")
 
 logReader.calcSegmentData(robotsData, geneIndex)
 logReader.saveData(robotsData, "result_data.txt")
@@ -103,8 +103,8 @@ local average_smoothed_error = sum * 1.0 / count
 local converge_step = findDataStepBelowValue(result_data, 100, 0.1)
 
 -- calc mns recruit step
-local MNS_number_data, data_length = readDataInFile("result_MNSNumber_data.txt")
-local recruit_step = findDataStepBelowValue(MNS_number_data, 1, 1.5)
+local SoNS_number_data, data_length = readDataInFile("result_MNSNumber_data.txt")
+local recruit_step = findDataStepBelowValue(SoNS_number_data, 1, 1.5)
 
 os.execute("echo " .. tostring(robotNumber) .. " " 
                    .. tostring(average_error) .. " " 

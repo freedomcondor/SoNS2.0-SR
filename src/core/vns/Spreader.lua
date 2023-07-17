@@ -21,7 +21,7 @@ function Spreader.preStep(vns)
 	vns.spreader.spreading_speed.flag = nil
 end
 
--- Issue a emergency message after the VNS core module get executed
+-- Issue a emergency message after the SoNS core module get executed
 -- <transV3> and <rotateV3> is the velocity and rotation velocity the robot wants the whole swarm to move
 -- <flag> is just an additional payload that the robot wants the whole swarm to know, can be anything
 function Spreader.emergency_after_core(vns, transV3, rotateV3, flag)
@@ -31,7 +31,7 @@ end
 -- Issue a emergency message
 -- <transV3> and <rotateV3> is the velocity and rotation velocity the robot wants the whole swarm to move
 -- <flag> is just an additional payload that the robot wants the whole swarm to know, can be anything
--- <after_core> is a flag showing whether this emergency is before or after VNS core module executed
+-- <after_core> is a flag showing whether this emergency is before or after SoNS core module executed
 function Spreader.emergency(vns, transV3, rotateV3, flag, after_core)
 	vns.spreader.spreading_speed.positionV3 = vns.spreader.spreading_speed.positionV3 + transV3
 	vns.spreader.spreading_speed.orientationV3 = vns.spreader.spreading_speed.orientationV3 + rotateV3

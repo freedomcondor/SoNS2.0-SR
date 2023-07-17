@@ -2,8 +2,8 @@
 source @CMAKE_SOURCE_DIR@/scripts/run_threads.sh
 
 #DATADIR=@CMAKE_CURRENT_SOURCE_DIR@/../data
-#DATADIR=@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_2/data
-DATADIR=@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_4/data
+#DATADIR=@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_2/data
+DATADIR=@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_4/data
 
 TMPDIR=threads
 

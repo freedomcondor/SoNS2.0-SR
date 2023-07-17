@@ -12,7 +12,7 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_02_fault_tolerance_33/data_simu/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_02_fault_tolerance_33/data_simu/data"
 sample_run = "run1"
 
 option = {
@@ -36,7 +36,7 @@ option = {
 	'key_frame' :  [0, 500] ,
 
 	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_02_fault_tolerance_33/track_fig_logs/logs"
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_02_fault_tolerance_33/track_fig_logs/logs"
 	,
 
 	'legend_obstacle'  : True,

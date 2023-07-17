@@ -18,7 +18,7 @@ ExperimentCommon = require("ExperimentCommon")
 -- includes -------------
 logger = require("Logger")
 local api = require(myType .. "API")
-local VNS = require("VNS")
+local SoNS = require("SoNS")
 local BT = require("BehaviorTree")
 logger.enable()
 logger.disable("Allocator")
@@ -41,29 +41,29 @@ local gene = {
 	}
 }
 
--- VNS option
--- VNS.Allocator.calcBaseValue = VNS.Allocator.calcBaseValue_oval -- default is oval
+-- SoNS option
+-- SoNS.Allocator.calcBaseValue = SoNS.Allocator.calcBaseValue_oval -- default is oval
 
 -- called when a child lost its parent
-function VNS.Allocator.resetMorphology(vns)
+function SoNS.Allocator.resetMorphology(vns)
 	vns.Allocator.setMorphology(vns, structure1)
 end
 
 if robot.id == robot.params.single_robot then 
-	function VNS.Connector.newVnsID(vns, idN, lastidPeriod)
+	function SoNS.Connector.newVnsID(vns, idN, lastidPeriod)
 		local _idS = vns.Msg.myIDS()
 		local _idN = idN or 0
 	
-		VNS.Connector.updateVnsID(vns, _idS, _idN, lastidPeriod)
+		SoNS.Connector.updateVnsID(vns, _idS, _idN, lastidPeriod)
 	end
 end
 
 -- argos functions -----------------------------------------------
 --- init
 function init()
-	api.linkRobotInterface(VNS)
+	api.linkRobotInterface(SoNS)
 	api.init() 
-	vns = VNS.create(myType)
+	vns = SoNS.create(myType)
 	reset()
 end
 

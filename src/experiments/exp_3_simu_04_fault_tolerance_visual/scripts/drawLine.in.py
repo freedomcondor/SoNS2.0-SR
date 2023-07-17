@@ -12,12 +12,12 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/data_simu_30s/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/data_simu_30s/data"
 sample_run = "run1"
 
-dataFolder1 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/data_simu_0.5s/data"
-dataFolder2 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/data_simu_1s/data"
-dataFolder3 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/data_simu_30s/data"
+dataFolder1 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/data_simu_0.5s/data"
+dataFolder2 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/data_simu_1s/data"
+dataFolder3 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/data_simu_30s/data"
 
 #dataFolder = "@CMAKE_SOURCE_DIR@/../../test_data/data3"
 #dataFolder1 = "@CMAKE_SOURCE_DIR@/../../test_data/data1"
@@ -51,7 +51,7 @@ option = {
 	'key_frame' :  [0, 500] ,
 
 	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/track_fig_logs/logs"
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_04_fault_tolerance_visual/track_fig_logs/logs"
 	,
 
 	'legend_obstacle'  : True,

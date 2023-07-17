@@ -286,21 +286,21 @@ end
 
 ------------------------------------------------------
 -- This is to wrap argos apis, in case that argos upgrades and change some of the apis.
-function api.linkRobotInterface(VNS)
-	VNS.Msg.sendTable = function(table)
+function api.linkRobotInterface(SoNS)
+	SoNS.Msg.sendTable = function(table)
 		robot.radios.wifi.send(table)
 	end
 
-	VNS.Msg.getTablesAT = function(table)
+	SoNS.Msg.getTablesAT = function(table)
 		return robot.radios.wifi.recv
 	end
 
-	VNS.Msg.myIDS = function()
+	SoNS.Msg.myIDS = function()
 		return robot.id
 	end
 
-	VNS.Driver.move = api.move
-	VNS.api = api
+	SoNS.Driver.move = api.move
+	SoNS.api = api
 end
 
 return api

@@ -1,6 +1,6 @@
 CURRENT_DIR=`pwd`
 
-EXPS_DIR="@CMAKE_MNS_DATA_PATH@/src/experiments/"
+EXPS_DIR="@CMAKE_SoNS_DATA_PATH@/src/experiments/"
 COPY_PY="@CMAKE_SOURCE_DIR@/scripts/csvgenerator/prepend_line.py"
 
 echo $EXPS_DIR

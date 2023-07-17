@@ -18,17 +18,17 @@ local Assigner = {}
 --	}
 --]]
 
--- This function is called by VNS.create
+-- This function is called by SoNS.create
 function Assigner.create(vns)
 	vns.assigner = {}
 end
 
--- This function is called by VNS.reset
+-- This function is called by SoNS.reset
 function Assigner.reset(vns)
 	vns.assigner.targetS = nil
 end
 
--- This function is called by VNS.addparent,
+-- This function is called by SoNS.addparent,
 -- <robotR> is the table of the new robot
 function Assigner.addParent(vns, robotR)
 	robotR.assigner = {
@@ -40,7 +40,7 @@ function Assigner.addParent(vns, robotR)
 	end
 end
 
--- This function is called by VNS.addChild,
+-- This function is called by SoNS.addChild,
 -- <robotR> is the table of the new robot
 function Assigner.addChild(vns, robotR)
 	robotR.assigner = {
@@ -52,7 +52,7 @@ function Assigner.addChild(vns, robotR)
 	end
 end
 
--- This function is called by VNS.deleteParent,
+-- This function is called by SoNS.deleteParent,
 function Assigner.deleteParent(vns)
 	vns.assigner.targetS = nil
 	for idS, childR in pairs(vns.childrenRT) do
@@ -62,7 +62,7 @@ function Assigner.deleteParent(vns)
 	end
 end
 
--- This function is called by VNS.deleteChild,
+-- This function is called by SoNS.deleteChild,
 -- <deleting_idS> is the id of the child to be deleted
 function Assigner.deleteChild(vns, deleting_idS)
 	for idS, childR in pairs(vns.childrenRT) do
@@ -72,7 +72,7 @@ function Assigner.deleteChild(vns, deleting_idS)
 	end
 end
 
--- This function is called by VNS.preStep,
+-- This function is called by SoNS.preStep,
 function Assigner.preStep(vns)
 	for idS, childR in pairs(vns.childrenRT) do
 		childR.assigner.scale_assign_offset = vns.ScaleManager.Scale:new()
@@ -92,7 +92,7 @@ function Assigner.assign(vns, childIdS, assignToIdS)
 	childR.assigner.targetS = assignToIdS
 end
 
--- This function is called by VNS.step,
+-- This function is called by SoNS.step,
 function Assigner.step(vns)
 	-- listen to assign
 	if vns.parentR ~= nil then for _, msgM in ipairs(vns.Msg.getAM(vns.parentR.idS, "assign")) do

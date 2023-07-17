@@ -12,7 +12,7 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data"
 #sample_run = "test_20220712_2_success_1"
 #sample_run = "test_20220712_3_success_2"
 #sample_run = "test_20220712_4_success_3"
@@ -74,7 +74,7 @@ option = {
 drawSRFig(option)
 drawTrackLog(option)
 
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_simu/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_simu/data"
 sample_run = "run1"
 
 option = {

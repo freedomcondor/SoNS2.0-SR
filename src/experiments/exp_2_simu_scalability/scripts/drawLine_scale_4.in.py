@@ -13,7 +13,7 @@ drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 option = {
-	'dataFolder' : "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_4/data",
+	'dataFolder' : "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_4/data",
 	'sample_run'             : "run1",
 	'SRFig_save'             : "scalability_simu25d_exp_2_simu_scalability_scale4_SRFig.pdf",
 	'trackLog_save'          : "scalability_simu25d_exp_2_simu_scalability_scale4_trackLog.pdf",
@@ -30,7 +30,7 @@ option = {
 	#'key_frame' :  [0, 300, 2000] ,  # option 1
 	'key_frame' :  [0, 1200] ,
 	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/track_fig_logs_scale_4"
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/track_fig_logs_scale_4"
 	,
 
 	'figsize'          : [10, 10],

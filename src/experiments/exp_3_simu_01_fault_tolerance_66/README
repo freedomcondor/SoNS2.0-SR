@@ -1,6 +1,6 @@
 In this scenario, we do the same as exp_1_simu_04_switch_line. (The tunnel one)
 
-But we fail 66% of the robots at the 1000th step. The rest of the robots should restore the MNS and the formation and keep move through the tunnel.
+But we fail 66% of the robots at the 1000th step. The rest of the robots should restore the SoNS and the formation and keep move through the tunnel.
 
 We do three sub tasks:
 

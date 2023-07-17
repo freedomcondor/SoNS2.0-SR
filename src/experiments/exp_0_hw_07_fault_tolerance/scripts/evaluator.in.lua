@@ -1,7 +1,7 @@
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/scripts/logReader/?.lua"
 package.path = package.path .. ";@CMAKE_SOURCE_DIR@/core/utils/?.lua"
 --package.path = package.path .. ";@CMAKE_CURRENT_BINARY_DIR@/../simu/?.lua"
-package.path = package.path .. ";@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_6_success_5/hw/?.lua"
+package.path = package.path .. ";@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_6_success_5/hw/?.lua"
 
 logger = require("Logger")
 logReader = require("logReader")
@@ -150,7 +150,7 @@ os.execute("echo " .. tostring(structure2Step - saveStartStep) .. " > formationS
 os.execute("echo " .. tostring(stage4Step - saveStartStep) .. " >> formationSwitch.txt")
 os.execute("echo " .. tostring(stage5Step - saveStartStep) .. " >> formationSwitch.txt")
 
-logReader.saveMNSNumber(robotsData, "result_MNSNumber_data.txt", saveStartStep)
+logReader.saveSoNSNumber(robotsData, "result_MNSNumber_data.txt", saveStartStep)
 
 logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep)
 --logReader.saveDataAveragedBySwarmSize(robotsData, "result_data_averaged_by_focal_size.txt", "error", saveStartStep)

@@ -61,7 +61,7 @@ function Stabilizer.postStep(vns)
 	end
 end
 
--- called by VNS.setGoal. If a goal is set for the robot, all the stabilizer info for obstacles needs to be updated
+-- called by SoNS.setGoal. If a goal is set for the robot, all the stabilizer info for obstacles needs to be updated
 function Stabilizer.setGoal(vns, positionV3, orientationQ)
 	local newGoal = {positionV3 = positionV3, orientationQ = orientationQ}
 	for i, ob in ipairs(vns.avoider.obstacles) do

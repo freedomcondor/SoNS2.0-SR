@@ -42,7 +42,7 @@ track_option_base = {
 '''
 # -------- loss 0.5s ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_0.5s/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_0.5s/data"
 sample_run = "run23"
 
 # 23 14 43
@@ -59,7 +59,7 @@ drawSRFig(track_option)
 '''
 # -------- loss 1s ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_1s/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_1s/data"
 sample_run = "run14"
 
 track_option['dataFolder']    = dataFolder
@@ -73,7 +73,7 @@ drawSRFig(track_option)
 
 # -------- loss 30s ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
 sample_run = "run43"
 
 track_option['dataFolder']    = dataFolder

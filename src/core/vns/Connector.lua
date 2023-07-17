@@ -213,7 +213,7 @@ function Connector.waitingCount(vns)
 	end
 end
 
--- called by VNS.step(), it is the function that runs every step
+-- called by SoNS.step(), it is the function that runs every step
 function Connector.step(vns)
 	Connector.update(vns)
 	Connector.waitingCount(vns)

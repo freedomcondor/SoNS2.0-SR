@@ -22,7 +22,7 @@ local Transform = require("Transform")
 -- includes -------------
 logger = require("Logger")
 local api = require(myType .. "API")
-local VNS = require("VNS")
+local SoNS = require("SoNS")
 local BT = require("BehaviorTree")
 logger.enable()
 logger.disable("Allocator")
@@ -39,12 +39,12 @@ local pipuckDis = 0.7
 local height = api.parameters.droneDefaultHeight
 local gene = create_back_line_morphology_with_drone_number(n_drone, droneDis, pipuckDis, height)
 
-Message = VNS.Msg
+Message = SoNS.Msg
 
--- VNS option
-VNS.Allocator.calcBaseValue = VNS.Allocator.calcBaseValue_vertical
+-- SoNS option
+SoNS.Allocator.calcBaseValue = SoNS.Allocator.calcBaseValue_vertical
 
-function VNS.create_vns_core_node(vns, option)
+function SoNS.create_vns_core_node(vns, option)
 	-- option = {
 	--      connector_no_recruit = true or false or nil,
 	--      connector_no_parent_ack = true or false or nil,
@@ -97,9 +97,9 @@ local commMeasureDataFile = "logs/" .. robot.id .. ".comm_dat"
 -- argos functions -----------------------------------------------
 --- init
 function init()
-	api.linkRobotInterface(VNS)
+	api.linkRobotInterface(SoNS)
 	api.init() 
-	vns = VNS.create(myType)
+	vns = SoNS.create(myType)
 	reset()
 	os.execute("rm -f " .. timeMeasureDataFile)
 end

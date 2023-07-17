@@ -39,7 +39,7 @@ track_option_base = {
 
 # -------- scale 1 ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_1/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_1/data"
 sample_run = "run3"
 
 #'3 19 2 47'
@@ -60,7 +60,7 @@ drawSRFig(track_option)
 
 # -------- scale 2 ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_2/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_2/data"
 sample_run = "run19"
 
 #'3 19 2 47'
@@ -82,7 +82,7 @@ drawSRFig(track_option)
 
 # -------- scale 3 ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_3/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_3/data"
 sample_run = "run2"
 
 #'3 19 2 47'
@@ -106,7 +106,7 @@ drawSRFig(track_option)
 
 # -------- scale 4 ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_4/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_4/data"
 sample_run = "run47"
 
 #'3 19 2 47'

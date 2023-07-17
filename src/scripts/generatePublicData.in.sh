@@ -1,6 +1,6 @@
 ORIGIN_DIR=`pwd`
 
-raw_exps_dir="@CMAKE_MNS_DATA_PATH@/src/experiments"
+raw_exps_dir="@CMAKE_SoNS_DATA_PATH@/src/experiments"
 public_dir="@CMAKE_PUB_DATA_PATH@"
 
 # check public data exists or not

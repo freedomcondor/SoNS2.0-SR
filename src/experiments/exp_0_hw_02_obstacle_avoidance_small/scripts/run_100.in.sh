@@ -2,8 +2,8 @@
 source @CMAKE_SOURCE_DIR@/scripts/run_threads.sh
 
 #DATADIR=@CMAKE_CURRENT_SOURCE_DIR@/../data
-DATADIR=@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data
-#DATADIR=@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_simu/data
+DATADIR=@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data
+#DATADIR=@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_simu/data
 TMPDIR=threads
 #THREADS_LOG_OUTPUT="/home/harry/code/mns2.0/build/out.log"
 

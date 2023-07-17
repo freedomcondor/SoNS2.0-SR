@@ -1,6 +1,6 @@
 -- Parameters ---------------------------------------------
 -- This is a list of parameters of SoNS
--- It will be required in VNS.lua, served each instance as vns.Parameters
+-- It will be required in SoNS.lua, served each instance as vns.Parameters
 -- To change these parameters, declare the new value in .argos file
 -- Example :
 --[[

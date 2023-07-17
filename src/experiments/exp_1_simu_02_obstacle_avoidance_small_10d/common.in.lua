@@ -16,7 +16,7 @@ ExperimentCommon = require("ExperimentCommon")
 local Transform = require("Transform")
 logger = require("Logger")
 local api = require(myType .. "API")
-local VNS = require("VNS")
+local SoNS = require("SoNS")
 local BT = require("BehaviorTree")
 logger.enable()
 logger.disable("Allocator")
@@ -28,15 +28,15 @@ local bt
 --local vns
 local gene = require("morphology")
 
--- VNS option
--- VNS.Allocator.calcBaseValue = VNS.Allocator.calcBaseValue_oval -- default is oval
+-- SoNS option
+-- SoNS.Allocator.calcBaseValue = SoNS.Allocator.calcBaseValue_oval -- default is oval
 
 -- argos functions -----------------------------------------------
 --- init
 function init()
-	api.linkRobotInterface(VNS)
+	api.linkRobotInterface(SoNS)
 	api.init() 
-	vns = VNS.create(myType)
+	vns = SoNS.create(myType)
 	reset()
 end
 

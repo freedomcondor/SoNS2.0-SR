@@ -12,8 +12,8 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_hw/data"
-dataFolder2 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_hw/data"
+dataFolder2 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw"
 sample_run = "test_20220713_1_success_1"
 #sample_run = "test_20220713_3_success_2"
 #sample_run = "test_20220713_4_success_3"
@@ -66,8 +66,8 @@ option = {
 drawSRFig(option)
 drawTrackLog(option)
 
-dataFolder = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_simu/data"
-dataFolder2 = "@CMAKE_MNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data"
+dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_simu/data"
+dataFolder2 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data"
 sample_run = "run1"
 
 option = {
