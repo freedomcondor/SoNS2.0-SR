@@ -92,7 +92,7 @@ logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, sta
 
 logReader.calcSegmentLowerBoundErrorInc(robotsData, geneIndex)
 
-logReader.saveSoNSNumber(robotsData, "result_MNSNumber_data.txt")
+logReader.saveSoNSNumber(robotsData, "result_SONSNumber_data.txt")
 
 
 os.execute("echo " .. saveStartStep.. " > saveStartStep.txt")

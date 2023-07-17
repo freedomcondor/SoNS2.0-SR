@@ -45,7 +45,7 @@ for subFolder in getSubfolders(dataFolder) :
 	#drawData(readDataFrom(subfolder + "result_data.txt"))
 	# choose a folder
 	drawDataInSubplot(readDataFrom(subFolder + "result_lowerbound_data.txt"), axs[0, 0])
-	drawDataInSubplot(readDataFrom(subFolder + "result_MNSNumber_data.txt"), axs[1, 0])
+	drawDataInSubplot(readDataFrom(subFolder + "result_SONSNumber_data.txt"), axs[1, 0])
 	for subFile in getSubfiles(subFolder + "result_each_robot_error") :
 		robotsData.append(readDataFrom(subFile))
 		#drawDataInSubplot(readDataFrom(subFile), axs[0, 0])

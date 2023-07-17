@@ -118,8 +118,8 @@ params = '''
 '''.format(exp_scale, n_drone)
 
 # generate argos file
-generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos", 
-                    "@CMAKE_CURRENT_BINARY_DIR@/vns.argos",
+generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/sons_template.argos", 
+                    "@CMAKE_CURRENT_BINARY_DIR@/sons.argos",
 	[
 		["RANDOMSEED",        str(Inputseed)],
 		["TOTALLENGTH",       str((Experiment_length or 6000)/5)],
@@ -142,4 +142,4 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos",
 	]
 )
 
-os.system("argos3 -c @CMAKE_CURRENT_BINARY_DIR@/vns.argos" + VisualizationArgosFlag)
+os.system("argos3 -c @CMAKE_CURRENT_BINARY_DIR@/sons.argos" + VisualizationArgosFlag)

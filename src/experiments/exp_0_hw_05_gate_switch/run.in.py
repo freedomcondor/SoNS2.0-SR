@@ -59,10 +59,10 @@ params = '''
     block_label_to="35"
 '''
 
-# generate vns.argos file, replacing each MARKWORD in the vns_template.argos with the content.
-# and call argos3 -c vns.argos
-generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos", 
-                    "vns.argos",
+# generate sons.argos file, replacing each MARKWORD in the sons_template.argos with the content.
+# and call argos3 -c sons.argos
+generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/sons_template.argos", 
+                    "sons.argos",
 	[
 		["RANDOMSEED",        str(Inputseed)],
 		["TOTALLENGTH",       str((Experiment_length or 2000)/5)],
@@ -85,4 +85,4 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos",
 	]
 )
 
-os.system("argos3 -c vns.argos" + VisualizationArgosFlag)
+os.system("argos3 -c sons.argos" + VisualizationArgosFlag)

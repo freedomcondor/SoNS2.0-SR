@@ -27,7 +27,7 @@ index e61f30b..fa44da7 100755
  
  n_drone = exp_scale * 6 + 1
  n_pipuck = n_drone * 4
-@@ -102,7 +103,8 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos",
+@@ -102,7 +103,8 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/sons_template.argos",
  	[
  		["RANDOMSEED",        str(Inputseed)],
  		["MULTITHREADS",      str(MultiThreads)],
@@ -37,10 +37,10 @@ index e61f30b..fa44da7 100755
  		["DRONES",            drone_xml], 
  		["PIPUCKS",           pipuck_xml], 
  		["WALL",              wall_xml], 
-diff --git a/src/experiments/exp_2_simu_scalability/vns_template.in.argos b/src/experiments/exp_2_simu_scalability/vns_template.in.argos
+diff --git a/src/experiments/exp_2_simu_scalability/sons_template.in.argos b/src/experiments/exp_2_simu_scalability/sons_template.in.argos
 index 1e198d3..b95ee09 100755
---- a/src/experiments/exp_2_simu_scalability/vns_template.in.argos
-+++ b/src/experiments/exp_2_simu_scalability/vns_template.in.argos
+--- a/src/experiments/exp_2_simu_scalability/sons_template.in.argos
++++ b/src/experiments/exp_2_simu_scalability/sons_template.in.argos
 @@ -22,7 +22,7 @@
    <!-- *********************** -->
    <arena size="ARENA_SIZE, ARENA_SIZE, 3.5" center="0, 0, 1">

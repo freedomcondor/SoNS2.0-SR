@@ -57,11 +57,11 @@ params = '''
     block_label_to="101"
 '''
 
-# generate vns.argos file, replacing each MARKWORD in the vns_template.argos with the content.
-# and call argos3 -c vns.argos
-generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos", 
-#                    "@CMAKE_CURRENT_BINARY_DIR@/vns.argos",
-                    "vns.argos",
+# generate sons.argos file, replacing each MARKWORD in the sons_template.argos with the content.
+# and call argos3 -c sons.argos
+generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/sons_template.argos", 
+#                    "@CMAKE_CURRENT_BINARY_DIR@/sons.argos",
+                    "sons.argos",
 	[
 		["RANDOMSEED",        str(Inputseed)],  # Inputseed is inherit from createArgosScenario.py
 		["TOTALLENGTH",       str((Experiment_length or 2500)/5)],
@@ -86,5 +86,5 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/vns_template.argos",
 )
               #drone_default_height="1.8"
 
-#os.system("argos3 -c @CMAKE_CURRENT_BINARY_DIR@/vns.argos" + VisualizationArgosFlag)
-os.system("argos3 -c vns.argos" + VisualizationArgosFlag)
+#os.system("argos3 -c @CMAKE_CURRENT_BINARY_DIR@/sons.argos" + VisualizationArgosFlag)
+os.system("argos3 -c sons.argos" + VisualizationArgosFlag)

@@ -55,9 +55,9 @@ copy_run() {
 	#if [ -d "$input_run_folder"hw ]; then
 	#	cp -r "$input_run_folder"hw "$output_run_folder"code_hw
 	#fi
-	#if [ -e "$input_run_folder"vns.argos ]; then
+	#if [ -e "$input_run_folder"sons.argos ]; then
 	#	mkdir -p "$output_run_folder"code_simu
-	#	cp "$input_run_folder"vns.argos "$output_run_folder"code_simu
+	#	cp "$input_run_folder"sons.argos "$output_run_folder"code_simu
 	#	if [ -d "$input_run_folder"../../code_and_output/simu ]; then
 	#		cp -r "$input_run_folder"../../code_and_output/simu "$output_run_folder"code_simu
 	#	fi

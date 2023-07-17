@@ -1,6 +1,6 @@
 ## simulation
-configure_file( vns_template.in.argos
-                vns_template.argos)
+configure_file( sons_template.in.argos
+                sons_template.argos)
 
 configure_file( common.in.lua      common.lua)
 configure_file( morphology.lua     morphology.lua        COPYONLY)

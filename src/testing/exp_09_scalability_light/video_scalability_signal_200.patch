@@ -11,10 +11,10 @@ index 51fcc4b..43ccbfd 100644
  
  n_drone = exp_scale * 6 + 1
  n_pipuck = n_drone * 4
-diff --git a/src/testing/exp_09_scalability_light/vns_template.in.argos b/src/testing/exp_09_scalability_light/vns_template.in.argos
+diff --git a/src/testing/exp_09_scalability_light/sons_template.in.argos b/src/testing/exp_09_scalability_light/sons_template.in.argos
 index 8cec3a9..3fb4262 100644
---- a/src/testing/exp_09_scalability_light/vns_template.in.argos
-+++ b/src/testing/exp_09_scalability_light/vns_template.in.argos
+--- a/src/testing/exp_09_scalability_light/sons_template.in.argos
++++ b/src/testing/exp_09_scalability_light/sons_template.in.argos
 @@ -71,7 +71,8 @@
                        label="my_qtopengl_user_functions" />
        <camera>

@@ -1,6 +1,6 @@
 ## simulation
-configure_file( vns_template.in.argos
-                vns_template.argos)
+configure_file( sons_template.in.argos
+                sons_template.argoss)
 
 configure_file( generate_hw_argos.in.py
                 generate_hw_argos.py)

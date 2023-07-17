@@ -8,7 +8,7 @@ This formation scenario, there are 10 drones and 40 pipucks, the swarm firstly f
          p     p                   oo    (o: obstacles, e: end marker)
 
 To run this experiment : `python3 build/experiments/exp_xxx/run.py -r 1 -l 1000`
-run.py will generate a vns.argos file and run command argos3 -c vns.argos automatically
+run.py will generate a sons.argos file and run command argos3 -c sons.argos automatically
 where -r and -l are optional,
 -r means the random seed, if not given, the current time is used,
 -l means the experiment length, if not given, the one set in run.py is used.
