@@ -46,11 +46,11 @@ function SoNS.Allocator.resetMorphology(vns)
 end
 
 if robot.id == robot.params.single_robot then 
-function SoNS.Connector.newVnsID(vns, idN, lastidPeriod)
+function SoNS.Connector.newSonsID(vns, idN, lastidPeriod)
 	local _idS = vns.Msg.myIDS()
 	local _idN = idN or 0
 
-	SoNS.Connector.updateVnsID(vns, _idS, _idN, lastidPeriod)
+	SoNS.Connector.updateSonsID(vns, _idS, _idN, lastidPeriod)
 end
 end
 
@@ -129,7 +129,7 @@ return function()
 				vns.deleteParent(vns)
 			end
 			vns.setMorphology(vns, structure2)
-			vns.Connector.newVnsID(vns, 0.9, 200)
+			vns.Connector.newSonsID(vns, 0.9, 200)
 
 			state = "split"
 			logger("split")

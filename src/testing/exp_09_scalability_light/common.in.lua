@@ -329,7 +329,7 @@ function create_reaction_node(vns)
 					vns.Msg.send(vns.parentR.idS, "dismiss")
 					vns.deleteParent(vns)
 				end
-				vns.Connector.newVnsID(vns, 1 + gate.length, 1)
+				vns.Connector.newSonsID(vns, 1 + gate.length, 1)
 				vns.BrainKeeper.reset(vns)
 				vns.allocator.mode_switch = "stationary"
 				vns.setMorphology(vns, structure2)

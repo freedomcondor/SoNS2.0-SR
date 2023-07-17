@@ -56,12 +56,12 @@ function SoNS.Allocator.resetMorphology(vns)
 end
 
 if myType == "drone" then
-	SoNS.Connector.newVnsID = 
+	SoNS.Connector.newSonsID = 
 	function(vns, idN, lastidPeriod)
 		local _idS = vns.Msg.myIDS()
 		local _idN = idN or robot.random.uniform() + 1
 	
-		SoNS.Connector.updateVnsID(vns, _idS, _idN, lastidPeriod)
+		SoNS.Connector.updateSonsID(vns, _idS, _idN, lastidPeriod)
 	end
 end
 

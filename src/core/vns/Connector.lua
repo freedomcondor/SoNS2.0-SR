@@ -84,26 +84,26 @@ end
 
 -- A new brain changes the Rank <idN>, and inform all the down stream robots
 -- In the meantime, remembers the last id for <lastidPeriod> time, and ignore recruitment from the old SoNS ID to prevent loop
-function Connector.newVnsID(vns, idN, lastidPeriod)
+function Connector.newSonsID(vns, idN, lastidPeriod)
 	local _idS = vns.Msg.myIDS()
 	local _idN = idN or robot.random.uniform()
 
-	Connector.updateVnsID(vns, _idS, _idN, lastidPeriod)
+	Connector.updateSonsID(vns, _idS, _idN, lastidPeriod)
 end
 
 -- Change a new SoNS ID <idS>, and rank <idN>, and inform all the down stream robots
 -- In the meantime, remembers the last id for <lastidPeriod> time, and ignore recruitment from the old SoNS ID to prevent loop
-function Connector.updateVnsID(vns, _idS, _idN, lastidPeriod)
+function Connector.updateSonsID(vns, _idS, _idN, lastidPeriod)
 	vns.connector.lastid[vns.idS] = lastidPeriod or (vns.scalemanager.depth + 2)
 	vns.connector.locker_count = vns.scalemanager.depth + 2
 
 	vns.idS = _idS
 	vns.idN = _idN
 	for idS, childR in pairs(vns.childrenRT) do
-		vns.Msg.send(idS, "updateVnsID", {idS = _idS, idN = _idN, lastidPeriod = lastidPeriod})
+		vns.Msg.send(idS, "updateSonsID", {idS = _idS, idN = _idN, lastidPeriod = lastidPeriod})
 	end
 	for idS, childR in pairs(vns.connector.waitingRobots) do
-		vns.Msg.send(idS, "updateVnsID", {idS = _idS, idN = _idN, lastidPeriod = lastidPeriod})
+		vns.Msg.send(idS, "updateSonsID", {idS = _idS, idN = _idN, lastidPeriod = lastidPeriod})
 	end
 end
 
@@ -177,7 +177,7 @@ function Connector.update(vns)
 	end
 	if vns.parentR ~= nil and (vns.parentR.connector.unseen_count == 0 or vns.parentR.connector.heartbeat_count == 0) then
 		vns.Msg.send(vns.parentR.idS, "dismiss")
-		Connector.newVnsID(vns)
+		Connector.newSonsID(vns)
 		vns.deleteParent(vns)
 		vns.resetMorphology(vns)
 	end
@@ -230,7 +230,7 @@ function Connector.step(vns)
 	-- check split
 	for _, msgM in ipairs(vns.Msg.getAM("ALLMSG", "split")) do
 		if vns.parentR ~= nil and msgM.fromS == vns.parentR.idS then
-			Connector.newVnsID(vns, msgM.dataT.newID, msgM.dataT.waitTick or 100)
+			Connector.newSonsID(vns, msgM.dataT.newID, msgM.dataT.waitTick or 100)
 			vns.deleteParent(vns)
 			if type(msgM.dataT.morphology) == "number" then
 				vns.setMorphology(vns, vns.allocator.gene_index[msgM.dataT.morphology])
@@ -244,7 +244,7 @@ function Connector.step(vns)
 	-- check dismiss
 	for _, msgM in ipairs(vns.Msg.getAM("ALLMSG", "dismiss")) do
 		if vns.parentR ~= nil and msgM.fromS == vns.parentR.idS then
-			Connector.newVnsID(vns, msgM.dataT and msgM.dataT.newID)  -- if dataT is nil then nil
+			Connector.newSonsID(vns, msgM.dataT and msgM.dataT.newID)  -- if dataT is nil then nil
 			vns.deleteParent(vns)
 			vns.resetMorphology(vns)
 		end
@@ -253,10 +253,10 @@ function Connector.step(vns)
 		end
 	end
 
-	-- check updateVnsID
-	for _, msgM in ipairs(vns.Msg.getAM("ALLMSG", "updateVnsID")) do
+	-- check updateSonsID
+	for _, msgM in ipairs(vns.Msg.getAM("ALLMSG", "updateSonsID")) do
 		if vns.parentR ~= nil and msgM.fromS == vns.parentR.idS then
-			Connector.updateVnsID(vns, msgM.dataT.idS, msgM.dataT.idN, msgM.dataT.lastidPeriod)
+			Connector.updateSonsID(vns, msgM.dataT.idS, msgM.dataT.idN, msgM.dataT.lastidPeriod)
 		end
 	end
 
@@ -430,7 +430,7 @@ function Connector.ackSpecific(vns, specific_name, option)
 					-- update vns id
 					-- vns.idS = msgM.dataT.idS
 					-- vns.idN = msgM.dataT.idN
-					Connector.updateVnsID(vns, msgM.dataT.idS, msgM.dataT.idN)
+					Connector.updateSonsID(vns, msgM.dataT.idS, msgM.dataT.idN)
 					vns.addParent(vns, robotR)
 				else
 					vns.connector.waitingParents[msgM.fromS].waiting_count = vns.Parameters.connector_waiting_parent_count
