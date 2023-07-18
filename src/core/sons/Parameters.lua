@@ -1,7 +1,7 @@
 -- Parameters ---------------------------------------------
--- This is a list of parameters of SoNS
--- It will be required in SoNS.lua, served each instance as sons.Parameters
--- To change these parameters, declare the new value in .argos file
+-- This is a list of parameters of SoNS, for all the modules and apis.
+-- It is required in SoNS.lua, serving each SoNS instance as sons.Parameters.
+-- To change these parameters, declare the new value in .argos file.
 -- Example :
 --[[
 	<lua_controller>
@@ -10,7 +10,7 @@
 	          stabilizer_preference_brain="drone1" />
 	</lua_controller>
 --]]
--- Attributes in <params> will appear as robot.params.xxxx
+-- Attributes in <params> will appear in the controller code as robot.params.xxxx
 ------------------------------------------------------
 
 return {
@@ -41,17 +41,17 @@ return {
 	reference_count_down = tonumber(robot.params.reference_count_down or 1),
 	-- avoid speed
 	--[[
-	        |   |
-	        |   |
-	speed   |    |  -log(d/dangerzone) * scalar
-	        |     |
-	        |      \  
-	        |       -\
-	        |         --\ 
-	        |            ---\ 
-	        |---------------+------------------------ d
-	                        |
-	                    dangerzone
+	        ||
+	        ||
+	speed   | |  -log(d/dangerzone) * scalar
+	        |  |
+	        |   \  
+	        |    -\
+	        |      --\ 
+	        |         ---\ 
+	        |------------+------------------------ d
+	                     |
+	                 dangerzone
 	        |  ||
 	        |  ||
 	speed   |  | |  -log(d/dangerzone) * scalar

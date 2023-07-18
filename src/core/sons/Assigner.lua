@@ -1,10 +1,9 @@
 -- Assigner ------------------------------------------
--- Assigner is the module that handles handover operation of SoNS
--- Handover means A robot gives one of its children to another robot
--- The operation is like this:
---     The parent tells the child to whom it will be handover to
---     The child get the messages, and listens to the recruitment from the new parent
---     Once the new parent recruits, the child answers the recruitment and break the link with the old parent.
+-- The Assigner module executes handover operations, in which one robot gives one of its children to another robot.
+-- The operation is:
+--     The parent tells the child to whom it will be handed over.
+--     The child get the handover messages, and listens to the recruitment messages from the new parent.
+--     The child accepts the recruitment messages and breaks the link with its old parent.
 ------------------------------------------------------
 local Assigner = {}
 

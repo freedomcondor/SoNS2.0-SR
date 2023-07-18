@@ -1,0 +1,4 @@
+add_subdirectory(Variant1_One_third_chance_for_each_robot_to_fail)
+add_subdirectory(Variant2_Two_thirds_chance_for_each_robot_to_fail)
+add_subdirectory(Variant3_Temporary_system-wide_vision_failure)
+add_subdirectory(Variant4_Temporary_system-wide_communication_failure)

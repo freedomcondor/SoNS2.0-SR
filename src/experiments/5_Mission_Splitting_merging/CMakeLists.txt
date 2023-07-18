@@ -1,0 +1,2 @@
+add_subdirectory(Variant1_Search_and_rescue_in_passage)
+add_subdirectory(Variant2_Push_away_obstruction)

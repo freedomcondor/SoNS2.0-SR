@@ -1,6 +1,6 @@
 -- CollectiveSensor ---------------------------------------
--- Collective Sensor is used for a child report to its parent the obstacles it sees,
--- and the parent keeps reporting upstream optionally
+-- Collective Sensor is used for a child to report to its parent the obstacles it sees,
+-- and for the parent to (optionally) report its childrens' reports further upstream.
 -- Data structure: 
 --    sons.collectivesensor.receiveList keeps received reports from children
 --    sons.collectivesensor.sendList    keeps what needs to be reported to the parent in the end of the step

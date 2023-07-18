@@ -1,7 +1,6 @@
 -- SensorUpdater --------------------------------------------------
--- Unlike each robot that has a unique id, obstacles are all the same
--- Sensor Updater is to match the new obstacles that a robot sees in the current step with the old obstacles in the sons.avoider.seenObstacles list
--- It also predictes the positions of an obstacle based on its movement last step when the tag got blurred for a short while
+-- Sensor Updater matches new obstacles that a robot sees in the current step with the obstacles seen in the last step, in the sons.avoider.seenObstacles list
+-- It also predicts the position of an obstacle that temporarily is not detected (because of blurred vision, etc) based on its last known postion and other information.
 -------------------------------------------------------------------
 local Transform = require("Transform")
 

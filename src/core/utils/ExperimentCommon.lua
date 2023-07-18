@@ -1,4 +1,5 @@
--- This file provides some common operations for many scenarios, for example detect wall, detect gates.. etc
+-- This file provides some common operations for many of the included mission scenarios, for example detecting a wall or detecting gates.
+-- Each operation is described seperately.
 
 ExperimentCommon = {}
 

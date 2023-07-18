@@ -1,7 +1,7 @@
 -- Avoider -------------------------------------------
--- Avoider is the module that handles obstacle avoidance
--- For each obstacle/other robots, it generates an avoidance velocity according to a log curve (explained later)
--- The summation of the avoidance velocity is stored in avoid_speed, and got added into goal.transV3, which is used in Driver module
+-- The Avoider module handles obstacle avoidance.
+-- For each obstacle (including another robot), the module generates an avoidance velocity according to a log curve.
+-- The summation of the avoidance velocities is stored in avoid_speed, and is added to goal.transV3, which is used in the Driver module.
 ------------------------------------------------------
 local Avoider = {}
 

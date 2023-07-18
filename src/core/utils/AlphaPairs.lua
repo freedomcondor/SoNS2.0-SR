@@ -1,6 +1,8 @@
--- in Lua, in a loop like "for i,v in pairs() do", pairs() produces different order every time.
--- in order to repeat the same experiment, AlphaPairs.lua and RandomPairs.lua are used to overwrite pairs() to produce a stable output when looping.
--- AlphaPairs sorts all the index in the table in an alphabet order (first numbers, and then string in alphabet order)
+-- This utility is used to support experiment repititions in Lua.  
+
+-- In Lua, in a loop such as "for i,v in pairs() do", pairs() produces a different order every time.
+-- To repeat an experiment, AlphaPairs.lua and RandomPairs.lua are used to overwrite pairs() to produce a stable output when looping.
+-- AlphaPairs sorts the indices in the table in alphabetical order (first numbers, then strings).
 -- RandomPairs generates the same random sequence of the indices every time.
 
 rawpairs = pairs

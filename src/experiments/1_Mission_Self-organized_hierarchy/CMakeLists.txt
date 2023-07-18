@@ -1,0 +1,2 @@
+add_subdirectory(Variant1_Clustered_start)
+add_subdirectory(Variant2_Scattered_start)

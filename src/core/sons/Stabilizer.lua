@@ -1,9 +1,9 @@
--- stabilizer -----------------------------------------
--- The drone drifts in the air, stabilizer is used for a brain drone to reference a pipuck of obstacles on the ground to stabilize itself
--- If there are obstacles on the ground, the drone brain will reference the obstacles, remember the relative transforms of these obstacles,
--- and tries to maintain the same transforms.
--- If there are no obstacles, the drone will choose one of pipucks to reference. In this case, the pipuck gets excluded from
---  allocator process, stays where it is, and only answers emergency movements.
+-- Stabilizer -----------------------------------------
+-- The Stabilizer module is used when a drone is the brain of its SoNS.
+-- The module allows the brain to use a ground robot or obstacle that it can see on the ground as a reference to stabilize its flight.
+--       If there are obstacles visible, the brain will use an obstacle as the reference.
+--       If there are no obstacles, the drone will use a ground robot as the reference. In this case, the ground robot gets excluded 
+--           from the allocation process of the SoNS and only moves in response to the brain or emergency messages from other robots.
 ------------------------------------------------------
 logger.register("Stabilizer")
 local Transform = require("Transform")

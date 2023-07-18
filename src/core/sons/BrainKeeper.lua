@@ -1,6 +1,6 @@
 -- BrainKeeper ---------------------------------------
--- The BrainKeeper module remembers the position of the brain for each robot in the SoNS.
--- So that if the robot got seperated from the swarm, the robot could choose to move towards the last brain location trying to get re-connected
+-- The BrainKeeper module (locally) remembers the position of the brain for each robot.
+-- If the robot got seperated from the SoNS, it can potentially choose to move towards the last remembered brain location to try to get re-connected.
 ------------------------------------------------------
 
 local BrainKeeper = {}

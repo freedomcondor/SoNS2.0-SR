@@ -73,5 +73,5 @@ add_subdirectory(testing)
 add_subdirectory(scripts)
 
 #add copy floor 
-configure_file( qtopengl_extensions/wood_floor.png     wood_floor.png    COPYONLY)
-configure_file( qtopengl_extensions/wood_floor_large.png     wood_floor_large.png    COPYONLY)
+configure_file( qtopengl_extensions/wood_floor.png           floor_texture/wood_floor.png          COPYONLY)
+configure_file( qtopengl_extensions/wood_floor_large.png     floor_texture/wood_floor_large.png    COPYONLY)

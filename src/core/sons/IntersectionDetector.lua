@@ -1,10 +1,11 @@
 -- IntersectionDetector ------------------------------
--- IntersectionDetector handles the following situation:
+-- IntersectionDetector handles the following situation that cannot be resolved by the Allocator module:
+-- If two links (between two parents and their respective children) are spatially intersected, as in:
 --        R  --  R \ / R -- R
 --   R <            X
 --        R  --  R / \ R -- R
--- If two parents each have a child, and the links are spacially intersected, it will be difficult for SoNS to resolve the situation.
--- In this case, one parent would handover the child to the other, so that SoNS can use a usual allocator way to solve the problem.
+-- one parent hands over its child to the other parent. 
+-- The new configuration conforms to situations that can be handled by the Allocator module.
 ------------------------------------------------------
 local IntersectionDetector = {}
 

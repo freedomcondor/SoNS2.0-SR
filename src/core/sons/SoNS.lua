@@ -1,14 +1,12 @@
 -- SoNS ------------------------------------------------------
--- This is the root file for SoNS library. It serves as a container that arranges all the SoNS function modules
--- For a robot, to create a SoNS data structure, do something like
+-- This is the root file for the SoNS library. It serves as a container that arranges all the SoNS function modules.
+-- For a robot, to create a SoNS data structure, do (for example):
 --      sons = SoNS:create("pipuck")
--- and sons will be the data structure of SoNS, it contains datas such as which robot is my parent, my children ...
--- sons has basic functions such as sons.addChild(), which adds a child into the data structure
--- in each of these functions, sons iterates all the modules and call the module function with the same name if implemented
--- 
--- At last, it provides create_sons_node() function to return a behavior tree node that contains the basic type of sons behavior tree
---
--- In addition, it provides functions to log sons datas into experiment logs through argos loop function in simulation, or message system in hardware
+-- and sons will be the main data structure. 
+-- It will contain data such as parent and children IDs and provides functions such as: 
+--      sons.addChild(), which adds a child into the data structure,
+--      create_sons_node(), to return a behavior tree node that contains the basic type of sons behavior tree,
+--      and functions to log experiment data.
 -------------------------------------------------------------
 local SoNS = {SoNSCLASS = true}
 SoNS.__index = SoNS
@@ -29,7 +27,6 @@ SoNS.Spreader = require("Spreader")
 SoNS.BrainKeeper = require("BrainKeeper")
 SoNS.CollectiveSensor = require("CollectiveSensor")
 SoNS.IntersectionDetector = require("IntersectionDetector")
-SoNS.Neuron = require("Neuron")
 SoNS.Stabilizer = require("Stabilizer")
 
 SoNS.Driver= require("Driver")
@@ -50,8 +47,6 @@ SoNS.Modules = {
 	SoNS.Spreader,
 	SoNS.CollectiveSensor,
 	SoNS.BrainKeeper,
-
-	SoNS.Neuron,
 
 	SoNS.Driver,
 }

@@ -1,8 +1,7 @@
 -- Allocator -----------------------------------------
--- Allocator is key module enables formation
--- It matches the current children with the current target formation branch in an optimaized way
--- And handles handovers, and allocate down the target formation branch
--- For details, please refer to the paper which describe the algorithm in detail.
+-- The Allocator module matches the current children with the current target formation branch in an optimized way and manages targeted handovers. 
+-- Each robot handles allocations of the robots downstream from it.
+-- For details, please refer to the accompanying paper which describe the SoNS algorithms in detail.
 ------------------------------------------------------
 logger.register("Allocator")
 --local Arrangement = require("Arrangement")

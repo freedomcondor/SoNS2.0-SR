@@ -1,4 +1,4 @@
--- Message library, it provides operation to for robots to send message between each other
+-- This message library provides operations for robots to send messages to each other.
 
 local Message = {}
 

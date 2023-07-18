@@ -1,9 +1,10 @@
 #----------------------------------------------------------------------------------------------
-# This file provides basic function to configure .argos file
-# Usually, in an experiment setup, there is a run.py that includes this file, and generate a
-# .argos file and run it with argos3
-# In this way, to run the experiment, do : python3 run.py -r x -l xx -v xx -m xxx
-# -r -l ... parameters will be explained in following section
+# This file provides basic functions to configure the .argos file
+# Usually, in an experiment setup, there is a run.py that includes this file, generates a
+# .argos file, and runs it with argos3
+# In this way, to run an experiment: 
+#    python3 run.py -r x -l xx -v xx -m xxx 
+# The -r -l  parameters are explained below.
 #----------------------------------------------------------------------------------------------
 import random
 import sys

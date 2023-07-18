@@ -1,9 +1,9 @@
 -- ScaleManager --------------------------------------
--- A scale is a table counts the number of each type of robots in the swarm, namely the "scale" of a swarm. See Scale.lua
--- ScaleManager manages the scale of each sub-branch of the SoNS, and also the depth of the tree
--- It collects scale report from all the children, sums them up, and reports to the parent
--- Further more, it mixes parent and children, it collects the scale report from all the neighbours
--- For each neighour, it sums up the reports from the rest, and send to that neighbour.
+-- This module counts the number of each type of robot in the SoNS.
+-- Each robot counts the number of robots in its SoNS independantly, as a summation of the counts it recives from its parent and children:
+--       This module manages the passing of counts between robots (for different branches of the SoNS) and calculates the depths of branches.
+--       It collects count reports from all children and sums them and also collects the count report from the parent.
+--       For each neighbor n, it sums up the reports recieved from all other neighbors, and sends it to neighbor n.
 ------------------------------------------------------
 local ScaleManager = {}
 

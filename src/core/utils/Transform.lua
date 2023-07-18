@@ -1,15 +1,14 @@
--- This is a library doing linear operations on position and orientation
--- A transform is defined as a combination of position and orientation, it describes where an object is relative to another
--- Here, a transformed is represented by a table with two elemets: positionV3 and orientationQ
+-- This is a library for iinear operations on position and orientation.
+-- Object positions and orientations relative to another object are represented by a table with two elemets: positionV3 and orientationQ
 -- t = {
 --          positionV3 = vector3(xxx)
 --          orientationQ = quaternion(xxx)
 --     }
 
--- Operation between transforms can be considered as a group (group from group, ring, field ... )
--- For example, the transform of Object B relative to Object A can be considered as a : A -> B (A see B at a)
---              the transform of Object C relative to Object B is   b : B -> C                 (B see C at b)
---        Then, the transform of Object C relative to Object A is   c : A -> C = a x b         (A see C at axb)
+-- Operations can be applied to groups, etc. (group from group, ring, field ... )
+-- For example, Object B relative to Object A can be considered as a : A -> B (A see B at a)
+--              Object C relative to Object B is   b : B -> C                 (B see C at b)
+--        Then, Object C relative to Object A is   c : A -> C = a x b         (A see C at axb)
 
 --    a
 -- A --> B

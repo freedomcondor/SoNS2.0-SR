@@ -1,5 +1,7 @@
 --------------------------------------------------------------------------------------
--- Dijkstra algorithm finding shortest path
+-- Dijkstra algorithm for shortest path.
+-- Shortest path is used as part of the robot reallocation strategy in SoNS reconfigurations.
+
 -- w is a square of weight, w[i][j] = nil means no connect
 -- if w[i][j] is a table, means multiple connects between i and j
 -- return D: an array from 1 to n, D[i] means the shortest path distance from 1 to i

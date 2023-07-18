@@ -1,10 +1,10 @@
 -- Driver --------------------------------------------
--- Driver handles the movement of the robot
--- It takes data from sons.goal
---     From sons.goal.positionV3 and orientationQ, it generates velocity to move to that position (explained later)
---     From sons.goal.transV3 and rotateV3, it takes additional velocity (for example, to avoid obstacles)
--- It adds these velocity together and use SoNS.move() to move the robot
--- SoNS.move() links to the api of each type of robot to actually move the robot
+-- Driver handles the motion of the robot.
+-- The module takes data from sons.goal.
+--     From sons.goal.positionV3 and orientationQ, it generates the velocity needed to move to that position.
+--     From sons.goal.transV3 and rotateV3, it takes additional velocities into consideration (for example, to avoid obstacles).
+-- It sums these velocities and uses SoNS.move().
+-- SoNS.move() links to the api of each type of robot to move the robot.
 ------------------------------------------------------
 local Driver = {}
 

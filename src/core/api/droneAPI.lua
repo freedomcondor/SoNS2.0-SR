@@ -26,8 +26,9 @@ function api.actuator.setNewLocation(locationV3, rad)
 end
 
 -- drone flight preparation sequence
+-- For details of drone operation, see the drone technical report here: https://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2022-010.pdf
 -- In hardware, the drone follows a procedure to take off
--- 1. set armed, the propeller start to rotate
+-- 1. set armed, the propellers start to rotate
 -- 2. set offboard mode, the pixhawk start take commands from the upcore, and upcore should set (0,0,1.5) so that the drone takes off
 -- 3. After the drone takes off, we go to navigation mode, where the upcore can freely navigate the drone by using either setNewLocation or setSpeed
 api.actuator.flight_preparation = {
@@ -79,13 +80,11 @@ api.actuator.flight_preparation.run_state = function()
 	end
 end
 
----- Virtual Frame and tilt ---------------------
--- For explanation of virtual frame, please refer to the virtual frame section in commonAPI.lua
--- For drones, since the drones tilts when moving around, the virtual frame of drones also serves to cancel that tilt,
--- so that the turret of virtual frame will always be horizontal.
--- Here we use logicOrientationQ for rotation as the same as orientationQ in commonAPI,
--- And anti-tilt logicOrientationQ into orientationQ,
--- In this way, api.virtualFrame.orientationQ will be the horizontal virtual frame
+---- Virtual Frame for Intermediary Motion Management and tilt ---------------------
+-- For explanation of intermediary motion frame, please refer to commonAPI.lua, and see the accompanying paper for more details.
+-- For drones, since the drones tilts when moving, the frame of drones also serves to cancel the tilt.
+-- Here we use logicOrientationQ for rotation, in the same way as orientationQ in commonAPI, and incorporate the anti-tilt.
+-- In this way, api.virtualFrame.orientationQ provides the correct intermediary motion frame for the drones.
 api.virtualFrame.orientationQ = quaternion(math.pi/4, vector3(0,0,1))
 api.virtualFrame.logicOrientationQ = api.virtualFrame.orientationQ
 -- overwrite rotateInspeed to change logicOrientation
@@ -107,7 +106,6 @@ function api.droneTiltVirtualFrame()
 	if robot.flight_system ~= nil then
 		tilt = (quaternion(robot.flight_system.orientation.x, vector3(1,0,0)) *
 		        quaternion(robot.flight_system.orientation.y, vector3(0,1,0))):inverse()
-		-- TODO: better way to swtich tilt
 		--tilt = quaternion()
 	else
 		tilt = quaternion()
@@ -158,10 +156,11 @@ function api.postStep()
 end
 
 ---- Height control --------------------
--- In real experiments, the result of rider measurements on different drones is different.
--- This will cause drones fly in different heights even if we set all drones the same target height.
--- Height control tries to solve this problem by using cameras and tags on the ground to measure the current height,
--- and make a feedback control on the setting the target height.
+-- In real experiments, the LiDAR measurements on different drones are not perfectly calibrated to match.
+-- This could cause drones to fly at different heights when set to the same target height.
+-- Height control addresses this problem by using the drone cameras and the tags on the ground to provide supplementary measurements of the current height,
+-- for feedback control when setting the target height.
+-- For details of drone hardware and operation, see the drone technical report here: https://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2022-010.pdf
 
 -- api.droneAdjustHeight(z) is called in postStep() to make sure the drone fly in a height of z
 
@@ -234,14 +233,15 @@ function api.droneEstimateHeight()
 end
 
 ---- speed control --------------------
--- drone's speed is commanded by api.droneSetSpeed(x, y, z, th) 
--- x,y,z is the movement speed in m/s and th the rotation angular speed in rad/s
--- For the fluent of the flying, when setting droneSetSpeed(x,y,z,th), the actual target speed
+-- The drone's speed is commanded by api.droneSetSpeed(x, y, z, th) 
+-- x,y,z is the linear velocity in m/s and th is the angular velocity in rad/s
+-- For smooth flying, when setting droneSetSpeed(x,y,z,th), the actual target speed
 -- is the average of the last speed setting and the new one.
 -- The last speed setting is remembered by api.rememberLastSpeed and updateLastSpeed
 
--- everything in robot hardware's coordinate frame
--- Speed maybe set multiple times in a step, remember it in justSetSpeed, and push to lastSetSpeed in postStep
+-- The following values are in the robot's body frame.
+-- For details about frames, see the accompanying paper.
+-- Speed may be set multiple times in a step, remembered in justSetSpeed, and pushed to lastSetSpeed in postStep
 function api.rememberLastSpeed(x,y,z,th)
 	api.actuator.justSetSpeed = {
 		x = x, y = y, z = z, th = th,
@@ -311,11 +311,13 @@ api.setSpeed = api.droneSetSpeed
 --api.move is implemented in commonAPI
 
 ---- Cameras -------------------------
--- The cameras needs to be enabled at the beginning and disable at the end by api.droneEnableCameras() and api.droneDisableCameras()
--- api.droneDetectTag() combines the tags seen by all four cameras, convert the position and orientation from camera's frame into drone's body frame
+-- For details of camera calibration and drone operation, see the drone technical report here: https://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2022-010.pdf
+-- 
+-- The cameras need to be enabled at the beginning and disabled at the end by api.droneEnableCameras() and api.droneDisableCameras()
+-- api.droneDetectTag() combines the tags seen by all four cameras, converts the position and orientation from camera's frame into drone's body frame
 -- api.droneDetectLeds() is optinal, it tries to detect the color of LEDs surrounding the tag in some scenario setups.
--- api.droneAddSeenRobots() and api.droneAddObstacles() takes the detected tags as input, and distinguish each tag represents a drone/a pipuck/an obstacle ...
--- api.tagLabelIndex used to set the range of tag id for each type of robots. For example tag number 1-500 is considered as pipucks ...
+-- api.droneAddSeenRobots() and api.droneAddObstacles() takes the detected tags as input, and distinguishes each tag that represents a drone/a pipuck/an obstacle ...
+-- api.tagLabelIndex is used to set the range of tag id for each type of robot. For example, tag number 1-500 is considered as pipucks ...
 -- This range can be set by .argos parameters for each scenario
 function api.droneEnableCameras()
 	for index, camera in pairs(robot.cameras_system) do

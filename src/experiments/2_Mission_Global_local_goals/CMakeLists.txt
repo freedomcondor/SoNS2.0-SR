@@ -1,0 +1,2 @@
+add_subdirectory(Variant1_Smaller_denser_obstacles)
+add_subdirectory(Variant2_Larger_less_dense_obstacles)

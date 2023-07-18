@@ -1,4 +1,5 @@
--- This a library of behavior tree
+-- All robots use this behavior tree library to contruct their own behavior trees for all types of tasks.
+
 -- Usage example:
 --[[
    BT = require("BehaviorTree")

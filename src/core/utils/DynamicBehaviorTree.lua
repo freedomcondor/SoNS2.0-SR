@@ -1,5 +1,5 @@
 -- This is an extension of BehaviorTree.lua
--- It adds the operation for a node to add a new node as its sibling
+-- It adds the operation for a node to add another node as its sibling
 -- For example:
 --[[
       bt = BehaviorTree:create{

@@ -75,12 +75,11 @@ api.estimateLocation = {
 	orientationQ = quaternion(),
 }
 
----- Virtual Coordinate Frame -----------------
-	-- The purpose of virtual coordinate frame is to give a "tank turret" to a robot, 
-	-- All the sons level operation is relative to this "turret", the virtual coordinate frame
-	-- when a robot is turning, instead of turning the real robot, we turn the virtual coordinate frame, 
-	-- so that a non-omni directional robot like a pipuck can moving left while heading ahead (with respect to the turret).
-	-- in this way, a pipuck can be operate "omni directionally"
+---- Virtual Coordinate Frame for Intermediary Motion Management -----------------
+	-- The purpose of the intermediary motion frame is to allow all robots, regardless of their hardware, to be given the same type of motion instructions. 
+	-- For the ground robot, for example, the frame allows the differential drive robot to be controlled as if it were an omnidirectional robot.
+	-- Effectively, when a robot is told (or tells itself) to turn, it turns its intermediary motion frame instead of its body. 
+	-- The motion of the robot body itself is then managed independantly. 
 api.virtualFrame = {}
 api.virtualFrame.orientationQ = quaternion()
 function api.virtualFrame.rotateInSpeed(speedV3)

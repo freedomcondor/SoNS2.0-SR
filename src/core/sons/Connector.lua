@@ -1,6 +1,6 @@
--- connector -----------------------------------------
--- Connector is the key module to establish a SoNS
--- It handles recruitment, keeps the connection and breaks the connection
+-- Connector -----------------------------------------
+-- Connector is the key module to establish, maintain, and reconfigure a SoNS.
+-- It handles recruitment, keeps connections, and breaks connections.
 ------------------------------------------------------
 local Connector = {}
 

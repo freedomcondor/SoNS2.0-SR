@@ -1,8 +1,10 @@
 --- Pipuck connector -------------------------------------------------
--- Pipuck connector makes a pipucks see a drone if it is seen by a drone
---             also makes two pipucks see each other if they can be seen by a common drone
--- It checks messages from drones, convert them into robots or obstacles and store in sons.connector.seenRobots and sons.avoider.seenObstacles
--- So that connector may handle the connection later
+-- The Pipuck connector module manages the virtual sensing capability that allows: 
+--        a ground robot to virtually sense a drone if it is sensed by that drone,
+--        allows two ground robots to virtually sense each other if they are both seen by the same drone.
+-- It checks messages from drones identifies connections that are available via virtual sensing.
+-- Then it stores this information in sons.connector.seenRobots and sons.avoider.seenObstacles.
+-- This information is used by the Connector module and the Avoider module.
 ---------------------------------------------------------------------
 
 local PipuckConnector = {}

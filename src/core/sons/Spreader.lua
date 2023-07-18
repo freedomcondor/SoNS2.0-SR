@@ -1,8 +1,7 @@
 -- Spreader -----------------------------------------
--- Spreader spreads a message to the whole SoNS.
--- It is used when a robot sees an (for example) predator, and wants the whole swarm to move towards a direction
--- The message spread is started by emergency() function, explained below
--- Each robot receives a spread message from a neighbour (parent or children), and send it to other neighbours
+-- The Spreader module facilitates an emergency message that should spread to the whole SoNS.
+-- The emergency message is used when any robot wants to trigger the whole SoNS to move towards a certain direction.
+-- When a robot receives an emergency message from a neighbor (parent or child), it immediately sends it to all its other neighbors.
 ------------------------------------------------------
 local Spreader = {}
 

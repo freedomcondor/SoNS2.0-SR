@@ -1,0 +1,2 @@
+add_subdirectory(Scalability_in_decision_making_mission)
+add_subdirectory(Scalability_in_SoNS_establishment_mission)

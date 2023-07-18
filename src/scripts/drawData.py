@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
+# This file is for plotting experiment results data.
+
 #----------------------------------------------------------------------------------------------
 # This function reads data from a file
 # The file is assumed to have one column of data, e.g. each line contains only one float number

@@ -1,20 +1,5 @@
 --- Scale -----------------------------------------------------------
--- Scale is a library counts the number of each type of robots in the swarm, namely the "scale" of a swarm
--- Basically, it handles vector add
--- For example :
--- scale A = {
---     pipuck = 5,
---     drone = 3,
--- }
--- B = {
---     pipuck = 1,
---     drone = 2,
--- }
--- A + B = {
---     pipuck = 6,
---     drone = 5,
--- }
--- It is used by ScaleManager to calculate the scale of the each branch of the SoNS
+-- This library is used by the ScaleManager module to count the number of each type of robot in the SoNS. 
 ---------------------------------------------------------------------
 local Scale = {}
 Scale.__index = Scale

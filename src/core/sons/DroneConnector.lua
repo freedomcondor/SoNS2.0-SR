@@ -1,7 +1,8 @@
 --- Drone connector -------------------------------------------------
--- Drone connector makes two drones see each other if they can see a common pipuck on the ground
--- It checks tags it sees, convert them into robots or obstacles and store in sons.connector.seenRobots and sons.avoider.seenObstacles
--- So that connector may handle the connection later
+-- The Drone connector module manages the virtual sensing capability that allows two drones to virtually sense each other if they can both see the same ground robot.
+-- It checks the tags a drone sees and compares them to the tags seen by a neighbor drone. 
+-- If two drones can virtually sense each other, then it stores this information in sons.connector.seenRobots and sons.avoider.seenObstacles
+-- This information is used by the Connector module and the Avoider module.
 ---------------------------------------------------------------------
 
 require("DeepCopy")
