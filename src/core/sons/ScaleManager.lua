@@ -67,7 +67,7 @@ function ScaleManager.step(sons)
 	for idS, robotR in pairs(sons.childrenRT) do 
 		for _, msgM in ipairs(sons.Msg.getAM(idS, "scale")) do
 			robotR.scalemanager.scale = ScaleManager.Scale:new(msgM.dataT.scale)
-			robotR.scalemanager.depth = msgM.dataT.depth
+			robotR.scalemanager.depth = msgM.dataT.depth or 1
 		end 
 	end
 
