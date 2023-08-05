@@ -24,8 +24,8 @@ copy_run () {
 	mv $outputFolder/error_measurements/result_data.txt $outputFolder/error_measurements/error.csv
 
 	mkdir -p $outputFolder/experiment_data
-	mkdir -p $outputFolder/communication_data
-	mkdir -p $outputFolder/cputime_data
+	mkdir -p $outputFolder/communication_measurements
+	mkdir -p $outputFolder/computation_time_measurements
 	CURRENT_DIR=`pwd`
 	# go into logs
 	cd $inputFolder/logs
@@ -35,16 +35,16 @@ copy_run () {
 		output_file=$outputFolder/experiment_data/${LOG_FILE%.*}.csv
 		python3 $COPY_PY $input_file $output_file
 	done
-	#copy logs/*.comm_dat to communication_data/*.csv
+	#copy logs/*.comm_dat to communication_measurements/*.csv
 	for LOG_FILE in *.comm_dat ; do
 		input_file=$inputFolder/logs/$LOG_FILE
-		output_file=$outputFolder/communication_data/${LOG_FILE%.*}.csv
+		output_file=$outputFolder/communication_measurements/${LOG_FILE%.*}.csv
 		cp $input_file $output_file
 	done
-	#copy logs/*.time_dat to cputime_data/*.csv
+	#copy logs/*.time_dat to computation_time_measurements/*.csv
 	for LOG_FILE in *.time_dat ; do
 		input_file=$inputFolder/logs/$LOG_FILE
-		output_file=$outputFolder/cputime_data/${LOG_FILE%.*}.csv
+		output_file=$outputFolder/computation_time_measurements/${LOG_FILE%.*}.csv
 		python3 $COPY_TIME_PY $input_file $output_file
 	done
 	cd $CURRENT_DIR
