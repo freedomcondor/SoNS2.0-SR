@@ -1,5 +1,9 @@
 ## Guidelines
-0. Clone this repo.
+0. download the ZIP of the code repo, and unzip
+	```bash
+	unzip SoNS2.0-SR.zip
+	```
+	or Clone this repo from github.
 	```bash
 	git clone https://github.com/freedomcondor/SoNS2.0-SR.git
 	```
