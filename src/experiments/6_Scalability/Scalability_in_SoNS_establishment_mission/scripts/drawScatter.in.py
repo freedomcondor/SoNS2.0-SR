@@ -55,7 +55,7 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 		    patch_artist=True
 		) 
 
-		ax.set_xticks([25, 50, 75, 100, 125, 150, 175, 200, 225])
+		ax.set_xticks([25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275])
 		ax.xaxis.set_major_formatter(FormatStrFormatter('%d'))
 		#ax.set_xticklabels(["hi", "hi"])
 
@@ -90,11 +90,15 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 #folder = "/home/harry/code/SoNS2.0-SR/build/threads_finish"
 #folder = "@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
 #folder = "@CMAKE_BINARY_DIR@/data_simu_scalability_analyze_1-450"
+#           folder + "/other/backups/outdated_data_simus/data_simu_1000-1300",
 
-folders = ["/media/harry/Expansion/Storage/scalability_analyze_data/data_simu_1-750",
-           "/media/harry/Expansion/Storage/scalability_analyze_data/data_simu_751-999",
-           "/media/harry/Expansion/Storage/scalability_analyze_data/data_simu_1000-1299-first",
-           "/media/harry/Expansion/Storage/scalability_analyze_data/data_simu_1300-1500",
+folder = "/media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_2_simu_scalability_analyze"
+
+folders = [folder + "/data_simu_1-750",
+           folder + "/data_simu_751-999",
+           folder + "/data_simu_1000-1299",
+           folder + "/data_simu_1300-1500",
+           folder + "/data_simu_1501-1800",
           ]
 
 '''
@@ -199,9 +203,9 @@ error_ax.tick_params(axis='y', labelsize=fontsize)
 #-------------------------------------------------------------
 # converge time and recruit time
 handle1 = boxplot_25_scales(converge_ax, scales, converges)
-handle2 = boxplot_25_scales(converge_ax, scales, recruits, 'red')
+#handle2 = boxplot_25_scales(converge_ax, scales, recruits, 'red')
 #converge_ax.set_ylim([0, 600])
-converge_ax.set_ylim([0, 1300])
+converge_ax.set_ylim([0, 1800])
 #converge_ax.set_title("converge and recruit time")
 
 converge_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
@@ -209,6 +213,7 @@ converge_ax.set_ylabel('Converge time (s)', fontsize=fontsize)
 converge_ax.tick_params(axis='x', labelsize=fontsize)
 converge_ax.tick_params(axis='y', labelsize=fontsize)
 
+'''
 if 'bodies' in handle1 :
 	converge_ax.legend([handle1['bodies'][0],
 	                    handle2['bodies'][1]],
@@ -225,11 +230,12 @@ else :
 	    loc="upper left",
 	    fontsize="xx-small"
 	)
+'''
 
 '''
 axs[1, 2].scatter(scales, recruits, color="red")
 axs[1, 2].set_title("zoom in of recruit time")
 '''
 
-#plt.savefig("exp_2_scalability_analyze.pdf")
-plt.show()
+plt.savefig("exp_2_scalability_analyze.pdf")
+#plt.show()
