@@ -50,7 +50,7 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 		    boxprops = dict(facecolor=color, color=color),
 		    capprops = dict(color=color),
 		    whiskerprops = dict(color=color),
-		    flierprops = dict(markerfacecolor=color, markeredgecolor=color, marker='.'),
+		    flierprops = dict(markerfacecolor=color, markeredgecolor=color, marker='.', markersize='1'),
 		    medianprops = dict(color=color),
 		    patch_artist=True
 		) 
@@ -98,7 +98,7 @@ folders = [folder + "/data_simu_1-750",
            folder + "/data_simu_751-999",
            folder + "/data_simu_1000-1299",
            folder + "/data_simu_1300-1500",
-           folder + "/data_simu_1501-1800",
+#           folder + "/data_simu_1501-1800",
           ]
 
 '''
@@ -119,8 +119,92 @@ time_ax = fig.add_subplot(down[1])
 converge_ax = fig.add_subplot(down[2])
 
 fontsize = 5
+
 #-------------------------------------------------------------
 # communication amount
+ # get data
+comms = []
+cut_left_comms = []
+
+#-------------------------------------------------------------
+# calculation cost (calc time per step)
+times = []
+cut_left_times = []
+
+#-------------------------------------------------------------
+#  read data of position errors and converge time and recruit time
+scales = []
+errors = []
+smoothed_errors = []
+converges = []
+recruits = []
+step_mean_errors = []
+
+all_scales_above_25 = []
+experiment_cut_scales = []
+experiment_cut_converges = []
+
+cut_left_scales = []
+cut_left_errors = []
+cut_left_smoothed_errors = []
+cut_left_converges = []
+cut_left_recruits = []
+cut_left_step_mean_errors = []
+
+for folder in folders :
+	for subfolder in getSubfolders(folder) :
+		# -- read communication
+		scale, comm = readCommOrTimeData(subfolder + "result_comm_data.txt")
+		comms.append(comm)
+		# -- read time
+		scale, time = readCommOrTimeData(subfolder + "result_time_data.txt")
+		times.append(time)
+		# -- read error and converge time
+		scale, error, smoothed_error, converge, recruit = readFormationData(subfolder + "result_formation_data.txt")
+		scales.append(scale)
+		errors.append(error)
+
+		# -- read step errors from result_data
+		step_errors = readDataFrom(subfolder + "result_data.txt")
+		mean = np.mean(np.array(step_errors))
+		step_mean_errors.append(mean)
+
+		'''
+		if smoothed_error > 0.12 :
+			print("smoothed error > 0.12: ", subfolder)
+
+		if recruit / 5 > 100 :
+			print("recruit > 100: ", subfolder)
+		'''
+
+		smoothed_errors.append(smoothed_error)
+		converges.append(converge / 5)
+		recruits.append(recruit / 5)
+
+		# compare with experiment length
+		n_drone = scale / 5
+		experiment_length = 2500
+		if n_drone > 25 :
+			experiment_length = n_drone * 100 + (n_drone - 25) * 100
+			all_scales_above_25.append(scale)
+		if converge > experiment_length :
+			experiment_cut_scales.append(scale)
+			experiment_cut_converges.append(converge / 5)
+		else :
+			cut_left_scales.append(scale)
+			cut_left_comms.append(comm)
+			cut_left_times.append(time)
+			cut_left_errors.append(error)
+			cut_left_smoothed_errors.append(smoothed_error)
+			cut_left_converges.append(converge / 5)
+			cut_left_recruits.append(recruit / 5)
+			cut_left_step_mean_errors.append(mean)
+
+show_cut = True
+#show_cut = False
+#-------------------------------------------------------------
+# communication amount
+'''
  # get data
 scales = []
 comms = []
@@ -133,9 +217,13 @@ for folder in folders :
 
 		if comm > 650 :
 			print("communication amount > 650: ", subfolder)
+'''
 
  # boxplot data
-boxplot_25_scales(comm_ax, scales, comms)
+if show_cut == True :
+	boxplot_25_scales(comm_ax, cut_left_scales, cut_left_comms)
+else :
+	boxplot_25_scales(comm_ax, scales, comms, "red")
 comm_ax.set_ylim([0, 1000])
 #comm_ax.set_title("Number of messages per robot per step")
 comm_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
@@ -145,6 +233,7 @@ comm_ax.tick_params(axis='y', labelsize=fontsize)
 
 #-------------------------------------------------------------
 # calculation cost (calc time per step)
+'''
 scales = []
 times = []
 
@@ -156,8 +245,12 @@ for folder in folders :
 
 		if time > 0.6 :
 			print("calculation cost > 0.6: ", subfolder)
+'''
 
-boxplot_25_scales(time_ax, scales, times)
+if show_cut == True :
+	boxplot_25_scales(time_ax, cut_left_scales, cut_left_times)
+else :
+	boxplot_25_scales(time_ax, scales, times, "red")
 #time_ax.set_ylim([0, 1.5])
 time_ax.set_ylim([0, 2.0])
 #time_ax.set_title("calculation cost per step (s)")
@@ -166,34 +259,18 @@ time_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
 time_ax.set_ylabel('Calculation cost: CPU time per robot per step (s)', fontsize=fontsize)
 time_ax.tick_params(axis='x', labelsize=fontsize)
 time_ax.tick_params(axis='y', labelsize=fontsize)
-#-------------------------------------------------------------
-#  read data of position errors and converge time and recruit time
-scales = []
-errors = []
-smoothed_errors = []
-converges = []
-recruits = []
-for folder in folders :
-	for subfolder in getSubfolders(folder) :
-		scale, error, smoothed_error, converge, recruit = readFormationData(subfolder + "result_formation_data.txt")
-		scales.append(scale)
-		errors.append(error)
-		if smoothed_error > 0.12 :
-			print("smoothed error > 0.12: ", subfolder)
-
-		if recruit / 5 > 100 :
-			print("recruit > 100: ", subfolder)
-
-		smoothed_errors.append(smoothed_error)
-		converges.append(converge / 5)
-		recruits.append(recruit / 5)
 
 #-------------------------------------------------------------
 # position errors
 #boxplot_25_scales(error_ax, scales, errors)
-#boxplot_25_scales(error_ax, scales, smoothed_errors, "red")
-boxplot_25_scales(error_ax, scales, smoothed_errors)
-error_ax.set_ylim([0, 0.50])
+if show_cut == True :
+	boxplot_25_scales(error_ax, scales, cut_left_step_mean_errors, "green")
+	boxplot_25_scales(error_ax, cut_left_scales, cut_left_smoothed_errors)
+else :
+	boxplot_25_scales(error_ax, scales, smoothed_errors, "red")
+	boxplot_25_scales(error_ax, scales, step_mean_errors, "green")
+#error_ax.set_ylim([0, 0.50])
+error_ax.set_ylim([0, 4.50])
 #error_ax.set_title("position errors")
 
 error_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
@@ -202,7 +279,10 @@ error_ax.tick_params(axis='x', labelsize=fontsize)
 error_ax.tick_params(axis='y', labelsize=fontsize)
 #-------------------------------------------------------------
 # converge time and recruit time
-handle1 = boxplot_25_scales(converge_ax, scales, converges)
+if show_cut == True :
+	handle1 = boxplot_25_scales(converge_ax, cut_left_scales, cut_left_converges)
+else :
+	handle1 = boxplot_25_scales(converge_ax, scales, converges, "red")
 #handle2 = boxplot_25_scales(converge_ax, scales, recruits, 'red')
 #converge_ax.set_ylim([0, 600])
 converge_ax.set_ylim([0, 1800])
@@ -212,6 +292,16 @@ converge_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
 converge_ax.set_ylabel('Converge time (s)', fontsize=fontsize)
 converge_ax.tick_params(axis='x', labelsize=fontsize)
 converge_ax.tick_params(axis='y', labelsize=fontsize)
+
+'''
+converge_ax.scatter(experiment_cut_scales, experiment_cut_converges,
+#                    marker=".",
+                    s=4,
+                    c="red"
+                   )
+'''
+print("all_scales_above_25 = ", len(all_scales_above_25))
+print("cut = ", len(experiment_cut_scales))
 
 '''
 if 'bodies' in handle1 :
@@ -237,5 +327,8 @@ axs[1, 2].scatter(scales, recruits, color="red")
 axs[1, 2].set_title("zoom in of recruit time")
 '''
 
-plt.savefig("exp_2_scalability_analyze.pdf")
+if show_cut == True :
+	plt.savefig("exp_2_scalability_analyze_cutted.pdf")
+else :
+	plt.savefig("exp_2_scalability_analyze_all.pdf")
 #plt.show()
