@@ -1,5 +1,7 @@
 ## Guidelines
-0. download the ZIP of the code repo, and unzip
+0. We can choose to either download the ZIP of the code repo or clone from github.
+
+   Download the ZIP of the code repo, and unzip
 	```bash
 	unzip SoNS2.0-SR.zip
 	```
