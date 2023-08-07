@@ -251,8 +251,7 @@ if show_cut == True :
 	boxplot_25_scales(time_ax, cut_left_scales, cut_left_times)
 else :
 	boxplot_25_scales(time_ax, scales, times, "red")
-#time_ax.set_ylim([0, 1.5])
-time_ax.set_ylim([0, 2.0])
+time_ax.set_ylim([0, 1.5])
 #time_ax.set_title("calculation cost per step (s)")
 
 time_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
@@ -264,7 +263,7 @@ time_ax.tick_params(axis='y', labelsize=fontsize)
 # position errors
 #boxplot_25_scales(error_ax, scales, errors)
 if show_cut == True :
-	boxplot_25_scales(error_ax, scales, cut_left_step_mean_errors, "green")
+	boxplot_25_scales(error_ax, cut_left_scales, cut_left_step_mean_errors, "green")
 	boxplot_25_scales(error_ax, cut_left_scales, cut_left_smoothed_errors)
 else :
 	boxplot_25_scales(error_ax, scales, smoothed_errors, "red")
@@ -285,7 +284,7 @@ else :
 	handle1 = boxplot_25_scales(converge_ax, scales, converges, "red")
 #handle2 = boxplot_25_scales(converge_ax, scales, recruits, 'red')
 #converge_ax.set_ylim([0, 600])
-converge_ax.set_ylim([0, 1800])
+converge_ax.set_ylim([0, 1600])
 #converge_ax.set_title("converge and recruit time")
 
 converge_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
@@ -293,13 +292,6 @@ converge_ax.set_ylabel('Converge time (s)', fontsize=fontsize)
 converge_ax.tick_params(axis='x', labelsize=fontsize)
 converge_ax.tick_params(axis='y', labelsize=fontsize)
 
-'''
-converge_ax.scatter(experiment_cut_scales, experiment_cut_converges,
-#                    marker=".",
-                    s=4,
-                    c="red"
-                   )
-'''
 print("all_scales_above_25 = ", len(all_scales_above_25))
 print("cut = ", len(experiment_cut_scales))
 
@@ -327,8 +319,29 @@ axs[1, 2].scatter(scales, recruits, color="red")
 axs[1, 2].set_title("zoom in of recruit time")
 '''
 
+# draw a line to show experiment length
+x = []
+y = []
+for i in range(1, 50) :
+	scale = i * 5
+	experiment_length = 2500
+	if i > 25 :
+		experiment_length = i * 100 + (i - 25) * 100
+
+	x.append(scale)
+	y.append(experiment_length / 5)
+'''
+#converge_ax.scatter(experiment_cut_scales, experiment_cut_converges,
+converge_ax.scatter(cut_line_scales, cut_line_experiment_length,
+#                    marker=".",
+                    s=4,
+                    c="red"
+                   )
+'''
+converge_ax.plot(x, y, "red")
+
 if show_cut == True :
 	plt.savefig("exp_2_scalability_analyze_cutted.pdf")
 else :
 	plt.savefig("exp_2_scalability_analyze_all.pdf")
-#plt.show()
+plt.show()
