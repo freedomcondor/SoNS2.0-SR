@@ -1,5 +1,5 @@
 ## Guidelines
-0. We can choose to either download the ZIP of the code repo or clone from github.
+0. To start, either download the ZIP of the code repo or clone from github.
 
    Download the ZIP of the code repo, and unzip
 	```bash
