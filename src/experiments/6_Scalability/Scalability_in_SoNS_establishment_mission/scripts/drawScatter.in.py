@@ -158,6 +158,7 @@ for folder in folders :
 		comms.append(comm)
 		# -- read time
 		scale, time = readCommOrTimeData(subfolder + "result_time_data.txt")
+		time = time * 2.35
 		times.append(time)
 		# -- read error and converge time
 		scale, error, smoothed_error, converge, recruit = readFormationData(subfolder + "result_formation_data.txt")
@@ -251,11 +252,11 @@ if show_cut == True :
 	boxplot_25_scales(time_ax, cut_left_scales, cut_left_times)
 else :
 	boxplot_25_scales(time_ax, scales, times, "red")
-time_ax.set_ylim([0, 1.5])
+time_ax.set_ylim([0, 1.5 * 2.35])
 #time_ax.set_title("calculation cost per step (s)")
 
 time_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)
-time_ax.set_ylabel('Calculation cost: CPU time per robot per step (s)', fontsize=fontsize)
+time_ax.set_ylabel('Calculation cost: CPU cycles per robot per step (10^6)', fontsize=fontsize)
 time_ax.tick_params(axis='x', labelsize=fontsize)
 time_ax.tick_params(axis='y', labelsize=fontsize)
 
@@ -294,6 +295,17 @@ converge_ax.tick_params(axis='y', labelsize=fontsize)
 
 print("all_scales_above_25 = ", len(all_scales_above_25))
 print("cut = ", len(experiment_cut_scales))
+
+scale_index = {}
+for i in range(0, len(experiment_cut_scales)) :
+	if experiment_cut_scales[i] in scale_index :
+		scale_index[experiment_cut_scales[i]] = scale_index[experiment_cut_scales[i]] + 1
+	else :
+		scale_index[experiment_cut_scales[i]] = 1
+
+for key in scale_index :
+	print(key, scale_index[key])
+
 
 '''
 if 'bodies' in handle1 :
