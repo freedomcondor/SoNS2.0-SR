@@ -8,10 +8,14 @@ import os
 # This function reads data from a file
 # The file is assumed to have one column of data, e.g. each line contains only one float number
 # output data is an array of data
-def readDataFrom(fileName) :
+def readDataFrom(fileName, cutTo=None) :
 	file = open(fileName,"r")
 	data = []
+	count = 0
 	for line in file :
+		count = count + 1
+		if cutTo != None and count > cutTo :
+			break
 		data.append(float(line))
 	file.close()
 	return data

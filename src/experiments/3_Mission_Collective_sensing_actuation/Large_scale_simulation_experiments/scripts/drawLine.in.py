@@ -25,6 +25,8 @@ option = {
 	'split_right'            : True,
 	'violin_ax_top_lim'      : [9.5, 10],
 
+	'cutTo'                  : 3500,
+
 #------------------------------------------------
 	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	#'key_frame' :  [0, 300, 2000] ,  # option 1
