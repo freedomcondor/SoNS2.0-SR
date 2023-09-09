@@ -12,14 +12,20 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_hw/data"
-savePDFNameBase = "mission1_scattered_positions_exp0_01_hw_"
+dataFolder ="@CMAKE_SoNS_DATA_PATH@/"
+dataFolder+="experiments/"
+dataFolder+="1_Mission_Self-organized_hierarchy/"
+dataFolder+="Variant2_Scattered_start/"
+dataFolder+="Real_robot_experiments_with_matching_simulations/"
+dataFolder+="data_hw/data"
+
+savePDFNameBase = "Mission1_Self-organized_hirarchy_Variant2_Scattered_start_Real_Robot_Hardware_"
 sampleList = [
-	"test_20220621_6_success_1",
-	"test_20220621_7_success_2",
-	"test_20220621_8_success_3",
-	"test_20220621_9_success_4",
-	"test_20220621_10_success_5",
+	"run1",
+	"run2",
+	"run3",
+	"run4",
+	"run5",
 ]
 
 #----------------------------------
@@ -70,8 +76,8 @@ parent_index_example = [
 ]
 
 #-----------------------------------------------------------
-key_frame_list["test_20220621_6_success_1"] = key_frame_example
-key_frame_parent_index_list["test_20220621_6_success_1"] = [
+key_frame_list["run1"] = key_frame_example
+key_frame_parent_index_list["run1"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone4'   ,
@@ -89,8 +95,8 @@ key_frame_parent_index_list["test_20220621_6_success_1"] = [
 	},
 ]
 
-key_frame_list["test_20220621_7_success_2"] = key_frame_example
-key_frame_parent_index_list["test_20220621_7_success_2"] = [
+key_frame_list["run2"] = key_frame_example
+key_frame_parent_index_list["run2"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone4'   ,
@@ -108,8 +114,8 @@ key_frame_parent_index_list["test_20220621_7_success_2"] = [
 	},
 ]
 
-key_frame_list["test_20220621_8_success_3"] = key_frame_example
-key_frame_parent_index_list["test_20220621_8_success_3"] = [
+key_frame_list["run3"] = key_frame_example
+key_frame_parent_index_list["run3"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone4'   ,
@@ -127,8 +133,8 @@ key_frame_parent_index_list["test_20220621_8_success_3"] = [
 	},
 ]
 
-key_frame_list["test_20220621_9_success_4"] = key_frame_example
-key_frame_parent_index_list["test_20220621_9_success_4"] = [
+key_frame_list["run4"] = key_frame_example
+key_frame_parent_index_list["run4"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone4'   ,
@@ -146,8 +152,8 @@ key_frame_parent_index_list["test_20220621_9_success_4"] = [
 	},
 ]
 
-key_frame_list["test_20220621_10_success_5"] = key_frame_example
-key_frame_parent_index_list["test_20220621_10_success_5"] = [
+key_frame_list["run5"] = key_frame_example
+key_frame_parent_index_list["run5"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone4'   ,
@@ -165,7 +171,7 @@ key_frame_parent_index_list["test_20220621_10_success_5"] = [
 	},
 ]
 
-x_lim_list["test_20220621_6_success_1"] = [-2, 3]
+x_lim_list["run1"] = [-2, 3]
 
 #-----------------------------------------------------------
 for sample_run in sampleList :

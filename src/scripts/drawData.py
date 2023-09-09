@@ -5,6 +5,14 @@ import os
 # This file is for plotting experiment results data.
 
 #----------------------------------------------------------------------------------------------
+# This function subtracts two list
+def subtractLists(a, b) :
+	c = []
+	for i in range(0, len(a)) :
+		c.append(a[i] - b[i])
+	return c
+
+#----------------------------------------------------------------------------------------------
 # This function reads data from a file
 # The file is assumed to have one column of data, e.g. each line contains only one float number
 # output data is an array of data

@@ -12,14 +12,21 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_hw/data"
-savePDFNameBase = "mission1_clustered_positions_exp0_10_hw_"
+dataFolder ="@CMAKE_SoNS_DATA_PATH@/"
+dataFolder+="experiments/"
+dataFolder+="1_Mission_Self-organized_hierarchy/"
+dataFolder+="Variant1_Clustered_start/"
+dataFolder+="Real_robot_experiments_with_matching_simulations/"
+dataFolder+="data_hw/data"
+
+savePDFNameBase = "Mission1_Self-organized_hirarchy_Variant1_Clustered_start_Real_robot_Hardware_"
+
 sampleList = [
-	"test_20220720_1_success_1",
-	"test_20220720_2_success_2",
-	"test_20220720_3_success_3",
-	"test_20220720_4_success_4",
-	"test_20220720_5_success_5",
+	"run1",
+	"run2",
+	"run3",
+	"run4",
+	"run5",
 ]
 
 #----------------------------------
@@ -54,7 +61,7 @@ z_lim_list = {}
 
 key_frame_example = [0]
 
-key_frame_parent_index_list["test_20220720_1_success_1"] = [
+key_frame_parent_index_list["run1"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone3'   ,
@@ -68,7 +75,7 @@ key_frame_parent_index_list["test_20220720_1_success_1"] = [
 	},
 ]
 
-key_frame_parent_index_list["test_20220720_2_success_2"] = [
+key_frame_parent_index_list["run2"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone3'   ,
@@ -82,7 +89,7 @@ key_frame_parent_index_list["test_20220720_2_success_2"] = [
 	},
 ]
 
-key_frame_parent_index_list["test_20220720_3_success_3"] = [
+key_frame_parent_index_list["run3"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone3'   ,
@@ -96,7 +103,7 @@ key_frame_parent_index_list["test_20220720_3_success_3"] = [
 	},
 ]
 
-key_frame_parent_index_list["test_20220720_4_success_4"] = [
+key_frame_parent_index_list["run4"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone3'   ,
@@ -110,7 +117,7 @@ key_frame_parent_index_list["test_20220720_4_success_4"] = [
 	},
 ]
 
-key_frame_parent_index_list["test_20220720_5_success_5"] = [
+key_frame_parent_index_list["run5"] = [
 	{}, # key frame 0
 	{
 		'drone2'    :   'drone3'   ,

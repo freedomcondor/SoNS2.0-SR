@@ -12,8 +12,7 @@ local geneIndex = logReader.calcMorphID(gene)
 local robotsData = logReader.loadData("./logs")
 
 local firstRecruitStep = logReader.calcFirstRecruitStep(robotsData)
-local saveStartStep = firstRecruitStep - 10
---local saveStartStep = firstRecruitStep + 10 -- for simulation data
+local saveStartStep = firstRecruitStep + 15
 print("firstRecruit happens", firstRecruitStep, "data start at", saveStartStep)
 
 logReader.calcSegmentData(robotsData, geneIndex)

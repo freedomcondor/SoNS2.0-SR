@@ -1,0 +1,1663 @@
+generating SR figures for manuscript
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robot_experiments_with_matching_simulations/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_hw/data/test_20220621_9_success_4/logs
+reading 1 pipuck9
+smoothing 1 pipuck9
+drawing 1 pipuck9
+set keyframe 1 pipuck9 's parent to drone4
+reading 2 pipuck8
+smoothing 2 pipuck8
+drawing 2 pipuck8
+set keyframe 1 pipuck8 's parent to drone4
+reading 3 pipuck5
+smoothing 3 pipuck5
+drawing 3 pipuck5
+set keyframe 1 pipuck5 's parent to drone2
+reading 4 pipuck4
+smoothing 4 pipuck4
+drawing 4 pipuck4
+set keyframe 1 pipuck4 's parent to drone2
+reading 5 pipuck6
+smoothing 5 pipuck6
+drawing 5 pipuck6
+set keyframe 1 pipuck6 's parent to drone4
+reading 6 pipuck7
+smoothing 6 pipuck7
+drawing 6 pipuck7
+set keyframe 1 pipuck7 's parent to drone4
+reading 7 pipuck2
+smoothing 7 pipuck2
+drawing 7 pipuck2
+set keyframe 1 pipuck2 's parent to drone2
+reading 8 pipuck10
+smoothing 8 pipuck10
+drawing 8 pipuck10
+set keyframe 1 pipuck10 's parent to drone2
+reading 9 pipuck11
+smoothing 9 pipuck11
+drawing 9 pipuck11
+set keyframe 1 pipuck11 's parent to drone2
+reading 10 pipuck1
+smoothing 10 pipuck1
+drawing 10 pipuck1
+set keyframe 1 pipuck1 's parent to drone4
+reading 11 drone4
+smoothing 11 drone4
+drawing 11 drone4
+set keyframe 1 drone4 's parent to nil
+reading 12 drone2
+smoothing 12 drone2
+drawing 12 drone2
+set keyframe 1 drone2 's parent to drone4
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_hw/data/test_20220621_9_success_4/logs/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 340
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 340
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+overwrite trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_1_simu_01_formation_10d/data_simu/track_fig_logs
+reading 1 pipuck33
+smoothing 1 pipuck33
+drawing 1 pipuck33
+reading 2 pipuck9
+smoothing 2 pipuck9
+drawing 2 pipuck9
+reading 3 pipuck19
+smoothing 3 pipuck19
+drawing 3 pipuck19
+reading 4 pipuck25
+smoothing 4 pipuck25
+drawing 4 pipuck25
+reading 5 pipuck31
+smoothing 5 pipuck31
+drawing 5 pipuck31
+reading 6 pipuck30
+smoothing 6 pipuck30
+drawing 6 pipuck30
+reading 7 pipuck24
+smoothing 7 pipuck24
+drawing 7 pipuck24
+reading 8 pipuck18
+smoothing 8 pipuck18
+drawing 8 pipuck18
+reading 9 pipuck8
+smoothing 9 pipuck8
+drawing 9 pipuck8
+reading 10 pipuck5
+smoothing 10 pipuck5
+drawing 10 pipuck5
+reading 11 pipuck15
+smoothing 11 pipuck15
+drawing 11 pipuck15
+reading 12 pipuck29
+smoothing 12 pipuck29
+drawing 12 pipuck29
+reading 13 pipuck28
+smoothing 13 pipuck28
+drawing 13 pipuck28
+reading 14 pipuck14
+smoothing 14 pipuck14
+drawing 14 pipuck14
+reading 15 pipuck4
+smoothing 15 pipuck4
+drawing 15 pipuck4
+reading 16 pipuck6
+smoothing 16 pipuck6
+drawing 16 pipuck6
+reading 17 pipuck16
+smoothing 17 pipuck16
+drawing 17 pipuck16
+reading 18 pipuck17
+smoothing 18 pipuck17
+drawing 18 pipuck17
+reading 19 pipuck7
+smoothing 19 pipuck7
+drawing 19 pipuck7
+reading 20 pipuck3
+smoothing 20 pipuck3
+drawing 20 pipuck3
+reading 21 pipuck13
+smoothing 21 pipuck13
+drawing 21 pipuck13
+reading 22 pipuck12
+smoothing 22 pipuck12
+drawing 22 pipuck12
+reading 23 pipuck2
+smoothing 23 pipuck2
+drawing 23 pipuck2
+reading 24 pipuck38
+smoothing 24 pipuck38
+drawing 24 pipuck38
+reading 25 pipuck10
+smoothing 25 pipuck10
+drawing 25 pipuck10
+reading 26 pipuck11
+smoothing 26 pipuck11
+drawing 26 pipuck11
+reading 27 pipuck40
+smoothing 27 pipuck40
+drawing 27 pipuck40
+reading 28 pipuck39
+smoothing 28 pipuck39
+drawing 28 pipuck39
+reading 29 pipuck20
+smoothing 29 pipuck20
+drawing 29 pipuck20
+reading 30 pipuck1
+smoothing 30 pipuck1
+drawing 30 pipuck1
+reading 31 pipuck34
+smoothing 31 pipuck34
+drawing 31 pipuck34
+reading 32 pipuck35
+smoothing 32 pipuck35
+drawing 32 pipuck35
+reading 33 pipuck21
+smoothing 33 pipuck21
+drawing 33 pipuck21
+reading 34 pipuck37
+smoothing 34 pipuck37
+drawing 34 pipuck37
+reading 35 pipuck23
+smoothing 35 pipuck23
+drawing 35 pipuck23
+reading 36 pipuck22
+smoothing 36 pipuck22
+drawing 36 pipuck22
+reading 37 pipuck36
+smoothing 37 pipuck36
+drawing 37 pipuck36
+reading 38 pipuck32
+smoothing 38 pipuck32
+drawing 38 pipuck32
+reading 39 pipuck26
+smoothing 39 pipuck26
+drawing 39 pipuck26
+reading 40 pipuck27
+smoothing 40 pipuck27
+drawing 40 pipuck27
+reading 41 drone8
+smoothing 41 drone8
+drawing 41 drone8
+reading 42 drone9
+smoothing 42 drone9
+drawing 42 drone9
+reading 43 drone4
+smoothing 43 drone4
+drawing 43 drone4
+reading 44 drone5
+smoothing 44 drone5
+drawing 44 drone5
+reading 45 drone7
+smoothing 45 drone7
+drawing 45 drone7
+reading 46 drone6
+smoothing 46 drone6
+drawing 46 drone6
+reading 47 drone2
+smoothing 47 drone2
+drawing 47 drone2
+reading 48 drone3
+smoothing 48 drone3
+drawing 48 drone3
+reading 49 drone1
+smoothing 49 drone1
+drawing 49 drone1
+reading 50 drone10
+smoothing 50 drone10
+drawing 50 drone10
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_1_simu_01_formation_10d/data_simu/track_fig_logs/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 1001
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 1001
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robot_experiments_with_matching_simulations/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data/test_20220623_success_1/logs
+reading 1 pipuck9
+smoothing 1 pipuck9
+drawing 1 pipuck9
+set keyframe 1 pipuck9 's parent to drone4
+set keyframe 2 pipuck9 's parent to drone4
+reading 2 pipuck8
+smoothing 2 pipuck8
+drawing 2 pipuck8
+set keyframe 1 pipuck8 's parent to drone4
+set keyframe 2 pipuck8 's parent to drone4
+reading 3 pipuck5
+smoothing 3 pipuck5
+drawing 3 pipuck5
+set keyframe 1 pipuck5 's parent to drone2
+set keyframe 2 pipuck5 's parent to drone2
+reading 4 pipuck4
+smoothing 4 pipuck4
+drawing 4 pipuck4
+set keyframe 1 pipuck4 's parent to drone4
+set keyframe 2 pipuck4 's parent to drone4
+reading 5 pipuck7
+smoothing 5 pipuck7
+drawing 5 pipuck7
+set keyframe 1 pipuck7 's parent to drone2
+set keyframe 2 pipuck7 's parent to drone2
+reading 6 pipuck2
+smoothing 6 pipuck2
+drawing 6 pipuck2
+set keyframe 1 pipuck2 's parent to drone4
+set keyframe 2 pipuck2 's parent to drone4
+reading 7 drone4
+smoothing 7 drone4
+drawing 7 drone4
+set keyframe 1 drone4 's parent to nil
+set keyframe 2 drone4 's parent to nil
+reading 8 drone2
+smoothing 8 drone2
+drawing 8 drone2
+set keyframe 1 drone2 's parent to drone4
+set keyframe 2 drone2 's parent to drone4
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data/test_20220623_success_1/logs/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 400
+drawing keyframe 2 at step 1275
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 400
+drawing keyframe 2 at step 1275
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Large_scale_simulation_experiments/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+overwrite trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_1_simu_02_obstacle_avoidance_small_10d/data_simu/track_fig_logs
+reading 1 pipuck40
+smoothing 1 pipuck40
+drawing 1 pipuck40
+reading 2 pipuck20
+smoothing 2 pipuck20
+drawing 2 pipuck20
+reading 3 pipuck34
+smoothing 3 pipuck34
+drawing 3 pipuck34
+reading 4 pipuck35
+smoothing 4 pipuck35
+drawing 4 pipuck35
+reading 5 pipuck21
+smoothing 5 pipuck21
+drawing 5 pipuck21
+reading 6 pipuck37
+smoothing 6 pipuck37
+drawing 6 pipuck37
+reading 7 pipuck23
+smoothing 7 pipuck23
+drawing 7 pipuck23
+reading 8 pipuck22
+smoothing 8 pipuck22
+drawing 8 pipuck22
+reading 9 pipuck36
+smoothing 9 pipuck36
+drawing 9 pipuck36
+reading 10 pipuck32
+smoothing 10 pipuck32
+drawing 10 pipuck32
+reading 11 pipuck26
+smoothing 11 pipuck26
+drawing 11 pipuck26
+reading 12 pipuck27
+smoothing 12 pipuck27
+drawing 12 pipuck27
+reading 13 pipuck33
+smoothing 13 pipuck33
+drawing 13 pipuck33
+reading 14 pipuck9
+smoothing 14 pipuck9
+drawing 14 pipuck9
+reading 15 pipuck19
+smoothing 15 pipuck19
+drawing 15 pipuck19
+reading 16 pipuck25
+smoothing 16 pipuck25
+drawing 16 pipuck25
+reading 17 pipuck31
+smoothing 17 pipuck31
+drawing 17 pipuck31
+reading 18 pipuck30
+smoothing 18 pipuck30
+drawing 18 pipuck30
+reading 19 pipuck24
+smoothing 19 pipuck24
+drawing 19 pipuck24
+reading 20 pipuck18
+smoothing 20 pipuck18
+drawing 20 pipuck18
+reading 21 pipuck8
+smoothing 21 pipuck8
+drawing 21 pipuck8
+reading 22 pipuck5
+smoothing 22 pipuck5
+drawing 22 pipuck5
+reading 23 pipuck15
+smoothing 23 pipuck15
+drawing 23 pipuck15
+reading 24 pipuck29
+smoothing 24 pipuck29
+drawing 24 pipuck29
+reading 25 pipuck28
+smoothing 25 pipuck28
+drawing 25 pipuck28
+reading 26 pipuck14
+smoothing 26 pipuck14
+drawing 26 pipuck14
+reading 27 pipuck4
+smoothing 27 pipuck4
+drawing 27 pipuck4
+reading 28 pipuck6
+smoothing 28 pipuck6
+drawing 28 pipuck6
+reading 29 pipuck16
+smoothing 29 pipuck16
+drawing 29 pipuck16
+reading 30 pipuck17
+smoothing 30 pipuck17
+drawing 30 pipuck17
+reading 31 pipuck7
+smoothing 31 pipuck7
+drawing 31 pipuck7
+reading 32 pipuck3
+smoothing 32 pipuck3
+drawing 32 pipuck3
+reading 33 pipuck13
+smoothing 33 pipuck13
+drawing 33 pipuck13
+reading 34 pipuck12
+smoothing 34 pipuck12
+drawing 34 pipuck12
+reading 35 pipuck2
+smoothing 35 pipuck2
+drawing 35 pipuck2
+reading 36 pipuck38
+smoothing 36 pipuck38
+drawing 36 pipuck38
+reading 37 pipuck10
+smoothing 37 pipuck10
+drawing 37 pipuck10
+reading 38 pipuck11
+smoothing 38 pipuck11
+drawing 38 pipuck11
+reading 39 pipuck39
+smoothing 39 pipuck39
+drawing 39 pipuck39
+reading 40 pipuck1
+smoothing 40 pipuck1
+drawing 40 pipuck1
+reading 41 drone8
+smoothing 41 drone8
+drawing 41 drone8
+reading 42 drone9
+smoothing 42 drone9
+drawing 42 drone9
+reading 43 drone4
+smoothing 43 drone4
+drawing 43 drone4
+reading 44 drone5
+smoothing 44 drone5
+drawing 44 drone5
+reading 45 drone7
+smoothing 45 drone7
+drawing 45 drone7
+reading 46 drone6
+smoothing 46 drone6
+drawing 46 drone6
+reading 47 drone2
+smoothing 47 drone2
+drawing 47 drone2
+reading 48 drone3
+smoothing 48 drone3
+drawing 48 drone3
+reading 49 drone1
+smoothing 49 drone1
+drawing 49 drone1
+reading 50 drone10
+smoothing 50 drone10
+drawing 50 drone10
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_1_simu_02_obstacle_avoidance_small_10d/data_simu/track_fig_logs/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 800
+drawing keyframe 2 at step 2501
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 800
+drawing keyframe 2 at step 2501
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/3_Mission_Collective_sensing_actuation/Real_robot_experiments_with_matching_simulations/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_04_switch_line/data_hw/data/test_20220628_3_success_3/logs
+reading 1 pipuck8
+smoothing 1 pipuck8
+drawing 1 pipuck8
+set keyframe 1 pipuck8 's parent to drone4
+set keyframe 2 pipuck8 's parent to pipuck2
+set keyframe 3 pipuck8 's parent to drone2
+reading 2 pipuck5
+smoothing 2 pipuck5
+drawing 2 pipuck5
+set keyframe 1 pipuck5 's parent to drone4
+set keyframe 2 pipuck5 's parent to drone4
+set keyframe 3 pipuck5 's parent to drone4
+reading 3 pipuck4
+smoothing 3 pipuck4
+drawing 3 pipuck4
+set keyframe 1 pipuck4 's parent to drone2
+set keyframe 2 pipuck4 's parent to drone4
+set keyframe 3 pipuck4 's parent to drone4
+reading 4 pipuck7
+smoothing 4 pipuck7
+drawing 4 pipuck7
+set keyframe 1 pipuck7 's parent to drone2
+set keyframe 2 pipuck7 's parent to pipuck8
+set keyframe 3 pipuck7 's parent to drone2
+reading 5 pipuck2
+smoothing 5 pipuck2
+drawing 5 pipuck2
+set keyframe 1 pipuck2 's parent to drone4
+set keyframe 2 pipuck2 's parent to pipuck5
+set keyframe 3 pipuck2 's parent to drone4
+reading 6 pipuck9
+smoothing 6 pipuck9
+drawing 6 pipuck9
+set keyframe 1 pipuck9 's parent to drone4
+set keyframe 2 pipuck9 's parent to pipuck7
+set keyframe 3 pipuck9 's parent to drone4
+reading 7 drone4
+smoothing 7 drone4
+drawing 7 drone4
+set keyframe 1 drone4 's parent to nil
+set keyframe 2 drone4 's parent to nil
+set keyframe 3 drone4 's parent to nil
+reading 8 drone2
+smoothing 8 drone2
+drawing 8 drone2
+set keyframe 1 drone2 's parent to drone4
+set keyframe 2 drone2 's parent to drone4
+set keyframe 3 drone2 's parent to drone4
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_04_switch_line/data_hw/data/test_20220628_3_success_3/logs/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 400
+drawing keyframe 2 at step 1000
+drawing keyframe 3 at step 1441
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 400
+drawing keyframe 2 at step 1000
+drawing keyframe 3 at step 1441
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/3_Mission_Collective_sensing_actuation/Large_scale_simulation_experiments/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+overwrite trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_1_simu_04_switch_line/data_simu/track_fig_logs
+reading 1 pipuck38
+smoothing 1 pipuck38
+drawing 1 pipuck38
+reading 2 pipuck10
+smoothing 2 pipuck10
+drawing 2 pipuck10
+reading 3 pipuck11
+smoothing 3 pipuck11
+drawing 3 pipuck11
+reading 4 pipuck39
+smoothing 4 pipuck39
+drawing 4 pipuck39
+reading 5 pipuck43
+smoothing 5 pipuck43
+drawing 5 pipuck43
+reading 6 pipuck1
+smoothing 6 pipuck1
+drawing 6 pipuck1
+reading 7 pipuck42
+smoothing 7 pipuck42
+drawing 7 pipuck42
+reading 8 pipuck40
+smoothing 8 pipuck40
+drawing 8 pipuck40
+reading 9 pipuck41
+smoothing 9 pipuck41
+drawing 9 pipuck41
+reading 10 pipuck51
+smoothing 10 pipuck51
+drawing 10 pipuck51
+reading 11 pipuck49
+smoothing 11 pipuck49
+drawing 11 pipuck49
+reading 12 pipuck45
+smoothing 12 pipuck45
+drawing 12 pipuck45
+reading 13 pipuck48
+smoothing 13 pipuck48
+drawing 13 pipuck48
+reading 14 pipuck44
+smoothing 14 pipuck44
+drawing 14 pipuck44
+reading 15 pipuck50
+smoothing 15 pipuck50
+drawing 15 pipuck50
+reading 16 pipuck46
+smoothing 16 pipuck46
+drawing 16 pipuck46
+reading 17 pipuck52
+smoothing 17 pipuck52
+drawing 17 pipuck52
+reading 18 pipuck47
+smoothing 18 pipuck47
+drawing 18 pipuck47
+reading 19 pipuck20
+smoothing 19 pipuck20
+drawing 19 pipuck20
+reading 20 pipuck34
+smoothing 20 pipuck34
+drawing 20 pipuck34
+reading 21 pipuck35
+smoothing 21 pipuck35
+drawing 21 pipuck35
+reading 22 pipuck21
+smoothing 22 pipuck21
+drawing 22 pipuck21
+reading 23 pipuck37
+smoothing 23 pipuck37
+drawing 23 pipuck37
+reading 24 pipuck23
+smoothing 24 pipuck23
+drawing 24 pipuck23
+reading 25 pipuck22
+smoothing 25 pipuck22
+drawing 25 pipuck22
+reading 26 pipuck36
+smoothing 26 pipuck36
+drawing 26 pipuck36
+reading 27 pipuck32
+smoothing 27 pipuck32
+drawing 27 pipuck32
+reading 28 pipuck26
+smoothing 28 pipuck26
+drawing 28 pipuck26
+reading 29 pipuck27
+smoothing 29 pipuck27
+drawing 29 pipuck27
+reading 30 pipuck33
+smoothing 30 pipuck33
+drawing 30 pipuck33
+reading 31 pipuck9
+smoothing 31 pipuck9
+drawing 31 pipuck9
+reading 32 pipuck19
+smoothing 32 pipuck19
+drawing 32 pipuck19
+reading 33 pipuck25
+smoothing 33 pipuck25
+drawing 33 pipuck25
+reading 34 pipuck31
+smoothing 34 pipuck31
+drawing 34 pipuck31
+reading 35 pipuck30
+smoothing 35 pipuck30
+drawing 35 pipuck30
+reading 36 pipuck24
+smoothing 36 pipuck24
+drawing 36 pipuck24
+reading 37 pipuck18
+smoothing 37 pipuck18
+drawing 37 pipuck18
+reading 38 pipuck8
+smoothing 38 pipuck8
+drawing 38 pipuck8
+reading 39 pipuck5
+smoothing 39 pipuck5
+drawing 39 pipuck5
+reading 40 pipuck15
+smoothing 40 pipuck15
+drawing 40 pipuck15
+reading 41 pipuck29
+smoothing 41 pipuck29
+drawing 41 pipuck29
+reading 42 pipuck28
+smoothing 42 pipuck28
+drawing 42 pipuck28
+reading 43 pipuck14
+smoothing 43 pipuck14
+drawing 43 pipuck14
+reading 44 pipuck4
+smoothing 44 pipuck4
+drawing 44 pipuck4
+reading 45 pipuck6
+smoothing 45 pipuck6
+drawing 45 pipuck6
+reading 46 pipuck16
+smoothing 46 pipuck16
+drawing 46 pipuck16
+reading 47 pipuck17
+smoothing 47 pipuck17
+drawing 47 pipuck17
+reading 48 pipuck7
+smoothing 48 pipuck7
+drawing 48 pipuck7
+reading 49 pipuck3
+smoothing 49 pipuck3
+drawing 49 pipuck3
+reading 50 pipuck13
+smoothing 50 pipuck13
+drawing 50 pipuck13
+reading 51 pipuck12
+smoothing 51 pipuck12
+drawing 51 pipuck12
+reading 52 pipuck2
+smoothing 52 pipuck2
+drawing 52 pipuck2
+reading 53 drone1
+smoothing 53 drone1
+drawing 53 drone1
+reading 54 drone11
+smoothing 54 drone11
+drawing 54 drone11
+reading 55 drone10
+smoothing 55 drone10
+drawing 55 drone10
+reading 56 drone12
+smoothing 56 drone12
+drawing 56 drone12
+reading 57 drone13
+smoothing 57 drone13
+drawing 57 drone13
+reading 58 drone8
+smoothing 58 drone8
+drawing 58 drone8
+reading 59 drone9
+smoothing 59 drone9
+drawing 59 drone9
+reading 60 drone4
+smoothing 60 drone4
+drawing 60 drone4
+reading 61 drone5
+smoothing 61 drone5
+drawing 61 drone5
+reading 62 drone7
+smoothing 62 drone7
+drawing 62 drone7
+reading 63 drone6
+smoothing 63 drone6
+drawing 63 drone6
+reading 64 drone2
+smoothing 64 drone2
+drawing 64 drone2
+reading 65 drone3
+smoothing 65 drone3
+drawing 65 drone3
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_1_simu_04_switch_line/data_simu/track_fig_logs/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 500
+drawing keyframe 2 at step 4001
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 500
+drawing keyframe 2 at step 4001
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/4_Mission_Binary_decision/Real_robot_experiments_with_matching_simulations/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_05_gate_switch/data_hw/data/test_20220630_12_success_3/logs
+reading 1 pipuck9
+smoothing 1 pipuck9
+drawing 1 pipuck9
+set keyframe 1 pipuck9 's parent to drone2
+set keyframe 2 pipuck9 's parent to drone2
+set keyframe 3 pipuck9 's parent to drone2
+reading 2 pipuck8
+smoothing 2 pipuck8
+drawing 2 pipuck8
+set keyframe 1 pipuck8 's parent to drone3
+set keyframe 2 pipuck8 's parent to drone3
+set keyframe 3 pipuck8 's parent to drone3
+reading 3 pipuck5
+smoothing 3 pipuck5
+drawing 3 pipuck5
+set keyframe 1 pipuck5 's parent to drone2
+set keyframe 2 pipuck5 's parent to drone2
+set keyframe 3 pipuck5 's parent to drone2
+reading 4 pipuck4
+smoothing 4 pipuck4
+drawing 4 pipuck4
+set keyframe 1 pipuck4 's parent to drone3
+set keyframe 2 pipuck4 's parent to drone3
+set keyframe 3 pipuck4 's parent to drone2
+reading 5 pipuck7
+smoothing 5 pipuck7
+drawing 5 pipuck7
+set keyframe 1 pipuck7 's parent to drone2
+set keyframe 2 pipuck7 's parent to drone3
+set keyframe 3 pipuck7 's parent to drone3
+reading 6 pipuck2
+smoothing 6 pipuck2
+drawing 6 pipuck2
+set keyframe 1 pipuck2 's parent to drone2
+set keyframe 2 pipuck2 's parent to drone3
+set keyframe 3 pipuck2 's parent to drone3
+reading 7 drone2
+smoothing 7 drone2
+drawing 7 drone2
+set keyframe 1 drone2 's parent to nil
+set keyframe 2 drone2 's parent to drone3
+set keyframe 3 drone2 's parent to drone3
+reading 8 drone3
+smoothing 8 drone3
+drawing 8 drone3
+set keyframe 1 drone3 's parent to drone2
+set keyframe 2 drone3 's parent to nil
+set keyframe 3 drone3 's parent to nil
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_05_gate_switch/data_hw/data/test_20220630_12_success_3/logs/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 300
+drawing keyframe 2 at step 1200
+drawing keyframe 3 at step 1711
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 300
+drawing keyframe 2 at step 1200
+drawing keyframe 3 at step 1711
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robot_experiments_with_matching_simulations/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_08_split/data_hw/data/test_20220713_1_success_1/logs
+reading 1 pipuck5
+smoothing 1 pipuck5
+drawing 1 pipuck5
+set keyframe 1 pipuck5 's parent to pipuck6
+reading 2 pipuck4
+smoothing 2 pipuck4
+drawing 2 pipuck4
+set keyframe 1 pipuck4 's parent to drone2
+reading 3 pipuck6
+smoothing 3 pipuck6
+drawing 3 pipuck6
+set keyframe 1 pipuck6 's parent to drone3
+reading 4 pipuck3
+smoothing 4 pipuck3
+drawing 4 pipuck3
+set keyframe 1 pipuck3 's parent to pipuck6
+reading 5 pipuck2
+smoothing 5 pipuck2
+drawing 5 pipuck2
+set keyframe 1 pipuck2 's parent to drone2
+reading 6 pipuck1
+smoothing 6 pipuck1
+drawing 6 pipuck1
+set keyframe 1 pipuck1 's parent to drone3
+reading 7 drone2
+smoothing 7 drone2
+drawing 7 drone2
+set keyframe 1 drone2 's parent to drone3
+reading 8 drone3
+smoothing 8 drone3
+drawing 8 drone3
+set keyframe 1 drone3 's parent to nil
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_08_split/data_hw/data/test_20220713_1_success_1/logs/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 1185
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 1185
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_7_success_6/logs
+reading 1 pipuck2
+smoothing 1 pipuck2
+drawing 1 pipuck2
+set keyframe 1 pipuck2 's parent to drone3
+reading 2 pipuck1
+smoothing 2 pipuck1
+drawing 2 pipuck1
+set keyframe 1 pipuck1 's parent to drone2
+set keyframe 2 pipuck1 's parent to pipuck3
+set keyframe 3 pipuck1 's parent to drone3
+reading 3 pipuck5
+smoothing 3 pipuck5
+drawing 3 pipuck5
+set keyframe 1 pipuck5 's parent to drone3
+reading 4 pipuck4
+smoothing 4 pipuck4
+drawing 4 pipuck4
+set keyframe 1 pipuck4 's parent to drone2
+reading 5 pipuck6
+smoothing 5 pipuck6
+drawing 5 pipuck6
+set keyframe 1 pipuck6 's parent to drone2
+reading 6 pipuck3
+smoothing 6 pipuck3
+drawing 6 pipuck3
+set keyframe 1 pipuck3 's parent to drone2
+set keyframe 2 pipuck3 's parent to drone3
+set keyframe 3 pipuck3 's parent to drone3
+reading 7 drone2
+smoothing 7 drone2
+drawing 7 drone2
+set keyframe 1 drone2 's parent to nil
+reading 8 drone3
+smoothing 8 drone3
+drawing 8 drone3
+set keyframe 1 drone3 's parent to drone2
+set keyframe 2 drone3 's parent to nil
+set keyframe 3 drone3 's parent to nil
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_7_success_6/logs/../failure_robots.txt
+failure_robots.txt exists
+failed at 544.0 failed_robots =  ['pipuck2', 'pipuck6', 'drone2', 'pipuck5']
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 250
+drawing keyframe 2 at step 950
+drawing keyframe 3 at step 1372
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 250
+drawing keyframe 2 at step 950
+drawing keyframe 3 at step 1372
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant1_One_third_chance_for_each_robot_to_fail/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+overwrite trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_3_simu_02_fault_tolerance_33/track_fig_logs/logs
+reading 1 pipuck39
+smoothing 1 pipuck39
+drawing 1 pipuck39
+reading 2 pipuck1
+smoothing 2 pipuck1
+drawing 2 pipuck1
+reading 3 pipuck49
+smoothing 3 pipuck49
+drawing 3 pipuck49
+reading 4 pipuck48
+smoothing 4 pipuck48
+drawing 4 pipuck48
+reading 5 pipuck43
+smoothing 5 pipuck43
+drawing 5 pipuck43
+reading 6 pipuck42
+smoothing 6 pipuck42
+drawing 6 pipuck42
+reading 7 pipuck40
+smoothing 7 pipuck40
+drawing 7 pipuck40
+reading 8 pipuck41
+smoothing 8 pipuck41
+drawing 8 pipuck41
+reading 9 pipuck51
+smoothing 9 pipuck51
+drawing 9 pipuck51
+reading 10 pipuck45
+smoothing 10 pipuck45
+drawing 10 pipuck45
+reading 11 pipuck44
+smoothing 11 pipuck44
+drawing 11 pipuck44
+reading 12 pipuck50
+smoothing 12 pipuck50
+drawing 12 pipuck50
+reading 13 pipuck46
+smoothing 13 pipuck46
+drawing 13 pipuck46
+reading 14 pipuck52
+smoothing 14 pipuck52
+drawing 14 pipuck52
+reading 15 pipuck47
+smoothing 15 pipuck47
+drawing 15 pipuck47
+reading 16 pipuck20
+smoothing 16 pipuck20
+drawing 16 pipuck20
+reading 17 pipuck34
+smoothing 17 pipuck34
+drawing 17 pipuck34
+reading 18 pipuck35
+smoothing 18 pipuck35
+drawing 18 pipuck35
+reading 19 pipuck21
+smoothing 19 pipuck21
+drawing 19 pipuck21
+reading 20 pipuck37
+smoothing 20 pipuck37
+drawing 20 pipuck37
+reading 21 pipuck23
+smoothing 21 pipuck23
+drawing 21 pipuck23
+reading 22 pipuck22
+smoothing 22 pipuck22
+drawing 22 pipuck22
+reading 23 pipuck36
+smoothing 23 pipuck36
+drawing 23 pipuck36
+reading 24 pipuck32
+smoothing 24 pipuck32
+drawing 24 pipuck32
+reading 25 pipuck26
+smoothing 25 pipuck26
+drawing 25 pipuck26
+reading 26 pipuck27
+smoothing 26 pipuck27
+drawing 26 pipuck27
+reading 27 pipuck33
+smoothing 27 pipuck33
+drawing 27 pipuck33
+reading 28 pipuck9
+smoothing 28 pipuck9
+drawing 28 pipuck9
+reading 29 pipuck19
+smoothing 29 pipuck19
+drawing 29 pipuck19
+reading 30 pipuck25
+smoothing 30 pipuck25
+drawing 30 pipuck25
+reading 31 pipuck31
+smoothing 31 pipuck31
+drawing 31 pipuck31
+reading 32 pipuck30
+smoothing 32 pipuck30
+drawing 32 pipuck30
+reading 33 pipuck24
+smoothing 33 pipuck24
+drawing 33 pipuck24
+reading 34 pipuck18
+smoothing 34 pipuck18
+drawing 34 pipuck18
+reading 35 pipuck8
+smoothing 35 pipuck8
+drawing 35 pipuck8
+reading 36 pipuck5
+smoothing 36 pipuck5
+drawing 36 pipuck5
+reading 37 pipuck15
+smoothing 37 pipuck15
+drawing 37 pipuck15
+reading 38 pipuck29
+smoothing 38 pipuck29
+drawing 38 pipuck29
+reading 39 pipuck28
+smoothing 39 pipuck28
+drawing 39 pipuck28
+reading 40 pipuck14
+smoothing 40 pipuck14
+drawing 40 pipuck14
+reading 41 pipuck4
+smoothing 41 pipuck4
+drawing 41 pipuck4
+reading 42 pipuck6
+smoothing 42 pipuck6
+drawing 42 pipuck6
+reading 43 pipuck16
+smoothing 43 pipuck16
+drawing 43 pipuck16
+reading 44 pipuck17
+smoothing 44 pipuck17
+drawing 44 pipuck17
+reading 45 pipuck7
+smoothing 45 pipuck7
+drawing 45 pipuck7
+reading 46 pipuck3
+smoothing 46 pipuck3
+drawing 46 pipuck3
+reading 47 pipuck13
+smoothing 47 pipuck13
+drawing 47 pipuck13
+reading 48 pipuck12
+smoothing 48 pipuck12
+drawing 48 pipuck12
+reading 49 pipuck2
+smoothing 49 pipuck2
+drawing 49 pipuck2
+reading 50 pipuck38
+smoothing 50 pipuck38
+drawing 50 pipuck38
+reading 51 pipuck10
+smoothing 51 pipuck10
+drawing 51 pipuck10
+reading 52 pipuck11
+smoothing 52 pipuck11
+drawing 52 pipuck11
+reading 53 drone11
+smoothing 53 drone11
+drawing 53 drone11
+reading 54 drone10
+smoothing 54 drone10
+drawing 54 drone10
+reading 55 drone12
+smoothing 55 drone12
+drawing 55 drone12
+reading 56 drone13
+smoothing 56 drone13
+drawing 56 drone13
+reading 57 drone8
+smoothing 57 drone8
+drawing 57 drone8
+reading 58 drone9
+smoothing 58 drone9
+drawing 58 drone9
+reading 59 drone4
+smoothing 59 drone4
+drawing 59 drone4
+reading 60 drone5
+smoothing 60 drone5
+drawing 60 drone5
+reading 61 drone7
+smoothing 61 drone7
+drawing 61 drone7
+reading 62 drone6
+smoothing 62 drone6
+drawing 62 drone6
+reading 63 drone2
+smoothing 63 drone2
+drawing 63 drone2
+reading 64 drone3
+smoothing 64 drone3
+drawing 64 drone3
+reading 65 drone1
+smoothing 65 drone1
+drawing 65 drone1
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_3_simu_02_fault_tolerance_33/track_fig_logs/logs/../failure_robots.txt
+failure_robots.txt exists
+failed at 1000.0 failed_robots =  ['pipuck16', 'drone12', 'pipuck47', 'pipuck14', 'pipuck51', 'drone9', 'pipuck21', 'pipuck45', 'pipuck49', 'drone10', 'drone7', 'pipuck22', 'pipuck26', 'drone3', 'pipuck30', 'drone5', 'pipuck24', 'pipuck50', 'pipuck29', 'drone4', 'pipuck9', 'drone13', 'drone2', 'pipuck33']
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 500
+drawing keyframe 2 at step 4001
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 500
+drawing keyframe 2 at step 4001
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/scripts/drawLine.py ------------------------------------------------------------
+input_path not provided, use default: logs
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/6_Scalability/Scalability_in_decision_making_mission/scripts/drawLine_scale_2.py ------------------------------------------------------------
+input_path not provided, use default: logs
+overwrite trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_2_simu_scalability/track_fig_logs_scale_2
+reading 1 pipuck46
+smoothing 1 pipuck46
+drawing 1 pipuck46
+reading 2 pipuck52
+smoothing 2 pipuck52
+drawing 2 pipuck52
+reading 3 pipuck7
+smoothing 3 pipuck7
+drawing 3 pipuck7
+reading 4 pipuck47
+smoothing 4 pipuck47
+drawing 4 pipuck47
+reading 5 pipuck3
+smoothing 5 pipuck3
+drawing 5 pipuck3
+reading 6 pipuck13
+smoothing 6 pipuck13
+drawing 6 pipuck13
+reading 7 pipuck20
+smoothing 7 pipuck20
+drawing 7 pipuck20
+reading 8 pipuck12
+smoothing 8 pipuck12
+drawing 8 pipuck12
+reading 9 pipuck34
+smoothing 9 pipuck34
+drawing 9 pipuck34
+reading 10 pipuck35
+smoothing 10 pipuck35
+drawing 10 pipuck35
+reading 11 pipuck2
+smoothing 11 pipuck2
+drawing 11 pipuck2
+reading 12 pipuck21
+smoothing 12 pipuck21
+drawing 12 pipuck21
+reading 13 pipuck37
+smoothing 13 pipuck37
+drawing 13 pipuck37
+reading 14 pipuck38
+smoothing 14 pipuck38
+drawing 14 pipuck38
+reading 15 pipuck23
+smoothing 15 pipuck23
+drawing 15 pipuck23
+reading 16 pipuck22
+smoothing 16 pipuck22
+drawing 16 pipuck22
+reading 17 pipuck10
+smoothing 17 pipuck10
+drawing 17 pipuck10
+reading 18 pipuck36
+smoothing 18 pipuck36
+drawing 18 pipuck36
+reading 19 pipuck11
+smoothing 19 pipuck11
+drawing 19 pipuck11
+reading 20 pipuck39
+smoothing 20 pipuck39
+drawing 20 pipuck39
+reading 21 pipuck1
+smoothing 21 pipuck1
+drawing 21 pipuck1
+reading 22 pipuck32
+smoothing 22 pipuck32
+drawing 22 pipuck32
+reading 23 pipuck49
+smoothing 23 pipuck49
+drawing 23 pipuck49
+reading 24 pipuck26
+smoothing 24 pipuck26
+drawing 24 pipuck26
+reading 25 pipuck48
+smoothing 25 pipuck48
+drawing 25 pipuck48
+reading 26 pipuck27
+smoothing 26 pipuck27
+drawing 26 pipuck27
+reading 27 pipuck33
+smoothing 27 pipuck33
+drawing 27 pipuck33
+reading 28 pipuck9
+smoothing 28 pipuck9
+drawing 28 pipuck9
+reading 29 pipuck19
+smoothing 29 pipuck19
+drawing 29 pipuck19
+reading 30 pipuck25
+smoothing 30 pipuck25
+drawing 30 pipuck25
+reading 31 pipuck31
+smoothing 31 pipuck31
+drawing 31 pipuck31
+reading 32 pipuck30
+smoothing 32 pipuck30
+drawing 32 pipuck30
+reading 33 pipuck24
+smoothing 33 pipuck24
+drawing 33 pipuck24
+reading 34 pipuck18
+smoothing 34 pipuck18
+drawing 34 pipuck18
+reading 35 pipuck8
+smoothing 35 pipuck8
+drawing 35 pipuck8
+reading 36 pipuck43
+smoothing 36 pipuck43
+drawing 36 pipuck43
+reading 37 pipuck5
+smoothing 37 pipuck5
+drawing 37 pipuck5
+reading 38 pipuck42
+smoothing 38 pipuck42
+drawing 38 pipuck42
+reading 39 pipuck15
+smoothing 39 pipuck15
+drawing 39 pipuck15
+reading 40 pipuck40
+smoothing 40 pipuck40
+drawing 40 pipuck40
+reading 41 pipuck29
+smoothing 41 pipuck29
+drawing 41 pipuck29
+reading 42 pipuck28
+smoothing 42 pipuck28
+drawing 42 pipuck28
+reading 43 pipuck41
+smoothing 43 pipuck41
+drawing 43 pipuck41
+reading 44 pipuck14
+smoothing 44 pipuck14
+drawing 44 pipuck14
+reading 45 pipuck51
+smoothing 45 pipuck51
+drawing 45 pipuck51
+reading 46 pipuck45
+smoothing 46 pipuck45
+drawing 46 pipuck45
+reading 47 pipuck4
+smoothing 47 pipuck4
+drawing 47 pipuck4
+reading 48 pipuck44
+smoothing 48 pipuck44
+drawing 48 pipuck44
+reading 49 pipuck6
+smoothing 49 pipuck6
+drawing 49 pipuck6
+reading 50 pipuck50
+smoothing 50 pipuck50
+drawing 50 pipuck50
+reading 51 pipuck16
+smoothing 51 pipuck16
+drawing 51 pipuck16
+reading 52 pipuck17
+smoothing 52 pipuck17
+drawing 52 pipuck17
+reading 53 drone6
+smoothing 53 drone6
+drawing 53 drone6
+reading 54 drone2
+smoothing 54 drone2
+drawing 54 drone2
+reading 55 drone3
+smoothing 55 drone3
+drawing 55 drone3
+reading 56 drone1
+smoothing 56 drone1
+drawing 56 drone1
+reading 57 drone11
+smoothing 57 drone11
+drawing 57 drone11
+reading 58 drone10
+smoothing 58 drone10
+drawing 58 drone10
+reading 59 drone12
+smoothing 59 drone12
+drawing 59 drone12
+reading 60 drone13
+smoothing 60 drone13
+drawing 60 drone13
+reading 61 drone8
+smoothing 61 drone8
+drawing 61 drone8
+reading 62 drone9
+smoothing 62 drone9
+drawing 62 drone9
+reading 63 drone4
+smoothing 63 drone4
+drawing 63 drone4
+reading 64 drone5
+smoothing 64 drone5
+drawing 64 drone5
+reading 65 drone7
+smoothing 65 drone7
+drawing 65 drone7
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_2_simu_scalability/track_fig_logs_scale_2/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 600
+drawing keyframe 2 at step 6501
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 600
+drawing keyframe 2 at step 6501
+running /home/harry/code-mns2.0/SoNS2.0-SR/build/experiments/6_Scalability/Scalability_in_decision_making_mission/scripts/drawLine_scale_4.py ------------------------------------------------------------
+input_path not provided, use default: logs
+overwrite trackLog input file: /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_2_simu_scalability/track_fig_logs_scale_4
+reading 1 pipuck81
+smoothing 1 pipuck81
+drawing 1 pipuck81
+reading 2 pipuck35
+smoothing 2 pipuck35
+drawing 2 pipuck35
+reading 3 pipuck29
+smoothing 3 pipuck29
+drawing 3 pipuck29
+reading 4 pipuck13
+smoothing 4 pipuck13
+drawing 4 pipuck13
+reading 5 pipuck21
+smoothing 5 pipuck21
+drawing 5 pipuck21
+reading 6 pipuck28
+smoothing 6 pipuck28
+drawing 6 pipuck28
+reading 7 pipuck12
+smoothing 7 pipuck12
+drawing 7 pipuck12
+reading 8 pipuck67
+smoothing 8 pipuck67
+drawing 8 pipuck67
+reading 9 pipuck85
+smoothing 9 pipuck85
+drawing 9 pipuck85
+reading 10 pipuck19
+smoothing 10 pipuck19
+drawing 10 pipuck19
+reading 11 pipuck14
+smoothing 11 pipuck14
+drawing 11 pipuck14
+reading 12 pipuck97
+smoothing 12 pipuck97
+drawing 12 pipuck97
+reading 13 pipuck92
+smoothing 13 pipuck92
+drawing 13 pipuck92
+reading 14 pipuck91
+smoothing 14 pipuck91
+drawing 14 pipuck91
+reading 15 pipuck37
+smoothing 15 pipuck37
+drawing 15 pipuck37
+reading 16 pipuck25
+smoothing 16 pipuck25
+drawing 16 pipuck25
+reading 17 pipuck2
+smoothing 17 pipuck2
+drawing 17 pipuck2
+reading 18 pipuck77
+smoothing 18 pipuck77
+drawing 18 pipuck77
+reading 19 pipuck73
+smoothing 19 pipuck73
+drawing 19 pipuck73
+reading 20 pipuck80
+smoothing 20 pipuck80
+drawing 20 pipuck80
+reading 21 pipuck83
+smoothing 21 pipuck83
+drawing 21 pipuck83
+reading 22 pipuck86
+smoothing 22 pipuck86
+drawing 22 pipuck86
+reading 23 pipuck23
+smoothing 23 pipuck23
+drawing 23 pipuck23
+reading 24 pipuck31
+smoothing 24 pipuck31
+drawing 24 pipuck31
+reading 25 pipuck63
+smoothing 25 pipuck63
+drawing 25 pipuck63
+reading 26 pipuck58
+smoothing 26 pipuck58
+drawing 26 pipuck58
+reading 27 pipuck72
+smoothing 27 pipuck72
+drawing 27 pipuck72
+reading 28 pipuck94
+smoothing 28 pipuck94
+drawing 28 pipuck94
+reading 29 pipuck54
+smoothing 29 pipuck54
+drawing 29 pipuck54
+reading 30 pipuck79
+smoothing 30 pipuck79
+drawing 30 pipuck79
+reading 31 pipuck46
+smoothing 31 pipuck46
+drawing 31 pipuck46
+reading 32 pipuck22
+smoothing 32 pipuck22
+drawing 32 pipuck22
+reading 33 pipuck30
+smoothing 33 pipuck30
+drawing 33 pipuck30
+reading 34 pipuck100
+smoothing 34 pipuck100
+drawing 34 pipuck100
+reading 35 pipuck88
+smoothing 35 pipuck88
+drawing 35 pipuck88
+reading 36 pipuck70
+smoothing 36 pipuck70
+drawing 36 pipuck70
+reading 37 pipuck40
+smoothing 37 pipuck40
+drawing 37 pipuck40
+reading 38 pipuck52
+smoothing 38 pipuck52
+drawing 38 pipuck52
+reading 39 pipuck36
+smoothing 39 pipuck36
+drawing 39 pipuck36
+reading 40 pipuck24
+smoothing 40 pipuck24
+drawing 40 pipuck24
+reading 41 pipuck4
+smoothing 41 pipuck4
+drawing 41 pipuck4
+reading 42 pipuck38
+smoothing 42 pipuck38
+drawing 42 pipuck38
+reading 43 pipuck64
+smoothing 43 pipuck64
+drawing 43 pipuck64
+reading 44 pipuck66
+smoothing 44 pipuck66
+drawing 44 pipuck66
+reading 45 pipuck43
+smoothing 45 pipuck43
+drawing 45 pipuck43
+reading 46 pipuck68
+smoothing 46 pipuck68
+drawing 46 pipuck68
+reading 47 pipuck51
+smoothing 47 pipuck51
+drawing 47 pipuck51
+reading 48 pipuck53
+smoothing 48 pipuck53
+drawing 48 pipuck53
+reading 49 pipuck18
+smoothing 49 pipuck18
+drawing 49 pipuck18
+reading 50 pipuck6
+smoothing 50 pipuck6
+drawing 50 pipuck6
+reading 51 pipuck10
+smoothing 51 pipuck10
+drawing 51 pipuck10
+reading 52 pipuck65
+smoothing 52 pipuck65
+drawing 52 pipuck65
+reading 53 pipuck57
+smoothing 53 pipuck57
+drawing 53 pipuck57
+reading 54 pipuck45
+smoothing 54 pipuck45
+drawing 54 pipuck45
+reading 55 pipuck47
+smoothing 55 pipuck47
+drawing 55 pipuck47
+reading 56 pipuck11
+smoothing 56 pipuck11
+drawing 56 pipuck11
+reading 57 pipuck75
+smoothing 57 pipuck75
+drawing 57 pipuck75
+reading 58 pipuck71
+smoothing 58 pipuck71
+drawing 58 pipuck71
+reading 59 pipuck44
+smoothing 59 pipuck44
+drawing 59 pipuck44
+reading 60 pipuck32
+smoothing 60 pipuck32
+drawing 60 pipuck32
+reading 61 pipuck16
+smoothing 61 pipuck16
+drawing 61 pipuck16
+reading 62 pipuck39
+smoothing 62 pipuck39
+drawing 62 pipuck39
+reading 63 pipuck61
+smoothing 63 pipuck61
+drawing 63 pipuck61
+reading 64 pipuck59
+smoothing 64 pipuck59
+drawing 64 pipuck59
+reading 65 pipuck99
+smoothing 65 pipuck99
+drawing 65 pipuck99
+reading 66 pipuck1
+smoothing 66 pipuck1
+drawing 66 pipuck1
+reading 67 pipuck49
+smoothing 67 pipuck49
+drawing 67 pipuck49
+reading 68 pipuck69
+smoothing 68 pipuck69
+drawing 68 pipuck69
+reading 69 pipuck50
+smoothing 69 pipuck50
+drawing 69 pipuck50
+reading 70 pipuck90
+smoothing 70 pipuck90
+drawing 70 pipuck90
+reading 71 pipuck26
+smoothing 71 pipuck26
+drawing 71 pipuck26
+reading 72 pipuck8
+smoothing 72 pipuck8
+drawing 72 pipuck8
+reading 73 pipuck17
+smoothing 73 pipuck17
+drawing 73 pipuck17
+reading 74 pipuck56
+smoothing 74 pipuck56
+drawing 74 pipuck56
+reading 75 pipuck41
+smoothing 75 pipuck41
+drawing 75 pipuck41
+reading 76 pipuck84
+smoothing 76 pipuck84
+drawing 76 pipuck84
+reading 77 pipuck27
+smoothing 77 pipuck27
+drawing 77 pipuck27
+reading 78 pipuck5
+smoothing 78 pipuck5
+drawing 78 pipuck5
+reading 79 pipuck89
+smoothing 79 pipuck89
+drawing 79 pipuck89
+reading 80 pipuck42
+smoothing 80 pipuck42
+drawing 80 pipuck42
+reading 81 pipuck55
+smoothing 81 pipuck55
+drawing 81 pipuck55
+reading 82 pipuck78
+smoothing 82 pipuck78
+drawing 82 pipuck78
+reading 83 pipuck33
+smoothing 83 pipuck33
+drawing 83 pipuck33
+reading 84 pipuck7
+smoothing 84 pipuck7
+drawing 84 pipuck7
+reading 85 pipuck62
+smoothing 85 pipuck62
+drawing 85 pipuck62
+reading 86 pipuck48
+smoothing 86 pipuck48
+drawing 86 pipuck48
+reading 87 pipuck82
+smoothing 87 pipuck82
+drawing 87 pipuck82
+reading 88 pipuck87
+smoothing 88 pipuck87
+drawing 88 pipuck87
+reading 89 pipuck20
+smoothing 89 pipuck20
+drawing 89 pipuck20
+reading 90 pipuck3
+smoothing 90 pipuck3
+drawing 90 pipuck3
+reading 91 pipuck76
+smoothing 91 pipuck76
+drawing 91 pipuck76
+reading 92 pipuck60
+smoothing 92 pipuck60
+drawing 92 pipuck60
+reading 93 pipuck98
+smoothing 93 pipuck98
+drawing 93 pipuck98
+reading 94 pipuck95
+smoothing 94 pipuck95
+drawing 94 pipuck95
+reading 95 pipuck96
+smoothing 95 pipuck96
+drawing 95 pipuck96
+reading 96 pipuck93
+smoothing 96 pipuck93
+drawing 96 pipuck93
+reading 97 pipuck34
+smoothing 97 pipuck34
+drawing 97 pipuck34
+reading 98 pipuck9
+smoothing 98 pipuck9
+drawing 98 pipuck9
+reading 99 pipuck15
+smoothing 99 pipuck15
+drawing 99 pipuck15
+reading 100 pipuck74
+smoothing 100 pipuck74
+drawing 100 pipuck74
+reading 101 drone20
+smoothing 101 drone20
+drawing 101 drone20
+reading 102 drone25
+smoothing 102 drone25
+drawing 102 drone25
+reading 103 drone8
+smoothing 103 drone8
+drawing 103 drone8
+reading 104 drone15
+smoothing 104 drone15
+drawing 104 drone15
+reading 105 drone23
+smoothing 105 drone23
+drawing 105 drone23
+reading 106 drone18
+smoothing 106 drone18
+drawing 106 drone18
+reading 107 drone19
+smoothing 107 drone19
+drawing 107 drone19
+reading 108 drone11
+smoothing 108 drone11
+drawing 108 drone11
+reading 109 drone21
+smoothing 109 drone21
+drawing 109 drone21
+reading 110 drone24
+smoothing 110 drone24
+drawing 110 drone24
+reading 111 drone3
+smoothing 111 drone3
+drawing 111 drone3
+reading 112 drone22
+smoothing 112 drone22
+drawing 112 drone22
+reading 113 drone5
+smoothing 113 drone5
+drawing 113 drone5
+reading 114 drone1
+smoothing 114 drone1
+drawing 114 drone1
+reading 115 drone16
+smoothing 115 drone16
+drawing 115 drone16
+reading 116 drone14
+smoothing 116 drone14
+drawing 116 drone14
+reading 117 drone7
+smoothing 117 drone7
+drawing 117 drone7
+reading 118 drone9
+smoothing 118 drone9
+drawing 118 drone9
+reading 119 drone13
+smoothing 119 drone13
+drawing 119 drone13
+reading 120 drone17
+smoothing 120 drone17
+drawing 120 drone17
+reading 121 drone6
+smoothing 121 drone6
+drawing 121 drone6
+reading 122 drone10
+smoothing 122 drone10
+drawing 122 drone10
+reading 123 drone4
+smoothing 123 drone4
+drawing 123 drone4
+reading 124 drone12
+smoothing 124 drone12
+drawing 124 drone12
+reading 125 drone2
+smoothing 125 drone2
+drawing 125 drone2
+checking failed robots from : /media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_2_simu_scalability/track_fig_logs_scale_4/../failure_robots.txt
+failure_robots.txt doesn't exist
+failed at None failed_robots =  []
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 1200
+drawing keyframe 2 at step 6501
+drawing keyframe 0 at step 0
+drawing keyframe 1 at step 1200
+drawing keyframe 2 at step 6501

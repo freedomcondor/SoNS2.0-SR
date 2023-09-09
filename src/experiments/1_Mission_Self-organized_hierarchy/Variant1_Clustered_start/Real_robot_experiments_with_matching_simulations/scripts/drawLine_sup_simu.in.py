@@ -12,8 +12,15 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_simu/data"
-savePDFNameBase = "mission1_clustered_positions_exp0_10_simu_"
+dataFolder ="@CMAKE_SoNS_DATA_PATH@/"
+dataFolder+="experiments/"
+dataFolder+="1_Mission_Self-organized_hierarchy/"
+dataFolder+="Variant1_Clustered_start/"
+dataFolder+="Real_robot_experiments_with_matching_simulations/"
+dataFolder+="data_simu/data"
+
+savePDFNameBase = "Mission1_Self-organized_hirarchy_Variant1_Clustered_start_Real_robot_Simulation_"
+
 sampleList = [
 	"run7",
 	"run16",

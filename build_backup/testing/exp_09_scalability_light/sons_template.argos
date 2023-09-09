@@ -1,0 +1,97 @@
+<?xml version="1.0" ?>
+<argos-configuration>
+
+  <!-- ************************* -->
+  <!-- * General configuration * -->
+  <!-- ************************* -->
+  <framework>
+    <system threads="MULTITHREADS" />
+    <experiment length="TOTALLENGTH" ticks_per_second="5" random_seed="RANDOMSEED" />
+  </framework>
+  
+  <!-- *************** -->
+  <!-- * Controllers * -->
+  <!-- *************** -->
+  <controllers>
+    PIPUCK_CONTROLLER
+    DRONE_CONTROLLER
+  </controllers>
+
+  <!-- *********************** -->
+  <!-- * Arena configuration * -->
+  <!-- *********************** -->
+  <arena size="ARENA_SIZE, ARENA_SIZE, 3.5" center="0, 0, 1">
+    <floor id="floor" source="image" path="/home/harry/code-mns2.0/SoNS2.0-SR/build/floor_texture/wood_floor_large.png" />
+    <!-- real scenario -->
+    REAL_SCENARIO
+
+    <!-- drones -->
+    DRONES
+    <!-- pipucks -->
+    PIPUCKS
+    <!-- walls -->
+    <!-- target -->
+    <!-- random obstacles-->
+  </arena>
+
+  <!-- Physics engines, Media, Loop functions and visualization -->
+  <!-- ******************* -->
+  <!-- * Physics engines * -->
+  <!-- ******************* -->
+  <physics_engines>
+    <pointmass3d id="pm3d" iterations="10" />
+    <dynamics3d id="dyn3d" iterations="25">
+      <gravity g="9.8" />
+      <floor />
+    </dynamics3d>
+  </physics_engines>
+
+  <!-- ********* -->
+  <!-- * Media * -->
+  <!-- ********* -->
+  <media>
+    <directional_led id="directional_leds" index="grid" grid_size="20,20,20"/>
+    <tag id="tags" index="grid" grid_size="20,20,20" />
+    <radio id="wifi" index="grid" grid_size="20,20,20" />
+  </media>
+
+  <!-- ****************** -->
+  <!-- * Loop functions * -->
+  <!-- ****************** -->
+  <loop_functions library="/home/harry/code-mns2.0/SoNS2.0-SR/build/libmy_extensions"
+                  label="my_loop_functions" />
+
+  <!-- ****************** -->
+  <!-- * Visualization  * -->
+  <!-- ****************** -->
+  <visualization>
+    <qt-opengl lua_editor="true" show_boundary="false">
+      <frame_grabbing quality="100" />
+      <user_functions library="/home/harry/code-mns2.0/SoNS2.0-SR/build/libmy_qtopengl_extensions"
+                      label="my_qtopengl_user_functions" />
+      <camera>
+        <placements>
+          <placement index="0" position="0.263763,-0.0355953,9.55429" look_at="0.263763,-0.0355953,8.55429" up="0.999982,0.0059975,0" lens_focal_length="90" />
+          <placement index="1" position="1.72925,-0.284212,41.5901" look_at="1.72925,-0.284212,40.5901" up="0.999982,0.0059975,0" lens_focal_length="90" />
+          <placement index="2" position="-3.02801,-1.96146,2.09701" look_at="-2.19123,-1.48518,1.82689" up="0.234754,0.133616,0.962828" lens_focal_length="30" />
+          <placement index="3" position="-4.02475,-2.03309,4.80951" look_at="-3.29636,-1.69228,4.21513" up="0.538369,0.251902,0.804179" lens_focal_length="30" />
+          <placement index="4" position="0.263763,-0.0355953,9.55429" look_at="0.263763,-0.0355953,8.55429" up="0.999982,0.0059975,0" lens_focal_length="90" />
+          <placement index="5" position="  0, 15, 7.5" look_at="0,0,0.25" lens_focal_length="60" />
+          <placement index="6" position="-15, 15, 10"  look_at="0,0,0.25" lens_focal_length="90" />
+          <placement index="7" position="-15,  0, 7.5" look_at="0,0,0.25" lens_focal_length="60" />
+          <!-- 3d view -->
+          <placement index="8" position="5.59254,-9.39234,11.9809" look_at="6.03213,-8.89779,11.2311" up="0.498125,0.560406,0.661678" lens_focal_length="30" />
+          <placement index="9" position="-21.8353,11.9569,22.1408" look_at="-21.148,11.6001,21.5081" up="0.561529,-0.291516,0.774405" lens_focal_length="90" />
+        </placements>
+        <timeline loop="10000">
+          <keyframe placement="0" step="1" />
+          <keyframe placement="0" step="50" />
+          <interpolate />
+          <keyframe placement="1" step="80" />
+          <keyframe placement="1" step="500" />
+        </timeline>
+      </camera>
+    </qt-opengl>
+  </visualization>
+
+</argos-configuration>

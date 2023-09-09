@@ -54,14 +54,9 @@ if(ARGOS_QTOPENGL_FOUND)
     my_extensions)
 endif(ARGOS_QTOPENGL_FOUND)
 
-#set(CMAKE_SoNS_DATA_PATH ${CMAKE_SOURCE_DIR}/../../SoNS2.0-data)
 set(CMAKE_SoNS_DATA_PATH /media/harry/Expansion/Storage/SoNS2.0-data)
-#set(CMAKE_SoNS_DATA_PATH /Volumes/Expansion/Storage/SoNS2.0-data)
-#set(CMAKE_SoNS_DATA_PATH ${CMAKE_BINARY_DIR}/temp-SoNS2.0-data)
 
 set(CMAKE_PUB_DATA_PATH /media/harry/Expansion/Storage/SoNS2.0-public-data)
-#set(CMAKE_PUB_DATA_PATH /media/harry/Expansion/Storage/SoNS2.0-public-data-video)
-#set(CMAKE_PUB_DATA_PATH ${CMAKE_BINARY_DIR}/temp-SoNS2.0-public-data)
 
 #create a logs folder for logs
 make_directory(logs)

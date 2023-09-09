@@ -1,0 +1,81 @@
+drawDataFileName = "/home/harry/code-mns2.0/SoNS2.0-SR/src/scripts/drawData.py"
+#execfile(drawDataFileName)
+exec(compile(open(drawDataFileName, "rb").read(), drawDataFileName, 'exec'))
+
+import statistics
+
+#dataFolder = "/Users/harry/Desktop/exp_0_hw_01_formation_1_2d_10p/data_hw/data"
+dataFolder = "/media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw"
+
+'''
+#-------------------------------------------------------------------------
+# draw data plain
+for subfolder in getSubfolders("/home/harry/code-mns2.0/SoNS2.0-SR/src/experiments/5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/scripts/../data") :
+	data = readDataFrom(subfolder + "result_data.txt")
+	if data[1375] > 1.3 :
+		print("wrong case", subfolder)
+	drawData(data)
+'''
+
+# two subfigures
+fig, axs = plt.subplots(1, 2, gridspec_kw={'width_ratios': [5, 1]})
+
+
+#-------------------------------------------------------------------------
+# read one case and shade fill each robot data
+robotsData = []
+#for subfolder in getSubfolders("/home/harry/code-mns2.0/SoNS2.0-SR/src/experiments/5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/scripts/../data") :
+for subFolder in getSubfolders(dataFolder) :
+	#drawData(readDataFrom(subfolder + "result_data.txt"))
+	#drawData(readDataFrom(subfolder + "result_lowerbound_data.txt"))
+	# choose a folder
+	if subFolder != dataFolder + "/test_20220804_1_success_2/" :
+		continue
+	for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+		robotsData.append(readDataFrom(subFile))
+		#drawData(readDataFrom(subfile))
+	break
+
+#drawData(readDataFrom("result_data.txt"))
+
+boxdata, positions = transferTimeDataToBoxData(robotsData, None, 5)
+
+mean = []
+upper = []
+lower = []
+mini = []
+maxi = []
+for stepData in boxdata :
+	meanvalue = statistics.mean(stepData)
+	stdev = statistics.stdev(stepData)
+	minvalue = min(stepData)
+	maxvalue = max(stepData)
+	mean.append(meanvalue)
+	upper.append(meanvalue + stdev)
+	lower.append(meanvalue - stdev)
+	mini.append(minvalue)
+	maxi.append(maxvalue)
+
+drawDataWithXInSubplot(positions, mean, axs[0])
+axs[0].fill_between(
+    positions, mini, maxi, color='b', alpha=.10)
+axs[0].fill_between(
+    positions, lower, upper, color='b', alpha=.30)
+
+#-------------------------------------------------------------------------
+# read all each robot data and make it a total box plot
+
+boxdata = []
+for subFolder in getSubfolders(dataFolder) :
+	for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+		boxdata = boxdata + readDataFrom(subFile)
+
+flierprops = dict(
+	marker='.',
+	markersize=2,
+	linestyle='none'
+)
+
+axs[1].boxplot(boxdata, widths=5, flierprops=flierprops)
+
+plt.show()

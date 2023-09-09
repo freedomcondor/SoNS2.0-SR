@@ -26,6 +26,8 @@ def drawSRFig(option) :
 	if 'height_ratios' in option :
 		height_ratios = option['height_ratios']
 	top_ratio_y_scalar = (height_ratios[0] + height_ratios[1]) / height_ratios[1]
+
+	option['split_right'] = False # in last version we do not need to split right
 	
 	if ('split_right'  not in option or option['split_right']  != True) and \
 	   ('double_right' not in option or option['double_right'] != True) and \
@@ -235,24 +237,19 @@ def drawSRFig(option) :
 	cutTo3 = None
 	if 'cutTo' in option :
 		cutTo = option['cutTo']
-	#for subfolder in getSubfolders("@CMAKE_CURRENT_SOURCE_DIR@/../data") :
+	#for subFolder in getSubfolders(dataFolder) :
+	#	X, sparseData = sparceDataEveryXSteps(readDataFrom(subFolder + "result_data.txt", cutTo), 5)
+	#	drawDataInSubplot(sparseData, main_ax)
 	for subFolder in getSubfolders(dataFolder) :
-		#drawData(readDataFrom(subFolder + "result_data.txt", cutTo))
-		#drawData(readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo))
+		#drawDataInSubplot(readDataFrom(subFolder + "result_data.txt", cutTo), main_ax)
+		#drawDataInSubplot(readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo), main_ax)
 		# choose a folder
 		if 'sample_run' in option and subFolder != dataFolder + "/" + option['sample_run'] + "/" :
 			continue
 		# draw new lowerbound as pink
-		X, sparseLowerbound = sparceDataEveryXSteps(readDataFrom(subFolder + "result_new_lowerbound_data.txt", cutTo), 5)
-		#drawDataWithXInSubplot(X, sparseLowerbound, axs[0], 'hotpink')
-		legend_handle_lowerbound, = drawDataInSubplot(sparseLowerbound, main_ax, 'hotpink')
-
-		'''
-		# draw old lowerbound as green
 		X, sparseLowerbound = sparceDataEveryXSteps(readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo), 5)
 		#drawDataWithXInSubplot(X, sparseLowerbound, axs[0], 'hotpink')
-		legend_handle_lowerbound, = drawDataInSubplot(sparseLowerbound, main_ax, 'green')
-		'''
+		legend_handle_lowerbound, = drawDataInSubplot(sparseLowerbound, main_ax, 'hotpink')
 
 		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
 			robotsData.append(readDataFrom(subFile, cutTo))
@@ -391,9 +388,19 @@ def drawSRFig(option) :
 		cutTo3 = option['cutTo3']
 
 	boxdata = []
+	''' # read each robot data
 	for subFolder in getSubfolders(dataFolder) :
 		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
 			boxdata = boxdata + readDataFrom(subFile, cutTo)
+	'''
+
+	# read mean data and lowerbound, and subtrack
+	for subFolder in getSubfolders(dataFolder) :
+		mean_data = readDataFrom(subFolder + "result_data.txt", cutTo)
+		#lowerbound_data = readDataFrom(subFolder + "result_new_lowerbound_data.txt", cutTo)
+		lowerbound_data = readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo)
+		data_to_show = subtractLists(mean_data, lowerbound_data)
+		boxdata = boxdata + data_to_show
 
 	violin_return_1 = violin_ax.violinplot(boxdata, showmeans=True)
 	violin_returns = [violin_return_1]
@@ -415,9 +422,19 @@ def drawSRFig(option) :
 			double_right_dataFolder = option['triple_right_dataFolder2']
 
 		boxdata2 = []
+		'''
 		for subFolder in getSubfolders(double_right_dataFolder) :
 			for subFile in getSubfiles(subFolder + "result_each_robot_error") :
 				boxdata2 = boxdata2 + readDataFrom(subFile, cutTo2)
+		'''
+		# read mean data and lowerbound, and subtrack
+		for subFolder in getSubfolders(double_right_dataFolder) :
+			mean_data = readDataFrom(subFolder + "result_data.txt", cutTo2)
+			#lowerbound_data = readDataFrom(subFolder + "result_new_lowerbound_data.txt", cutTo2)
+			lowerbound_data = readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo2)
+			data_to_show = subtractLists(mean_data, lowerbound_data)
+			boxdata2 = boxdata2 + data_to_show
+
 
 		violin_return_3 = violin2_ax.violinplot(boxdata2, showmeans=True)
 		violin_returns.append(violin_return_3)
@@ -433,9 +450,18 @@ def drawSRFig(option) :
 		dataFolder3 = option['triple_right_dataFolder3']
 
 		boxdata3 = []
+		'''
 		for subFolder in getSubfolders(dataFolder3) :
 			for subFile in getSubfiles(subFolder + "result_each_robot_error") :
 				boxdata3 = boxdata3 + readDataFrom(subFile, cutTo3)
+		'''
+		# read mean data and lowerbound, and subtrack
+		for subFolder in getSubfolders(dataFolder3) :
+			mean_data = readDataFrom(subFolder + "result_data.txt", cutTo3)
+			#lowerbound_data = readDataFrom(subFolder + "result_new_lowerbound_data.txt", cutTo3)
+			lowerbound_data = readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo3)
+			data_to_show = subtractLists(mean_data, lowerbound_data)
+			boxdata3 = boxdata3 + data_to_show
 
 		violin_return_5 = violin3_ax.violinplot(boxdata3, showmeans=True)
 		violin_returns.append(violin_return_5)
