@@ -2,46 +2,25 @@ drawDataFileName = "@CMAKE_SOURCE_DIR@/scripts/drawData.py"
 #execfile(drawDataFileName)
 exec(compile(open(drawDataFileName, "rb").read(), drawDataFileName, 'exec'))
 
-drawSRFigFileName = "@CMAKE_SOURCE_DIR@/scripts/drawSRFig.py"
-#execfile(drawSRFigFileName)
-exec(compile(open(drawSRFigFileName, "rb").read(), drawSRFigFileName, 'exec'))
+DATADIR= ""
+DATADIR+="@CMAKE_SoNS_DATA_PATH@/"
+DATADIR+="experiments/"
+DATADIR+="2_Mission_Global_local_goals/"
+DATADIR+="Variant1_Smaller_denser_obstacles/"
+DATADIR+="Large_scale_simulation_experiments/"
+DATADIR+="data_simu/data"
 
-logGeneratorFileName = "@CMAKE_SOURCE_DIR@/scripts/logReader/logReplayer.py"
-exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exec'))
+for subFolder in getSubfolders(DATADIR) :
+	data = readDataFrom(subFolder + "result_data.txt")
+	drawData(data)
+	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
 
-drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
-exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
+	'''
+	if subFolder != DATADIR+ "/run1/" :
+		continue
+	for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+		drawData(readDataFrom(subFile))
+	break
+	'''
 
-option = {
-	'dataFolder' : "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_1_simu_02_obstacle_avoidance_small_10d/data_simu/data",
-	'sample_run'             : "run1",
-	'SRFig_save'             : "mission2_simu10d_exp_1_simu_02_obstacle_avoidance_small_10d_SRFig.pdf",
-	'trackLog_save'          : "mission2_simu10d_exp_1_simu_02_obstacle_avoidance_small_10d_trackLog.pdf",
-	'SRFig_show'             : False,
-	'trackLog_show'          : False,
-
-	'main_ax_lim'            : [-0.2, 3],
-
-	'split_right'            : True,
-	'violin_ax_top_lim'      : [5.18, 5.21],
-	'height_ratios'          : [1, 8],
-
-	'double_right'           : True,
-	'double_right_dataFolder': "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_1_simu_03_obstacle_avoidance_large_10d/data_simu/data",
-
-#------------------------------------------------
-	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
-	'key_frame' :  [0, 800] ,
-	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_1_simu_02_obstacle_avoidance_small_10d/data_simu/track_fig_logs"
-	,
-
-	'legend_obstacle'  : True,
-
-	'x_lim'     :  [-4, 14]    ,
-	'y_lim'     :  [-9, 9]        ,
-	'z_lim'     :  [-8.0, 10.0]    ,
-}
-
-drawSRFig(option)
-drawTrackLog(option)
+plt.show()

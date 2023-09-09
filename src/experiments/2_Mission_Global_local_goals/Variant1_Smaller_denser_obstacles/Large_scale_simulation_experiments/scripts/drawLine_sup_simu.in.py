@@ -12,9 +12,15 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_1_simu_02_obstacle_avoidance_small_10d/data_simu/data"
+dataFolder= ""
+dataFolder+="@CMAKE_SoNS_DATA_PATH@/"
+dataFolder+="experiments/"
+dataFolder+="2_Mission_Global_local_goals/"
+dataFolder+="Variant1_Smaller_denser_obstacles/"
+dataFolder+="Large_scale_simulation_experiments/"
+dataFolder+="data_simu/data"
 
-savePDFNameBase = "mission2_small_obstacle_10drone_exp1_02_simu_"
+savePDFNameBase = "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_Large_scale_Simulation_"
 sampleList = [
 	"run4",
 	"run21",
