@@ -7,7 +7,7 @@ DATADIR=""
 DATADIR+=@CMAKE_SoNS_DATA_PATH@/
 DATADIR+=experiments/
 DATADIR+=1_Mission_Self-organized_hierarchy/
-DATADIR+=Variant1_Clustered_start/
+DATADIR+=Variant2_Scattered_start/
 DATADIR+=Real_robot_experiments_with_matching_simulations/
 DATADIR+=data_hw/data
 

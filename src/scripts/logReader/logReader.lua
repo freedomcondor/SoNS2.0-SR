@@ -342,8 +342,6 @@ function logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsD
 
 			-- the predator, targetID == nil, consider its error is always 0
 			local targetRelativePositionV3 = geneIndex[robotData[endStep].targetID or 1].globalPositionV3
-			--local targetGlobalPositionV3 = brainData[step].positionV3 +
-			--                               brainData[step].orientationQ:toRotate(targetRelativePositionV3)
 			local targetGlobalPositionV3 = brainData[step].goalPositionV3 +
 			                               brainData[step].goalOrientationQ:toRotate(targetRelativePositionV3)
 			if goalReferenceOption == false then
