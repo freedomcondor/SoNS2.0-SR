@@ -18,7 +18,7 @@ if hw_or_simu == None :
 	exit()
 # -----------------------------
 
-DATADIR= ""
+DATADIR =""
 DATADIR+="@CMAKE_SoNS_DATA_PATH@/"
 DATADIR+="experiments/"
 DATADIR+="1_Mission_Self-organized_hierarchy/"
@@ -30,18 +30,23 @@ else :
 	DATADIR+="data_simu/data"
 
 for subFolder in getSubfolders(DATADIR) :
-	'''
+	# choose a specific run
+	#if subFolder != DATADIR+ "/run1/" :
+	#	continue
+
 	data = readDataFrom(subFolder + "result_data.txt")
-	if data[120] > 1.3 :
-		print(subFolder)
+#	if data[120] > 1.3 :
+#		print(subFolder)
 	drawData(data)
 	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
 	'''
 
-	if subFolder != DATADIR+ "/run1/" :
-		continue
 	for subFile in getSubfiles(subFolder + "result_each_robot_error") :
-		drawData(readDataFrom(subFile))
+		data = readDataFrom(subFile)
+		if data[115] < 0.2 :
+			print(subFile)
+		drawData(data)
 	break
+	'''
 
 plt.show()

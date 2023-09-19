@@ -48,6 +48,7 @@ track_option_base = {
 
 	'SRFig_show'        : False,
 	'main_ax_lim'            : [-0.2, 3],
+	'no_violin'         : True,
 }
 
 #----------------------------------
@@ -80,6 +81,5 @@ for sample_run in sampleList :
 
 	drawTrackLog(track_option)
 
-	track_option['no_violin'] = True
 	track_option['SRFig_save'] = savePDFNameBase + sample_run + "_ErrorLog.pdf"
 	drawSRFig(track_option)
