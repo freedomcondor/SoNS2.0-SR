@@ -12,8 +12,15 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_04_switch_line/data_simu/data"
-savePDFNameBase = "mission3_switch_funnel_exp0_04_simu_"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+dataFolder += "data_simu/data"
+
+savePDFNameBase = "Mission3_Collective_sensing_actuation_Real_robot_Simulation_"
+
 sampleList = [
 	"run3",
 	"run11",
@@ -39,6 +46,8 @@ track_option_base = {
 	'showRobotName'     : False,
 
 	'colored_key_frame' : True,
+
+	'cutTo'             : 1278,
 
 	'SRFig_show'        : False,
 	'no_violin'         : True,
