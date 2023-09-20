@@ -12,21 +12,20 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder= ""
-dataFolder+="@CMAKE_SoNS_DATA_PATH@/"
-dataFolder+="experiments/"
-dataFolder+="2_Mission_Global_local_goals/"
-dataFolder+="Variant1_Smaller_denser_obstacles/"
-dataFolder+="Real_robot_experiments_with_matching_simulations/"
-dataFolder+="data_hw/data"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+dataFolder += "data_hw/data"
 
 savePDFNameBase = "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_Read_robot_Hardware_"
 sampleList = [
-	"run1",
-	"run2",
+#	"run1",
+#	"run2",
 	"run3",
-	"run4",
-	"run5",
+#	"run4",
+#	"run5",
 ]
 
 #----------------------------------

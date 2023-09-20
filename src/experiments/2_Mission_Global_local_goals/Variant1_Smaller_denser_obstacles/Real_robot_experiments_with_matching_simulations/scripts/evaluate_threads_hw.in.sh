@@ -3,12 +3,12 @@ source @CMAKE_SOURCE_DIR@/scripts/librun_threads.sh
 
 # prepare to run threads
 #-----------------------------------------------------
-DATADIR=""
-DATADIR+=@CMAKE_SoNS_DATA_PATH@/
-DATADIR+=experiments/
-DATADIR+=2_Mission_Global_local_goals/
-DATADIR+=Variant1_Smaller_denser_obstacles/
-DATADIR+=Real_robot_experiments_with_matching_simulations/
+cmake_source_dir="@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir="@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir=${cmake_current_source_dir#$cmake_source_dir}
+cmake_relative_dir=${cmake_relative_dir%"scripts"}
+#cmake_relative_dir starts with / and end with /
+DATADIR="@CMAKE_SoNS_DATA_PATH@"$cmake_relative_dir
 DATADIR+=data_hw/data
 
 TMPDIR=@CMAKE_BINARY_DIR@/eva_threads

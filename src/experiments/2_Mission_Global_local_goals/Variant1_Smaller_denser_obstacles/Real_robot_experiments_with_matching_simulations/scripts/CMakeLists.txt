@@ -1,6 +1,6 @@
 configure_file( evaluator.in.lua     evaluator.lua)
-configure_file( evaluate_threads_hw.in.sh     evaluate_threads_hw.sh)
-configure_file( evaluate_threads_simu.in.sh   evaluate_threads_simu.sh)
+configure_file( evaluate_threads_hw.in.sh     evaluate_threads_hw.sh   @ONLY)
+configure_file( evaluate_threads_simu.in.sh   evaluate_threads_simu.sh @ONLY)
 
 configure_file( replayLogs.in.py     replayLogs.py)
 configure_file( run_100.in.sh        run_100.sh)

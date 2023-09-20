@@ -30,13 +30,13 @@ lowerBoundParameters = {
 	stop_dis = 0.01,
 }
 
-logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, 1)
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, saveStartStep)
 
-logReader.calcSegmentLowerBoundErrorInc(robotsData, geneIndex)
+logReader.calcSegmentLowerBoundErrorInc(robotsData, geneIndex, saveStartStep)
 
 logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep)
 logReader.saveData(robotsData, "result_lowerbound_data.txt", "lowerBoundError", saveStartStep)
 logReader.saveData(robotsData, "result_lowerbound_inc_data.txt", "lowerBoundInc", saveStartStep)
+logReader.saveEachRobotData(robotsData, "result_each_robot_error_data", "error", saveStartStep)
+logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_data", "lowerBound", saveStartStep)
 logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_inc_data", "lowerBoundInc", saveStartStep)
-logReader.saveEachRobotData(robotsData, "result_each_robot_error", "error", saveStartStep)

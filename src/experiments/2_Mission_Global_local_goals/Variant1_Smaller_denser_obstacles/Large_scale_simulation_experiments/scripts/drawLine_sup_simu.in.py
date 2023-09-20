@@ -12,13 +12,12 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder= ""
-dataFolder+="@CMAKE_SoNS_DATA_PATH@/"
-dataFolder+="experiments/"
-dataFolder+="2_Mission_Global_local_goals/"
-dataFolder+="Variant1_Smaller_denser_obstacles/"
-dataFolder+="Large_scale_simulation_experiments/"
-dataFolder+="data_simu/data"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+dataFolder += "data_simu/data"
 
 savePDFNameBase = "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_Large_scale_Simulation_"
 sampleList = [
