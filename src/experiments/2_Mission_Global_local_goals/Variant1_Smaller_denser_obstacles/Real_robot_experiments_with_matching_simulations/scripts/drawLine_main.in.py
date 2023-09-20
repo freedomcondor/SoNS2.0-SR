@@ -38,22 +38,22 @@ dataFolder2+="data_hw/data"
 option = {
 	'dataFolder'             : dataFolder,
 	'sample_run'             : sample_run,
-	'SRFig_save'             : "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_SRFig.pdf",
-	'trackLog_save'          : "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_trackLog.pdf",
+	'SRFig_save'             : "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_Real_robot_Hardware-SRFig.pdf",
+	'trackLog_save'          : "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_Real_robot_Hardware-trackLog.pdf",
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
 	'main_ax_lim'            : [-0.1, 2],
 
-	'split_right'            : True,
+	'split_right'            : False,
 	'violin_ax_top_lim'      : [3.4, 4.1],
 	'height_ratios'          : [1, 3],
 
-	'double_right'           : False,
+	'double_right'           : True,
 	'double_right_dataFolder': dataFolder2,
 
-	'boxPlotValue_save'                  : "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles.dat",
-	'boxPlotValue_doubleRight_save'      : "Mission2_Obstacle_avoidance_Variant2_Larger_less_dense_obstacles.dat",
+	'boxPlotValue_save'                  : "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_Real_robot_Hardware.dat",
+	'boxPlotValue_doubleRight_save'      : "Mission2_Obstacle_avoidance_Variant2_Larger_less_dense_obstacles_Real_robot_hardware.dat",
 
 #------------------------------------------------
 	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
