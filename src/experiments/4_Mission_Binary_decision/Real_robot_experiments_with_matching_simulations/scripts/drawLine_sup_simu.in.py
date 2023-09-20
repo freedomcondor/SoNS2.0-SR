@@ -12,8 +12,14 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_simu/data"
-savePDFNameBase = "mission4_choosing_gates_exp0_05_simu"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+dataFolder += "data_simu/data"
+
+savePDFNameBase = "mission4_Binary_decision_Real_robot_Simulation_"
 sampleList = [
 	"run6",
 	"run10",
@@ -32,13 +38,15 @@ track_option_base = {
 #	'trackLog_save'     : savePDFNameBase + sample_run + ".pdf",
 	'trackLog_show'     : False,
 
-	'x_lim'     :  [-3.5, 4.5]    ,
-	'y_lim'     :  [-4, 4]        ,
-	'z_lim'     :  [-1.0, 7.0]    ,
+	'x_lim'     :  [-4.5, 4.5]    ,
+	'y_lim'     :  [-4.5, 4.5]        ,
+	'z_lim'     :  [-1.0, 8.0]    ,
 
 	'showRobotName'     : False,
 
 	'colored_key_frame' : True,
+
+	'cutTo'             : 1372,
 
 	'SRFig_show'        : False,
 	'no_violin'         : True,
@@ -52,7 +60,7 @@ x_lim_list = {}
 y_lim_list = {}
 z_lim_list = {}
 
-key_frame_example = [0, 300, 1200]
+key_frame_example = [0, 300, 1000]
 
 #-----------------------------------------------------------
 for sample_run in sampleList :
