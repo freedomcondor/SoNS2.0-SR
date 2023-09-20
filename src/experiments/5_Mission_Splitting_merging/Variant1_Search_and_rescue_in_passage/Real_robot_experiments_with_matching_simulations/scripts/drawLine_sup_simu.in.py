@@ -12,8 +12,14 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_simu/data"
-savePDFNameBase = "mission5_split_exp0_08_simu_"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+dataFolder += "data_simu/data"
+
+savePDFNameBase = "Mission5_Splitting_merging_Variant1_Search_and_rescue_Real_robot_Simulation_"
 sampleList = [
 	"run10",
 	"run16",
@@ -39,6 +45,8 @@ track_option_base = {
 	'showRobotName'     : False,
 
 	'colored_key_frame' : True,
+
+	'cutTo'             : 957,
 
 	'SRFig_show'        : False,
 	'no_violin'         : True,

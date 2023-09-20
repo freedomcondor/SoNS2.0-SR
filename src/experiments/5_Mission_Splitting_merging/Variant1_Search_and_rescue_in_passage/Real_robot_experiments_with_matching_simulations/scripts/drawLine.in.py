@@ -2,91 +2,49 @@ drawDataFileName = "@CMAKE_SOURCE_DIR@/scripts/drawData.py"
 #execfile(drawDataFileName)
 exec(compile(open(drawDataFileName, "rb").read(), drawDataFileName, 'exec'))
 
-drawSRFigFileName = "@CMAKE_SOURCE_DIR@/scripts/drawSRFig.py"
-#execfile(drawSRFigFileName)
-exec(compile(open(drawSRFigFileName, "rb").read(), drawSRFigFileName, 'exec'))
+# -----------------------------
+hw_or_simu = None
 
-logGeneratorFileName = "@CMAKE_SOURCE_DIR@/scripts/logReader/logReplayer.py"
-exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exec'))
+import sys
+params = sys.argv
+if len(sys.argv) >= 2 :
+	if sys.argv[1] == "hw" :
+		hw_or_simu = "hw"
+	if sys.argv[1] == "simu" :
+		hw_or_simu = "simu"
 
-drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
-exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
+if hw_or_simu == None :
+	print("please specify hw or simu")
+	exit()
+# -----------------------------
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+DATADIR  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+if hw_or_simu == "hw" :
+	DATADIR+="data_hw/data"
+else :
+	DATADIR+="data_simu/data"
+# -----------------------------
+for subFolder in getSubfolders(DATADIR) :
+	# choose a specific run
+	#if subFolder != DATADIR+ "/run1/" :
+	#	continue
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_hw/data"
-dataFolder2 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw"
-sample_run = "test_20220713_1_success_1"
-#sample_run = "test_20220713_3_success_2"
-#sample_run = "test_20220713_4_success_3"
-#sample_run = "test_20220713_5_success_4"
-#sample_run = "test_20220713_6_success_5"
+	data = readDataFrom(subFolder + "result_data.txt")
+#	if data[120] > 1.3 :
+#		print(subFolder)
+	drawData(data)
+	print("length: ", len(data), ":", subFolder)
+	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
+	'''
+	for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
+		data = readDataFrom(subFile)
+		if data[115] < 0.2 :
+			print(subFile)
+		drawData(data)
+	break
+	'''
 
-option = {
-	'dataFolder'             : dataFolder,
-	'sample_run'             : sample_run,
-	'SRFig_save'             : "mission5_hw_exp_0_hw_08_split_SRFig.pdf",
-	'trackLog_save'          : "mission5_hw_exp_0_hw_08_split_trackLog.pdf",
-	'SRFig_show'             : False,
-	'trackLog_show'          : False,
-
-	'main_ax_lim'            : [-0.5, 6.5],
-
-	#'split_right'            : True,
-	#'violin_ax_top_lim'      : [2.3, 6.2],
-	#'height_ratios'          : [1, 10],
-
-	'double_right'           : True,
-	'double_right_dataFolder': dataFolder2,
-
-	'boxPlotValue_save'                  : "mission5_hw_boxplot1_exp_0_hw_08_split.dat",
-	'boxPlotValue_doubleRight_save'      : "mission5_hw_boxplot2_exp_0_hw_09_1d_switch_rescue.dat",
-#------------------------------------------------
-	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
-	'key_frame' :  [0] ,
-
-	'key_frame_parent_index' :  [
-		{}, # for key frame 0
-		{
-			'drone2'    :   'drone3'   ,
-			'drone3'    :   'nil'      ,
-			'pipuck1'   :   'drone3'  ,
-			'pipuck2'   :   'drone2'  ,
-			'pipuck3'   :   'pipuck6'  ,
-			'pipuck4'   :   'drone2'  ,
-			'pipuck5'   :   'pipuck6'  ,
-			'pipuck6'   :   'drone3'  ,
-		},
-	] ,
-
-	'x_lim'     :  [-3.5, 4.5]    ,
-	'y_lim'     :  [-4, 4]    ,
-	'z_lim'     :  [-1.0, 7.0]    ,
-}
-
-
-drawSRFig(option)
-drawTrackLog(option)
-
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_simu/data"
-dataFolder2 = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data"
-sample_run = "run1"
-
-option = {
-	'dataFolder'             : dataFolder,
-	'sample_run'             : sample_run,
-	'SRFig_save'             : "mission5_simu_exp_0_hw_08_split_SRFig.pdf",
-	'SRFig_show'             : False,
-
-	'main_ax_lim'            : [-0.5, 6.5],
-
-	#'split_right'            : True,
-	#'violin_ax_top_lim'      : [2.3, 6.2],
-	#'height_ratios'          : [1, 10],
-
-	'double_right'           : True,
-	'double_right_dataFolder': dataFolder2,
-
-	'boxPlotValue_save'                  : "mission5_simu_boxplot1_exp_0_hw_08_split.dat",
-	'boxPlotValue_doubleRight_save'      : "mission5_simu_boxplot2_exp_0_hw_09_1d_switch_rescue.dat",
-}
-
-drawSRFig(option)
+plt.show()
