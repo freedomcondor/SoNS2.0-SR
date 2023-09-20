@@ -19,13 +19,13 @@ cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, ""
 dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
 dataFolder += "data_hw/data"
 
-savePDFNameBase = "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_Read_robot_Hardware_"
+savePDFNameBase = "Mission2_Obstacle_avoidance_Variant1_Smaller_denser_obstacles_Real_robot_Hardware_"
 sampleList = [
-#	"run1",
-#	"run2",
+	"run1",
+	"run2",
 	"run3",
-#	"run4",
-#	"run5",
+	"run4",
+	"run5",
 ]
 
 #----------------------------------
