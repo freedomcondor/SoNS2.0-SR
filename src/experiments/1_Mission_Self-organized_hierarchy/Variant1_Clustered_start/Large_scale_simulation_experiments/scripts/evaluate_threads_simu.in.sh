@@ -19,7 +19,7 @@ TMPDIR=@CMAKE_BINARY_DIR@/eva_threads
 echo $DATADIR
 
 # start run number, run per thread, total threads
-run_threads 1 5 12\
+run_threads 1 2 25\
 	"lua @CMAKE_CURRENT_BINARY_DIR@/evaluator.lua" \
 	$DATADIR \
 	$TMPDIR \

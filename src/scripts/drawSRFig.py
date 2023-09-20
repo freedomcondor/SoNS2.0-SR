@@ -27,8 +27,6 @@ def drawSRFig(option) :
 		height_ratios = option['height_ratios']
 	top_ratio_y_scalar = (height_ratios[0] + height_ratios[1]) / height_ratios[1]
 
-	option['split_right'] = False # in last version we do not need to split right
-	
 	if ('split_right'  not in option or option['split_right']  != True) and \
 	   ('double_right' not in option or option['double_right'] != True) and \
 	   ('triple_right' not in option or option['triple_right'] != True) :

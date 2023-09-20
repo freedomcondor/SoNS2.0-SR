@@ -12,8 +12,6 @@ DATADIR+="data_hw/data"
 
 for subFolder in getSubfolders(DATADIR) :
 	data = readDataFrom(subFolder + "result_data.txt")
-	#if data[115] > 2 :
-	#	print(subFolder)
 	drawData(data)
 	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
 
