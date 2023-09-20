@@ -30,7 +30,7 @@ local geneIndex = logReader.calcMorphID(gene)
 local robotsData = logReader.loadData("./logs")
 
 local firstRecruitStep = logReader.calcFirstRecruitStep(robotsData)
-local saveStartStep = firstRecruitStep + 10
+local saveStartStep = firstRecruitStep + 15
 print("firstRecruit happens", firstRecruitStep, "data start at", saveStartStep)
 
 local stage2Step = logReader.checkIDFirstAppearStep(robotsData, structure2.idN, nil)
@@ -42,7 +42,7 @@ print("stage3 start at", stage3Step)
 os.execute("echo " .. tostring(stage2Step - saveStartStep) .. " > formationSwitch.txt")
 os.execute("echo " .. tostring(stage3Step - saveStartStep) .. " >> formationSwitch.txt")
 
-logReader.calcSegmentData(robotsData, geneIndex, 1, stage2Step - 1)
+logReader.calcSegmentData(robotsData, geneIndex, saveStartStep, stage2Step - 1)
 logReader.calcSegmentData(robotsData, geneIndex, stage2Step, stage3Step - 1)
 logReader.calcSegmentData(robotsData, geneIndex, stage3Step, nil) 
 
@@ -56,15 +56,16 @@ lowerBoundParameters = {
 	stop_dis = 0.01,
 }
 
-logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, 1, stage2Step - 1)
+logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, saveStartStep, stage2Step - 1)
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, saveStartStep, stage2Step - 1)
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, stage2Step, stage3Step - 1)
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, stage3Step, nil)
 
-logReader.calcSegmentLowerBoundErrorInc(robotsData, geneIndex)
+logReader.calcSegmentLowerBoundErrorInc(robotsData, geneIndex, saveStartStep)
 
 logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep)
 logReader.saveData(robotsData, "result_lowerbound_data.txt", "lowerBoundError", saveStartStep)
 logReader.saveData(robotsData, "result_lowerbound_inc_data.txt", "lowerBoundInc", saveStartStep)
+logReader.saveEachRobotData(robotsData, "result_each_robot_error_data", "error", saveStartStep)
+logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_data", "lowerBound", saveStartStep)
 logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_inc_data", "lowerBoundInc", saveStartStep)
-logReader.saveEachRobotData(robotsData, "result_each_robot_error", "error", saveStartStep)
