@@ -14,7 +14,7 @@ exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exe
 
 cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
 cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
-cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "")
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
 #cmake_relative_dir starts with / and end with no /
 dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
 dataFolder += "data_simu/data"
