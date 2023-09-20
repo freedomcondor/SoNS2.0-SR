@@ -3,12 +3,12 @@ source @CMAKE_SOURCE_DIR@/scripts/librun_threads.sh
 
 # prepare to run threads
 #-----------------------------------------------------
-DATADIR=""
-DATADIR+=@CMAKE_SoNS_DATA_PATH@/
-DATADIR+=experiments/
-DATADIR+=1_Mission_Self-organized_hierarchy/
-DATADIR+=Variant1_Clustered_start/
-DATADIR+=Real_robot_experiments_with_matching_simulations/
+cmake_source_dir="@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir="@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir=${cmake_current_source_dir#$cmake_source_dir}
+cmake_relative_dir=${cmake_relative_dir%"scripts"}
+#cmake_relative_dir starts with / and end with /
+DATADIR="@CMAKE_SoNS_DATA_PATH@"$cmake_relative_dir
 DATADIR+=data_hw/data
 
 TMPDIR=@CMAKE_BINARY_DIR@/eva_threads
@@ -20,7 +20,7 @@ echo $DATADIR
 
 # start run number, run per thread, total threads
 run_threads 1 1 5\
-	"lua @CMAKE_CURRENT_BINARY_DIR@/evaluator.lua" \
+	"lua @CMAKE_CURRENT_BINARY_DIR@/evaluator.lua hardware" \
 	$DATADIR \
 	$TMPDIR \
 	"----" \

@@ -17,28 +17,33 @@ if hw_or_simu == None :
 	print("please specify hw or simu")
 	exit()
 # -----------------------------
-
-DATADIR= ""
-DATADIR+="@CMAKE_SoNS_DATA_PATH@/"
-DATADIR+="experiments/"
-DATADIR+="1_Mission_Self-organized_hierarchy/"
-DATADIR+="Variant1_Clustered_start/"
-DATADIR+="Real_robot_experiments_with_matching_simulations/"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+DATADIR  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
 if hw_or_simu == "hw" :
 	DATADIR+="data_hw/data"
 else :
 	DATADIR+="data_simu/data"
-
+# -----------------------------
 for subFolder in getSubfolders(DATADIR) :
-	data = readDataFrom(subFolder + "result_data.txt")
-	drawData(data)
-	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
+	# choose a specific run
+	#if subFolder != DATADIR+ "/run1/" :
+	#	continue
 
+	data = readDataFrom(subFolder + "result_data.txt")
+#	if data[120] > 1.3 :
+#		print(subFolder)
+	drawData(data)
+	print("length: ", len(data), ":", subFolder)
+	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
 	'''
-	if subFolder != DATADIR+ "/run1/" :
-		continue
-	for subFile in getSubfiles(subFolder + "result_each_robot_error") :
-		drawData(readDataFrom(subFile))
+	for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
+		data = readDataFrom(subFile)
+		if data[115] < 0.2 :
+			print(subFile)
+		drawData(data)
 	break
 	'''
 

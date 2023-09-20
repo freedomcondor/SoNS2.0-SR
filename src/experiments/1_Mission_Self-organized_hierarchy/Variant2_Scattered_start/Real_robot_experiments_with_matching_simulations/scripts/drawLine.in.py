@@ -38,7 +38,7 @@ for subFolder in getSubfolders(DATADIR) :
 	drawData(data)
 	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
 	'''
-	for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+	for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
 		data = readDataFrom(subFile)
 		if data[115] < 0.2 :
 			print(subFile)

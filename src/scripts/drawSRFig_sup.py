@@ -271,7 +271,7 @@ def drawSRFig(option) :
 		#drawDataWithXInSubplot(X, sparseLowerbound, axs[0], 'hotpink')
 		legend_handle_lowerbound, = drawDataInSubplot(sparseLowerbound, main_ax, 'hotpink')
 
-		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+		for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
 			robotsData.append(readDataFrom(subFile, cutTo))
 			#drawDataInSubplot(readDataFrom(subFile, cutTo), main_ax)
 
@@ -420,7 +420,7 @@ def drawSRFig(option) :
 	boxdata = []
 	''' # read each robot data
 	for subFolder in getSubfolders(dataFolder) :
-		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+		for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
 			boxdata = boxdata + readDataFrom(subFile, cutTo)
 	'''
 
@@ -454,7 +454,7 @@ def drawSRFig(option) :
 		boxdata2 = []
 		'''
 		for subFolder in getSubfolders(double_right_dataFolder) :
-			for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+			for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
 				boxdata2 = boxdata2 + readDataFrom(subFile, cutTo2)
 		'''
 		# read mean data and lowerbound, and subtrack
@@ -482,7 +482,7 @@ def drawSRFig(option) :
 		boxdata3 = []
 		'''
 		for subFolder in getSubfolders(dataFolder3) :
-			for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+			for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
 				boxdata3 = boxdata3 + readDataFrom(subFile, cutTo3)
 		'''
 		# read mean data and lowerbound, and subtrack

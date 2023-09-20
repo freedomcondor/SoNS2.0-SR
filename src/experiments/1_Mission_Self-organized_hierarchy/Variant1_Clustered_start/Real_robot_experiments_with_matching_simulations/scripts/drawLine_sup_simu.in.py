@@ -12,12 +12,12 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder ="@CMAKE_SoNS_DATA_PATH@/"
-dataFolder+="experiments/"
-dataFolder+="1_Mission_Self-organized_hierarchy/"
-dataFolder+="Variant1_Clustered_start/"
-dataFolder+="Real_robot_experiments_with_matching_simulations/"
-dataFolder+="data_simu/data"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+dataFolder += "data_simu/data"
 
 savePDFNameBase = "Mission1_Self-organized_hirarchy_Variant1_Clustered_start_Real_robot_Simulation_"
 
@@ -46,6 +46,8 @@ track_option_base = {
 	'showRobotName'     : False,
 
 	'colored_key_frame' : True,
+
+	'cutTo'             : 166,
 
 	'SRFig_show'        : False,
 	'no_violin'         : True,

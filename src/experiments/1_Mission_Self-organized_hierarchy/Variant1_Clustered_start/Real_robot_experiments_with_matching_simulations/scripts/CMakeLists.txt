@@ -1,6 +1,6 @@
 configure_file( evaluator.in.lua              evaluator.lua)
-configure_file( evaluate_threads_hw.in.sh     evaluate_threads_hw.sh)
-configure_file( evaluate_threads_simu.in.sh   evaluate_threads_simu.sh)
+configure_file( evaluate_threads_hw.in.sh     evaluate_threads_hw.sh   @ONLY)
+configure_file( evaluate_threads_simu.in.sh   evaluate_threads_simu.sh @ONLY)
 
 configure_file( run_cluster.in.slurm run_cluster.slurm)
 configure_file( readPkl.in.py        readPkl.py)

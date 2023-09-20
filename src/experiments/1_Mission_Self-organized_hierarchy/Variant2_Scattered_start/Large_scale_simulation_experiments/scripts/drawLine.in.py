@@ -17,7 +17,7 @@ for subFolder in getSubfolders(DATADIR) :
 	'''
 	if subFolder != DATADIR+ "/run1/" :
 		continue
-	for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+	for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
 		drawData(readDataFrom(subFile))
 	break
 	'''
