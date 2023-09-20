@@ -2,13 +2,12 @@ drawDataFileName = "@CMAKE_SOURCE_DIR@/scripts/drawData.py"
 #execfile(drawDataFileName)
 exec(compile(open(drawDataFileName, "rb").read(), drawDataFileName, 'exec'))
 
-DATADIR= ""
-DATADIR+="@CMAKE_SoNS_DATA_PATH@/"
-DATADIR+="experiments/"
-DATADIR+="1_Mission_Self-organized_hierarchy/"
-DATADIR+="Variant2_Scattered_start/"
-DATADIR+="Large_scale_simulation_experiments/"
-DATADIR+="data_simu/data"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "")
+#cmake_relative_dir starts with / and end with no /
+DATADIR  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+DATADIR += "data_simu/data"
 
 for subFolder in getSubfolders(DATADIR) :
 	data = readDataFrom(subFolder + "result_data.txt")
