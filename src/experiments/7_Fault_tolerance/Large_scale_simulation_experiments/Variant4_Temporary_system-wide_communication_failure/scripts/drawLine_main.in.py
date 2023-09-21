@@ -29,17 +29,17 @@ option = {
 	'dataFolder'             : dataFolder,
 	'sample_run'             : sample_run,
 
-	'SRFig_save'             : "Mission7_Fault_tolerance_Variant3_vision_failure_Large_scale_Simulation-SRFig.pdf",
-	'trackLog_save'          : "Mission7_Fault_tolerance_Variant3_vision_failure_Large_scale_Simulation-trackLog.pdf",
+	'SRFig_save'             : "Mission7_Fault_tolerance_Variant4_communication_failure_Large_scale_Simulation-SRFig.pdf",
+	'trackLog_save'          : "Mission7_Fault_tolerance_Variant4_communication_failure_Large_scale_Simulation-trackLog.pdf",
 
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
-	'main_ax_lim'            : [-0.5, 7.5],
+	'main_ax_lim'            : [-0.5, 7],
 
 	'split_right'            : False,
-	'violin_ax_top_lim'      : [9.5, 10.5],
-	'height_ratios'          : [1, 8],
+	'violin_ax_top_lim'      : [9.8, 10.8],
+	'height_ratios'          : [1, 7.5],
 
 	'failure_place_holder'   : 0,
 
@@ -48,11 +48,28 @@ option = {
 	'triple_right_dataFolder2':  dataFolder2,
 	'triple_right_dataFolder3':  dataFolder3,
 
-	'boxPlotValue_save'              : "Mission7_Fault_tolerance_Variant3_vision_failure_0.5s_Large_scale_Simulation.dat",
-	'boxPlotValue_doubleRight_save'  : "Mission7_Fault_tolerance_Variant3_vision_failure_1s_Large_scale_Simulation.dat",
-	'boxPlotValue_tripleRight_save'  : "Mission7_Fault_tolerance_Variant3_vision_failure_30s_Large_scale_Simulation.dat",
+	'boxPlotValue_save'              : "Mission7_Fault_tolerance_Variant4_communication_failure_0.5s_Large_scale_Simulation.dat",
+	'boxPlotValue_doubleRight_save'  : "Mission7_Fault_tolerance_Variant4_communication_failure_1s_Large_scale_Simulation.dat",
+	'boxPlotValue_tripleRight_save'  : "Mission7_Fault_tolerance_Variant4_communication_failure_30s_Large_scale_Simulation.dat",
 }
+#------------------------------------------------
+'''
+	#'key_frame' :  [0, 250, 950] ,
+	'key_frame' :  [0, 500] ,
+
+	'overwrite_trackFig_log_foler' : 
+		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/track_fig_logs/logs"
+	,
+
+	'legend_obstacle'  : True,
+
+	'x_lim'     :  [-12, 12]    ,
+	'y_lim'     :  [-12, 12]        ,
+	'z_lim'     :  [-4.0,8.0]    ,
+}
+'''
 
 drawSRFig(option)
+#drawTrackLog(option)
 
 

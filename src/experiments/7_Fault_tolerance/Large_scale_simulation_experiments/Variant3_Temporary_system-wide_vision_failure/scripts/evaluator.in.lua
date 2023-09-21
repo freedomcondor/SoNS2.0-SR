@@ -5,30 +5,6 @@ package.path = package.path .. ";@CMAKE_CURRENT_BINARY_DIR@/../simu/?.lua"
 logger = require("Logger")
 logReader = require("logReader")
 
--- this is a hack of log reader for bugs
--- some good pipuck is marked as failed, they all have 0,0,0,0,0,0, 70, drone1
-logReader.markFailedRobot = function(robotsData, endStep)
-	for robotName, robotData in pairs(robotsData) do
-		if robotData[endStep].targetID ~= 70 and
-		   robotData[endStep].originGoalPositionV3:XYequ(robotData[endStep-1].originGoalPositionV3) == true and
-		   robotData[endStep-1].originGoalPositionV3:XYequ(robotData[endStep-2].originGoalPositionV3) == true and
-		   robotData[endStep-2].originGoalPositionV3:XYequ(robotData[endStep-3].originGoalPositionV3) == true and
-		   robotData[endStep].originGoalOrientationQ == robotData[endStep-1].originGoalOrientationQ and
-		   robotData[endStep-1].originGoalOrientationQ == robotData[endStep-2].originGoalOrientationQ and
-		   robotData[endStep-2].originGoalOrientationQ == robotData[endStep-3].originGoalOrientationQ and
-		   ((robotData[endStep].originGoalPositionV3 ~= vector3() 
-		     and
-		     robotData[endStep].originGoalOrientationQ ~= quaternion()
-		    ) 
-		    or 
-		    robotData[endStep].brainID ~= robotName
-		   ) then
-			robotData[endStep].failed = true
-			print(robotName, "failed at", endStep)
-		end
-	end
-end
-
 logger.enable()
 
 require("morphologiesGenerator")
@@ -95,9 +71,6 @@ os.execute("echo " .. saveStartStep.. " > saveStartStep.txt")
 os.execute("echo " .. failureStep.. " > failure_step.txt")
 os.execute("echo " .. tostring(structure2Step - saveStartStep) .. " > formationSwitch.txt")
 os.execute("echo " .. tostring(stage4Step - saveStartStep) .. " >> formationSwitch.txt")
-
-logReader.markFailedRobot(robotsData, logReader.getEndStep(robotsData))
-logReader.saveFailedRobot(robotsData, "failure_robots.txt")
 
 logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep)
 logReader.saveData(robotsData, "result_lowerbound_data.txt", "lowerBoundError", saveStartStep)

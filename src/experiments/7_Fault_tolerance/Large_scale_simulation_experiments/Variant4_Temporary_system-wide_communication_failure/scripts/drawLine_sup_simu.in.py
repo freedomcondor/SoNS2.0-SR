@@ -12,7 +12,13 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-savePDFNameBase = "mission7_fault_tolerance_comm_loss_exp3_03_simu_"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolderBase  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+
+savePDFNameBase = "Mission7_Fault_tolerance_Variant4_communication_failure_Large_scale_Simulation_"
 
 #----------------------------------
 track_option_base = {
@@ -39,10 +45,9 @@ track_option_base = {
 	'main_ax_lim'       : [-0.5, 7],
 }
 
-'''
 # -------- loss 0.5s ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_0.5s/data"
+dataFolder = dataFolderBase + "data_simu_0.5s/data"
 sample_run = "run23"
 
 # 23 14 43
@@ -56,10 +61,9 @@ drawTrackLog(track_option)
 track_option['SRFig_save'] = savePDFNameBase + "0.5s_" + sample_run + "_ErrorLog.pdf"
 drawSRFig(track_option)
 
-'''
 # -------- loss 1s ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_1s/data"
+dataFolder = dataFolderBase + "data_simu_1s/data"
 sample_run = "run14"
 
 track_option['dataFolder']    = dataFolder
@@ -73,7 +77,7 @@ drawSRFig(track_option)
 
 # -------- loss 30s ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data"
+dataFolder = dataFolderBase + "data_simu_30s/data"
 sample_run = "run43"
 
 track_option['dataFolder']    = dataFolder
