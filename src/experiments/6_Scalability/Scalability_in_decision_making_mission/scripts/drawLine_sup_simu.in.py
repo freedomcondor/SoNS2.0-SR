@@ -12,7 +12,13 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-savePDFNameBase = "mission6_scalability_gate_choosing_exp2_01_"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolderBase  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+
+savePDFNameBase = "Mission6_Scalability_in_decision_making_Simulation_"
 
 #----------------------------------
 track_option_base = {
@@ -39,14 +45,14 @@ track_option_base = {
 
 # -------- scale 1 ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_1/data"
+dataFolder = dataFolderBase + "data_simu_scale_1/data"
 sample_run = "run3"
 
 #'3 19 2 47'
 
 track_option['dataFolder']    = dataFolder
 track_option['sample_run']    = sample_run
-track_option['trackLog_save'] = savePDFNameBase + "scale1_7drones" + sample_run + "_TrackLog.pdf"
+track_option['trackLog_save'] = savePDFNameBase + "scale1_7drones_" + sample_run + "_TrackLog.pdf"
 track_option['key_frame']     = [0, 450]
 track_option['x_lim'] = [-8, 8]
 track_option['y_lim'] = [-8, 8]
@@ -60,7 +66,7 @@ drawSRFig(track_option)
 
 # -------- scale 2 ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_2/data"
+dataFolder = dataFolderBase + "data_simu_scale_2/data"
 sample_run = "run19"
 
 #'3 19 2 47'
@@ -82,7 +88,7 @@ drawSRFig(track_option)
 
 # -------- scale 3 ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_3/data"
+dataFolder = dataFolderBase + "data_simu_scale_3/data"
 sample_run = "run2"
 
 #'3 19 2 47'
@@ -106,7 +112,7 @@ drawSRFig(track_option)
 
 # -------- scale 4 ---------------------
 track_option = track_option_base.copy()
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability/data_simu_scale_4/data"
+dataFolder = dataFolderBase + "data_simu_scale_4/data"
 sample_run = "run47"
 
 #'3 19 2 47'
