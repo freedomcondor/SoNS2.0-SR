@@ -16,6 +16,7 @@ def readDataFromFolderWithCut(dataFolder) :
 	for subFolder in getSubfolders(dataFolder) :
 		# calc cut time
 		origin_single_data = readDataFrom(subFolder + "result_data.txt")
+		origin_lowerbound_data = readDataFrom(subFolder + "result_lowerbound_data.txt")
 		length = len(origin_single_data)
 		tail_data = origin_single_data[length-20:]
 		end_error = sum(tail_data) / len(tail_data)
@@ -25,20 +26,19 @@ def readDataFromFolderWithCut(dataFolder) :
 				cut_time = i
 				break
 
-		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
-			origin_each_robot_data = readDataFrom(subFile)
-			boxdata = boxdata + origin_each_robot_data[cut_time:]
+		data_to_show = subtractLists(origin_single_data, origin_lowerbound_data)
+		boxdata = boxdata + data_to_show[cut_time:]
 
 	return boxdata
 
 def readDataFromFolder(dataFolder) :
 	boxdata = []
 	for subFolder in getSubfolders(dataFolder) :
-		for subFile in getSubfiles(subFolder + "result_each_robot_error") :
-			boxdata = boxdata + readDataFrom(subFile)
-#		boxdata = readDataFrom(subFolder + "result_data.txt")
+		origin_single_data = readDataFrom(subFolder + "result_data.txt")
+		origin_lowerbound_data = readDataFrom(subFolder + "result_lowerbound_data.txt")
+		data_to_show = subtractLists(origin_single_data, origin_lowerbound_data)
+		boxdata = boxdata + data_to_show
 	return boxdata
-
 
 # set font and style for violin plot (both top and bottom if existed)
 def set_violin_font(violin, color) :
@@ -56,47 +56,47 @@ def set_violin_font(violin, color) :
 
 folder_pairs = [
 	[
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_hw/data",
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_01_formation_1_2d_10p/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robot_experiments_with_matching_simulations/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robot_experiments_with_matching_simulations/data_simu/data",
 		"SoNS Establishing\n(scattered)",
 		[0, 1.0]
 	],
 	[
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_hw/data",
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_10_formation_1_2d_6p_group_start/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robot_experiments_with_matching_simulations/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robot_experiments_with_matching_simulations/data_simu/data",
 		"SoNS Establishing\n(clustered)",
 		[0, 0.5]
 	],
 	[
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_hw/data",
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_02_obstacle_avoidance_small/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robot_experiments_with_matching_simulations/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robot_experiments_with_matching_simulations/data_simu/data",
 		"Obstacle Avoidance\n(smaller obstacles)",
 		[0, 2.5]
 	],
 	[
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_hw/data",
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_03_obstacle_avoidance_large/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robot_experiments_with_matching_simulations/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robot_experiments_with_matching_simulations/data_simu/data",
 		"Obstacle Avoidance\n(larger obstacles)",
 		[0, 2.5]
 	],
 	[
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_04_switch_line/data_hw/data",
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_04_switch_line/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/3_Mission_Collective_sensing_actuation/Real_robot_experiments_with_matching_simulations/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/3_Mission_Collective_sensing_actuation/Real_robot_experiments_with_matching_simulations/data_simu/data",
 		"Through the Funnel",
 	],
 	[
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_hw/data",
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_05_gate_switch/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/4_Mission_Binary_decision/Real_robot_experiments_with_matching_simulations/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/4_Mission_Binary_decision/Real_robot_experiments_with_matching_simulations/data_simu/data",
 		"Choosing Gates",
 	],
 	[
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_hw/data",
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_08_split/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robot_experiments_with_matching_simulations/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robot_experiments_with_matching_simulations/data_simu/data",
 		"Search and Rescue\n(split and searching)",
 	],
 	[
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_hw",
-		"@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/data_hw/data",
+		"@CMAKE_SoNS_DATA_PATH@/experiments/5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/data_simu/data",
 		"Search and Rescue\n(moving the circle)",
 	],
 ]
@@ -117,7 +117,8 @@ index_number = 0
 f = open('violin_compares.dat', "w")
 for folder_pair in folder_pairs :
 	index = index + distance
-	index_number = index_number + 1
+	#index_number = index_number + 1
+	index_number = 1
 
 	tick_index.append(index+offset)
 	tick_label.append(folder_pair[2])

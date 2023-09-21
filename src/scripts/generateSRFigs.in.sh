@@ -1,6 +1,6 @@
 #!/bin/bash
 EXP_DIR=@CMAKE_BINARY_DIR@/experiments
-SCRIPT_PATH=scripts/drawLine.py
+SCRIPT_PATH=scripts/drawLine_main.py
 
 EXPERIMENT_LIST=( \
 # mission 1 --------------------------------------------
@@ -53,10 +53,9 @@ do
 done
 
 SPECIAL_LIST=( \
-#exp_2_simu_scalability/scripts/drawLine_scale_2.py \
-6_Scalability/Scalability_in_decision_making_mission/scripts/drawLine_scale_2.py \
-#exp_2_simu_scalability/scripts/drawLine_scale_4.py \
-6_Scalability/Scalability_in_decision_making_mission/scripts/drawLine_scale_4.py \
+#exp_2_simu_scalability/scripts/drawLine_scale_2.py and scale_4 \
+6_Scalability/Scalability_in_decision_making_mission/scripts/drawLine_main.py \
+6_Scalability/Scalability_in_SoNS_establishment_mission/scripts/drawLine_main.py \
 )
 
 for script_name in ${SPECIAL_LIST[@]}
