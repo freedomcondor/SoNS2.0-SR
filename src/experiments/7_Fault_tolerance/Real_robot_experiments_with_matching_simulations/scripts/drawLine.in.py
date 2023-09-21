@@ -29,13 +29,14 @@ else :
 # -----------------------------
 for subFolder in getSubfolders(DATADIR) :
 	# choose a specific run
-	if subFolder != DATADIR+ "/run5/" :
-		continue
+	#if subFolder != DATADIR+ "/run2/" :
+	#	continue
 
 	data = readDataFrom(subFolder + "result_data.txt")
 #	if data[120] > 1.3 :
 #		print(subFolder)
 	drawData(data)
+	print("length: ", len(data), ":", subFolder)
 	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
 	'''
 	for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :

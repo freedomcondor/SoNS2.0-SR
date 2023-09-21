@@ -47,6 +47,8 @@ track_option_base = {
 
 	'colored_key_frame' : True,
 
+	'cutTo'             : 907,
+
 	'SRFig_show'        : False,
 	'no_violin'         : True,
 	'main_ax_lim'       : [-0.3, 3.0],
