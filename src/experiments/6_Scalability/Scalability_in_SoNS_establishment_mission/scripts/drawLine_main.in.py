@@ -86,13 +86,13 @@ def boxplot_25_scales(ax, scales, values, color='b') :
 		return violin_return
 
 #----------------------------------------------------------------------------------
-#folder = "@CMAKE_CURRENT_SOURCE_DIR@/../data"
-#folder = "/home/harry/code/SoNS2.0-SR/build/threads_finish"
-#folder = "@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
-#folder = "@CMAKE_BINARY_DIR@/data_simu_scalability_analyze_1-450"
-#           folder + "/other/backups/outdated_data_simus/data_simu_1000-1300",
-
-folder = "/media/harry/Expansion/Storage/SoNS2.0-data/src/experiments/exp_2_simu_scalability_analyze"
+# Base folder
+#-----------------------------------------------------------------------------------------
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+folder = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir  # with no / at the end
 
 folders = [folder + "/data_simu_1-750",
            folder + "/data_simu_751-999",
@@ -100,6 +100,8 @@ folders = [folder + "/data_simu_1-750",
            folder + "/data_simu_1300-1500",
 #           folder + "/data_simu_1501-1800",
           ]
+
+PDFNameBase = "Mission6_Scalability_in_SoNS_formation_Analyze_Simulation"
 
 '''
 fig, axs = plt.subplots(2, 2)
@@ -353,7 +355,7 @@ converge_ax.scatter(cut_line_scales, cut_line_experiment_length,
 converge_ax.plot(x, y, "red")
 
 if show_cut == True :
-	plt.savefig("exp_2_scalability_analyze_cutted.pdf")
+	plt.savefig(PDFNameBase + "_cutted.pdf")
 else :
-	plt.savefig("exp_2_scalability_analyze_all.pdf")
-plt.show()
+	plt.savefig(PDFNameBase + "_all.pdf")
+#plt.show()

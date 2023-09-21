@@ -12,9 +12,16 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-#dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability_analyze/data_simu/data"
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/../scalability_analyze_data/data_simu_1-750"
-savePDFNameBase = "mission6_scalability_formation_analyze_"
+# Base folder
+#-----------------------------------------------------------------------------------------
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+BaseFolder = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir  # with no / at the end
+
+dataFolder = BaseFolder + "/data_simu_1-750"
+savePDFNameBase = "Mission6_Scalability_in_SoNS_formation_Analyze_Simulation_"
 sampleList = [
 #	"run150",  # 5
 #	"run300",  # 10
@@ -48,6 +55,8 @@ track_option_base = {
 	'SRFig_show'        : False,
 	'no_violin'         : True,
 	'main_ax_lim'       : [-0.5, 6],
+
+	'scalability_analyze_new_lowerbound_hack' : True,
 }
 
 #----------------------------------

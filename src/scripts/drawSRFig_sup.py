@@ -267,12 +267,19 @@ def drawSRFig(option) :
 		if 'sample_run' in option and subFolder != dataFolder + "/" + option['sample_run'] + "/" :
 			continue
 		# draw new lowerbound as pink
-		X, sparseLowerbound = sparceDataEveryXSteps(readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo), 5)
+		if 'scalability_analyze_new_lowerbound_hack' in option and option['scalability_analyze_new_lowerbound_hack'] == True :
+			X, sparseLowerbound = sparceDataEveryXSteps(readDataFrom(subFolder + "result_new_lowerbound_data.txt", cutTo), 5)
+		else :
+			X, sparseLowerbound = sparceDataEveryXSteps(readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo), 5)
 		#drawDataWithXInSubplot(X, sparseLowerbound, axs[0], 'hotpink')
 		legend_handle_lowerbound, = drawDataInSubplot(sparseLowerbound, main_ax, 'hotpink')
 
-		for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
-			robotsData.append(readDataFrom(subFile, cutTo))
+		if 'scalability_analyze_new_lowerbound_hack' in option and option['scalability_analyze_new_lowerbound_hack'] == True :
+			for subFile in getSubfiles(subFolder + "result_each_robot_error") :
+				robotsData.append(readDataFrom(subFile, cutTo))
+		else :
+			for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
+				robotsData.append(readDataFrom(subFile, cutTo))
 			#drawDataInSubplot(readDataFrom(subFile, cutTo), main_ax)
 
 		# check switch time
@@ -428,7 +435,12 @@ def drawSRFig(option) :
 	for subFolder in getSubfolders(dataFolder) :
 		mean_data = readDataFrom(subFolder + "result_data.txt", cutTo)
 		#lowerbound_data = readDataFrom(subFolder + "result_new_lowerbound_data.txt", cutTo)
-		lowerbound_data = readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo)
+
+		if 'scalability_analyze_new_lowerbound_hack' in option and option['scalability_analyze_new_lowerbound_hack'] == True :
+			lowerbound_data = readDataFrom(subFolder + "result_new_lowerbound_data.txt", cutTo)
+		else :
+			lowerbound_data = readDataFrom(subFolder + "result_lowerbound_data.txt", cutTo)
+
 		data_to_show = subtractLists(mean_data, lowerbound_data)
 		boxdata = boxdata + data_to_show
 
