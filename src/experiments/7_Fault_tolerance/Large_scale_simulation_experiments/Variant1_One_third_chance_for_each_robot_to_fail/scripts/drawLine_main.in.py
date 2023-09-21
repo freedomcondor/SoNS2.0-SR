@@ -9,7 +9,7 @@ exec(compile(open(drawSRFigFileName, "rb").read(), drawSRFigFileName, 'exec'))
 logGeneratorFileName = "@CMAKE_SOURCE_DIR@/scripts/logReader/logReplayer.py"
 exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exec'))
 
-drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
+drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py" # TrackLogs main will draw brains everywhere
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
 cmake_source_dir         = "@CMAKE_SOURCE_DIR@"

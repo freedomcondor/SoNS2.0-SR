@@ -25,3 +25,10 @@ run_threads 1 2 25\
 	$TMPDIR \
 	"----" \
 	true
+
+Example_exp_folder="@CMAKE_SoNS_DATA_PATH@"$cmake_relative_dir
+Example_exp_folder+=data_simu/track_fig_exp
+currentDir=`pwd`
+cd $Example_exp_folder
+lua "@CMAKE_CURRENT_BINARY_DIR@/evaluator.lua" > $EVA_OUTPUT
+cd $currentDir
