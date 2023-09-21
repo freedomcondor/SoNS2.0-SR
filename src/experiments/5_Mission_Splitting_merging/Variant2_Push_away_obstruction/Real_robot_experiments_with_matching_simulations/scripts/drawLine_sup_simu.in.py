@@ -12,8 +12,15 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_0_hw_09_1d_switch_rescue/data_simu/data"
-savePDFNameBase = "mission5_search_rescue_exp0_09_simu_"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+dataFolder += "data_simu/data"
+
+savePDFNameBase = "Mission5_Splitting_merging_Variant2_Push_away_obstruction_Real_robot_Simulation_"
+
 sampleList = [
 	"run3" ,
 	"run7" ,
@@ -32,9 +39,9 @@ track_option_base = {
 #	'trackLog_save'     : savePDFNameBase + sample_run + ".pdf",
 	'trackLog_show'     : False,
 
-	'x_lim'     :  [-3.3, 1.7]    ,
-	'y_lim'     :  [-2.5, 2.5]    ,
-	'z_lim'     :  [-1.0, 4.0]    ,
+	'x_lim'     :  [-4.0, 1.7]    ,
+	'y_lim'     :  [-2.85, 2.85]    ,
+	'z_lim'     :  [-1.0, 4.7]    ,
 
 	'showRobotName'     : False,
 
