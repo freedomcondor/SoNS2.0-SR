@@ -2,40 +2,24 @@ drawDataFileName = "@CMAKE_SOURCE_DIR@/scripts/drawData.py"
 #execfile(drawDataFileName)
 exec(compile(open(drawDataFileName, "rb").read(), drawDataFileName, 'exec'))
 
-drawSRFigFileName = "@CMAKE_SOURCE_DIR@/scripts/drawSRFig.py"
-#execfile(drawSRFigFileName)
-exec(compile(open(drawSRFigFileName, "rb").read(), drawSRFigFileName, 'exec'))
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+DATADIR  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+DATADIR += "data_simu/data"
 
-logGeneratorFileName = "@CMAKE_SOURCE_DIR@/scripts/logReader/logReplayer.py"
-exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exec'))
+for subFolder in getSubfolders(DATADIR) :
+	data = readDataFrom(subFolder + "result_data.txt")
+	drawData(data)
+	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
 
-drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs.py"
-exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
+	'''
+	if subFolder != DATADIR+ "/run1/" :
+		continue
+	for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
+		drawData(readDataFrom(subFile))
+	break
+	'''
 
-option = {
-	'dataFolder' : "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_1_simu_08_split/data_simu/data",
-	'sample_run'             : "run1",
-	'SRFig_save'             : "exp_1_simu_08_split_SRFig.pdf",
-	'trackLog_save'          : "exp_1_simu_08_split_trackLog.pdf",
-	'SRFig_show'             : False,
-	'trackLog_show'          : False,
-
-	'main_ax_lim'            : [-0.2, 2.00],
-
-	'split_right'            : True,
-	'violin_ax_top_lim'      : [4.2, 4.4],
-
-#------------------------------------------------
-	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
-	'key_frame' :  [0] ,
-#	'overwrite_trackFig_log_foler' : 
-#		"@CMAKE_SOURCE_DIR@/../../SoNS2.0-data/src/experiments/exp_1_simu_08_split/data_simu/track_fig_logs"
-#	,
-
-	'x_lim'     :  [-4, 6]    ,
-	'y_lim'     :  [-5, 5]        ,
-	'z_lim'     :  [-1.0, 9.0]    ,
-}
-
-drawSRFig(option)
-drawTrackLog(option)
+plt.show()
