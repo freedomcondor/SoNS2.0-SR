@@ -47,6 +47,8 @@ track_option_base = {
 
 	'showRobotName'     : False,
 
+	'colored_key_frame' : True,
+
 	'SRFig_show'        : False,
 	'no_violin'         : True,
 	'main_ax_lim'       : [-0.5, 3.5],
