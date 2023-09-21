@@ -12,8 +12,15 @@ exec(compile(open(logGeneratorFileName, "rb").read(), logGeneratorFileName, 'exe
 drawTrackLogFileName = "@CMAKE_SOURCE_DIR@/scripts/drawTrackLogs_sup.py"
 exec(compile(open(drawTrackLogFileName, "rb").read(), drawTrackLogFileName, 'exec'))
 
-dataFolder = "@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_3_simu_02_fault_tolerance_33/data_simu/data"
-savePDFNameBase = "mission7_fault_tolerance_10drone_33percent_loss_exp3_02_simu_"
+cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
+cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
+cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+#cmake_relative_dir starts with / and end with no /
+dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
+dataFolder += "data_simu/data"
+
+savePDFNameBase = "mission7_Fault_tolerance_Variant1_One_third_failure_Large_scale_Simulation_"
+
 sampleList = [
 	"run2",
 	"run4",
@@ -45,6 +52,8 @@ track_option_base = {
 	'SRFig_show'        : False,
 	'no_violin'         : True,
 	'main_ax_lim'       : [-0.5, 5.5],
+
+	'failure_place_holder'   : 0,
 }
 
 #----------------------------------

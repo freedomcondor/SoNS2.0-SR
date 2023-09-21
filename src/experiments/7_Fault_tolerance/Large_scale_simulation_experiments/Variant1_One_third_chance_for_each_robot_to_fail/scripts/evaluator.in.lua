@@ -55,7 +55,7 @@ local geneIndex = logReader.calcMorphID(gene)
 local robotsData = logReader.loadData("./logs")
 
 local firstRecruitStep = logReader.calcFirstRecruitStep(robotsData)
-local saveStartStep = firstRecruitStep + 10
+local saveStartStep = firstRecruitStep + 15
 print("firstRecruit happens", firstRecruitStep, "data start at", saveStartStep)
 
 local stage2Step = logReader.checkIDFirstAppearStep(robotsData, structure2.idN)
@@ -73,7 +73,7 @@ print("stage2 start at", stage2Step)
 print("stage3 start at", stage3Step)
 print("stage4 start at", stage4Step)
 
-logReader.calcSegmentData(robotsData, geneIndex, 1, stage2Step - 1)
+logReader.calcSegmentData(robotsData, geneIndex, saveStartStep, stage2Step - 1)
 logReader.calcSegmentData(robotsData, geneIndex, stage2Step, stage3Step - 1)
 logReader.calcSegmentData(robotsData, geneIndex, stage3Step, stage4Step - 1)
 logReader.calcSegmentData(robotsData, geneIndex, stage4Step, nil)
@@ -85,28 +85,25 @@ lowerBoundParameters = {
 	stop_dis = 0.01,
 }
 
-logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, 1, structure2Step - 1)
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, saveStartStep, structure2Step - 1)
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, structure2Step, stage4Step - 1)
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, stage4Step, nil)
 
-logReader.calcSegmentLowerBoundErrorInc(robotsData, geneIndex)
-
-logReader.saveSoNSNumber(robotsData, "result_SoNSNumber_data.txt")
-
+logReader.calcSegmentLowerBoundErrorInc(robotsData, geneIndex, saveStartStep)
 
 os.execute("echo " .. saveStartStep.. " > saveStartStep.txt")
 os.execute("echo " .. failureStep.. " > failure_step.txt")
 os.execute("echo " .. tostring(structure2Step - saveStartStep) .. " > formationSwitch.txt")
 os.execute("echo " .. tostring(stage4Step - saveStartStep) .. " >> formationSwitch.txt")
 
-logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep)
---logReader.saveDataAveragedBySwarmSize(robotsData, "result_data_averaged_by_focal_size.txt", saveStartStep)
-logReader.saveEachRobotDataWithFailurePlaceHolder(robotsData, "result_each_robot_error", "error", "0", saveStartStep)
---logReader.saveEachRobotDataAveragedBySwarmSize(robotsData, "result_each_robot_error_averaged_by_focal_size")
-
-logReader.saveData(robotsData, "result_lowerbound_data.txt", "lowerBoundError", saveStartStep)
-logReader.saveData(robotsData, "result_lowerbound_inc_data.txt", "lowerBoundInc", saveStartStep)
-
 logReader.markFailedRobot(robotsData, logReader.getEndStep(robotsData))
 logReader.saveFailedRobot(robotsData, "failure_robots.txt")
+
+logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep)
+logReader.saveData(robotsData, "result_lowerbound_data.txt", "lowerBoundError", saveStartStep)
+logReader.saveData(robotsData, "result_lowerbound_inc_data.txt", "lowerBoundInc", saveStartStep)
+logReader.saveEachRobotDataWithFailurePlaceHolder(robotsData, "result_each_robot_error_data", "error", "0.0", saveStartStep)
+logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_data", "lowerBound", saveStartStep)
+logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_inc_data", "lowerBoundInc", saveStartStep)
+
+logReader.saveSoNSNumber(robotsData, "result_SoNSNumber_data.txt", saveStartStep)
