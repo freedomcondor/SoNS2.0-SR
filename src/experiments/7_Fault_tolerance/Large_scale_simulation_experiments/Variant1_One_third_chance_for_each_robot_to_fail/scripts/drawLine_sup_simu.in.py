@@ -43,7 +43,7 @@ track_option_base = {
 	'y_lim'     :  [-12, 12]        ,
 	'z_lim'     :  [-4.0,8.0]    ,
 
-	'figsize'           : [10, 10],
+	'large_scale'       : True,
 
 	'showRobotName'     : False,
 

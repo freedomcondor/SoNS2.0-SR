@@ -36,7 +36,7 @@ track_option_base = {
 
 	'showRobotName'     : False,
 
-	'figsize'           : [10, 10],
+	'large_scale'       : True,
 
 	'colored_key_frame' : True,
 

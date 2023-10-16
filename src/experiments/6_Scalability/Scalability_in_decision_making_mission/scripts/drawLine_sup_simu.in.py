@@ -102,7 +102,7 @@ track_option['x_lim'] = [-15,   20]
 track_option['y_lim'] = [-17.5, 17.5]
 track_option['z_lim'] = [-10.0, 25.0]
 
-track_option['figsize'] = [10, 10]
+track_option['large_scale'] = True
 
 track_option['main_ax_lim'] = [-0.5, 13]
 
@@ -126,7 +126,7 @@ track_option['x_lim'] = [-15,   20]
 track_option['y_lim'] = [-17.5, 17.5]
 track_option['z_lim'] = [-10.0, 25.0]
 
-track_option['figsize'] = [10, 10]
+track_option['large_scale'] = True
 
 track_option['main_ax_lim'] = [-0.5, 13]
 

@@ -207,13 +207,16 @@ def drawTrackLog(option):
 		key_frame_i = 0
 		color = colours[robot_count-1]
 
+		linewidth = 0.7
+		if "large_scale" in option and option["large_scale"] == True :
+			linewidth = linewidth * 0.5
 		while i < len(T_smooth)-window :
 			if i != 0 :
 				drawVector3(ax,
 				            [X_smooth[i-interval], Y_smooth[i-interval], Z_smooth[i-interval]],
 				            [X_smooth[i],          Y_smooth[i],          Z_smooth[i]],
 				            color,
-				            0.7
+				            linewidth
 				)
 
 			# record key_frame
@@ -276,13 +279,16 @@ def drawTrackLog(option):
 
 	# draw obstacles
 	color = 'red'
+	markersize = '2.5'
+	if "large_scale" in option and option["large_scale"] == True :
+		linewidth = '1.25'
 	for obstacleLog in obstacleLogs:
 		step = readNextLine(obstacleLog, True)    # True means asking readNextLine to return none if pipuckLog ends, otherwise it returns exit()
 		# draw dot
 		ax.plot3D([step["position"][0]],
 		          [step["position"][1]],
 		          [step["position"][2]],
-		          color = color, linewidth='0.5', markersize='2.5', marker = 's')
+		          color = color, linewidth='0.5', markersize=markersize, marker = 's')
 
 	for obstacleLog in targetLogs:
 		step = readNextLine(obstacleLog, True)    # True means asking readNextLine to return none if pipuckLog ends, otherwise it returns exit()
@@ -290,7 +296,7 @@ def drawTrackLog(option):
 		ax.plot3D([step["position"][0]],
 		          [step["position"][1]],
 		          [step["position"][2]],
-		          color = color, linewidth='0.5', markersize='2.5', marker = 'v')
+		          color = color, linewidth='0.5', markersize=markersize, marker = 'v')
 
 	# draw key frame
 	# first check failed step and failed robots
@@ -338,6 +344,9 @@ def drawTrackLog(option):
 			if "color" in robotData :
 				color = robotData["color"]
 			# draw dot
+			if "large_scale" in option and option["large_scale"] == True :
+				makersize_without_scale = markersize
+				markersize = str(float(markersize) * 0.5)
 			ax.plot3D([robotData["position"][0]],
 			          [robotData["position"][1]],
 			          [robotData["position"][2]],
@@ -355,12 +364,15 @@ def drawTrackLog(option):
 						color="red"
 				)
 			# draw parent line
+			linewidth='1.2'
+			if "large_scale" in option and option["large_scale"] == True :
+				linewidth='0.6'
 			if robotData["parent"] != "nil" :
 				parentData = key_frame[robotData["parent"]]
 				ax.plot3D([robotData["position"][0], parentData["position"][0]],
 				          [robotData["position"][1], parentData["position"][1]],
 				          [robotData["position"][2], parentData["position"][2]],
-				          linewidth="1.2",
+				          linewidth=linewidth,
 				          color = color)
 
 	#draw brain at last to cover the lines and overlapping robots
@@ -406,7 +418,7 @@ def drawTrackLog(option):
 					          [robotData["position"][2]],
 					          color = "white",
 					          marker = "o",
-					          markersize=str(float(markersize)*1.6)
+					          markersize=str(float(makersize_without_scale)*1.6)
 					         )
 					# draw svgs for fancy marker
 					ax.plot3D([robotData["position"][0]],
@@ -414,7 +426,7 @@ def drawTrackLog(option):
 					          [robotData["position"][2]],
 					          color = "black",
 					          marker = brain_svg_marker,
-					          markersize=str(float(markersize)*1.4)
+					          markersize=str(float(makersize_without_scale)*1.4)
 					         )
 
 					ax.plot3D([robotData["position"][0]],
@@ -422,7 +434,7 @@ def drawTrackLog(option):
 					          [robotData["position"][2]],
 					          color = "black",
 					          marker = marker,
-					          markersize=str(float(markersize)*0.8)
+					          markersize=str(float(makersize_without_scale)*0.8)
 					         )
 
 	# legend
