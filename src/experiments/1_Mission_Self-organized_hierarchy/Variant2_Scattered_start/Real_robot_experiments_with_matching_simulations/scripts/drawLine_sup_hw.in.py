@@ -141,14 +141,14 @@ key_frame_parent_index_list["run4"] = [
 		'drone4'    :   'nil'      ,
 		'pipuck1'   :   'drone4'  ,
 		'pipuck2'   :   'drone2'  ,
-		'pipuck4'   :   'drone2'  ,
+		'pipuck4'   :   'drone4'  ,
 		'pipuck5'   :   'drone2'  ,
-		'pipuck6'   :   'drone4'  ,
-		'pipuck7'   :   'drone4'   ,
-		'pipuck8'   :   'drone4'   ,
+		'pipuck6'   :   'drone2'  ,
+		'pipuck7'   :   'drone2'   ,
+		'pipuck8'   :   'drone2'   ,
 		'pipuck9'   :   'drone4'  ,
-		'pipuck10'  :   'drone2'  ,
-		'pipuck11'  :   'drone2'  ,
+		'pipuck10'  :   'drone4'  ,
+		'pipuck11'  :   'drone4'  ,
 	},
 ]
 
@@ -199,8 +199,8 @@ for sample_run in sampleList :
 
 #----- draw the special case
 track_option = track_option_base.copy()
-track_option['dataFolder'] = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/data_hw/data"
-track_option['sample_run'] = "run4"
+track_option['dataFolder'] = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/data_hw/hw_other_cases"
+track_option['sample_run'] = "run4_special_case"
 
 track_option['key_frame'] = key_frame_example
 track_option['key_frame_parent_index'] = [

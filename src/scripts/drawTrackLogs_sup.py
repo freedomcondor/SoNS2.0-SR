@@ -344,8 +344,8 @@ def drawTrackLog(option):
 			if "color" in robotData :
 				color = robotData["color"]
 			# draw dot
+			makersize_without_scale = markersize
 			if "large_scale" in option and option["large_scale"] == True :
-				makersize_without_scale = markersize
 				markersize = str(float(markersize) * 0.5)
 			ax.plot3D([robotData["position"][0]],
 			          [robotData["position"][1]],
