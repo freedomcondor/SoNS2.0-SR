@@ -67,6 +67,10 @@ function logReader.readLine(str)
 		targetID = tonumber(strList[16]),
 		brainID = strList[17],
 	}
+	if #strList >= 18 and strList[18] ~= "nil" then
+		stepData.parentID = strList[18]
+	end
+
 	stepData.originGoalPositionV3 = stepData.goalPositionV3
 	stepData.originGoalOrientationQ = stepData.goalOrientationQ
 
