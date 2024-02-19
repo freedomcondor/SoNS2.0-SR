@@ -8,3 +8,8 @@ configure_file( execute.sh           execute.sh)
 configure_file( drawLine.in.py       drawLine.py)
 configure_file( drawLine_main.in.py  drawLine_main.py)  # old drawScatter.py
 configure_file( drawLine_sup_simu.in.py      drawLine_sup_simu.py)
+
+
+configure_file( evaluator_time.in.lua     evaluator_time.lua)
+configure_file( drawScatter_time.in.py    drawScatter_time.py)
+configure_file( eva_threads.in.sh         eva_threads.sh       @ONLY)
