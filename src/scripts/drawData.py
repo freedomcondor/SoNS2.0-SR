@@ -96,6 +96,21 @@ def getSubfiles(data_dir) :
 	
 	return subfiles
 
+def getSubfilesWithoutPaths(data_dir) :
+	# get the self folder item of os.walk
+	walk_dir_item=[]
+	for folder in os.walk(data_dir) :
+		if folder[0] == data_dir :
+			walk_dir_item=folder
+			break
+
+	# iterate subdir
+	subfiles =[]
+	for subfile in walk_dir_item[2] :
+		subfiles.append(subfile)
+	
+	return subfiles
+
 #----------------------------------------------------------------------------------------------
 # This function will generate a new list of datas from the input list of datas, by pick a data every <step_length> steps
 # X is the index of the picked data
