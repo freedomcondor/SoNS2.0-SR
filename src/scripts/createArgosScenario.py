@@ -151,7 +151,7 @@ def generate_physics_media_loop_visualization(cmake_binary_dir) :
   <!-- * Visualization  * -->
   <!-- ****************** -->
   <visualization>
-    <qt-opengl lua_editor="true" show_boundary="false">
+    <qt-opengl lua_editor="false" show_boundary="false">
       <user_functions library="{}/libmy_qtopengl_extensions"
                       label="my_qtopengl_user_functions" />
       <camera>
