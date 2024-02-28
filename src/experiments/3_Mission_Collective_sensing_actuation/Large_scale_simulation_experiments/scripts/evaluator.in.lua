@@ -69,3 +69,5 @@ logReader.saveData(robotsData, "result_lowerbound_inc_data.txt", "lowerBoundInc"
 logReader.saveEachRobotData(robotsData, "result_each_robot_error_data", "error", saveStartStep)
 logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_data", "lowerBound", saveStartStep)
 logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_inc_data", "lowerBoundInc", saveStartStep)
+
+logReader.saveSoNSNumber(robotsData, "result_SoNSNumber_data.txt", saveStartStep)

@@ -17,15 +17,15 @@ arena_size = exp_scale * 10 + 8 + (n_drone)/math.pi
 # drone and pipuck
 drone_locations = generate_random_locations(n_drone,                        # total number
                                             -exp_scale - 4, 0,              # origin location
-                                            -exp_scale*3-4, -3,             # random x range
-                                            -exp_scale*3,exp_scale*3,       # random y range
+                                            -exp_scale*3-3.5, -4.2,             # random x range
+                                            -exp_scale*2.5,exp_scale*2.5,       # random y range
                                             1.3, 1.5)                       # near limit and far limit
 pipuck_locations = generate_slave_locations_with_origin(n_pipuck,
                                             drone_locations,
                                             -exp_scale -3.5, 0.4,          # origin
-                                            -exp_scale*3-4, -3,             # random x range
-                                            -exp_scale*3,exp_scale*3,       # random y range
-                                            0.5, 0.9)          
+                                            -exp_scale*3-3.5, -4.2,             # random x range
+                                            -exp_scale*2.5,exp_scale*2.5,       # random y range
+                                            0.3, 0.7)
 
 drone_xml = generate_drones(drone_locations, 1)                 # from label 1 generate drone xml tags
 pipuck_xml = generate_pipucks(pipuck_locations, 1)              # from label 1 generate pipuck xml tags
@@ -68,8 +68,10 @@ params = '''
     obstacle_unseen_count="0"
 
     safezone_drone_drone="2.0"
-    safezone_pipuck_pipuck="1.5"
-    safezone_drone_pipuck="1.0"
+    safezone_pipuck_pipuck="0.3"
+    driver_spring_default_speed_scalar="6"
+    drone_tag_detection_rate="1"
+    pipuck_wheel_speed_limit="0.2"
 
     morphologiesGenerator="morphologiesGenerator"
     exp_scale="{}"

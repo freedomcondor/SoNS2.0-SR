@@ -78,7 +78,7 @@ function reset()
 		sons.create_sons_core_node(sons),
 		sons.CollectiveSensor.create_collectivesensor_node_reportAll(sons),
 		create_head_navigate_node(sons),
-		sons.Driver.create_driver_node(sons),
+		sons.Driver.create_driver_node(sons, {waiting = "spring"}),
 	}}
 end
 
@@ -261,7 +261,7 @@ return function()
 		end
 
 		-- brain move forward
-		if sons.api.stepCount < 250 then return false, true end
+		if sons.api.stepCount < 300 then return false, true end
 		local speed = 0.03
 		sons.Spreader.emergency_after_core(sons, vector3(speed,SpeedY * speed,0), vector3())
 	end
