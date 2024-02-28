@@ -38,6 +38,11 @@ for subFolder in getSubfolders(DATADIR) :
 	drawData(data)
 #	print("length: ", len(data), ":", subFolder)
 	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
+
+	data = readDataFrom(subFolder + "result_SoNSNumber_data.txt")
+	if data[-1] > 1 :
+		print("split:", subFolder)
+	drawData(data)
 	'''
 	for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
 		data = readDataFrom(subFile)
