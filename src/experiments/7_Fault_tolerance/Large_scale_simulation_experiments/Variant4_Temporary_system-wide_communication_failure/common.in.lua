@@ -298,7 +298,7 @@ end end
 
 function cut_wifi(sons, api)
 	--if 500 < api.stepCount and api.stepCount <= 502 then
-	if 500 < api.stepCount and api.stepCount <= 650 then  -- 30s
+	if 500 < api.stepCount and api.stepCount <= 500 + tonumber(robot.params.stop_steps) then  -- 30s
 		robot.radios.wifi.recv = {}
 	end
 end

@@ -23,12 +23,12 @@ cmake_relative_dir=${cmake_relative_dir%"scripts"}
 DATADIR="@CMAKE_SoNS_DATA_PATH@"$cmake_relative_dir
 DATADIR+=data_simu_$experiment_type/data
 
-#-----------------------------------------------------
-CODEDIR=$DATADIR/../code
 TMPDIR=@CMAKE_BINARY_DIR@/eva_threads
 #THREADS_LOG_OUTPUT=`pwd`/threads_evaluator_output.txt
 
 #echo exp_01_formation start > $THREADS_LOG_OUTPUT # this is for run_single_threads to reset $THREADS_LOG_OUTPUT
+
+echo $DATADIR
 
 # start run number, run per thread, total threads
 run_threads 1 2 25\

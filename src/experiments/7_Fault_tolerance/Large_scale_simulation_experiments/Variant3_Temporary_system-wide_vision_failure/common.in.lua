@@ -78,7 +78,7 @@ function reset()
 		sons.create_sons_core_node(sons),
 		sons.CollectiveSensor.create_collectivesensor_node_reportAll(sons),
 		create_head_navigate_node(sons),
-		sons.Driver.create_driver_node(sons),
+		sons.Driver.create_driver_node(sons, {waiting="spring"}),
 	}}
 end
 
@@ -113,6 +113,7 @@ end
 ----------------------------------------------------------------------------------
 function create_head_navigate_node(sons)
 local state = 1
+local stateCount = 0
 local left_obstacle_type = 101
 local right_obstacle_type = 102
 local target_type = 255
@@ -134,6 +135,7 @@ local target_type = 255
 	end
 
 return function()
+	stateCount = stateCount + 1
 	-- for debug
 	sons.state = state
 
@@ -141,6 +143,12 @@ return function()
 	if sons.parentR ~= nil then for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "switch_to_state")) do
 		switchAndSendNewState(sons, msgM.dataT.state)
 	end end
+
+	if state == 4 and stateCount < 600 then
+		sons.allocator.pipuck_bridge_switch = true
+	else
+		sons.allocator.pipuck_bridge_switch = nil
+	end
 
 	if sons.parentR == nil then
 		-- brain detect width
@@ -191,7 +199,7 @@ return function()
 			sons.Parameters.stabilizer_preference_robot = nil
 			for id, ob in ipairs(sons.avoider.obstacles) do
 				if ob.type == target_type then
-					state = 4
+					switchAndSendNewState(sons, 4)
 					sons.setMorphology(sons, structure3)
 				end
 			end
@@ -289,7 +297,7 @@ return function()
 end end
 
 function cut_camera(sons, api)
-	if 500 < api.stepCount and api.stepCount <= 502 then
+	if 500 < api.stepCount and api.stepCount <= 500 + tonumber(robot.params.stop_steps) then
 		if robot.cameras_system ~= nil then
 			for id, camera in pairs(robot.cameras_system) do
 				camera.tags = {}

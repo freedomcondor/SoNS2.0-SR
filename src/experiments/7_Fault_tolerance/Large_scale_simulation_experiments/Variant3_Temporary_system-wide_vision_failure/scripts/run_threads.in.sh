@@ -24,16 +24,20 @@ DATADIR="@CMAKE_SoNS_DATA_PATH@"$cmake_relative_dir
 DATADIR+=data_simu_$experiment_type/data
 
 #-----------------------------------------------------
+# prepare to run threads
 CODEDIR=$DATADIR/../code
-TMPDIR=@CMAKE_BINARY_DIR@/eva_threads
-#THREADS_LOG_OUTPUT=`pwd`/threads_evaluator_output.txt
+TMPDIR=@CMAKE_BINARY_DIR@/threads
+#THREADS_LOG_OUTPUT=`pwd`/threads_output.txt
 
-#echo exp_01_formation start > $THREADS_LOG_OUTPUT # this is for run_single_threads to reset $THREADS_LOG_OUTPUT
+run_per_thread=5
+number_threads=10
+argos_multi_threads=4
 
 # start run number, run per thread, total threads
-run_threads 1 2 25\
-	"lua @CMAKE_CURRENT_BINARY_DIR@/evaluator.lua" \
+run_threads 1 $run_per_thread $number_threads\
+	"python3 @CMAKE_CURRENT_BINARY_DIR@/../run.py -m $argos_multi_threads -t $experiment_type" \
 	$DATADIR \
 	$TMPDIR \
-	"----" \
-	true
+	"check_finish_by_log_length 4000"
+
+cp -r @CMAKE_CURRENT_BINARY_DIR@/../simu $CODEDIR
