@@ -22,8 +22,13 @@ usage="[usage] example: python3 xxx.py -r 1 -l 1000 -v true -m 10"
 # -v True/False means sets whether to enable GUI. When we are doing large scale parallel experiments, we do not need GUI, so use -v False
 # -m x means using x threads in parallel
 
+#----------------------------------------------------------------------------------------------
+# parse opts
+if "customizeOpts" not in locals() :
+    customizeOpts = ""
+
 try:
-	optlist, args = getopt.getopt(sys.argv[1:], "r:l:v:m:h")
+	optlist, args = getopt.getopt(sys.argv[1:], "r:l:v:m:h" + customizeOpts)
 except:
 	print("[error] unexpected opts")
 	print(usage)
