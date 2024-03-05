@@ -156,10 +156,14 @@ cut_left_step_mean_errors = []
 for folder in folders :
 	for subfolder in getSubfolders(folder) :
 		# -- read communication
-		scale, comm = readCommOrTimeData(subfolder + "result_comm_data.txt")
+		#scale, comm = readCommOrTimeData(subfolder + "result_comm_data.txt")
+		scale, comm = readCommOrTimeData(subfolder + "result_brain_comm_data.txt")
+		#scale, comm = readCommOrTimeData(subfolder + "result_brain_max_comm_data.txt")
 		comms.append(comm)
 		# -- read time
-		scale, time = readCommOrTimeData(subfolder + "result_time_data.txt")
+		#scale, time = readCommOrTimeData(subfolder + "result_time_data.txt")
+		scale, time = readCommOrTimeData(subfolder + "result_brain_time_data.txt")
+		#scale, time = readCommOrTimeData(subfolder + "result_brain_max_time_data.txt")
 		time = time * 2.35
 		times.append(time)
 		# -- read error and converge time
@@ -254,7 +258,8 @@ if show_cut == True :
 	boxplot_25_scales(time_ax, cut_left_scales, cut_left_times)
 else :
 	boxplot_25_scales(time_ax, scales, times, "red")
-time_ax.set_ylim([0, 1.5 * 2.35])
+#time_ax.set_ylim([0, 1.5 * 2.35])
+time_ax.set_ylim([0, 2.0])
 #time_ax.set_title("calculation cost per step (s)")
 
 time_ax.set_xlabel('Scale: number of robots', fontsize=fontsize)

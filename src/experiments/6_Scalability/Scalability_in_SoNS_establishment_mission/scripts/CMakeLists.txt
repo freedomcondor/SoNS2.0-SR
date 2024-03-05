@@ -11,5 +11,8 @@ configure_file( drawLine_sup_simu.in.py      drawLine_sup_simu.py)
 
 
 configure_file( evaluator_time.in.lua     evaluator_time.lua)
+configure_file( evaluator_brain_time_and_comm.in.lua
+                evaluator_brain_time_and_comm.lua
+              )
 configure_file( drawScatter_time.in.py    drawScatter_time.py)
 configure_file( eva_threads.in.sh         eva_threads.sh       @ONLY)
