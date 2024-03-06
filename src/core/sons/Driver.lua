@@ -189,7 +189,9 @@ function Driver.step(sons, waiting)
 			end
 		end
 	-- if waiting == "spring", use a spring model to attract neighbours
-	elseif waiting == "spring" and sons.stabilizer.referencing_me ~= true then
+	elseif waiting == "spring" and
+	       not sons.stabilizer.referencing_me == true and
+	       not (sons.robotTypeS == "pipuck" and sons.parentR == nil) then
 		-- create neighbour table
 		local neighbours = {}
 		if sons.parentR ~= nil then neighbours[#neighbours + 1] = sons.parentR end
