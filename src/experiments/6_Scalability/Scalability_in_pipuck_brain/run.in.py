@@ -41,7 +41,7 @@ params = '''
               drone_tag_detection_rate="1"
               drone_default_height="1.8"
               drone_default_start_height="1.8"
-              dangerzone_drone="0.8"
+              dangerzone_drone="0.5"
               dangerzone_pipuck="0.25"
               dangerzone_reference_pipuck_scalar="2.0"
               deadzone_reference_pipuck_scalar="2"
@@ -54,8 +54,8 @@ params = '''
 '''.format(n_pipuck)
 
 drone_params = '''
-	driver_slowdown_zone = "0.50"
-	driver_stop_zone = "0.10"
+	driver_slowdown_zone = "1.00"
+	driver_stop_zone = "0.20"
 '''
 
 # generate sons.argos file, replacing each MARKWORD in the sons_template.argos with the content.
@@ -64,6 +64,7 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/sons_template.argos",
                     "sons.argos",
 	[
 		["RANDOMSEED",        str(Inputseed)],
+		["MULTITHREADS",      str(MultiThreads)],
 		["TOTALLENGTH",       str((Experiment_length)/5)],
 		["DRONES",            drone_xml], 
 		["PIPUCKS",           pipuck_xml], 
