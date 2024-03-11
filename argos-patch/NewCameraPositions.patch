@@ -71,7 +71,7 @@ index 707e423..5740177 100644
 -#define CAMERA_RANGE_MIN 0.001
 -#define CAMERA_RANGE_MAX 1.800
 +#define CAMERA_RANGE_MIN 0.010
-+#define CAMERA_RANGE_MAX 2.500
++#define CAMERA_RANGE_MAX 5.000
  
  namespace argos {
  

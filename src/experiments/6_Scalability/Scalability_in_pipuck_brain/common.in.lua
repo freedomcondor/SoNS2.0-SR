@@ -28,8 +28,8 @@ logger.disable("droneAPI")
 -- datas ----------------
 local bt
 --local sons
-local droneDis = 1.5
-local pipuckDis = 0.75
+local droneDis = 3.0
+local pipuckDis = 1.5
 local height = api.parameters.droneDefaultHeight
 local gene = create_back_line_morphology_with_pipuck_number(n_pipuck, droneDis, pipuckDis, height)
 

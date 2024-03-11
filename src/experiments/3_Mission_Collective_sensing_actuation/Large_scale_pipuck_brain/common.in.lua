@@ -25,11 +25,33 @@ logger.enable()
 logger.disable("Stabilizer")
 logger.disable("droneAPI")
 
+-- overwrite collective sensor
+------ behaviour tree ---------------------------------------
+local CollectiveSensor = SoNS.Modules[11]
+function CollectiveSensor.create_collectivesensor_node_reportAll(sons)
+	return function()
+--		if sons.robotTypeS == "drone" then
+		CollectiveSensor.step(sons)
+		CollectiveSensor.reportAll(sons)
+--		end
+		return false, true
+	end
+end
+
+function CollectiveSensor.create_collectivesensor_node(sons)
+	return function()
+--		if sons.robotTypeS == "drone" then
+			CollectiveSensor.step(sons)
+--		end
+		return false, true
+	end
+end
+
 -- datas ----------------
 local bt
 --local sons
-local droneDis = 1.5
-local pipuckDis = 0.7
+local droneDis = 3
+local pipuckDis = 1.5
 local height = api.parameters.droneDefaultHeight
 local structure1 = create_left_right_line_morphology(expScale, droneDis, pipuckDis, height)
 --local structure1 = create_3drone_12pipuck_children_chain(1, droneDis, pipuckDis, height, vector3(), quaternion())
@@ -141,12 +163,18 @@ return function()
 		switchAndSendNewState(sons, msgM.dataT.state)
 	end end
 
+	-- fail safe
+	if state == 5 and sons.scalemanager.scale:totalNumber() == 1 then
+		local speed = 0.1
+		sons.Spreader.emergency_after_core(sons, vector3(speed,0,0), vector3())
+	end
+
 	if sons.parentR == nil then
 		-- brain detect width
 		local middle = 0
 
-		local left = 10
-		local right = -10
+		local left = 30
+		local right = -30
 		for i, ob in ipairs(sons.avoider.obstacles) do
 			if ob.type == left_obstacle_type and
 			   ob.positionV3.y < left then
@@ -168,12 +196,12 @@ return function()
 			end
 		end
 
-		local width = left - right
+		width = left - right
 
 		-- brain run state
 		if state == 1 then
 			sons.setGoal(sons, vector3(0,0,0), sons.goal.orientationQ)
-			if width < 5.0 then
+			if width < 10.0 then
 				state = 3
 				sons.setMorphology(sons, structure2)
 				logger("state2")
@@ -199,7 +227,7 @@ return function()
 		elseif state == 4 then
 			for id, ob in ipairs(sons.avoider.obstacles) do
 				if ob.type == target_type then
-					sons.setGoal(sons, ob.positionV3 - vector3(1.0, 0, 0), ob.orientationQ)
+					sons.setGoal(sons, ob.positionV3 - vector3(2.0, 0, 0), ob.orientationQ)
 					--[[
 					if sons.goal.positionV3:length() < 0.3 then
 						state = 5
@@ -215,7 +243,7 @@ return function()
 		end
 
 		-- align with the average direction of the obstacles
-		if #sons.avoider.obstacles ~= 0 or #sons.collectivesensor.receiveList ~= 0 then
+		if (#sons.avoider.obstacles ~= 0 or #sons.collectivesensor.receiveList ~= 0) and state ~= 4 then
 			local orientationAcc = Transform.createAccumulator()
 
 			-- add sons.avoider.obstacles and sons.collectivesensor.receiveList together
@@ -244,13 +272,7 @@ return function()
 
 			local averageOri = Transform.averageAccumulator(orientationAcc).orientationQ
 
-			if sons.stabilizer.referencing_robot ~= nil then
-				sons.Msg.send(sons.stabilizer.referencing_robot.idS, "new_heading", 
-					{heading = sons.api.virtualFrame.Q_VtoR(averageOri)}
-				)
-			else
-				sons.setGoal(sons, sons.goal.positionV3, averageOri)
-			end
+			sons.setGoal(sons, sons.goal.positionV3, averageOri)
 		end
 
 		-- brain calc y speed
@@ -263,28 +285,12 @@ return function()
 			SpeedY = 0 
 		end
 
+		SpeedY = SpeedY * 0.1
+
 		-- brain move forward
-		if sons.api.stepCount < 300 then return false, true end
-		local speed = 0.03
+		if sons.api.stepCount < 1000 then return false, true end
+		local speed = 0.06
 		sons.Spreader.emergency_after_core(sons, vector3(speed,SpeedY * speed,0), vector3())
-	end
-
-	-- reference lead move
-	if sons.stabilizer.referencing_me == true then
-		-- receive from brain information about heading and middle
-		sons.stabilizer.referencing_me_goal_overwrite = {}
-		for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "new_heading")) do
-			sons.stabilizer.referencing_me_goal_overwrite = {orientationQ = sons.parentR.orientationQ * msgM.dataT.heading}
-		end
-
-		--[[
-		for _, msgM in ipairs(sons.Msg.getAM(sons.parentR.idS, "middleY")) do
-			local middleV3 = sons.parentR.positionV3 + (msgM.dataT.positionY * vector3(0,1,0)):rotate(sons.parentR.orientationQ)
-			newGoalPosition = vector3(sons.goal.positionV3)
-			newGoalPosition.y = middleV3.y
-			sons.stabilizer.referencing_me_goal_overwrite = {positionV3 = newGoalPosition}
-		end
-		--]]
 	end
 
 	return false, true

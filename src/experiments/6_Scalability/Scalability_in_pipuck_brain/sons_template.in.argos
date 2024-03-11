@@ -20,7 +20,7 @@
   <!-- *********************** -->
   <!-- * Arena configuration * -->
   <!-- *********************** -->
-  <arena size="ARENA_SIZE, ARENA_SIZE, 3.5" center="0, 0, 1">
+  <arena size="ARENA_SIZE, ARENA_SIZE, 10" center="0, 0, 4">
     <floor id="floor" source="image" path="@CMAKE_BINARY_DIR@/floor_texture/wood_floor_large.png" /> <!-- real scenario -->
     <!-- real scenario -->
     REAL_SCENARIO

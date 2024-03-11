@@ -11,7 +11,7 @@ n_pipuck = Experiment_length
 print("n_pipuck", n_pipuck)
 
 n_drone = n_pipuck * 3
-arena_size = n_pipuck * 3 + 2
+arena_size = n_pipuck * 6 + 4
 
 Experiment_length = 2500
 
@@ -20,37 +20,42 @@ if n_pipuck > 25 :
 
 # drone and pipuck
 pipuck_locations = generate_random_locations(n_pipuck,                        # total number
-                                            n_pipuck * 0.25, 0,              # origin location
-                                            -n_pipuck * 0.25-1, n_pipuck * 0.25+1,              # random x range
-                                            -3, 3,              # random y range
-                                            1.1, 1.3)                       # near limit and far limit
+                                            n_pipuck * 0.5, 0,              # origin location
+                                            -n_pipuck * 0.5-1, n_pipuck * 0.5+1,              # random x range
+                                            -6, 6,              # random y range
+                                            2.2, 2.6)                       # near limit and far limit
 drone_locations = generate_slave_locations_with_origin(n_drone,
                                             pipuck_locations,
-                                            n_pipuck * 0.25, 0,              # origin location
-                                            -n_pipuck * 0.25-1, n_pipuck * 0.25+1,              # random x range
-                                            -3, 3,              # random y range
-                                            0.4, 0.9)                       # near limit and far limit
+                                            n_pipuck * 0.5, 0,              # origin location
+                                            -n_pipuck * 0.5-1, n_pipuck * 0.5+1,              # random x range
+                                            -6, 6,              # random y range
+                                            0.8, 1.8)                       # near limit and far limit
 
-drone_xml = generate_drones(drone_locations, 1, 4.5)                 # from label 1 generate drone xml tags
-pipuck_xml = generate_pipucks(pipuck_locations, 1, 4.5)              # from label 1 generate pipuck xml tags
+drone_xml = generate_drones(drone_locations, 1, 6)                 # from label 1 generate drone xml tags
+pipuck_xml = generate_pipucks(pipuck_locations, 1, 6)              # from label 1 generate pipuck xml tags
 
 
 params = '''
               n_pipuck="{}"
               stabilizer_preference_brain="pipuck1"
               drone_tag_detection_rate="1"
-              drone_default_height="1.8"
-              drone_default_start_height="1.8"
-              dangerzone_drone="0.5"
-              dangerzone_pipuck="0.25"
+              drone_default_height="3.6"
+              drone_default_start_height="3.6"
+              dangerzone_drone="1.5"
+              dangerzone_pipuck="0.40"
               dangerzone_reference_pipuck_scalar="2.0"
               deadzone_reference_pipuck_scalar="2"
               morphologiesGenerator="morphologiesGenerator"
 
-              safezone_pipuck_pipuck="2.0"
+              safezone_pipuck_pipuck="4.0"
+              safezone_drone_pipuck="3.0"
+              safezone_drone_drone="3.0"
 
               avoid_block_vortex="nil"
               deadzone_block="0.2"
+
+	          driver_default_speed="0.20"
+              pipuck_wheel_speed_limit="0.4"
 '''.format(n_pipuck)
 
 drone_params = '''
