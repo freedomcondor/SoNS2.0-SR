@@ -62,6 +62,8 @@ end
 function api.preStep()
 	api.stepCount = api.stepCount + 1
 	api.processTime()
+
+	api.debug.record = ""
 end
 
 function api.postStep()
@@ -138,6 +140,8 @@ end
 -- Sometimes, we don't want the all the debug information is drawn, so :
 -- api.debug.show_all == true triggers everything gets drawn, otherwise only whose with essential parameter set to true gets drawn
 api.debug = {}
+api.debug.recordSwitch = false
+api.debug.record = ""
 function api.debug.drawArrow(color, begin, finish, essential)
 	if api.debug.show_all ~= true and essential ~= true then return end
 	if robot.debug == nil then return end
@@ -154,7 +158,15 @@ function api.debug.drawArrow(color, begin, finish, essential)
 		                       tonumber(colorArray[1]),
 		                       tonumber(colorArray[2]),
 		                       tonumber(colorArray[3])
-	                          )
+		                      )
+	end
+	-- log drawing
+	if api.debug.recordSwitch == true then
+		api.debug.record = api.debug.record ..
+						   "," .. "arrow" ..
+						   "," .. tostring(begin) ..
+						   "," .. tostring(finish) ..
+						   "," .. color
 	end
 end
 
@@ -174,6 +186,14 @@ function api.debug.drawRing(color, middle, radius, essential)
 		                       tonumber(colorArray[2]),
 		                       tonumber(colorArray[3])
 	                          )
+	end
+	-- log drawing
+	if api.debug.recordSwitch == true then
+		api.debug.record = api.debug.record ..
+						   "," .. "ring" ..
+						   "," .. tostring(middle) ..
+						   "," .. tostring(radius) ..
+						   "," .. color
 	end
 end
 

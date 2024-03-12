@@ -297,6 +297,12 @@ function SoNS.logLoopFunctionInfoHW(sons)
 	if sons.parentR ~= nil then
 		parentID = sons.parentR.idS
 	end
+
+	local debugRecord
+	if sons.api.debug.recordSwitch == true then
+		debugRecord = sons.api.debug.record
+	end
+
 	SoNS.Msg.sendTable{
 		toS = "LOGINFO",
 		stepCount = sons.api.stepCount,
@@ -305,7 +311,8 @@ function SoNS.logLoopFunctionInfoHW(sons)
 		goalOrientationQ = sons.goal.orientationQ,
 		targetID = targetID,
 		sonsID = sons.idS,
-		parentID = parentID
+		parentID = parentID,
+		debugRecord = debugRecord
 	}
 end
 
@@ -339,6 +346,11 @@ function SoNS.logLoopFunctionInfo(sons)
 		str = str .. "," .. tostring(sons.parentR.idS)
 	else
 		str = str .. "," .. tostring(nil)
+	end
+
+	-- log debug drawings
+	if sons.api.debug.recordSwitch == true then
+		str = str .. sons.api.debug.record
 	end
 
 	robot.debug.write(str)
