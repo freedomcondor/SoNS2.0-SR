@@ -70,7 +70,7 @@ params = '''
     safezone_drone_drone="5.0"
     safezone_pipuck_pipuck="5.0"
     safezone_drone_pipuck="2.0"
-    dangerzone_drone="1.5"
+    dangerzone_drone="1.2"
 
     driver_spring_default_speed_scalar="6"
     drone_tag_detection_rate="1"

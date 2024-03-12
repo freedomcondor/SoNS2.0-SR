@@ -84,6 +84,8 @@ function init()
 	api.init() 
 	sons = SoNS.create(myType)
 	reset()
+
+	api.debug.recordSwitch = true
 end
 
 --- reset
@@ -91,6 +93,7 @@ function reset()
 	sons.reset(sons)
 	--if sons.idS == "pipuck1" then sons.idN = 1 end
 	if sons.idS == robot.params.stabilizer_preference_brain then sons.idN = 1 end
+	if sons.robotTypeS == "drone" then sons.idN = 0 end
 	sons.setGene(sons, gene)
 	sons.setMorphology(sons, structure1)
 
@@ -118,12 +121,13 @@ function step()
 	sons.postStep(sons)
 	api.postStep()
 
-	sons.logLoopFunctionInfo(sons)
 	-- debug
 	api.debug.showChildren(sons)
 	if sons.robotTypeS == "drone" then
 		api.debug.showObstacles(sons, true)
 	end
+
+	sons.logLoopFunctionInfo(sons)
 end
 
 --- destroy
@@ -227,7 +231,7 @@ return function()
 		elseif state == 4 then
 			for id, ob in ipairs(sons.avoider.obstacles) do
 				if ob.type == target_type then
-					sons.setGoal(sons, ob.positionV3 - vector3(2.0, 0, 0), ob.orientationQ)
+					sons.setGoal(sons, ob.positionV3 + vector3(-2.0, 1.0, 0), ob.orientationQ)
 					--[[
 					if sons.goal.positionV3:length() < 0.3 then
 						state = 5
@@ -272,20 +276,15 @@ return function()
 
 			local averageOri = Transform.averageAccumulator(orientationAcc).orientationQ
 
-			sons.setGoal(sons, sons.goal.positionV3, averageOri)
+			if (vector3(1,0,0):rotate(averageOri) - vector3(1,0,0)):length() > 0.35 then
+				sons.setGoal(sons, sons.goal.positionV3, averageOri)
+			end
 		end
 
 		-- brain calc y speed
 		local SpeedY = (left + right) / 2
-		if SpeedY > 0 then 
-			SpeedY = 1.5
-		elseif SpeedY < 0 then 
-			SpeedY = -1.5
-		elseif SpeedY == 0 then 
-			SpeedY = 0 
-		end
-
-		SpeedY = SpeedY * 0.1
+		if -0.5 < SpeedY and SpeedY < 0.5 then SpeedY = 0 end
+		SpeedY = 0.03 * SpeedY
 
 		-- brain move forward
 		if sons.api.stepCount < 1000 then return false, true end

@@ -1,0 +1,27 @@
+diff --git a/src/extensions/replay_loop_functions.cpp b/src/extensions/replay_loop_functions.cpp
+index 218c41d..38ee882 100644
+--- a/src/extensions/replay_loop_functions.cpp
++++ b/src/extensions/replay_loop_functions.cpp
+@@ -220,7 +220,13 @@ namespace argos {
+                   cColor.Set(vecWordList[nCurrentIdx]);
+                   nCurrentIdx ++;
+                }
+-               s_tracked_entity.DebugEntity->GetRings().emplace_back(cVecMiddle, fRadius, cColor);
++               //s_tracked_entity.DebugEntity->GetRings().emplace_back(cVecMiddle, fRadius, cColor);
++               s_tracked_entity.DebugEntity->GetCustomizeRings().emplace_back(cVecMiddle,
++                                                                              fRadius,
++                                                                              cColor,
++                                                                              0.15,
++                                                                              0.03,
++                                                                              1);
+             }
+             if (strDrawType == "customize_ring") {
+                CVector3 cVecMiddle = CVector3(
+@@ -276,6 +282,7 @@ namespace argos {
+                   cColor.Set(vecWordList[nCurrentIdx]);
+                   nCurrentIdx ++;
+                }
++               if (cColor != CColor::RED)
+                s_tracked_entity.DebugEntity->GetArrows().emplace_back(cVecBegin, cVecEnd, cColor);
+             }
+             else if (strDrawType == "customize_arrow") {
