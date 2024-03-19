@@ -1,7 +1,9 @@
 ORIGIN_DIR=`pwd`
 
-raw_exps_dir="@CMAKE_SoNS_DATA_PATH@/src/experiments"
+raw_exps_dir="@CMAKE_SoNS_DATA_PATH@/experiments"
 public_dir="@CMAKE_PUB_DATA_PATH@"
+
+PREPEND_LINE_PY="@CMAKE_SOURCE_DIR@/scripts/csvgenerator/prepend_line.py"
 
 # check public data exists or not
 if [ ! -d "$public_dir" ]; then
@@ -18,14 +20,21 @@ copy_run() {
 	#echo "        $run_folder_name"
 	begin_folder=`pwd`
 
-	# copy csvs
-	cp -r "$input_run_folder"csvs "$output_run_folder"experiment_data
+	mkdir -p $output_run_folder
+
+	# generate csvs
+	mkdir -p "$output_run_folder"experiment_data
+	cd $input_run_folder/logs
+	for file in *.log; do
+		python3 $PREPEND_LINE_PY "$input_run_folder"logs/$file "$output_run_folder"experiment_data/${file%.*}.csv
+	done
+
 	# copy results
 	mkdir -p "$output_run_folder"error_measurements
 	cp "$input_run_folder"result_data.txt "$output_run_folder"error_measurements/error.csv
-	if [ -d "$input_run_folder"result_each_robot_error ]; then
+	if [ -d "$input_run_folder"result_each_robot_error_data ]; then
 		mkdir -p "$output_run_folder"error_measurements/error_per_robot
-		cd "$input_run_folder"result_each_robot_error
+		cd "$input_run_folder"result_each_robot_error_data
 		for error_per_robot_txt in * ; do
 			cp $error_per_robot_txt "$output_run_folder"error_measurements/error_per_robot/${error_per_robot_txt%.*}.csv
 		done
@@ -141,10 +150,23 @@ copy_exp_folder() {
 }
 #-----------------------------------------------------------------------------------
 # list of data sets and their public names
+
+#"1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments/data_simu/data                 1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/50robots"
+
 data_set_lists=(
-	"exp_0_hw_01_formation_1_2d_10p/data_hw/data    1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robots_experiments"
-	"exp_0_hw_01_formation_1_2d_10p/data_simu/data  1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/12robots"
-	"exp_1_simu_01_formation_10d/data_simu/data     1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/50robots"
+	"2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Large_scale_simulation_experiments/data_simu/data                  2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Simulation_experiments/50robots"
+	"2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Large_scale_simulation_experiments/data_simu/data               2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Simulation_experiments/50robots"
+	"3_Mission_Collective_sensing_actuation/Large_scale_simulation_experiments/data_simu/data                                          3_Mission_Collective_sensing_actuation/Simulation_experiments/50robots"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/data_simu_0.5s/data            7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/0.5s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/data_simu_1s/data              7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/1s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/data_simu_30s/data             7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/30s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_0.5s/data     7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/0.5s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_1s/data       7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/1s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_30s/data      7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/30s_failure"
+)
+
+data_set_lists_backup=(
+	"exp_0_hw_01_formation_1_2d_10p/data_simu/data              1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/12robots"
 
 	"exp_0_hw_10_formation_1_2d_6p_group_start/data_hw/data     1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robots_experiments"
 	"exp_0_hw_10_formation_1_2d_6p_group_start/data_simu/data   1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Simulation_experiments/8robots"
@@ -166,17 +188,17 @@ data_set_lists=(
 	"exp_0_hw_05_gate_switch/data_simu/data                     4_Mission_Binary_decision/Simulation_experiments/8robots"
 	"exp_2_simu_scalability/data_simu_scale_2/data              4_Mission_Binary_decision/Simulation_experiments/65robots"
 
-	"exp_0_hw_08_split/data_hw/data                    5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robots_experiments"
-	"exp_0_hw_08_split/data_simu/data                  5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Simulation_experiments/8robots"
-	"exp_1_simu_08_split/data_simu/data                5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Simulation_experiments/50robots"
+	"exp_0_hw_08_split/data_hw/data                             5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robots_experiments"
+	"exp_0_hw_08_split/data_simu/data                           5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Simulation_experiments/8robots"
+	"exp_1_simu_08_split/data_simu/data                         5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Simulation_experiments/50robots"
 
-	"exp_0_hw_09_1d_switch_rescue/data_hw              5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robots_experiments"
-	"exp_0_hw_09_1d_switch_rescue/data_simu/data       5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Simulation_experiments/5robots"
+	"exp_0_hw_09_1d_switch_rescue/data_hw                       5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robots_experiments"
+	"exp_0_hw_09_1d_switch_rescue/data_simu/data                5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Simulation_experiments/5robots"
 
-	"exp_2_simu_scalability/data_simu_scale_1/data     6_Scalability/Scalability_in_decision_making_mission/35robots"
-	"exp_2_simu_scalability/data_simu_scale_2/data     6_Scalability/Scalability_in_decision_making_mission/65robots"
-	"exp_2_simu_scalability/data_simu_scale_3/data     6_Scalability/Scalability_in_decision_making_mission/95robots"
-	"exp_2_simu_scalability/data_simu_scale_4/data     6_Scalability/Scalability_in_decision_making_mission/125robots"
+	"exp_2_simu_scalability/data_simu_scale_1/data              6_Scalability/Scalability_in_decision_making_mission/35robots"
+	"exp_2_simu_scalability/data_simu_scale_2/data              6_Scalability/Scalability_in_decision_making_mission/65robots"
+	"exp_2_simu_scalability/data_simu_scale_3/data              6_Scalability/Scalability_in_decision_making_mission/95robots"
+	"exp_2_simu_scalability/data_simu_scale_4/data              6_Scalability/Scalability_in_decision_making_mission/125robots"
 
 #----------------------------
 
@@ -229,7 +251,9 @@ copy_data_set_folder() {
 	echo "          to $output_data_set_folder"
 
 	if [ ! -d $raw_exps_dir/$input_data_set_folder ]; then
-		echo "[Waring]: input data set doesn't exist, skipped: $public_dir/$output_data_set_folder"
+		echo "[Waring]: input data set doesn't exist, skipped:"
+		echo "[Waring]:     skipping input $raw_exps_dir/$input_data_set_folder"
+		echo "[Waring]:     skipping output $public_dir/$output_data_set_folder"
 		return
 	fi
 
