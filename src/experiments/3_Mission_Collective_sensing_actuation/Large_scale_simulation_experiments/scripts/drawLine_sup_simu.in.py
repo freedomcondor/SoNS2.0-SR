@@ -22,7 +22,7 @@ dataFolder += "data_simu/data"
 savePDFNameBase = "Mission3_Collective_sensing_actuation_Large_scale_Simulation_"
 sampleList = [
 	"run13",
-	"run23",
+	"run24",
 	"run35",
 	"run40",
 	"run50",

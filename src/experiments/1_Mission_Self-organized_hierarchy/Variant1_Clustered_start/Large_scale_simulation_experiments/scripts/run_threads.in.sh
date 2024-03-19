@@ -9,7 +9,7 @@ cmake_relative_dir=${cmake_current_source_dir#$cmake_source_dir}
 cmake_relative_dir=${cmake_relative_dir%"scripts"}
 #cmake_relative_dir starts with / and end with /
 DATADIR="@CMAKE_SoNS_DATA_PATH@"$cmake_relative_dir
-DATADIR+=data
+DATADIR+=data_simu/data
 
 #-----------------------------------------------------
 # prepare to run threads
@@ -17,8 +17,8 @@ CODEDIR=$DATADIR/../code
 TMPDIR=@CMAKE_BINARY_DIR@/threads
 #THREADS_LOG_OUTPUT=`pwd`/threads_output.txt
 
-run_per_thread=7
-number_threads=8
+run_per_thread=5
+number_threads=10
 argos_multi_threads=4
 
 # start run number, run per thread, total threads

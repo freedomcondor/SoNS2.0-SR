@@ -35,14 +35,14 @@ for subFolder in getSubfolders(DATADIR) :
 	data = readDataFrom(subFolder + "result_data.txt")
 #	if data[120] > 1.3 :
 #		print(subFolder)
-	drawData(data)
+	drawData(data, "blue")
 #	print("length: ", len(data), ":", subFolder)
-	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"))
+	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"), "red")
 
-	data = readDataFrom(subFolder + "result_SoNSNumber_data.txt")
-	if data[-1] > 1 :
-		print("split:", subFolder)
-	drawData(data)
+	#data = readDataFrom(subFolder + "result_SoNSNumber_data.txt")
+	#if data[-1] > 1 :
+	#	print("split:", subFolder)
+	#drawData(data)
 	'''
 	for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
 		data = readDataFrom(subFile)
