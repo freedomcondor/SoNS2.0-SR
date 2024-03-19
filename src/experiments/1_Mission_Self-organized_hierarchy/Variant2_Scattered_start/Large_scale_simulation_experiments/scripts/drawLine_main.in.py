@@ -48,12 +48,9 @@ option = {
 #------------------------------------------------
 	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	'key_frame' :  [0] ,
-	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/data_simu/track_fig_logs"
-	,
 
-	'x_lim'     :  [-4, 4]    ,
-	'y_lim'     :  [-3, 5]        ,
+	'x_lim'     :  [-3, 5]    ,
+	'y_lim'     :  [-4, 4]        ,
 	'z_lim'     :  [-1.0, 7.0]    ,
 }
 

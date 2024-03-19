@@ -42,9 +42,6 @@ option = {
 	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	#'key_frame' :  [0, 300, 2000] ,  # option 1
 	'key_frame' :  [0, 500] ,
-	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/data_simu/track_fig_logs"
-	,
 
 	'legend_obstacle'  : True,
 
