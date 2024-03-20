@@ -58,7 +58,7 @@ generate_argos_file("@CMAKE_CURRENT_BINARY_DIR@/sons_template.argos",
               dangerzone_drone="1.3"
 
               safezone_pipuck_pipuck="0.3"
-              driver_spring_default_speed_scalar="6"
+              driver_spring_default_speed_scalar="4"
         ''')],
         ["SIMULATION_SETUP",  generate_physics_media_loop_visualization("@CMAKE_BINARY_DIR@")],
     ]

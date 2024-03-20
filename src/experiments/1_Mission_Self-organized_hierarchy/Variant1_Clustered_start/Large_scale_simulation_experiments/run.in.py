@@ -24,8 +24,8 @@ for i in range(0, 5) :
     for j in range(0, 8) :
         pipuck_index.append([i - 2, j - 4])
 tmp = pipuck_index[0]
-pipuck_index[0] = pipuck_index[20]
-pipuck_index[20] = tmp
+pipuck_index[0] = pipuck_index[21]
+pipuck_index[21] = tmp
 
 dis = 0.3
 pipuck_locations = []
@@ -36,7 +36,7 @@ drone_xml = generate_drones(drone_locations, 1)                 # from label 1 g
 
 pipuck_locations.remove(pipuck_locations[0])
 
-pipuck_xml = generate_pipuck_xml(1, 0, 0, 90) + \
+pipuck_xml = generate_pipuck_xml(1, dis*pipuck_index[0][0], dis*pipuck_index[0][1], 90) + \
              generate_pipucks(pipuck_locations, 2)             # from label 2 generate pipuck xml tags
 
 # generate sons.argos file, replacing each MARKWORD in the sons_template.argos with the content.

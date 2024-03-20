@@ -28,4 +28,4 @@ run_threads 1 $run_per_thread $number_threads\
 	$TMPDIR \
 	": do not check"
 
-cp -r @CMAKE_CURRENT_BINARY_DIR@/../simu_code $CODEDIR
+cp -r @CMAKE_CURRENT_BINARY_DIR@/../simu $CODEDIR
