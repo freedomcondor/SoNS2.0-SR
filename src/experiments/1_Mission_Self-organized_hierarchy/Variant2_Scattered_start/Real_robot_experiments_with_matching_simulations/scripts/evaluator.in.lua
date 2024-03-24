@@ -73,12 +73,10 @@ local robotsData = logReader.loadData("./logs")
 
 if hardware_flag == true then
 	print("hardware flag detected, fix optitrack data")
-	--fixData(robotsData)  -- only for hardware datas
+	fixData(robotsData)  -- only for hardware datas
 end
 
-local firstRecruitStep = logReader.calcFirstRecruitStep(robotsData)
-local saveStartStep = firstRecruitStep + 15
-print("firstRecruit happens", firstRecruitStep, "data start at", saveStartStep)
+local saveStartStep = logReader.getStartStep(robotsData)
 
 logReader.calcSegmentData(robotsData, geneIndex, saveStartStep)
 

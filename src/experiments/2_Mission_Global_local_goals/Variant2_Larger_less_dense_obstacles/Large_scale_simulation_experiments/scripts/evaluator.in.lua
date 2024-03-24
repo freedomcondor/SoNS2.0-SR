@@ -13,10 +13,7 @@ local robotsData = logReader.loadData("./logs")
 
 local endStep = logReader.getEndStep(robotsData)
 
-local firstRecruitStep = logReader.calcFirstRecruitStep(robotsData)
---local saveStartStep = firstRecruitStep + 10
-local saveStartStep = firstRecruitStep + 15
-print("firstRecruit happens", firstRecruitStep, "data start at", saveStartStep)
+local saveStartStep = logReader.getStartStep(robotsData)
 
 logReader.calcSegmentData(robotsData, geneIndex, 1, 600)
 for i = 601, endStep do

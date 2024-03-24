@@ -203,7 +203,7 @@ function logReader.smoothData(robotsData, window)
 	end
 end
 
-function logReader.calcFirstRecruitStep(robotsData, saveFile)
+function logReader.calcFirstRecruitStep(robotsData)
 	local SoNSs = nil
 	local step = 0
 	while true do
@@ -233,6 +233,18 @@ function logReader.calcFirstRecruitStep(robotsData, saveFile)
 			end
 		end
 	end
+end
+
+function logReader.getStartStep(robotsData)
+	-- method 1
+	--local firstRecruitStep = logReader.calcFirstRecruitStep(robotsData)
+	--local saveStartStep = firstRecruitStep + 15
+	--print("firstRecruit happens", firstRecruitStep, "data start at", saveStartStep)
+	-- method 2
+	local saveStartStep = 75
+	print("start step fixed at", saveStartStep)
+
+	return saveStartStep
 end
 
 function logReader.saveSoNSNumber(robotsData, saveFile, startStep, endStep)
@@ -305,7 +317,8 @@ function logReader.saveFailedRobot(robotsData, saveFile)
 end
 
 function logReader.calcSegmentData(robotsData, geneIndex, startStep, endStep)
-	logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsData, geneIndex, false, true, startStep, endStep)
+	--logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsData, geneIndex, false, true, startStep, endStep)
+	logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsData, geneIndex, false, false, startStep, endStep)
 end
 
 function logReader.calcSegmentDataWithFailureCheck(robotsData, geneIndex, startStep, endStep)

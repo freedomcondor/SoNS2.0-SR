@@ -104,9 +104,7 @@ if f ~= nil then
 end
 
 -- read first step
-local firstRecruitStep = logReader.calcFirstRecruitStep(robotsData)
-local saveStartStep = firstRecruitStep + 15
-print("firstRecruit happens", firstRecruitStep, "data start at", saveStartStep)
+local saveStartStep = logReader.getStartStep(robotsData)
 
 local stage2Step = logReader.checkIDFirstAppearStep(robotsData, structure2.idN)
 local structure2Step = stage2Step
