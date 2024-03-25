@@ -19,7 +19,7 @@ cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, ""
 dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
 dataFolder += "data_hw/data"
 
-savePDFNameBase = "mission7_Fault_tolerance_Real_robot_Hardware_"
+savePDFNameBase = "Mission7_Fault_tolerance_Real_robot_Hardware_"
 
 sampleList = [
 	"run1",
