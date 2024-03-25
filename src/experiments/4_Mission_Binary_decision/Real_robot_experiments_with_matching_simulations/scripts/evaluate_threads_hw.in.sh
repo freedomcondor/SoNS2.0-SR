@@ -20,7 +20,7 @@ echo $DATADIR
 
 # start run number, run per thread, total threads
 run_threads 1 1 5\
-	"lua @CMAKE_CURRENT_BINARY_DIR@/evaluator.lua" \
+	"lua @CMAKE_CURRENT_BINARY_DIR@/evaluator.lua hw" \
 	$DATADIR \
 	$TMPDIR \
 	"----" \

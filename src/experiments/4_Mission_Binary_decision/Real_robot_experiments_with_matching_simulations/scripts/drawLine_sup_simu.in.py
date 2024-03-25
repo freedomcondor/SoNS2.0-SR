@@ -19,7 +19,7 @@ cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, ""
 dataFolder  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
 dataFolder += "data_simu/data"
 
-savePDFNameBase = "mission4_Binary_decision_Real_robot_Simulation_"
+savePDFNameBase = "Mission4_Binary_decision_Real_robot_Simulation_"
 sampleList = [
 	"run6",
 	"run10",

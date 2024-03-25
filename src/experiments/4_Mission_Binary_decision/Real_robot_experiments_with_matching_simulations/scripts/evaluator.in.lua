@@ -25,6 +25,8 @@ local geneIndex = logReader.calcMorphID(gene)
 local robotsData = logReader.loadData("./logs")
 
 local saveStartStep = logReader.getStartStep(robotsData)
+-- special case for hw
+if #arg == 1 and arg[1] == "hw" then saveStartStep = 180 end
 
 local stage2Step = logReader.checkIDFirstAppearStep(robotsData, structure2.idN)
 local stage3Step = logReader.checkIDFirstAppearStep(robotsData, structure3.idN)
@@ -45,7 +47,7 @@ for i = 1, stage2Step - 1 do
 end
 
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, saveStartStep, stage2Step - 1)
-logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, firstRecruitStep, stage2Step - 1)
+--logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, firstRecruitStep, stage2Step - 1)
 logReader.calcSegmentData(robotsData, geneIndex, stage2Step, stage3Step - 1)
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, stage2Step, stage3Step - 1)
 
