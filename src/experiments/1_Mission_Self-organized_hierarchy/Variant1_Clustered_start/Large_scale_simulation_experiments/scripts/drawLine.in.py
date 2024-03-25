@@ -27,17 +27,35 @@ if hw_or_simu == "hw" :
 else :
 	DATADIR+="data_simu/data"
 # -----------------------------
+
+count = 0
 for subFolder in getSubfolders(DATADIR) :
 	# choose a specific run
 	#if subFolder != DATADIR+ "/run1/" :
 	#	continue
 
+	count = count + 1
 	data = readDataFrom(subFolder + "result_data.txt")
+	dataLowerbound = readDataFrom(subFolder + "result_lowerbound_data.txt")
+	data_minus_lowerbound = subtractLists(data, dataLowerbound)
+
+	flag = False
+	for value in data_minus_lowerbound :
+		if value < -0.01 :
+			drawData(data)
+			drawData(dataLowerbound)
+			drawData(data_minus_lowerbound)
+			flag = True
+			break
+	if flag == True :
+		break
+
+#	data = readDataFrom(subFolder + "result_data.txt")
 #	if data[120] > 1.3 :
 #		print(subFolder)
-	drawData(data, "blue")
+#	drawData(data, "blue")
 #	print("length: ", len(data), ":", subFolder)
-	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"), "red")
+#	drawData(readDataFrom(subFolder + "result_lowerbound_data.txt"), "red")
 
 	#data = readDataFrom(subFolder + "result_SoNSNumber_data.txt")
 	#if data[-1] > 1 :
