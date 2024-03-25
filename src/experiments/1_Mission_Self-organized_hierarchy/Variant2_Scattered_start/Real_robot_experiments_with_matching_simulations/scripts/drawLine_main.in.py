@@ -21,8 +21,8 @@ dataFolder += "data_hw/data"
 
 #sample_run = "run1"
 #sample_run = "run2"
-#sample_run = "run3"
-sample_run = "run4"
+sample_run = "run3"
+#sample_run = "run4"
 #sample_run = "run5"
 
 dataFolder2 ="@CMAKE_SoNS_DATA_PATH@/"
@@ -52,9 +52,34 @@ option = {
 #------------------------------------------------
 	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',
 	'key_frame' :  [0] ,
-
 	'key_frame_parent_index' :  [
-		{}, # for key frame 0
+		{}, # for key frame'''
+		{
+			'drone2'    :   'drone4'   ,
+			'drone4'    :   'nil'      ,
+			'pipuck1'   :   'drone4'  ,
+			'pipuck2'   :   'drone2'  ,
+			'pipuck4'   :   'drone2'  ,
+			'pipuck5'   :   'drone4'  ,
+			'pipuck6'   :   'drone2'  ,
+			'pipuck7'   :   'drone4'   ,
+			'pipuck8'   :   'drone4'   ,
+			'pipuck9'   :   'drone2'  ,
+			'pipuck10'  :   'drone2'  ,
+			'pipuck11'  :   'drone4'  ,
+		},
+	] ,
+
+	'x_lim'     :  [-1.5, 3.5]    ,
+	'y_lim'     :  [-2.5, 2.5]    ,
+	'z_lim'     :  [-1.0, 3.0]    ,
+}
+
+drawSRFig(option)
+drawTrackLog(option)
+
+'''
+		# for run4?
 		{
 			'drone2'    :   'drone4'  ,
 			'drone4'    :   'nil'     ,
@@ -69,12 +94,4 @@ option = {
 			'pipuck10'  :   'drone2'  ,
 			'pipuck11'  :   'drone2'  ,
 		},
-	] ,
-
-	'x_lim'     :  [-1.5, 3.5]    ,
-	'y_lim'     :  [-2.5, 2.5]    ,
-	'z_lim'     :  [-1.0, 3.0]    ,
-}
-
-drawSRFig(option)
-drawTrackLog(option)
+'''
