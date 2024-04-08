@@ -1,0 +1,77 @@
+# Mission 1
+echo "01 Mission 1 Variant1 Large scale"
+bash experiments/1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Large_scale_simulation_experiments/scripts/eva_threads.sh
+echo "02 Mission 1 Variant1 Real robot"
+bash experiments/1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_hw.sh
+bash experiments/1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_simu.sh
+echo "03 Mission 1 Variant2 Large scale"
+bash experiments/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments/scripts/eva_threads.sh
+echo "04 Mission 1 Variant2 Real robot"
+bash experiments/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_hw.sh
+bash experiments/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_simu.sh
+
+# Mission 2
+echo "05 Mission 1 Variant1 Large scale"
+bash experiments/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Large_scale_simulation_experiments/scripts/eva_threads.sh
+echo "06 Mission 1 Variant1 Real robot"
+bash experiments/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_hw.sh
+bash experiments/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_simu.sh
+echo "07 Mission 1 Variant2 Large scale"
+bash experiments/2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Large_scale_simulation_experiments/scripts/eva_threads.sh
+echo "08 Mission 1 Variant2 Real robot"
+bash experiments/2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_hw.sh
+bash experiments/2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_simu.sh
+
+# Mission 3
+echo "09 Mission 3 Large scale"
+bash experiments/3_Mission_Collective_sensing_actuation/Large_scale_simulation_experiments/scripts/eva_threads.sh
+echo "10 Mission 3 Real robot"
+bash experiments/3_Mission_Collective_sensing_actuation/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_hw.sh
+bash experiments/3_Mission_Collective_sensing_actuation/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_simu.sh
+
+# Mission 4
+echo "11 Mission 4 Real robot"
+bash experiments/4_Mission_Binary_decision/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_hw.sh
+bash experiments/4_Mission_Binary_decision/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_simu.sh
+
+# Mission 5
+echo "12 Mission 5 Variant1 Large scale"
+bash experiments/5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Large_scale_simulation_experiments/scripts/eva_threads.sh
+echo "13 Mission 5 Variant1 Real robot"
+bash experiments/5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_hw.sh
+bash experiments/5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_simu.sh
+echo "14 Mission 5 Variant2 Real robot"
+bash experiments/5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_hw.sh
+bash experiments/5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_simu.sh
+
+# Mission 6
+echo "15 Mission 6 Scalability in decision making -- scale 1"
+bash experiments/6_Scalability/Scalability_in_decision_making_mission/scripts/evaluate_threads_simu.sh scale_1
+# or do not specify scale_1, evaluate_threads_simu will run for all 4 cases
+echo "16 Mission 6 Scalability in decision making -- scale 2"
+bash experiments/6_Scalability/Scalability_in_decision_making_mission/scripts/evaluate_threads_simu.sh scale_2
+echo "17 Mission 6 Scalability in decision making -- scale 3"
+bash experiments/6_Scalability/Scalability_in_decision_making_mission/scripts/evaluate_threads_simu.sh scale_3
+echo "18 Mission 6 Scalability in decision making -- scale 4"
+bash experiments/6_Scalability/Scalability_in_decision_making_mission/scripts/evaluate_threads_simu.sh scale_4
+
+# scalability in establishment is excluded
+
+# Mission 7
+echo "19 Mission 7 Fault tolerance Large scale 1 one third failure"
+bash experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant1_One_third_chance_for_each_robot_to_fail/scripts/evaluate_threads_simu.sh 
+echo "20 Mission 7 Fault tolerance Large scale 2 two thirds failure"
+bash experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant2_Two_thirds_chance_for_each_robot_to_fail/scripts/evaluate_threads_simu.sh 
+
+echo "21 Mission 7 Fault tolerance Large scale 3 vision failure"
+bash experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/scripts/eva_threads.sh 0.5s
+bash experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/scripts/eva_threads.sh 1s
+bash experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/scripts/eva_threads.sh 30s
+echo "22 Mission 7 Fault tolerance Large scale 4 communication failure"
+bash experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/scripts/eva_threads.sh 0.5s
+bash experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/scripts/eva_threads.sh 1s
+bash experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/scripts/eva_threads.sh 30s
+
+echo "22 Mission 7 Fault tolerance Real robot"
+bash experiments/7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_hw.sh
+bash experiments/7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/scripts/evaluate_threads_simu.sh

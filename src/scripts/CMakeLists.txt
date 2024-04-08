@@ -9,3 +9,5 @@ configure_file( generatePublicScalabilityAnalyzeData.in.sh
               )
 
 configure_file( generateSingleRunCSVs.in.sh   generateSingleRunCSVs.sh     @ONLY)
+
+configure_file( evaluateAll.sh             evaluateAll.sh     @ONLY)
