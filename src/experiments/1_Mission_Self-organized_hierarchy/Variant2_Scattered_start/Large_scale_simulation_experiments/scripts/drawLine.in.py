@@ -5,9 +5,14 @@ exec(compile(open(drawDataFileName, "rb").read(), drawDataFileName, 'exec'))
 cmake_source_dir         = "@CMAKE_SOURCE_DIR@"
 cmake_current_source_dir = "@CMAKE_CURRENT_SOURCE_DIR@"
 cmake_relative_dir       = cmake_current_source_dir.replace(cmake_source_dir, "").replace("/scripts", "")
+
+#cmake_relative_dir = "/experiments/7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure"
+cmake_relative_dir = "/experiments/7_Fault_tolerance/Real_robot_experiments_with_matching_simulations"
 #cmake_relative_dir starts with / and end with no /
 DATADIR  = "@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/"
-DATADIR += "data_simu/data"
+DATADIR += "data_hw/data"
+#DATADIR += "data_simu_1s/data"
+
 
 count = 0
 for subFolder in getSubfolders(DATADIR) :
@@ -19,13 +24,28 @@ for subFolder in getSubfolders(DATADIR) :
 	flag = False
 	for value in data_minus_lowerbound :
 		if value < -0.1:
-			drawData(data)
-			drawData(dataLowerbound)
-			drawData(data_minus_lowerbound)
 			flag = True
 			break
+
+	flag = True
 	if flag == True :
-		break
+		fig = plt.figure()
+		ax1 = fig.add_subplot(211)
+		ax2 = fig.add_subplot(212)
+
+		drawDataInSubplot(data, ax1)
+		drawDataInSubplot(dataLowerbound, ax1)
+		drawDataInSubplot(data_minus_lowerbound, ax1)
+
+		for subFile in getSubfiles(subFolder + "result_each_robot_lowerbound_data") :
+			drawDataInSubplot(readDataFrom(subFile), ax2, "red")
+		for subFile in getSubfiles(subFolder + "result_each_robot_error_data") :
+			drawDataInSubplot(readDataFrom(subFile), ax2, "blue")
+
+		plt.savefig(subFolder.split('/')[-2] + ".pdf")
+
+	#if flag == True :
+	#	break
 
 	# check no splits
 #	data = readDataFrom(subFolder + "result_SoNSNumber_data.txt")
@@ -45,4 +65,4 @@ for subFolder in getSubfolders(DATADIR) :
 	break
 	'''
 
-plt.show()
+#plt.show()
