@@ -322,7 +322,8 @@ function logReader.calcSegmentData(robotsData, geneIndex, startStep, endStep)
 end
 
 function logReader.calcSegmentDataWithFailureCheck(robotsData, geneIndex, startStep, endStep)
-	logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsData, geneIndex, true, true, startStep, endStep)
+	--logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsData, geneIndex, true, true, startStep, endStep)
+	logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsData, geneIndex, true, false, startStep, endStep)
 end
 
 function logReader.calcSegmentDataWithFailureCheckAndGoalReferenceOption(robotsData, geneIndex, failureCheckOption, goalReferenceOption, startStep, endStep)
