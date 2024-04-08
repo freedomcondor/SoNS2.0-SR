@@ -151,9 +151,12 @@ copy_exp_folder() {
 #-----------------------------------------------------------------------------------
 # list of data sets and their public names
 
-#"1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments/data_simu/data                 1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/50robots"
-
 data_set_lists=(
+	"1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments/data_simu/data                     1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/50robots"
+)
+data_set_lists_test=(
+	"1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Large_scale_simulation_experiments/data_simu/data                     1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Simulation_experiments/50robots"
+	"1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments/data_simu/data                     1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/50robots"
 	"2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Large_scale_simulation_experiments/data_simu/data                  2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Simulation_experiments/50robots"
 	"2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Large_scale_simulation_experiments/data_simu/data               2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Simulation_experiments/50robots"
 	"3_Mission_Collective_sensing_actuation/Large_scale_simulation_experiments/data_simu/data                                          3_Mission_Collective_sensing_actuation/Simulation_experiments/50robots"
@@ -165,6 +168,7 @@ data_set_lists=(
 	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_30s/data      7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/30s_failure"
 )
 
+# outdated, the raw data repo moved from exp_x_hw_x to 1_Mission_XX/VariantX
 data_set_lists_backup=(
 	"exp_0_hw_01_formation_1_2d_10p/data_simu/data              1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/12robots"
 
@@ -281,11 +285,11 @@ for i in ${!data_set_lists[@]}; do
 	copy_data_set_folder ${exp_tuple[0]} ${exp_tuple[1]}
 done
 
-for i in ${!special_run_list[@]}; do
-	read -a exp_tuple <<< ${special_run_list[$i]}
-	mkdir -p $public_dir/${exp_tuple[1]}/
-	copy_run $raw_exps_dir/${exp_tuple[0]}/ $public_dir/${exp_tuple[1]}/
-done
+#for i in ${!special_run_list[@]}; do
+#	read -a exp_tuple <<< ${special_run_list[$i]}
+#	mkdir -p $public_dir/${exp_tuple[1]}/
+#	copy_run $raw_exps_dir/${exp_tuple[0]}/ $public_dir/${exp_tuple[1]}/
+#done
 
 # copy README
 cp @CMAKE_SOURCE_DIR@/scripts/public_data_readmes/Root_readme.txt $public_dir/README
@@ -294,8 +298,8 @@ for i in ${!data_set_lists[@]}; do
 	cp @CMAKE_SOURCE_DIR@/scripts/public_data_readmes/Data_set_readme.txt $public_dir/${exp_tuple[1]}/README
 done
 
-for i in ${!special_readme_list[@]}; do
-	cp @CMAKE_SOURCE_DIR@/scripts/public_data_readmes/Data_set_readme.txt $public_dir/${special_readme_list[$i]}/README
-done
+#for i in ${!special_readme_list[@]}; do
+#	cp @CMAKE_SOURCE_DIR@/scripts/public_data_readmes/Data_set_readme.txt $public_dir/${special_readme_list[$i]}/README
+#done
 
 cd $ORIGIN_DIR

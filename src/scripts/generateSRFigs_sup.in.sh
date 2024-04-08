@@ -1,96 +1,39 @@
-#!/bin/bash
+#!/bin/bashEXP_DIR
 EXP_DIR=@CMAKE_BINARY_DIR@/experiments
-SCRIPT_HW_PATH=scripts/drawLine_sup_hw.py
-SCRIPT_SIMU_PATH=scripts/drawLine_sup_simu.py
 
-EXPERIMENT_LIST=( \
-	# mission 1 formation
-	# 01 clustered positions
-	# 02 clustered positions 10 drone
-	# 03 scattered positions
-	# 04 scattered positions 10 drone
+python3 $EXP_DIR/1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Large_scale_simulation_experiments/scripts/drawLine_sup_simu.py > M1V1L.output 2>&1 &
+python3 $EXP_DIR/1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_hw.py > M1V1Rhw.output 2>&1 &
+python3 $EXP_DIR/1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_simu.py > M1V1Rsimu.output 2>&1 &
+python3 $EXP_DIR/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments/scripts/drawLine_sup_simu.py > M1V2L.output 2>&1 &
+python3 $EXP_DIR/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_hw.py > M1V2Rhw.output 2>&1 &
+python3 $EXP_DIR/1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_simu.py > M1V2Rsimu.output 2>&1 &
 
-exp_0_hw_10_formation_1_2d_6p_group_start \
-exp_0_hw_01_formation_1_2d_10p \
-exp_1_simu_10_formation_10d_group_start \
-exp_1_simu_1_formation_10d \
+python3 $EXP_DIR/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Large_scale_simulation_experiments/scripts/drawLine_sup_simu.py > M2V1L.output 2>&1 &
+python3 $EXP_DIR/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_hw.py > M2V1Rhw.output 2>&1 &
+python3 $EXP_DIR/2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_simu.py > M2V1Rsimu.output 2>&1 &
+python3 $EXP_DIR/2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Large_scale_simulation_experiments/scripts/drawLine_sup_simu.py > M2V2L.output 2>&1 &
+python3 $EXP_DIR/2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_hw.py > M2V2Rhw.output 2>&1 &
+python3 $EXP_DIR/2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_simu.py > M2V2Rsimu.output 2>&1 &
 
-	# mission 2 obstacle avoidance
-	# 01 small obstacles
-	# 02 small obstacles 10 drone
-	# 03 large obstacles
-	# 04 large obstacles 10 drone
+python3 $EXP_DIR/3_Mission_Collective_sensing_actuation/Large_scale_simulation_experiments/scripts/drawLine_sup_simu.py > M3L.output 2>&1 &
+python3 $EXP_DIR/3_Mission_Collective_sensing_actuation/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_hw.py > M3Rhw.output 2>&1 &
+python3 $EXP_DIR/3_Mission_Collective_sensing_actuation/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_simu.py > M3Rsimu.output 2>&1 &
 
-exp_0_hw_02_obstacle_avoidance_small \
-exp_1_simu_02_obstacle_avoidance_small_10d \
-exp_0_hw_03_obstacle_avoidance_large \
-exp_1_simu_03_obstacle_avoidance_large_10d \
+python3 $EXP_DIR/4_Mission_Binary_decision/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_hw.py > M4Rhw.output 2>&1 &
+python3 $EXP_DIR/4_Mission_Binary_decision/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_simu.py > M4Rsimu.output 2>&1 &
 
-	# mission 3
-	# 01 funnel
-	# 02 funnel 10 drone
+python3 $EXP_DIR/5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Large_scale_simulation_experiments/scripts/drawLine_sup_simu.py > M5V1L.output 2>&1 &
+python3 $EXP_DIR/5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_hw.py > M5V1Rhw.output 2>&1 &
+python3 $EXP_DIR/5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_simu.py > M5V1Rsimu.output 2>&1 &
+python3 $EXP_DIR/5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_hw.py > M5V2Rhw.output 2>&1 &
+python3 $EXP_DIR/5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_simu.py > M5V2Rsimu.output 2>&1 &
 
-exp_0_hw_04_switch_line \
-exp_1_simu_04_switch_line \
+python3 $EXP_DIR/6_Scalability/Scalability_in_SoNS_establishment_mission/scripts/drawLine_sup_simu.py > M6ES.output 2>&1 &
+python3 $EXP_DIR/6_Scalability/Scalability_in_decision_making_mission/scripts/drawLine_sup_simu.py > M6DE.output 2>&1 &
 
-	# mission 4
-	# 01 choosing gates
-	# 02 choosing gates -- scalability scale 2 13 drones
-
-exp_0_hw_05_gate_switch \
-#scalablity scale 2   # run seperately later TODO
-
-	# mission 5
-	# 01 split 
-	# 02 split 10 drone
-	# 03 move circle 
-	# 04 move circle 10 drone
-
-exp_0_hw_08_split \
-exp_1_simu_08_split \
-exp_0_hw_09_1d_switch_rescue \
-
-	# mission 6
-	# scalability gate choosing
-	# scalability analyze
-
-exp_2_simu_scalability \
-exp_2_simu_scalability_analyze \
-
-	# mission 7 fault tolerance
-	# 01 fault tolerance hw
-	# 02 fault tolerance 33 loss
-	# 03 fault tolerance comm loss
-
-exp_0_hw_07_fault_tolerance \
-exp_3_simu_02_fault_tolerance_33 \
-exp_3_simu_03_fault_tolerance_communication \
-exp_3_simu_04_fault_tolerance_visual \
-)
-
-for exp_name in ${EXPERIMENT_LIST[@]}
-do
-	drawLinePyScript=$EXP_DIR/$exp_name/$SCRIPT_HW_PATH
-	if [ -f "$drawLinePyScript" ]; then
-		echo "running" $drawLinePyScript
-		python3 $drawLinePyScript
-	fi
-
-	drawLinePyScript=$EXP_DIR/$exp_name/$SCRIPT_SIMU_PATH
-	if [ -f "$drawLinePyScript" ]; then
-		echo "running" $drawLinePyScript
-		python3 $drawLinePyScript
-	fi
-done
-
-#SPECIAL_LIST=( \
-#exp_2_simu_scalability/scripts/drawLine_scale_2.py \
-#exp_2_simu_scalability/scripts/drawLine_scale_4.py \
-#)
-
-#for script_name in ${SPECIAL_LIST[@]}
-#do
-#	drawLinePyScript=$EXP_DIR/$script_name
-#	echo "running" $drawLinePyScript
-#	python3 $drawLinePyScript
-#done
+python3 $EXP_DIR/7_Fault_tolerance/Large_scale_simulation_experiments/Variant1_One_third_chance_for_each_robot_to_fail/scripts/drawLine_sup_simu.py > M7LV1.output 2>&1 &
+python3 $EXP_DIR/7_Fault_tolerance/Large_scale_simulation_experiments/Variant2_Two_thirds_chance_for_each_robot_to_fail/scripts/drawLine_sup_simu.py > M7LV2.output 2>&1 &
+python3 $EXP_DIR/7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/scripts/drawLine_sup_simu.py > M7LV3.output 2>&1 &
+python3 $EXP_DIR/7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/scripts/drawLine_sup_simu.py > M7LV4.output 2>&1 &
+python3 $EXP_DIR/7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_hw.py > M7Rhw.output 2>&1 &
+python3 $EXP_DIR/7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/scripts/drawLine_sup_simu.py > M7Rsimu.output 2>&1 &
