@@ -52,6 +52,8 @@ track_option_base = {
 	'SRFig_show'        : False,
 	'no_violin'         : True,
 	'main_ax_lim'       : [-0.5, 3.5],
+
+	'failure_place_holder'   : -1,
 }
 
 #----------------------------------

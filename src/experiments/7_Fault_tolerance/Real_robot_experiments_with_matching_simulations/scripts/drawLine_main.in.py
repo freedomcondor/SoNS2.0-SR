@@ -42,7 +42,7 @@ option = {
 #	'violin_ax_top_lim_from' : 5,
 #	'violin_ax_top_lim_to'   : 5.5,
 
-	'failure_place_holder'   : 0,
+	'failure_place_holder'   : -1,
 
 #------------------------------------------------
 	'brain_marker'      :    '@CMAKE_SOURCE_DIR@/scripts/brain-icon-small.svg',

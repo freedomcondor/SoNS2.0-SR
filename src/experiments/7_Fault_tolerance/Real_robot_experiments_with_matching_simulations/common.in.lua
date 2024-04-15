@@ -331,9 +331,11 @@ return function()
 		if sons.robotTypeS == "pipuck" then
 			sons.api.move(vector3(), vector3())
 			sons.api.pipuckShowAllLEDs()
+			sons.api.debug.drawRing("red", vector3(0,0,0), 0.2, true)
 		elseif sons.robotTypeS == "drone" then
 			sons.api.parameters.droneDefaultHeight = -0.2
 			sons.api.move(vector3(0,0,-0.02), vector3())
+			sons.api.debug.drawRing("red", vector3(0,0,0), 0.2, true)
 			robot.leds.set_leds("red")
 		end
 	end

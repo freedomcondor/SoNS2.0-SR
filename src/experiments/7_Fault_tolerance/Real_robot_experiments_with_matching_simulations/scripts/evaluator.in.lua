@@ -141,7 +141,6 @@ logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, sav
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, structure2Step, stage4Step - 1)
 
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, stage4Step, stage5Step - 1)
-logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, stage4Step + 5, stage5Step - 1)
 
 logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, stage5Step, nil)
 
@@ -157,7 +156,7 @@ os.execute("echo " .. tostring(stage5Step - saveStartStep) .. " >> formationSwit
 logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep)
 logReader.saveData(robotsData, "result_lowerbound_data.txt", "lowerBoundError", saveStartStep)
 logReader.saveData(robotsData, "result_lowerbound_inc_data.txt", "lowerBoundInc", saveStartStep)
-logReader.saveEachRobotDataWithFailurePlaceHolder(robotsData, "result_each_robot_error_data", "error", "0.0", saveStartStep)
+logReader.saveEachRobotDataWithFailurePlaceHolder(robotsData, "result_each_robot_error_data", "error", "-1", saveStartStep)
 logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_data", "lowerBoundError", saveStartStep)
 logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_inc_data", "lowerBoundInc", saveStartStep)
 
