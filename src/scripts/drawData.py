@@ -13,6 +13,16 @@ def subtractLists(a, b) :
 	return c
 
 #----------------------------------------------------------------------------------------------
+# This function filters list a, remove any elements below b
+# The result is a new list, original a is untouched
+def filterListBelow(a, b) :
+	c = []
+	for i in range(0, len(a)) :
+		if a[i] >= b :
+			c.append(a[i])
+	return c
+
+#----------------------------------------------------------------------------------------------
 # This function reads data from a file
 # The file is assumed to have one column of data, e.g. each line contains only one float number
 # output data is an array of data

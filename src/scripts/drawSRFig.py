@@ -400,6 +400,7 @@ def drawSRFig(option) :
 		data_to_show = subtractLists(mean_data, lowerbound_data)
 		boxdata = boxdata + data_to_show
 
+	boxdata = filterListBelow(boxdata, 0)
 	violin_return_1 = violin_ax.violinplot(boxdata, showmeans=True)
 	violin_returns = [violin_return_1]
 	if violin_ax_top != None :
@@ -434,6 +435,7 @@ def drawSRFig(option) :
 			boxdata2 = boxdata2 + data_to_show
 
 
+		boxdata2 = filterListBelow(boxdata2, 0)
 		violin_return_3 = violin2_ax.violinplot(boxdata2, showmeans=True)
 		violin_returns.append(violin_return_3)
 		if violin2_ax_top != None :
@@ -461,6 +463,7 @@ def drawSRFig(option) :
 			data_to_show = subtractLists(mean_data, lowerbound_data)
 			boxdata3 = boxdata3 + data_to_show
 
+		boxdata3 = filterListBelow(boxdata3, 0)
 		violin_return_5 = violin3_ax.violinplot(boxdata3, showmeans=True)
 		violin_returns.append(violin_return_5)
 		if violin3_ax_top != None :
