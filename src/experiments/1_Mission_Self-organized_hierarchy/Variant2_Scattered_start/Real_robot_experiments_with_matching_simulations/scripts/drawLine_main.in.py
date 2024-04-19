@@ -42,7 +42,7 @@ option = {
 
 	'boxPlotValue_save'      : "Mission1_Self-organized_hirarchy_Variant2_Scattered_start.dat",
 
-	'main_ax_lim'            : [-0.2, 1.5],
+	'main_ax_lim'            : [-0.2, 1.7],
 
 	'split_right'            : False,
 

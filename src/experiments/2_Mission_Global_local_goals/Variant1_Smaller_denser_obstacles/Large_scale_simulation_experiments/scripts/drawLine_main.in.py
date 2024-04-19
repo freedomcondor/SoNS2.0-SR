@@ -36,7 +36,7 @@ option = {
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
-	'main_ax_lim'            : [-0.2, 3],
+	'main_ax_lim'            : [-0.2, 2.7],
 
 	'split_right'            : False,
 	'violin_ax_top_lim'      : [5.18, 5.21],

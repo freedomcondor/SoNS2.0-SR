@@ -54,7 +54,7 @@ option_scale_2 = {
 	'SRFig_show'             : False,
 	'trackLog_show'          : False,
 
-	'main_ax_lim'            : [-0.5, 7.5],
+	'main_ax_lim'            : [-0.5, 7],
 
 	'split_right'            : False,
 	'violin_ax_top_lim'      : [9.5, 10],
