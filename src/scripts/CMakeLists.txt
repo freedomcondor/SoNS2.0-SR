@@ -8,6 +8,9 @@ configure_file( generatePublicScalabilityAnalyzeData.in.sh
                 @ONLY
               )
 
-configure_file( generateSingleRunCSVs.in.sh   generateSingleRunCSVs.sh     @ONLY)
+configure_file( generateSingleRunCSVs.in.sh  generateSingleRunCSVs.sh    @ONLY)
 
-configure_file( evaluateAll.sh             evaluateAll.sh     @ONLY)
+configure_file( evaluateAll.sh               evaluateAll.sh              @ONLY)
+
+configure_file( iterateAllDataSets.in.sh     iterateAllDataSets.sh        @ONLY)
+configure_file( compareLowerbound.in.py      compareLowerbound.py        @ONLY)
