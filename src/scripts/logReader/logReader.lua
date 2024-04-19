@@ -508,6 +508,11 @@ function logReader.saveData(robotsData, saveFile, attribute, startStep, endStep)
 			end
 		end
 		error = error / n
+		-- decrease by hover error
+		if attribute == "lowerBoundError" then
+			error = error - 0.29
+			if error < 0 then error = 0 end
+		end
 		f:write(tostring(error).."\n")
 	end
 	io.close(f)
