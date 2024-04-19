@@ -146,19 +146,44 @@ logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, sta
 
 logReader.calcSegmentLowerBoundErrorInc(robotsData, geneIndex, saveStartStep)
 
+-- see if two drones both failed
+local failedDroneNumber = 0
+for robotName, robotData in pairs(robotsData) do
+	if robotData[stage4Step].failed == true then
+		local robotTypeS, number = string.match(robotName, "(%a+)(%d+)")
+		if robotTypeS == "drone" then
+			failedDroneNumber = failedDroneNumber + 1
+		end
+	end
+end
+
+-- if two drone failed, make and endStep at the failure step for data saving,
+-- re-calc lowerbound to make lowerbound 0 at the failure step
+local endStep = nil
+if failedDroneNumber == 2 then
+	endStep = failure_step + 1
+	logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, saveStartStep, stage2Step - 1)
+	logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, stage2Step, stage3Step - 1)
+	logReader.calcSegmentLowerBound(robotsData, geneIndex, lowerBoundParameters, stage3Step, stage4Step - 1)
+end
 
 os.execute("echo " .. saveStartStep.. " > saveStartStep.txt")
 
 os.execute("echo " .. tostring(structure2Step - saveStartStep) .. " > formationSwitch.txt")
-os.execute("echo " .. tostring(stage4Step - saveStartStep) .. " >> formationSwitch.txt")
-os.execute("echo " .. tostring(stage5Step - saveStartStep) .. " >> formationSwitch.txt")
 
-logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep)
-logReader.saveData(robotsData, "result_lowerbound_data.txt", "lowerBoundError", saveStartStep)
-logReader.saveData(robotsData, "result_lowerbound_inc_data.txt", "lowerBoundInc", saveStartStep)
-logReader.saveEachRobotDataWithFailurePlaceHolder(robotsData, "result_each_robot_error_data", "error", "-1", saveStartStep)
-logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_data", "lowerBoundError", saveStartStep)
-logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_inc_data", "lowerBoundInc", saveStartStep)
+if failedDroneNumber ~= 2 then
+	os.execute("echo " .. tostring(stage4Step - saveStartStep) .. " >> formationSwitch.txt")
+	os.execute("echo " .. tostring(stage5Step - saveStartStep) .. " >> formationSwitch.txt")
+end
 
-logReader.saveSoNSNumber(robotsData, "result_SoNSNumber_data.txt", saveStartStep)
+
+
+logReader.saveData(robotsData, "result_data.txt", "error", saveStartStep, endStep)
+logReader.saveData(robotsData, "result_lowerbound_data.txt", "lowerBoundError", saveStartStep, endStep)
+logReader.saveData(robotsData, "result_lowerbound_inc_data.txt", "lowerBoundInc", saveStartStep, endStep)
+logReader.saveEachRobotDataWithFailurePlaceHolder(robotsData, "result_each_robot_error_data", "error", "-1", saveStartStep, endStep)
+logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_data", "lowerBoundError", saveStartStep, endStep)
+logReader.saveEachRobotData(robotsData, "result_each_robot_lowerbound_inc_data", "lowerBoundInc", saveStartStep, endStep)
+
+logReader.saveSoNSNumber(robotsData, "result_SoNSNumber_data.txt", saveStartStep, endStep)
 logReader.saveFailedRobot(robotsData, "failure_robots.txt")
