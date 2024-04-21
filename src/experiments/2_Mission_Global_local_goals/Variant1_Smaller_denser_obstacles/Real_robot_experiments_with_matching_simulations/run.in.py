@@ -45,7 +45,7 @@ params = '''
       block_label_from="30"
       block_label_to="35"
 
-      avoid_block_vortex="nil"
+      driver_spring_default_speed_scalar="6"
 '''
 
 #safezone_drone_pipuck="1.0"
