@@ -75,7 +75,6 @@ params = '''
     driver_spring_default_speed_scalar="6"
     drone_tag_detection_rate="1"
     pipuck_wheel_speed_limit="0.4"
-    driver_default_speed_scalar="0.2"
 
     morphologiesGenerator="morphologiesGenerator"
     exp_scale="{}"
