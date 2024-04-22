@@ -54,7 +54,8 @@ if(ARGOS_QTOPENGL_FOUND)
     my_extensions)
 endif(ARGOS_QTOPENGL_FOUND)
 
-set(CMAKE_SoNS_DATA_PATH /media/harry/Expansion/Storage/SoNS2.0-data)
+#set(CMAKE_SoNS_DATA_PATH /media/harry/Expansion/Storage/SoNS2.0-data)
+set(CMAKE_SoNS_DATA_PATH /media/harry/Expansion/Weixu-Storage/Work/mns2.0/SoNS2.0-data)
 
 set(CMAKE_PUB_DATA_PATH /media/harry/Expansion/Storage/SoNS2.0-public-data)
 
