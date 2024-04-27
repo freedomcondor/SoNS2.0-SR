@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<argos-configuration>
+
+  <!-- ************************* -->
+  <!-- * General configuration * -->
+  <!-- ************************* -->
+  <framework>
+    <system threads="MULTITHREADS" method="balance_length"/>
+    <experiment length="TOTALLENGTH" ticks_per_second="5" random_seed="RANDOMSEED" />
+  </framework>
+  
+  <!-- *************** -->
+  <!-- * Controllers * -->
+  <!-- *************** -->
+  <controllers>
+    DRONE_CONTROLLER
+  </controllers>
+
+  <!-- *********************** -->
+  <!-- * Arena configuration * -->
+  <!-- *********************** -->
+  <arena size="10, 10, 3.5" center="0, 0, 1">
+    <floor id="floor" source="image" path="@CMAKE_BINARY_DIR@/floor_texture/wood_floor.png" />
+    <!-- drones -->
+    DRONES
+  </arena>
+
+  <!-- Physics engines, Media, Loop functions and visualization -->
+  SIMULATION_SETUP
+
+</argos-configuration>

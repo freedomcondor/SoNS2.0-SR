@@ -1,2 +1,3 @@
 add_subdirectory(exp_0_hw_00_demo_1_2d_4p)
 add_subdirectory(exp_09_scalability_light)
+add_subdirectory(exp_10_hover)
