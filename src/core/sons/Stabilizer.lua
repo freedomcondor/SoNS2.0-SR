@@ -22,6 +22,7 @@ function Stabilizer.preStep(sons)
 	sons.stabilizer.referencing_robot = nil
 	sons.stabilizer.referencing_me = nil
 	sons.stabilizer.stationary_referencing = nil
+	sons.stabilizer.switch = true
 end
 
 function Stabilizer.addParent(sons)
@@ -39,6 +40,9 @@ end
 function Stabilizer.postStep(sons)
 	-- effect only for brain
 	if sons.parentR ~= nil then return end
+
+	-- switch
+	if sons.stabilizer.switch ~= true then return end
 
 	-- estimate location of the new step 
 	local input_transV3 = sons.goal.transV3
