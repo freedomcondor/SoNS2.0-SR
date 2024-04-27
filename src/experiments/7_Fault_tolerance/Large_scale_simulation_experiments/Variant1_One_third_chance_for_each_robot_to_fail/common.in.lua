@@ -184,9 +184,15 @@ return function()
 		-- brain run state
 		if state == 1 then
 			if width < 5.0 then
-				state = 3
+				switchAndSendNewState(sons, 3)
 				sons.setMorphology(sons, structure2)
 				logger("state2")
+			end
+			for id, ob in ipairs(sons.avoider.obstacles) do
+				if ob.type == target_type then
+					switchAndSendNewState(sons, 4)
+					sons.setMorphology(sons, structure3)
+				end
 			end
 		--[[
 		elseif state == 2 then
@@ -198,14 +204,16 @@ return function()
 			end
 		--]]
 		elseif state == 3 then
+			sons.setMorphology(sons, structure2)
 			sons.Parameters.stabilizer_preference_robot = nil
 			for id, ob in ipairs(sons.avoider.obstacles) do
 				if ob.type == target_type then
-					state = 4
+					switchAndSendNewState(sons, 4)
 					sons.setMorphology(sons, structure3)
 				end
 			end
 		elseif state == 4 then
+			sons.stabilizer.switch = true
 			for id, ob in ipairs(sons.avoider.obstacles) do
 				if ob.type == target_type then
 					sons.setGoal(sons, ob.positionV3 - vector3(1.0, 0, 0), ob.orientationQ)
@@ -302,6 +310,9 @@ end end
 function create_failure_node(sons)
 	local fail_return = true
 return function()
+	if sons.api.stepCount == 1000 then
+		sons.stabilizer.switch = false
+	end
 	if sons.api.stepCount == 1000 and robot.random.uniform() < 0.33 then
 		sons.reset(sons)
 		fail_return = false
