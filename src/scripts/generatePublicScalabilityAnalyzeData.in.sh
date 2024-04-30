@@ -3,9 +3,9 @@ COPY_TIME_PY="@CMAKE_SOURCE_DIR@/scripts/csvgenerator/prepend_time_line.py"
 
 ORIGIN_DIR=`pwd`
 
-raw_exps_dir="@CMAKE_SoNS_DATA_PATH@/src/experiments/exp_2_simu_scalability_analyze"
+raw_exps_dir="@CMAKE_SoNS_DATA_PATH@/experiments/6_Scalability/Scalability_in_SoNS_establishment_mission"
 #public_dir="@CMAKE_PUB_DATA_PATH@"
-public_dir="@CMAKE_SoNS_DATA_PATH@/../Scalability_in_SoNS_establishment_mission"
+public_dir="@CMAKE_PUB_DATA_PATH@/6_Scalability/Scalability_in_SoNS_establishment_mission"
 
 mkdir -p $public_dir
 

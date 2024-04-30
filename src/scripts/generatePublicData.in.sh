@@ -74,13 +74,6 @@ copy_run() {
 
 }
 
-#-----------------------------------------------------------------------------------
-# list of experiments and their public names
-exp_folder_lists=(
-	"exp_0_hw_01_formation_1_2d_10p    mission1_hw_exp_formation_scatter"
-	"exp_0_hw_05_gate_switch           mission4_hw_exp_gate_switch"
-)
-
 copy_exp_folder() {
 	input_folder=$1
 	output_folder=$2
@@ -152,94 +145,87 @@ copy_exp_folder() {
 # list of data sets and their public names
 
 data_set_lists=(
-	"1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments/data_simu/data                     1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/50robots"
-)
-data_set_lists_test=(
+	"1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robot_experiments_with_matching_simulations/data_hw/data         1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robots_experiments"
+	"1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robot_experiments_with_matching_simulations/data_simu/data       1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Simulation_experiments/8robots"
 	"1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Large_scale_simulation_experiments/data_simu/data                     1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Simulation_experiments/50robots"
+	"1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robot_experiments_with_matching_simulations/data_hw/data         1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robots_experiments"
+	"1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Real_robot_experiments_with_matching_simulations/data_simu/data       1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/12robots"
 	"1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments/data_simu/data                     1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/50robots"
+
+	"2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robot_experiments_with_matching_simulations/data_hw/data      2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robots_experiments"
+	"2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robot_experiments_with_matching_simulations/data_simu/data    2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Simulation_experiments/8robots"
 	"2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Large_scale_simulation_experiments/data_simu/data                  2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Simulation_experiments/50robots"
+
+	"2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robot_experiments_with_matching_simulations/data_hw/data   2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robots_experiments"
+	"2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robot_experiments_with_matching_simulations/data_simu/data 2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Simulation_experiments/8robots"
 	"2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Large_scale_simulation_experiments/data_simu/data               2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Simulation_experiments/50robots"
+
+	"3_Mission_Collective_sensing_actuation/Real_robot_experiments_with_matching_simulations/data_hw/data                              3_Mission_Collective_sensing_actuation/Real_robots_experiments"
+	"3_Mission_Collective_sensing_actuation/Real_robot_experiments_with_matching_simulations/data_simu/data                            3_Mission_Collective_sensing_actuation/Simulation_experiments/8robots"
 	"3_Mission_Collective_sensing_actuation/Large_scale_simulation_experiments/data_simu/data                                          3_Mission_Collective_sensing_actuation/Simulation_experiments/50robots"
-	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/data_simu_0.5s/data            7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/0.5s_failure"
-	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/data_simu_1s/data              7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/1s_failure"
-	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/data_simu_30s/data             7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/30s_failure"
-	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_0.5s/data     7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/0.5s_failure"
-	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_1s/data       7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/1s_failure"
-	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_30s/data      7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/30s_failure"
-)
 
-# outdated, the raw data repo moved from exp_x_hw_x to 1_Mission_XX/VariantX
-data_set_lists_backup=(
-	"exp_0_hw_01_formation_1_2d_10p/data_simu/data              1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Simulation_experiments/12robots"
+	"4_Mission_Binary_decision/Real_robot_experiments_with_matching_simulations/data_hw/data                                           4_Mission_Binary_decision/Real_robots_experiments"
+	"4_Mission_Binary_decision/Real_robot_experiments_with_matching_simulations/data_simu/data                                         4_Mission_Binary_decision/Simulation_experiments/8robots"
+	"6_Scalability/Scalability_in_decision_making_mission/data_simu_scale_2/data                                                       4_Mission_Binary_decision/Simulation_experiments/65robots"
 
-	"exp_0_hw_10_formation_1_2d_6p_group_start/data_hw/data     1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Real_robots_experiments"
-	"exp_0_hw_10_formation_1_2d_6p_group_start/data_simu/data   1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Simulation_experiments/8robots"
-	"exp_1_simu_10_formation_10d_group_start/data_simu/data     1_Mission_Self-organized_hierarchy/Variant1_Clustered_start/Simulation_experiments/50robots"
+	"5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robot_experiments_with_matching_simulations/data_hw/data   5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robots_experiments"
+	"5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robot_experiments_with_matching_simulations/data_simu/data 5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Simulation_experiments/8robots"
+	"5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Large_scale_simulation_experiments/data_simu/data               5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Simulation_experiments/50robots"
 
-	"exp_0_hw_02_obstacle_avoidance_small/data_hw/data          2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Real_robots_experiments"
-	"exp_0_hw_02_obstacle_avoidance_small/data_simu/data        2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Simulation_experiments/8robots"
-	"exp_1_simu_02_obstacle_avoidance_small_10d/data_simu/data  2_Mission_Global_local_goals/Variant1_Smaller_denser_obstacles/Simulation_experiments/50robots"
+	"5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/data_hw/data          5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robots_experiments"
+	"5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robot_experiments_with_matching_simulations/data_simu/data        5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Simulation_experiments/5robots"
 
-	"exp_0_hw_03_obstacle_avoidance_large/data_hw/data          2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Real_robots_experiments"
-	"exp_0_hw_03_obstacle_avoidance_large/data_simu/data        2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Simulation_experiments/8robots"
-	"exp_1_simu_03_obstacle_avoidance_large_10d/data_simu/data  2_Mission_Global_local_goals/Variant2_Larger_less_dense_obstacles/Simulation_experiments/50robots"
+	"6_Scalability/Scalability_in_decision_making_mission/data_simu_scale_1/data              6_Scalability/Scalability_in_decision_making_mission/35robots"
+	"6_Scalability/Scalability_in_decision_making_mission/data_simu_scale_2/data              6_Scalability/Scalability_in_decision_making_mission/65robots"
+	"6_Scalability/Scalability_in_decision_making_mission/data_simu_scale_3/data              6_Scalability/Scalability_in_decision_making_mission/95robots"
+	"6_Scalability/Scalability_in_decision_making_mission/data_simu_scale_4/data              6_Scalability/Scalability_in_decision_making_mission/125robots"
 
-	"exp_0_hw_04_switch_line/data_hw/data                       3_Mission_Collective_sensing_actuation/Real_robots_experiments"
-	"exp_0_hw_04_switch_line/data_simu/data                     3_Mission_Collective_sensing_actuation/Simulation_experiments/8robots"
-	"exp_1_simu_04_switch_line/data_simu/data                   3_Mission_Collective_sensing_actuation/Simulation_experiments/50robots"
-
-	"exp_0_hw_05_gate_switch/data_hw/data                       4_Mission_Binary_decision/Real_robots_experiments"
-	"exp_0_hw_05_gate_switch/data_simu/data                     4_Mission_Binary_decision/Simulation_experiments/8robots"
-	"exp_2_simu_scalability/data_simu_scale_2/data              4_Mission_Binary_decision/Simulation_experiments/65robots"
-
-	"exp_0_hw_08_split/data_hw/data                             5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Real_robots_experiments"
-	"exp_0_hw_08_split/data_simu/data                           5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Simulation_experiments/8robots"
-	"exp_1_simu_08_split/data_simu/data                         5_Mission_Splitting_merging/Variant1_Search_and_rescue_in_passage/Simulation_experiments/50robots"
-
-	"exp_0_hw_09_1d_switch_rescue/data_hw                       5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Real_robots_experiments"
-	"exp_0_hw_09_1d_switch_rescue/data_simu/data                5_Mission_Splitting_merging/Variant2_Push_away_obstruction/Simulation_experiments/5robots"
-
-	"exp_2_simu_scalability/data_simu_scale_1/data              6_Scalability/Scalability_in_decision_making_mission/35robots"
-	"exp_2_simu_scalability/data_simu_scale_2/data              6_Scalability/Scalability_in_decision_making_mission/65robots"
-	"exp_2_simu_scalability/data_simu_scale_3/data              6_Scalability/Scalability_in_decision_making_mission/95robots"
-	"exp_2_simu_scalability/data_simu_scale_4/data              6_Scalability/Scalability_in_decision_making_mission/125robots"
+	"6_Scalability/Scalability_in_SoNS_establishment_mission/data_simu_1-750              6_Scalability/Scalability_in_SoNS_establishment_mission"
+	"6_Scalability/Scalability_in_SoNS_establishment_mission/data_simu_751-999            6_Scalability/Scalability_in_SoNS_establishment_mission"
+	"6_Scalability/Scalability_in_SoNS_establishment_mission/data_simu_1000-1299          6_Scalability/Scalability_in_SoNS_establishment_mission"
+	"6_Scalability/Scalability_in_SoNS_establishment_mission/data_simu_1300-1500          6_Scalability/Scalability_in_SoNS_establishment_mission"
 
 #----------------------------
 
 	# -- remove fault tolerance data hw is moved to special run list
-	"exp_0_hw_07_fault_tolerance/data_simu/data                       7_Fault_tolerance/Simulation_experiments/8robots"
+	"7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/data_simu/data        7_Fault_tolerance/Simulation_experiments/8robots"
 
-	"exp_3_simu_02_fault_tolerance_33/data_simu/data                  7_Fault_tolerance/Simulation_experiments/50robots/Variant1_One_third_chance_for_each_robot_to_fail"
-	"exp_3_simu_02_fault_tolerance_33/data_simu_drone_failure/data    7_Fault_tolerance/Simulation_experiments/50robots/Variants_additional/One_third_chance_for_each_aerial_robot_to_fail"
-	"exp_3_simu_02_fault_tolerance_33/data_simu_pipuck_failure/data   7_Fault_tolerance/Simulation_experiments/50robots/Variants_additional/One_third_chance_for_each_ground_robot_to_fail"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant1_One_third_chance_for_each_robot_to_fail/data_simu/data                                   7_Fault_tolerance/Simulation_experiments/50robots/Variant1_One_third_chance_for_each_robot_to_fail"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant1_One_third_chance_for_each_robot_to_fail/datas_other_exps/data_simu_drone_failure/data    7_Fault_tolerance/Simulation_experiments/50robots/Variants_additional/One_third_chance_for_each_aerial_robot_to_fail"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant1_One_third_chance_for_each_robot_to_fail/datas_other_exps/data_simu_pipuck_failure/data   7_Fault_tolerance/Simulation_expeariments/50robots/Variants_additional/One_third_chance_for_each_ground_robot_to_fail"
 
-	"exp_3_simu_01_fault_tolerance_66/data_simu/data                  7_Fault_tolerance/Simulation_experiments/50robots/Variant2_Two_thirds_chance_for_each_robot_to_fail"
-	"exp_3_simu_01_fault_tolerance_66/data_simu_drone_failure/data    7_Fault_tolerance/Simulation_experiments/50robots/Variants_additional/Two_thirds_chance_for_each_aerial_robot_to_fail"
-	"exp_3_simu_01_fault_tolerance_66/data_simu_pipuck_failure/data   7_Fault_tolerance/Simulation_experiments/50robots/Variants_additional/Two_thirds_chance_for_each_ground_robot_to_fail"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant2_Two_thirds_chance_for_each_robot_to_fail/data_simu/data                                  7_Fault_tolerance/Simulation_experiments/50robots/Variant2_Two_thirds_chance_for_each_robot_to_fail"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant2_Two_thirds_chance_for_each_robot_to_fail/datas_other_exps/data_simu_drone_failure/data   7_Fault_tolerance/Simulation_experiments/50robots/Variants_additional/Two_thirds_chance_for_each_aerial_robot_to_fail"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant2_Two_thirds_chance_for_each_robot_to_fail/datas_other_exps/data_simu_pipuck_failure/data  7_Fault_tolerance/Simulation_experiments/50robots/Variants_additional/Two_thirds_chance_for_each_ground_robot_to_fail"
 
-	"exp_3_simu_04_fault_tolerance_visual/data_simu_0.5s/data         7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/0.5s_failure"
-	"exp_3_simu_04_fault_tolerance_visual/data_simu_1s/data           7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/1s_failure"
-	"exp_3_simu_04_fault_tolerance_visual/data_simu_30s/data          7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/30s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/data_simu_0.5s/data         7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/0.5s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/data_simu_1s/data           7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/1s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant3_Temporary_system-wide_vision_failure/data_simu_30s/data          7_Fault_tolerance/Simulation_experiments/50robots/Variant3_Temporary_system-wide_vision_failure/30s_failure"
 
-	"exp_3_simu_03_fault_tolerance_communication/data_simu_0.5s/data  7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/0.5s_failure"
-	"exp_3_simu_03_fault_tolerance_communication/data_simu_1s/data    7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/1s_failure"
-	"exp_3_simu_03_fault_tolerance_communication/data_simu_30s/data   7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/30s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_0.5s/data  7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/0.5s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_1s/data    7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/1s_failure"
+	"7_Fault_tolerance/Large_scale_simulation_experiments/Variant4_Temporary_system-wide_communication_failure/data_simu_30s/data   7_Fault_tolerance/Simulation_experiments/50robots/Variant4_Temporary_system-wide_communication_failure/30s_failure"
 
 #	#-- remove this one "exp_0_hw_06_formation_1_3d_14p/data_simu/data        8_Demos/Simulation_of_the_real_robot_demo_with_17robots_with_3drone"
+
+	"3_Mission_Collective_sensing_actuation/Large_scale_simulation_experiments_with_random_brain/data_simu/data                        8_Demos/Random_brain/3_Mission_Collective_sensing_actuation"
+	"1_Mission_Self-organized_hierarchy/Variant2_Scattered_start/Large_scale_simulation_experiments_with_random_brain/data_simu/data   8_Demos/Random_brain/1_Mission_Self-organized_hierarchy"
 )
 
 #	"exp_0_hw_07_fault_tolerance/data_hw/data                         7_Fault_tolerance/Real_robots_experiments"
 
 special_run_list=(
-	"exp_0_hw_07_fault_tolerance/datas_substitute/1_non_brain_drone_failure  8_Demos/Real_robots_with_failure_and_substitution/Non_brain_aerial_robot_failure"
-	"exp_0_hw_07_fault_tolerance/datas_substitute/2_brain_drone_failure      8_Demos/Real_robots_with_failure_and_substitution/Brain_aerial_robot_failure"
-	"exp_0_hw_07_fault_tolerance/datas_substitute/3_pipuck_failure           8_Demos/Real_robots_with_failure_and_substitution/Ground_robot_failure"
+	"7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/datas_substitute/1_non_brain_drone_failure  8_Demos/Real_robots_with_failure_and_substitution/Non_brain_aerial_robot_failure"
+	"7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/datas_substitute/2_brain_drone_failure      8_Demos/Real_robots_with_failure_and_substitution/Brain_aerial_robot_failure"
+	"7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/datas_substitute/3_pipuck_failure           8_Demos/Real_robots_with_failure_and_substitution/Ground_robot_failure"
 
-	"exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_2_success_1     7_Fault_tolerance/Real_robots_experiments/run1_3robots_failed"
-	"exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_3_success_2     7_Fault_tolerance/Real_robots_experiments/run2_2robots_failed"
-	"exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_4_success_3     7_Fault_tolerance/Real_robots_experiments/run3_4robots_failed"
-	"exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_6_success_5     7_Fault_tolerance/Real_robots_experiments/run4_3robots_failed"
-	"exp_0_hw_07_fault_tolerance/data_hw/data/test_20220712_7_success_6     7_Fault_tolerance/Real_robots_experiments/run5_4robots_failed"
+	"7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/data_hw/data/run1     7_Fault_tolerance/Real_robots_experiments/run1_3robots_failed"
+	"7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/data_hw/data/run2     7_Fault_tolerance/Real_robots_experiments/run2_2robots_failed"
+	"7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/data_hw/data/run3     7_Fault_tolerance/Real_robots_experiments/run3_4robots_failed"
+	"7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/data_hw/data/run4     7_Fault_tolerance/Real_robots_experiments/run4_3robots_failed"
+	"7_Fault_tolerance/Real_robot_experiments_with_matching_simulations/data_hw/data/run5     7_Fault_tolerance/Real_robots_experiments/run5_4robots_failed"
+
+	"3_Mission_Collective_sensing_actuation/Large_scale_pipuck_brain  8_Demos/Pipuck_brain/3_Mission_Collective_sensing_actuation"
 )
 
 special_readme_list=(
@@ -285,11 +271,11 @@ for i in ${!data_set_lists[@]}; do
 	copy_data_set_folder ${exp_tuple[0]} ${exp_tuple[1]}
 done
 
-#for i in ${!special_run_list[@]}; do
-#	read -a exp_tuple <<< ${special_run_list[$i]}
-#	mkdir -p $public_dir/${exp_tuple[1]}/
-#	copy_run $raw_exps_dir/${exp_tuple[0]}/ $public_dir/${exp_tuple[1]}/
-#done
+for i in ${!special_run_list[@]}; do
+	read -a exp_tuple <<< ${special_run_list[$i]}
+	mkdir -p $public_dir/${exp_tuple[1]}/
+	copy_run $raw_exps_dir/${exp_tuple[0]}/ $public_dir/${exp_tuple[1]}/
+done
 
 # copy README
 cp @CMAKE_SOURCE_DIR@/scripts/public_data_readmes/Root_readme.txt $public_dir/README
