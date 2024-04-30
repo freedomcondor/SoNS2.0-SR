@@ -22,11 +22,11 @@ dataFolder += "data_simu/data"
 savePDFNameBase = "Mission7_Fault_tolerance_Variant2_Two_thirds_failure_Large_scale_Simulation_"
 
 sampleList = [
-	"run16",
+	"run6",
+	"run8",
+	"run15",
 	"run31",
-	"run45",
-	"run46",
-	"run50",
+	"run35",
 ]
 
 #----------------------------------

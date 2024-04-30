@@ -45,10 +45,6 @@ option = {
 	#'key_frame' :  [0, 250, 950] ,
 	'key_frame' :  [0, 500] ,
 
-	'overwrite_trackFig_log_foler' : 
-		"@CMAKE_SoNS_DATA_PATH@" + cmake_relative_dir + "/data_simu/track_fig_exp/logs"
-	,
-
 	'legend_obstacle'  : True,
 
 	'x_lim'     :  [-12, 12]    ,
